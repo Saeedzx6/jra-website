@@ -7,6 +7,13 @@
  *
  *   npm run migrate:images -- --dry     preview, changes nothing
  *   npm run migrate:images              do it
+ *
+ * NOTE: this script used to cover restaurant images and the site settings only.
+ * Every other table that stores a /uploads/... path (staff photos, resources,
+ * classification standards, magazine PDFs, ...) was left behind, so those files
+ * 404'd in production. Those assets are now committed under public/uploads and
+ * served statically, and this script covers their tables too — so migrating
+ * them to the CDN is an option rather than a prerequisite for a working deploy.
  */
 
 import fs from "node:fs";
@@ -34,32 +41,78 @@ function assertConfigured() {
   }
 }
 
+const IMAGE_EXTS = new Set([".jpg", ".jpeg", ".png", ".gif", ".webp", ".avif", ".svg"]);
+
 /** Uploads one local file, returning its CDN url. */
 async function upload(localUrl: string): Promise<string | null> {
-  const abs = path.join(PUBLIC_DIR, localUrl);
+  // Paths are stored unencoded, but a percent-encoded one would still resolve.
+  // decodeURIComponent throws on a stray `%`, so it only ever gets to be a
+  // fallback for the literal path.
+  let abs = path.join(PUBLIC_DIR, localUrl);
+  if (!fs.existsSync(abs)) {
+    try {
+      abs = path.join(PUBLIC_DIR, decodeURIComponent(localUrl));
+    } catch {
+      /* not percent-encoded — keep the literal path and fail below */
+    }
+  }
   if (!fs.existsSync(abs)) {
     console.warn(`  missing on disk, skipped: ${localUrl}`);
     return null;
   }
 
+  // Documents (PDF, docx, pptx) must go up as `raw`. Sending them as `image`
+  // either fails or lands them behind Cloudinary's PDF-delivery restriction,
+  // which is how the annual reports and classification standards would break.
+  const ext = path.extname(abs).toLowerCase();
+  const isImage = IMAGE_EXTS.has(ext);
+
   // Mirror the on-disk layout under a jra/ prefix so the CDN stays browsable.
   // The prefix lives in public_id, not the `folder` option — under "dynamic
   // folders" mode `folder` sets only a display folder and leaves public_id bare.
-  const rel = localUrl.replace(/^\/uploads\//, "").replace(/\.[^.]+$/, "");
+  // `raw` public_ids keep their extension; image public_ids drop it.
+  const rel = localUrl.replace(/^\/uploads\//, "");
+  const publicId = isImage ? `jra/${rel.replace(/\.[^.]+$/, "")}` : `jra/${rel}`;
+
   const res = await cloudinary.uploader.upload(abs, {
-    public_id: `jra/${rel}`,
+    public_id: publicId,
     overwrite: false,
-    resource_type: "image",
+    resource_type: isImage ? "image" : "raw",
   });
   return res.secure_url;
 }
 
-async function migrateRestaurantImages() {
-  const rows = await db.restaurantImage.findMany({
-    where: { NOT: { url: { startsWith: "http" } } },
-    select: { id: true, url: true },
+/**
+ * Every column that stores a local /uploads/... path. Anything added here gets
+ * migrated; leaving a column out is what caused the original 404s, so add new
+ * media columns to this list when the schema grows one.
+ */
+const TARGETS: { model: string; field: string }[] = [
+  { model: "restaurantImage", field: "url" },
+  { model: "supplierImage", field: "url" },
+  { model: "marketplaceListingImage", field: "url" },
+  { model: "mediaGalleryItem", field: "imageUrl" },
+  { model: "newsArticle", field: "coverImageUrl" },
+  { model: "event", field: "coverImageUrl" },
+  { model: "classificationStandard", field: "sourcePdfUrl" },
+  { model: "legalDocumentVersion", field: "fileUrl" },
+  { model: "magazineIssue", field: "coverImageUrl" },
+  { model: "magazineIssue", field: "pdfUrl" },
+  { model: "course", field: "coverImageUrl" },
+  { model: "resource", field: "fileUrl" },
+  { model: "resource", field: "coverImageUrl" },
+  { model: "person", field: "photoUrl" },
+];
+
+async function migrateColumn(model: string, field: string) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const delegate = (db as any)[model];
+  const rows: { id: string; [k: string]: string }[] = await delegate.findMany({
+    where: { AND: [{ [field]: { not: null } }, { NOT: { [field]: { startsWith: "http" } } }] },
+    select: { id: true, [field]: true },
   });
-  console.log(`restaurant_images: ${rows.length} to migrate`);
+  if (!rows.length) return;
+  console.log(`${model}.${field}: ${rows.length} to migrate`);
 
   let done = 0;
   for (const row of rows) {
@@ -67,17 +120,19 @@ async function migrateRestaurantImages() {
       done++;
       continue;
     }
-    const url = await upload(row.url);
+    const localPath = row[field];
+    if (!localPath) continue;
+    const url = await upload(localPath);
     if (!url) continue;
-    await db.restaurantImage.update({
-      where: { id: row.id },
-      // legacyPath keeps the original location, so a bad run can be reversed.
-      data: { url, legacyPath: row.url },
-    });
+    // legacyPath keeps the original location so a bad run can be reversed. Only
+    // restaurant_images carries that column.
+    const data: Record<string, string> =
+      model === "restaurantImage" ? { [field]: url, legacyPath: localPath } : { [field]: url };
+    await delegate.update({ where: { id: row.id }, data });
     done++;
     if (done % 50 === 0) console.log(`  ${done}/${rows.length}`);
   }
-  console.log(`restaurant_images: ${done} done`);
+  console.log(`${model}.${field}: ${done} done`);
 }
 
 async function migrateSiteSettings() {
@@ -104,7 +159,9 @@ async function migrateSiteSettings() {
 async function main() {
   if (!DRY) assertConfigured();
   console.log(DRY ? "== DRY RUN ==" : "== MIGRATING ==");
-  await migrateRestaurantImages();
+  for (const { model, field } of TARGETS) {
+    await migrateColumn(model, field);
+  }
   await migrateSiteSettings();
   console.log("done");
 }

@@ -140,8 +140,18 @@ submissions repeatedly and start getting `rate_limited`, that is why.
 
 ## Never commit
 
-`.env`, `.env.production.local`, `.env.vercel.local`, `public/uploads/`, and the
-`JRA/` source folders. All are gitignored — please keep it that way.
+`.env`, `.env.production.local`, `.env.vercel.local`, `public/uploads/restaurants/`,
+`public/uploads/membership-documents/`, and the `JRA/` source folders. All are
+gitignored — please keep it that way.
+
+The rest of `public/uploads/` **is** committed on purpose. Staff photos,
+classification standards, annual reports, HR manuals, publications, workforce
+studies and newsletters are fixed site content that seeded database rows point at
+with plain `/uploads/...` paths. They used to be gitignored along with everything
+else, which meant every one of those paths 404'd in production — the About page
+had no photos and the classification standards would not download. Do not
+re-ignore them unless you have first moved them to the CDN with
+`npm run migrate:images` and confirmed the database rows now hold `https://` URLs.
 
 ## Health check scripts
 
