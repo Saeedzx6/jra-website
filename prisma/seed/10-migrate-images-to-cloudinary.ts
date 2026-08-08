@@ -107,12 +107,20 @@ const TARGETS: { model: string; field: string }[] = [
 async function migrateColumn(model: string, field: string) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const delegate = (db as any)[model];
-  const rows: { id: string; [k: string]: string }[] = await delegate.findMany({
-    where: { AND: [{ [field]: { not: null } }, { NOT: { [field]: { startsWith: "http" } } }] },
+  // Filtered in JS rather than in the query: `{ not: null }` is rejected on the
+  // non-nullable columns (restaurant_images.url), and a bare `NOT startsWith`
+  // silently drops NULL rows on the nullable ones. These tables are small
+  // enough that reading the column and filtering here is simpler than
+  // branching on each column's nullability.
+  const all: { id: string; [k: string]: string | null }[] = await delegate.findMany({
     select: { id: true, [field]: true },
   });
+  const rows = all.filter((r) => {
+    const v = r[field];
+    return typeof v === "string" && v.length > 0 && !v.startsWith("http");
+  });
   if (!rows.length) return;
-  console.log(`${model}.${field}: ${rows.length} to migrate`);
+  console.log(`${model}.${field}: ${rows.length} to migrate (of ${all.length})`);
 
   let done = 0;
   for (const row of rows) {
