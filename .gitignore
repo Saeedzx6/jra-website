@@ -44,3 +44,7 @@ prisma/dev.db-journal
 .idea/
 .vercel
 .env*
+
+# rollback record written by scripts/media-url-snapshot.mjs — environment
+# specific (row ids differ per database), so it stays local
+/media-url-snapshot.json
