@@ -1,0 +1,29 @@
+# What `vercel deploy` / `vercel --prod` may NOT upload.
+#
+# Without this file the CLI tries to push the entire working directory —
+# 553MB — and dies in an endless "Upload aborted" retry loop. Production
+# deploys normally come from GitHub, where none of this is tracked anyway,
+# so this file only matters for CLI deploys.
+#
+# Careful: everything under public/uploads EXCEPT restaurants/ is real site
+# content (staff photos, classification standards, annual reports, HR manuals,
+# publications, workforce studies, newsletters). Excluding it 404s those pages.
+
+# build + deps — Vercel installs and builds these itself
+node_modules
+.next
+tsconfig.tsbuildinfo
+
+# source data dumps, read only by seed scripts and never shipped
+/JRA/
+/JRA-moreassets/
+
+# restaurant photos live on Cloudinary; member documents are private
+/public/uploads/restaurants/
+/public/uploads/membership-documents/
+
+# local-only
+.git
+.env
+.env*.local
+/media-url-snapshot.json
