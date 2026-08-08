@@ -24,10 +24,20 @@ prisma/dev.db-journal
 /JRA/
 /JRA-moreassets/
 
-# Uploaded media (421MB). These are the local-dev fallback only — production
-# serves them from Cloudinary. Run `npm run migrate:images` BEFORE deploying,
-# or the live site will 404 every restaurant photo.
-/public/uploads/
+# Uploaded media. Two different things live under public/uploads:
+#
+#   1. Restaurant photos (322MB) — far too big to ship in the repo, and the
+#      only set `npm run migrate:images` actually moves to Cloudinary. Run it
+#      BEFORE deploying or the live site will 404 every restaurant photo.
+#   2. Member document uploads — runtime, per-member, and private. Never commit.
+#
+# Everything else under public/uploads (staff photos, classification standards,
+# annual reports, HR manuals, publications, workforce studies, newsletters) is
+# fixed site content referenced by seeded database rows as plain /uploads/...
+# paths. It is only ~78MB and is NOT covered by the Cloudinary migration, so it
+# has to be committed — otherwise those paths 404 in production.
+/public/uploads/restaurants/
+/public/uploads/membership-documents/
 
 # editors
 .vscode/
