@@ -1,0 +1,34 @@
+# deps
+node_modules/
+
+# next
+.next/
+out/
+next-env.d.ts
+tsconfig.tsbuildinfo
+
+# env
+.env
+.env*.local
+
+# misc
+.DS_Store
+*.log
+npm-debug.log*
+
+# prisma
+prisma/dev.db
+prisma/dev.db-journal
+
+# source data (large, not part of the app)
+/JRA/
+/JRA-moreassets/
+
+# Uploaded media (421MB). These are the local-dev fallback only — production
+# serves them from Cloudinary. Run `npm run migrate:images` BEFORE deploying,
+# or the live site will 404 every restaurant photo.
+/public/uploads/
+
+# editors
+.vscode/
+.idea/

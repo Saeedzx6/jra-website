@@ -1,0 +1,498 @@
+{
+  "nav": {
+    "home": "الرئيسية",
+    "about": "عن الجمعية",
+    "aboutWhoWeAre": "من نحن",
+    "aboutBoard": "مجلس الإدارة",
+    "aboutTeam": "فريق العمل",
+    "aboutReports": "التقارير السنوية",
+    "restaurants": "المطاعم",
+    "suppliers": "الموردون",
+    "classification": "التصنيف",
+    "sustainability": "الاستدامة",
+    "legal": "التشريعات",
+    "marketplace": "السوق الإلكتروني",
+    "training": "التدريب والأكاديمية",
+    "jobs": "الوظائف",
+    "projects": "المشاريع",
+    "opportunities": "الفرص",
+    "knowledge": "مركز المعرفة",
+    "news": "الأخبار والفعاليات",
+    "magazine": "المجلة",
+    "newsletter": "النشرة الإخبارية",
+    "membership": "انضم إلى الجمعية",
+    "contact": "اتصل بنا",
+    "login": "تسجيل الدخول",
+    "portal": "حسابي",
+    "logout": "تسجيل الخروج"
+  },
+  "common": {
+    "learnMore": "المزيد",
+    "viewAll": "عرض الكل",
+    "readMore": "قراءة المزيد",
+    "search": "بحث",
+    "filter": "تصفية",
+    "clearAll": "مسح الكل",
+    "noResults": "لا توجد نتائج.",
+    "comingSoon": "هذا القسم قيد الإنشاء — يرجى العودة قريباً.",
+    "star": "نجمة",
+    "stars": "نجوم",
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "back": "رجوع",
+    "result": "نتيجة",
+    "results": "نتائج",
+    "noRestaurantsLinked": "لا توجد مطاعم مرتبطة بحسابك بعد.",
+    "pagination": "تصفح الصفحات"
+  },
+  "home": {
+    "heroKicker": "جمعية المطاعم السياحية الأردنية",
+    "heroTitle": "بيت قطاع المطاعم السياحية في الأردن",
+    "heroSubtitle": "جمعية إلزامية يديرها أعضاؤها، تمثل أكثر من 1300 مطعم ومقهى ومنشأة ترفيهية في جميع أنحاء الأردن منذ عام 2002.",
+    "heroCtaDirectory": "تصفح الدليل",
+    "heroCtaJoin": "انضم إلى الجمعية",
+    "servicesTitle": "خدمات الجمعية",
+    "serviceDirectory": "دليل المطاعم",
+    "serviceDirectoryDesc": "تصفح المطاعم المصنّفة حسب المحافظة والمطبخ والتصنيف.",
+    "serviceClassification": "التقييم الذاتي للتصنيف",
+    "serviceClassificationDesc": "قيّم منشأتك وفق معايير التصنيف الرسمية للجمعية.",
+    "serviceMembership": "العضوية",
+    "serviceMembershipDesc": "انضم إلى الجمعية واستفد من خدمات الأعضاء.",
+    "serviceSustainability": "الاستدامة",
+    "serviceSustainabilityDesc": "أدوات الطاقة والمياه والهدر الغذائي لقطاع أكثر استدامة.",
+    "statsTitle": "الجمعية بالأرقام",
+    "statMembers": "الأعضاء المصنّفون",
+    "statGovernorates": "المحافظات الممثَّلة",
+    "statFounded": "التأسيس",
+    "newsTitle": "آخر الأخبار",
+    "newsletterTitle": "ابقَ على اطلاع",
+    "newsletterSubtitle": "اشترك لتصلك أخبار القطاع والتشريعات والفرص.",
+    "newsletterPlaceholder": "بريدك الإلكتروني",
+    "newsletterCta": "اشترك",
+    "showcaseAltOne": "طاهٍ يقدّم طبقاً في مطبخ مطعم أردني",
+    "showcaseAltTwo": "أعضاء مجلس إدارة جمعية المطاعم السياحية الأردنية"
+  },
+  "footer": {
+    "tagline": "شبكة واحدة، صوت واحد، فرص لا محدودة.",
+    "phone": "الهاتف",
+    "email": "البريد الإلكتروني",
+    "address": "العنوان",
+    "addressLine": "الدوار الثاني، جبل عمّان، عمّان، الأردن",
+    "sitemap": "خريطة الموقع",
+    "rights": "جميع الحقوق محفوظة."
+  },
+  "about": {
+    "intro": "جمعية المطاعم السياحية الأردنية (JRA) هي جمعية عضوية إلزامية غير ربحية أُنشئت بموجب القانون رقم 47 لسنة 2002، المعدَّل بالقانون رقم 33 لسنة 2018 والنظام رقم 59 لسنة 2025. تمثل الجمعية أكثر من 1300 منشأة مصنَّفة — مطاعم، ومدن ترفيهية، ومقاهٍ، ومطاعم وجبات سريعة، وديسكو، وبارات، وكباريهات مصنَّفة من نجمة إلى 5 نجوم — وهي عضو في هيئة تنشيط السياحة الأردنية وعضو منتسب في منظمة السياحة العالمية التابعة للأمم المتحدة."
+  },
+  "membership": {
+    "intro": "الانضمام إلى جمعية المطاعم السياحية الأردنية هو أحد أذكى الاستثمارات التي يمكنك القيام بها لنجاح منشأتك — دعم ومناصرة، ومساندة في التصنيف، وتدريب، وحضور في الدليل يصل إلى الزوار والمقيمين في جميع أنحاء الأردن. أدخل بياناتك أدناه وسيتواصل معك فريق العضوية.",
+    "classificationPromptBold": "غير متأكد من التصنيف المتوقع لمنشأتك؟",
+    "classificationPromptText": "جرّب التقييم الذاتي المجاني للتصنيف أولاً — دون الحاجة لإنشاء حساب."
+  },
+  "jobs": {
+    "title": "الوظائف والتوظيف",
+    "description": "لا تدير الجمعية لوحة وظائف منفصلة — تُعرض فرص العمل في قطاع المطاعم السياحية على منصة SiyahaJobs، المنصة الوطنية لوظائف القطاع السياحي.",
+    "cta": "زيارة SiyahaJobs"
+  },
+  "projects": {
+    "description": "مشاريع الجمعية الحالية والمكتملة، ومخرجاتها، وقصص النجاح من مختلف أنحاء القطاع."
+  },
+  "opportunities": {
+    "description": "فرص التمويل والمعارض ودعوات المشاركة ذات الصلة بقطاع المطاعم السياحية."
+  },
+  "knowledge": {
+    "description": "دراسات وأدلة وموارد للموارد البشرية لأصحاب ومشغّلي المطاعم — مستقاة مباشرة من إصدارات الجمعية وأبحاثها حول القوى العاملة."
+  },
+  "legal": {
+    "description": "القوانين والأنظمة والتعليمات المتعلقة بقطاع المطاعم السياحية، محدَّثة باستمرار مع سجل الإصدارات وتتبع التعديلات.",
+    "all": "الكل",
+    "versionHistory": "سجل الإصدارات",
+    "downloadDocument": "تحميل المستند"
+  },
+  "resourceTypes": {
+    "STUDY": "دراسة",
+    "GUIDE": "دليل",
+    "TEMPLATE": "نموذج",
+    "HR_MANUAL": "دليل الموارد البشرية",
+    "ANNUAL_REPORT": "التقرير السنوي",
+    "PROJECT": "مشروع",
+    "OPPORTUNITY": "فرصة",
+    "CASE_STUDY": "دراسة حالة"
+  },
+  "legalTypes": {
+    "LAW": "قانون",
+    "REGULATION": "نظام",
+    "INSTRUCTION": "تعليمات"
+  },
+  "restaurants": {
+    "description": "ابحث في المطاعم والمقاهي والمنشآت الترفيهية المصنَّفة في جميع أنحاء الأردن.",
+    "cuisine": "المطبخ",
+    "features": "المزايا",
+    "contact": "التواصل",
+    "greenKeyCertified": "حاصل على شهادة Green Key",
+    "sustainabilityScore": "مؤشر الاستدامة",
+    "allGovernorates": "جميع المحافظات",
+    "allCuisines": "جميع المطابخ"
+  },
+  "suppliers": {
+    "description": "دليل الأعضاء المنتسبين — شركات توريد الأغذية والمعدات والتقنية والخدمات لمطاعم الجمعية.",
+    "emptyTitle": "هذا الدليل لا يزال في بداياته",
+    "emptyBody": "نعمل على بناء دليل الموردين من الصفر. إذا كانت شركتك تورّد الأغذية أو المشروبات أو المعدات أو الخدمات لقطاع الضيافة، كن من أوائل المنضمين.",
+    "applyAsSupplier": "قدّم كمورد"
+  },
+  "classification": {
+    "heroTitle": "اعرف بدقة أين تقف منشأتك",
+    "heroBody": "تصنّف جمعية المطاعم السياحية الأردنية المطاعم السياحية والمقاهي والبارات والمنشآت الترفيهية من نجمة إلى 5 نجوم وفق معايير رسمية منشورة. قيّم منشأتك وفق المعايير الحقيقية قبل التقديم — المبنى والواجهة، الخدمة، صالة الطعام، المطبخ، الموظفون، وجودة الطعام، جميعها تُحتسب في تقييمك.",
+    "startCta": "ابدأ تقييمك الذاتي المجاني",
+    "noAccountNote": "دون الحاجة لإنشاء حساب — هذا مخصص لأي شخص يفكر بالانضمام. عضو بالفعل؟ يحفظ حسابك نسخة رسمية مرتبطة بمطعمك.",
+    "standardsLibrary": "مكتبة المعايير",
+    "pointsAcross": "{points} نقطة موزعة على 10 أقسام — التقييم الذاتي التفاعلي متاح",
+    "scoringComingSoon": "المعيار منشور — التقييم التفاعلي قريباً",
+    "takeAssessment": "ابدأ التقييم",
+    "downloadPdf": "تحميل PDF",
+    "selfAssessmentKicker": "التقييم الذاتي",
+    "publicIntro": "أجب عن كل بند كما يصنّفه معيار الجمعية الرسمي للتصنيف. دون الحاجة لحساب — تتحدّث نتيجتك مباشرة ولا يُحفظ شيء إلا إذا قررت التقديم.",
+    "portalTitle": "التقييم الذاتي للتصنيف",
+    "portalIntro": "اختر مطعماً لبدء أو متابعة تقييم ذاتي وفق معيار التصنيف الرسمي للجمعية.",
+    "lastAssessment": "آخر تقييم: {status}",
+    "noAssessmentYet": "لا يوجد تقييم بعد",
+    "resume": "متابعة",
+    "startNew": "بدء جديد",
+    "sessionIntro": "أجب عن كل بند تماماً كما يصنّفه معيار الجمعية الرسمي للتصنيف. تتحدّث نتيجتك وتصنيف النجوم المتوقع مباشرة أثناء تقدّمك.",
+    "assessmentSubmitted": "تم إرسال التقييم",
+    "resultPrefix": "بناءً على إجاباتك، تُتوقَّع لهذه المنشأة",
+    "resultSuffix": "({score} من {total} نقطة). هذا تقييم ذاتي — سيؤكد فريق التصنيف في الجمعية التصنيف الرسمي أثناء التفتيش.",
+    "savePdf": "حفظ التقرير كملف PDF",
+    "answeredCount": "{answered} / {total} تمت الإجابة عنها",
+    "submitAssessment": "إرسال التقييم",
+    "seeMyResult": "عرض نتيجتي",
+    "projectsTo": "التوقع",
+    "applyToJoin": "جاهز؟ قدّم للانضمام إلى الجمعية",
+    "rateNote": "قيّم كل بند من 0 إلى 10، أو ضع علامة أنك لا تملكه. لا يُحفظ شيء إلا إذا اخترت إرسال نتيجتك إلى الجمعية.",
+    "sentToJra": "تم الإرسال إلى الجمعية — نتائجك وبيانات التواصل الخاصة بك أصبحت لدى فريق العضوية.",
+    "submitResultsHeading": "أرسل هذه النتائج إلى الجمعية للمراجعة",
+    "restaurantNamePlaceholder": "اسم المطعم",
+    "yourNamePlaceholder": "اسمك",
+    "emailPlaceholder": "البريد الإلكتروني",
+    "phonePlaceholder": "الهاتف",
+    "submitForReview": "إرسال للمراجعة",
+    "pts": "نقطة",
+    "rateLabel": "تقييم",
+    "dontHaveThis": "لا نملك هذا",
+    "projectedRating": "التصنيف المتوقع",
+    "statusLabels": {
+      "in_progress": "قيد التنفيذ",
+      "submitted": "تم الإرسال",
+      "scored": "تم التقييم"
+    },
+    "typeLabels": {
+      "RESTAURANT": "مطعم",
+      "FAST_FOOD": "وجبات سريعة / خدمة سريعة",
+      "COFFEE_SHOP": "مقهى سياحي",
+      "BAR": "بار",
+      "DISCO": "ديسكو",
+      "NIGHTCLUB": "نادي ليلي",
+      "TOURIST_PARK": "منتزه سياحي"
+    }
+  },
+  "sustainability": {
+    "heroTitle": "قطاع أكثر استدامة، بمقاييس بسيطة",
+    "heroBody": "توفّر أدوات الاستدامة في الجمعية لأصحاب المطاعم مؤشراً سريعاً وتقريبياً عبر الطاقة والمياه والهدر الغذائي — ليست تدقيقاً رسمياً، بل نقطة انطلاق للتحسين والاستعداد لشهادة Green Key.",
+    "runAssessment": "ابدأ تقييمك",
+    "completedCount": "أكمل {count} مطعم هذا التقييم حتى الآن",
+    "pillarEnergyTitle": "الطاقة",
+    "pillarEnergyDesc": "استهلاك الكهرباء لكل مقعد، مقارنة بمعايير كفاءة بسيطة.",
+    "pillarWaterTitle": "المياه",
+    "pillarWaterDesc": "استهلاك المياه الشهري لكل مقعد.",
+    "pillarWasteTitle": "الهدر الغذائي",
+    "pillarWasteDesc": "الهدر الغذائي الأسبوعي لكل مقعد، وهو أكبر عامل تحسين لمعظم المطابخ.",
+    "portalTitle": "التقييم الذاتي للاستدامة",
+    "portalIntro": "أدخل استهلاكك الشهري من الطاقة والمياه والهدر الغذائي الأسبوعي للحصول على مؤشر استدامة تقريبي لكل مطعم تديره.",
+    "currentScore": "المؤشر الحالي: {score}",
+    "overallScore": "المؤشر الإجمالي: {score} / 100",
+    "indicativeNote": "تقييم ذاتي تقريبي، وليس تدقيقاً رسمياً.",
+    "seats": "عدد المقاعد",
+    "monthlyElectricity": "استهلاك الكهرباء الشهري (كيلوواط/ساعة)",
+    "monthlyWater": "استهلاك المياه الشهري (م³)",
+    "weeklyFoodWaste": "الهدر الغذائي الأسبوعي (كغم)",
+    "calculateScore": "احسب المؤشر"
+  },
+  "marketplace": {
+    "description": "مطاعم للبيع، ومعدات للبيع أو الإيجار، وفرص استثمارية — منشورة من قبل أعضاء الجمعية ومراجَعة قبل النشر.",
+    "all": "الكل",
+    "priceOnRequest": "السعر عند الطلب",
+    "membersNote": "يمكن للأعضاء نشر إعلاناتهم من حسابهم في البوابة.",
+    "goToPortal": "الذهاب إلى بوابة الأعضاء",
+    "myListings": "إعلاناتي في السوق الإلكتروني",
+    "postNewListing": "نشر إعلان جديد",
+    "noListingsYet": "لا توجد إعلانات بعد.",
+    "listingSubmitted": "تم إرسال الإعلان — سيظهر بعد موافقة الإدارة.",
+    "titlePlaceholder": "العنوان",
+    "descriptionPlaceholder": "الوصف",
+    "pricePlaceholder": "السعر (اختياري)",
+    "contactPhonePlaceholder": "هاتف التواصل",
+    "contactEmailPlaceholder": "بريد التواصل الإلكتروني",
+    "submitListing": "إرسال الإعلان",
+    "moderationTitle": "مراجعة السوق الإلكتروني",
+    "noPendingListings": "لا توجد إعلانات قيد المراجعة.",
+    "approve": "موافقة",
+    "reject": "رفض",
+    "categoryLabels": {
+      "RESTAURANT_FOR_SALE": "مطعم للبيع",
+      "EQUIPMENT_SALE": "معدات للبيع",
+      "EQUIPMENT_RENT": "معدات للإيجار",
+      "INVESTMENT_OPPORTUNITY": "فرصة استثمارية"
+    },
+    "statusLabels": {
+      "published": "منشور",
+      "rejected": "مرفوض",
+      "pending": "قيد المراجعة",
+      "expired": "منتهي"
+    }
+  },
+  "training": {
+    "description": "دورات ومسارات للطهاة وطاقم الخدمة والباريستا والمدراء.",
+    "fullNamePlaceholder": "الاسم الكامل",
+    "emailPlaceholder": "البريد الإلكتروني",
+    "phonePlaceholder": "الهاتف",
+    "register": "تسجيل",
+    "registered": "تم التسجيل — نراك هناك."
+  },
+  "magazine": {
+    "description": "أرشيف نشرة الجمعية — أخبار القطاع والمقابلات والتحديثات للأعضاء.",
+    "issue": "العدد {number}",
+    "downloadFullPdf": "تحميل الملف الكامل PDF",
+    "membersOnlyNote": "محتوى خاص بالأعضاء — سجّل الدخول للقراءة.",
+    "noArticlesYet": "لم تُضَف مقالات لهذا العدد بعد."
+  },
+  "login": {
+    "welcomeBack": "أهلاً بعودتك",
+    "intro": "سجّل الدخول لإدارة ملف مطعمك أو ملف مورّدك.",
+    "incorrectCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "logIn": "تسجيل الدخول",
+    "memberAccountsNote": "تُنشئ الجمعية حسابات الأعضاء بعد الموافقة على طلب العضوية."
+  },
+  "portal": {
+    "welcome": "أهلاً، {name}",
+    "logOut": "تسجيل الخروج",
+    "noBusinessLinked": "لا توجد منشأة مرتبطة بحسابك بعد. تواصل مع الجمعية إذا كان هذا غير صحيح.",
+    "restaurant": "مطعم",
+    "supplier": "مورّد",
+    "startClassification": "ابدأ تقييماً ذاتياً للتصنيف",
+    "suggestProfileUpdate": "اقترح تحديثاً للملف",
+    "sentForApproval": "تم الإرسال لموافقة الإدارة.",
+    "suggestThisUpdate": "اقترح هذا التحديث"
+  },
+  "admin": {
+    "nav": {
+      "dashboard": "لوحة التحكم",
+      "siteSettings": "إعدادات الموقع",
+      "restaurants": "المطاعم",
+      "news": "الأخبار",
+      "contactInbox": "صندوق الرسائل",
+      "membershipApplications": "طلبات العضوية",
+      "selfAssessments": "التقييمات الذاتية للأعضاء",
+      "changeRequests": "طلبات التعديل",
+      "marketplaceModeration": "مراجعة السوق الإلكتروني",
+      "sustainabilityBenchmarks": "معايير الاستدامة المرجعية",
+      "legalDocuments": "المستندات القانونية",
+      "trainingCourses": "التدريب والدورات",
+      "magazineArticles": "مقالات المجلة",
+      "knowledgeHub": "مركز المعرفة / المشاريع / الفرص",
+      "newsletterSubscribers": "مشتركو النشرة الإخبارية"
+    },
+    "dashboard": {
+      "title": "لوحة التحكم",
+      "restaurants": "المطاعم",
+      "publishedDraft": "{published} منشور، {draft} مسودة",
+      "newsArticles": "مقالات إخبارية",
+      "newContactInquiries": "استفسارات تواصل جديدة",
+      "pendingMembershipApplications": "طلبات عضوية قيد الانتظار",
+      "pendingChangeRequests": "طلبات تعديل قيد الانتظار",
+      "submittedSelfAssessments": "تقييمات ذاتية مُرسَلة"
+    },
+    "settings": {
+      "title": "إعدادات الموقع",
+      "heroImageTitle": "صورة خلفية الصفحة الرئيسية",
+      "heroImageDesc": "تظهر كخلفية باهتة خلف نص الصفحة الرئيسية. تعود تلقائياً لشعار الجمعية إذا لم تُرفع صورة.",
+      "upload": "رفع",
+      "resetToDefault": "إعادة الافتراضي",
+      "showcaseTitle": "صور الواجهة في الصفحة الرئيسية",
+      "showcaseDesc": "الصورتان اللتان تتداخلان مع بطاقة الواجهة في الصفحة الرئيسية. استخدم صوراً تمثّل الجمعية نفسها. تعود إلى صور الجمعية الافتراضية عند الحذف.",
+      "showcaseOne": "الصورة الكبيرة",
+      "showcaseTwo": "الصورة الصغيرة"
+    },
+    "common": {
+      "edit": "تعديل",
+      "create": "إنشاء",
+      "save": "حفظ",
+      "saveChanges": "حفظ التغييرات",
+      "delete": "حذف",
+      "remove": "إزالة",
+      "approve": "موافقة",
+      "reject": "رفض",
+      "manage": "إدارة",
+      "add": "إضافة",
+      "upload": "رفع",
+      "exportCsv": "تصدير CSV",
+      "titlePlaceholder": "العنوان",
+      "bodyHtmlPlaceholder": "النص (HTML)",
+      "status": "الحالة",
+      "name": "الاسم"
+    },
+    "restaurants": {
+      "searchPlaceholder": "ابحث بالاسم…",
+      "governorate": "المحافظة",
+      "showingFirst50": "عرض أول 50 نتيجة.",
+      "editRestaurant": "تعديل المطعم",
+      "photos": "الصور",
+      "shortDescription": "وصف مختصر",
+      "statusOptions": {
+        "DRAFT": "مسودة",
+        "PUBLISHED": "منشور",
+        "ARCHIVED": "مؤرشف"
+      },
+      "deleteConfirm": "حذف \"{name}\"؟ سيؤدي هذا لإزالة ملفه وصوره وسجل تقييماته نهائياً. لا يمكن التراجع عن هذا الإجراء."
+    },
+    "news": {
+      "newArticle": "+ مقال جديد",
+      "statusOptions": {
+        "DRAFT": "مسودة",
+        "PUBLISHED": "منشور"
+      }
+    },
+    "contact": {
+      "markHandled": "وضع علامة تمت المعالجة",
+      "handled": "تمت المعالجة",
+      "noInquiriesYet": "لا توجد استفسارات بعد."
+    },
+    "membership": {
+      "noPendingApplications": "لا توجد طلبات قيد الانتظار.",
+      "approvedAccountCreated": "تمت الموافقة — تم إنشاء حساب لـ {name}.",
+      "loginLabel": "الدخول:",
+      "tempPasswordLabel": "كلمة مرور مؤقتة:",
+      "shareSecurely": "شارك هذا بأمان؛ اطلب منهم تغييرها بعد أول تسجيل دخول.",
+      "rejectedFor": "تم رفض طلب {name}.",
+      "selfAssessmentAttached": "تقييم ذاتي مرفق",
+      "pointsSummary": "{score} / {total} نقطة",
+      "projectsToStars": "— يُتوقع {stars} {starWord}",
+      "attachedDocuments": "المستندات المرفقة"
+    },
+    "assessments": {
+      "description": "التقييمات الذاتية للتصنيف المُرسَلة من الأعضاء المسجَّلين، محفوظة على ملف مطعمهم الحقيقي.",
+      "noSubmittedYet": "لا توجد تقييمات مُرسَلة بعد.",
+      "pts": "نقطة",
+      "points": "نقطة",
+      "statusLabels": {
+        "MET": "مستوفى",
+        "PARTIAL": "جزئي",
+        "NOT_MET": "غير مستوفى",
+        "NOT_APPLICABLE": "لا ينطبق"
+      }
+    },
+    "changeRequests": {
+      "description": "صندوق واحد لكل تعديل يقدّمه الأعضاء — تعديلات الملف، إعلانات السوق الإلكتروني، وغيرها — بغض النظر عن نوع الكيان.",
+      "noPending": "لا توجد طلبات تعديل قيد الانتظار.",
+      "resultLine": "طلب تعديل {entityType} {status}.",
+      "byLine": "{action} · بواسطة {name}",
+      "statusLabels": {
+        "approved": "تمت الموافقة عليه",
+        "rejected": "تم رفضه"
+      }
+    },
+    "sustainability": {
+      "description": "قيم مرجعية اختيارية لمتوسط القطاع. أضف أرقاماً حقيقية هنا عندما تتوفر لدى الجمعية — تعمل الآلة الحاسبة بدونها باستخدام معايير كفاءة تقريبية.",
+      "metricKeyPlaceholder": "مفتاح المقياس (مثال: energy_kwh_monthly)",
+      "sectorAveragePlaceholder": "متوسط القطاع",
+      "unitPlaceholder": "الوحدة",
+      "noBenchmarksYet": "لا توجد معايير مرجعية بعد."
+    },
+    "training": {
+      "newCourse": "+ دورة جديدة",
+      "courseTitlePlaceholder": "عنوان الدورة",
+      "trackOptions": {
+        "CHEFS": "الطهاة",
+        "SERVICE": "الخدمة",
+        "BARISTA": "الباريستا",
+        "MANAGEMENT": "الإدارة",
+        "OTHER": "أخرى"
+      },
+      "locationPlaceholder": "الموقع",
+      "capacityPlaceholder": "السعة",
+      "descriptionPlaceholder": "الوصف",
+      "registeredCount": "{count} مسجَّل",
+      "noCoursesYet": "لا توجد دورات بعد."
+    },
+    "magazine": {
+      "noArticlesYet": "لا توجد مقالات بعد.",
+      "addArticle": "+ إضافة مقال",
+      "articleTitlePlaceholder": "عنوان المقال",
+      "categoryPlaceholder": "التصنيف",
+      "accessLevelOptions": {
+        "PUBLIC": "عام",
+        "MEMBERS_ONLY": "للأعضاء فقط"
+      }
+    },
+    "knowledge": {
+      "title": "مركز المعرفة / المشاريع / الفرص",
+      "description": "جدول واحد مشترك يغذّي الأقسام العامة الثلاثة — اختر النوع أدناه وسيظهر تلقائياً في مكانه الصحيح.",
+      "newEntry": "+ إدخال جديد",
+      "fileUrlPlaceholder": "رابط الملف (اختياري)",
+      "deadlinePlaceholder": "الموعد النهائي (للفرص فقط)",
+      "summaryPlaceholder": "الملخص",
+      "noEntriesYet": "لا توجد إدخالات بعد."
+    },
+    "newsletter": {
+      "activeSubscribers": "{count} مشترك نشط.",
+      "email": "البريد الإلكتروني",
+      "interests": "الاهتمامات",
+      "locale": "اللغة"
+    },
+    "legal": {
+      "newDocument": "+ مستند جديد",
+      "titlePlaceholder": "العنوان",
+      "topicPlaceholder": "الموضوع (مثال: التراخيص)",
+      "entityPlaceholder": "الجهة المُصدِرة",
+      "yearPlaceholder": "السنة",
+      "versionLabelPlaceholder": "رقم الإصدار (مثال: 1.0)",
+      "fileUrlPlaceholder": "رابط الملف (اختياري)",
+      "summaryPlaceholder": "الملخص (HTML، اختياري)",
+      "versionsCount": "{count} إصدار",
+      "noDocumentsYet": "لا توجد مستندات بعد.",
+      "addNewVersion": "إضافة إصدار جديد",
+      "versionLabelOnly": "رقم الإصدار",
+      "fileUrlOnly": "رابط الملف",
+      "amendmentSummaryPlaceholder": "ملخص التعديل (HTML)",
+      "addVersion": "إضافة إصدار"
+    }
+  },
+  "contactForm": {
+    "thanks": "شكراً — سنتواصل معك قريباً.",
+    "fullNamePlaceholder": "الاسم الكامل",
+    "emailPlaceholder": "البريد الإلكتروني",
+    "phoneOptionalPlaceholder": "الهاتف (اختياري)",
+    "subjectPlaceholder": "الموضوع",
+    "messagePlaceholder": "الرسالة"
+  },
+  "newsletterForm": {
+    "subscribed": "شكراً لك — تم اشتراكك."
+  },
+  "membershipForm": {
+    "received": "تم استلام الطلب — سيراجعه فريق العضوية ويتواصل معك عبر البريد الإلكتروني.",
+    "restaurantVenue": "مطعم / منشأة",
+    "supplier": "مورّد",
+    "restaurantNamePlaceholder": "اسم المطعم",
+    "companyNamePlaceholder": "اسم الشركة",
+    "contactPersonPlaceholder": "الشخص المسؤول",
+    "emailPlaceholder": "البريد الإلكتروني",
+    "phonePlaceholder": "الهاتف",
+    "classificationClaimPlaceholder": "التصنيف الحالي أو المتوقع (اختياري)",
+    "supportingDocuments": "مستندات داعمة",
+    "optional": "(اختياري)",
+    "documentsHint": "رخصة العمل، الهوية، أو صور — PDF أو Word أو صورة، حتى 10 ميغابايت لكل ملف.",
+    "submitApplication": "إرسال الطلب"
+  }
+}

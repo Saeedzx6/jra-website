@@ -1,0 +1,439 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------- */
+/* Design tokens — colors sampled directly from the real JRA logo          */
+/* (public/brand/jra-logo.png): primary blue #0050A0, wordmark gray #707070*/
+/* ---------------------------------------------------------------------- */
+
+:root {
+  --color-paper: #f7f7f8;
+  --color-surface: #ffffff;
+  --color-surface-2: #f2f3f5;
+  --color-ink: #1c1e22;
+  --color-ink-soft: #585d64;
+  --color-ink-faint: #8b9098;
+  --color-accent: #0050a0;
+  --color-accent-strong: #003d7a;
+  --color-accent-soft: #e8f1fb;
+  --color-olive: #1e8a5f;
+  --color-olive-soft: #dceee3;
+  --color-brass: #b8901f;
+  --color-brass-soft: #f3e8cc;
+  --color-rule: #e5e7eb;
+  --shadow-card: 0 1px 2px rgba(20, 20, 20, 0.05), 0 10px 28px rgba(20, 20, 20, 0.07);
+
+  /* Editorial layer — floating white surfaces over an atmospheric backdrop.
+     Stacked shadows read as real depth; one large blur reads flat. */
+  --shadow-float:
+    0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.06),
+    0 32px 64px -12px rgba(16, 24, 40, 0.1);
+  --shadow-float-lg:
+    0 2px 4px rgba(16, 24, 40, 0.05), 0 16px 40px rgba(16, 24, 40, 0.08),
+    0 48px 96px -16px rgba(16, 24, 40, 0.14);
+  --radius-editorial: 2rem;
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --color-paper: #0b1520;
+  --color-surface: #101e2b;
+  --color-surface-2: #16283a;
+  --color-ink: #e7eef5;
+  --color-ink-soft: #a9b7c3;
+  --color-ink-faint: #6e7c89;
+  --color-accent: #4a9be0;
+  --color-accent-strong: #6fb4ec;
+  --color-accent-soft: #123354;
+  --color-olive: #4cc08a;
+  --color-olive-soft: #123b2a;
+  --color-brass: #e0bb4e;
+  --color-brass-soft: #2e2610;
+  --color-rule: #223244;
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 32px rgba(0, 0, 0, 0.4);
+  /* Dark mode can't lean on shadow for elevation — the ambient light is gone.
+     Keep a soft cast for grounding and let borders carry the separation. */
+  --shadow-float:
+    0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.45),
+    0 32px 64px -12px rgba(0, 0, 0, 0.55);
+  --shadow-float-lg:
+    0 2px 4px rgba(0, 0, 0, 0.45), 0 16px 40px rgba(0, 0, 0, 0.5),
+    0 48px 96px -16px rgba(0, 0, 0, 0.6);
+  --radius-editorial: 2rem;
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --color-paper: #f7f7f8;
+  --color-surface: #ffffff;
+  --color-surface-2: #f2f3f5;
+  --color-ink: #1c1e22;
+  --color-ink-soft: #585d64;
+  --color-ink-faint: #8b9098;
+  --color-accent: #0050a0;
+  --color-accent-strong: #003d7a;
+  --color-accent-soft: #e8f1fb;
+  --color-olive: #1e8a5f;
+  --color-olive-soft: #dceee3;
+  --color-brass: #b8901f;
+  --color-brass-soft: #f3e8cc;
+  --color-rule: #e5e7eb;
+  --shadow-card: 0 1px 2px rgba(20, 20, 20, 0.05), 0 10px 28px rgba(20, 20, 20, 0.07);
+  --shadow-float:
+    0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.06),
+    0 32px 64px -12px rgba(16, 24, 40, 0.1);
+  --shadow-float-lg:
+    0 2px 4px rgba(16, 24, 40, 0.05), 0 16px 40px rgba(16, 24, 40, 0.08),
+    0 48px 96px -16px rgba(16, 24, 40, 0.14);
+  --radius-editorial: 2rem;
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: light;
+}
+
+/* Feed the tokens into Tailwind v4's theme so utilities like bg-paper, text-ink,
+   border-rule, etc. are generated automatically from the same source of truth. */
+@theme inline {
+  --color-paper: var(--color-paper);
+  --color-surface: var(--color-surface);
+  --color-surface-2: var(--color-surface-2);
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-ink-faint: var(--color-ink-faint);
+  --color-accent: var(--color-accent);
+  --color-accent-strong: var(--color-accent-strong);
+  --color-accent-soft: var(--color-accent-soft);
+  --color-olive: var(--color-olive);
+  --color-olive-soft: var(--color-olive-soft);
+  --color-brass: var(--color-brass);
+  --color-brass-soft: var(--color-brass-soft);
+  --color-rule: var(--color-rule);
+
+  --font-display-en: var(--font-display-en);
+  --font-editorial-en: var(--font-editorial-en);
+  --font-display-ar: var(--font-display-ar);
+  --font-body-en: var(--font-body-en);
+  --font-body-ar: var(--font-body-ar);
+}
+
+html,
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+body {
+  font-family: var(--font-body-en), var(--font-body-ar), system-ui, sans-serif;
+}
+
+[dir="rtl"] body {
+  font-family: var(--font-body-ar), var(--font-body-en), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display-en), sans-serif;
+  letter-spacing: -0.01em;
+}
+
+[dir="rtl"] .font-display {
+  font-family: var(--font-display-ar), sans-serif;
+  letter-spacing: 0;
+}
+
+/* Editorial serif for hero/section leads. Arabic has no matched serif here,
+   so RTL falls back to the Arabic display face — a deliberate asymmetry
+   rather than pairing Arabic with an unrelated Latin serif. */
+.font-editorial {
+  font-family: var(--font-editorial-en), Georgia, serif;
+  letter-spacing: -0.02em;
+}
+
+[dir="rtl"] .font-editorial {
+  font-family: var(--font-display-ar), sans-serif;
+  letter-spacing: 0;
+}
+
+* {
+  border-color: var(--color-rule);
+}
+
+::selection {
+  background: var(--color-accent-soft);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Motion primitives — "service, not spectacle" (see plan §5)              */
+/* ---------------------------------------------------------------------- */
+
+.motion-card {
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 320ms ease;
+}
+.motion-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+}
+.motion-card-image {
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.motion-card:hover .motion-card-image {
+  transform: scale(1.045);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 520ms ease, transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Page-load entrance for hero content — plays once, briefly, on mount. */
+@keyframes fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-rise {
+  animation: fade-rise 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Editorial entrance — one orchestrated page-load sequence, not scattered  */
+/* effects. Nav drops first, hero text rises line by line, cards float last.*/
+/* ---------------------------------------------------------------------- */
+
+@keyframes editorial-shell {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.animate-editorial-shell {
+  animation: editorial-shell 800ms var(--ease-editorial) both;
+}
+
+@keyframes nav-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-nav-drop {
+  animation: nav-drop 620ms var(--ease-editorial) both;
+}
+
+@keyframes editorial-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-editorial-rise {
+  animation: editorial-rise 760ms var(--ease-editorial) both;
+}
+
+/* Sliding active-nav indicator. Position/width are driven from JS via these
+   custom properties so the pill can travel between links; the spring-ish
+   easing approximates stiffness 300 / damping 30 without a physics lib. */
+.nav-indicator {
+  position: absolute;
+  /* Physical `left` on purpose: --nav-x comes from offsetLeft, which is also
+     physical, so the same math drives LTR and RTL. inset-inline-start would
+     flip the origin under [dir=rtl] and send the pill off in the wrong
+     direction. */
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--color-accent);
+  transform: translateX(var(--nav-x, 0px));
+  width: var(--nav-w, 0px);
+  opacity: 0;
+  transition:
+    transform 420ms cubic-bezier(0.22, 1.4, 0.36, 1),
+    width 420ms cubic-bezier(0.22, 1.4, 0.36, 1),
+    opacity 200ms ease;
+}
+.nav-indicator[data-ready="true"] {
+  opacity: 1;
+}
+
+/* Buttons/cards lift toward the light source on hover. */
+.lift {
+  transition:
+    transform 300ms var(--ease-editorial),
+    box-shadow 300ms var(--ease-editorial);
+}
+.lift:hover {
+  transform: scale(1.03);
+  box-shadow: var(--shadow-float);
+}
+
+.zoom-frame {
+  overflow: hidden;
+}
+.zoom-frame img {
+  transition:
+    transform 620ms var(--ease-editorial),
+    filter 620ms ease;
+}
+.zoom-frame:hover img {
+  transform: scale(1.05);
+  filter: saturate(1.12);
+}
+
+/* Parallax backdrop — translated from JS on scroll, transform only so it
+   never triggers layout. */
+.parallax-layer {
+  will-change: transform;
+}
+
+/* Subtle ambient drift used behind the hero mark. */
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0) scale(1.02);
+  }
+}
+.animate-drift {
+  animation: drift 9s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-card,
+  .motion-card-image,
+  .reveal,
+  .animate-fade-rise,
+  .animate-drift,
+  .animate-editorial-shell,
+  .animate-nav-drop,
+  .animate-editorial-rise,
+  .nav-indicator,
+  .lift,
+  .zoom-frame img,
+  .parallax-layer {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+  .reveal {
+    opacity: 1;
+  }
+  /* The indicator still needs to mark the current page — it just won't slide. */
+  .nav-indicator {
+    transform: translateX(var(--nav-x, 0px)) !important;
+  }
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Range slider — cross-browser thumb/track (used by the classification    */
+/* self-assessment 0–10 rating control)                                    */
+/* ---------------------------------------------------------------------- */
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-surface-2);
+}
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-surface-2);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -7px;
+  height: 20px;
+  width: 20px;
+  border-radius: 999px;
+  background: var(--color-accent);
+  border: 3px solid var(--color-surface);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform 150ms ease;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.12);
+}
+input[type="range"]::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 999px;
+  background: var(--color-accent);
+  border: 3px solid var(--color-surface);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform 150ms ease;
+}
+input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.12);
+}
+
+input[type="range"]:disabled {
+  cursor: not-allowed;
+}
+input[type="range"]:disabled::-webkit-slider-thumb {
+  background: var(--color-ink-faint);
+}
+input[type="range"]:disabled::-moz-range-thumb {
+  background: var(--color-ink-faint);
+}
+
+input[type="range"]:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Animated underline for nav links */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.35rem;
+  height: 2px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-link:hover::after,
+.nav-link[aria-current="page"]::after {
+  transform: scaleX(1);
+}

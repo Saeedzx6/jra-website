@@ -1,0 +1,992 @@
+// JRA Website — Prisma schema
+// See C:\Users\dvd\.claude\plans\binary-seeking-raven.md Section 3 for design rationale.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  // Pooled connection (Neon's -pooler host) — used by the app at runtime so
+  // serverless invocations don't exhaust Postgres connection slots.
+  url      = env("DATABASE_URL")
+  // Direct connection — migrations can't run through a pooler. Falls back to
+  // DATABASE_URL locally, where both point at the same Docker container.
+  directUrl = env("DIRECT_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Users & access
+// ---------------------------------------------------------------------------
+
+enum UserRole {
+  ADMIN
+  EDITOR
+  RESTAURANT_MEMBER
+  SUPPLIER_MEMBER
+}
+
+enum Locale {
+  en
+  ar
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  fullName     String
+  phone        String?
+  role         UserRole
+  localePref   Locale   @default(en)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  businessLinks       BusinessManager[]
+  submittedChanges    ChangeRequest[]         @relation("SubmittedChangeRequests")
+  reviewedChanges     ChangeRequest[]         @relation("ReviewedChangeRequests")
+  auditEntries        AuditLog[]
+  reviewedApplications MembershipApplication[] @relation("ReviewedApplications")
+  authoredNews        NewsArticle[]
+  marketplaceListings MarketplaceListing[]
+  assessmentSessions  AssessmentSession[]
+
+  @@index([role])
+}
+
+model BusinessManager {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  restaurantId String?
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  supplierId   String?
+  supplier     Supplier? @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+
+  @@index([userId])
+  @@index([restaurantId])
+  @@index([supplierId])
+}
+
+// ---------------------------------------------------------------------------
+// Shared lookups
+// ---------------------------------------------------------------------------
+
+model Governorate {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  nameEn    String
+  nameAr    String?
+  areas     Area[]
+  restaurants Restaurant[]
+  suppliers Supplier[]
+
+  @@map("governorates")
+}
+
+model Area {
+  id            String      @id @default(cuid())
+  governorateId String
+  governorate   Governorate @relation(fields: [governorateId], references: [id], onDelete: Cascade)
+  nameEn        String
+  nameAr        String?
+  restaurants   Restaurant[]
+
+  @@index([governorateId])
+  @@map("areas")
+}
+
+model Cuisine {
+  id          String       @id @default(cuid())
+  slug        String       @unique
+  nameEn      String
+  nameAr      String?
+  restaurants RestaurantCuisine[]
+
+  @@map("cuisines")
+}
+
+enum AmenityKind {
+  SERVICE
+  AMENITY
+}
+
+model AmenityTag {
+  id          String       @id @default(cuid())
+  slug        String       @unique
+  nameEn      String
+  nameAr      String?
+  kind        AmenityKind  @default(AMENITY)
+  restaurants RestaurantAmenityTag[]
+
+  @@map("amenity_tags")
+}
+
+enum EstablishmentType {
+  RESTAURANT
+  FAST_FOOD
+  COFFEE_SHOP
+  BAR
+  DISCO
+  NIGHTCLUB
+  TOURIST_PARK
+}
+
+model ClassificationLevel {
+  id     String @id @default(cuid())
+  stars  Int
+  nameEn String
+  nameAr String?
+  restaurants Restaurant[]
+
+  @@unique([stars])
+  @@map("classification_levels")
+}
+
+// ---------------------------------------------------------------------------
+// Restaurant Directory
+// ---------------------------------------------------------------------------
+
+enum ListingStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ListingSource {
+  LEGACY_IMPORT
+  MEMBER_SUBMITTED
+  ADMIN_CREATED
+}
+
+enum PriceTier {
+  UNKNOWN
+  BUDGET
+  MODERATE
+  UPSCALE
+  FINE_DINING
+}
+
+model Restaurant {
+  id                     String              @id @default(cuid())
+  slug                   String              @unique
+  name                   String
+  nameAr                 String?
+  shortDescription       String?
+  fullDescriptionHtml    String?
+  governorateId          String?
+  governorate            Governorate?        @relation(fields: [governorateId], references: [id])
+  areaId                 String?
+  area                   Area?               @relation(fields: [areaId], references: [id])
+  addressText            String?
+  latitude               Float?
+  longitude              Float?
+  classificationLevelId  String?
+  classificationLevel    ClassificationLevel? @relation(fields: [classificationLevelId], references: [id])
+  establishmentType      EstablishmentType   @default(RESTAURANT)
+  phone                  String?
+  email                  String?
+  website                String?
+  whatsapp               String?
+  facebookUrl            String?
+  instagramUrl           String?
+  openingHoursText       String?
+  priceTier              PriceTier           @default(UNKNOWN)
+  greenKeyCertified      Boolean             @default(false)
+  sustainabilityScore    Float?
+  status                 ListingStatus       @default(DRAFT)
+  source                 ListingSource       @default(ADMIN_CREATED)
+  legacyProductId        Int?
+  createdAt              DateTime            @default(now())
+  updatedAt              DateTime            @updatedAt
+
+  images       RestaurantImage[]
+  cuisines     RestaurantCuisine[]
+  amenityTags  RestaurantAmenityTag[]
+  managers     BusinessManager[]
+  assessments  AssessmentSession[]
+  sustainabilityAssessments SustainabilityAssessment[]
+
+  @@index([status])
+  @@index([governorateId])
+  @@index([classificationLevelId])
+  @@map("restaurants")
+}
+
+model RestaurantImage {
+  id           String     @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  url          String
+  altTextEn    String?
+  altTextAr    String?
+  sortOrder    Int        @default(0)
+  isPrimary    Boolean    @default(false)
+  legacyPath   String?
+
+  @@index([restaurantId])
+  @@map("restaurant_images")
+}
+
+model RestaurantCuisine {
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  cuisineId    String
+  cuisine      Cuisine    @relation(fields: [cuisineId], references: [id], onDelete: Cascade)
+
+  @@id([restaurantId, cuisineId])
+  @@map("restaurant_cuisines")
+}
+
+model RestaurantAmenityTag {
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  amenityTagId String
+  amenityTag   AmenityTag @relation(fields: [amenityTagId], references: [id], onDelete: Cascade)
+
+  @@id([restaurantId, amenityTagId])
+  @@map("restaurant_amenity_tags")
+}
+
+// ---------------------------------------------------------------------------
+// Suppliers Directory — schema mirrors Restaurants, ships EMPTY (no legacy rows)
+// ---------------------------------------------------------------------------
+
+model SupplierCategory {
+  id       String             @id @default(cuid())
+  slug     String             @unique
+  nameEn   String
+  nameAr   String?
+  parentId String?
+  parent   SupplierCategory?  @relation("SupplierCategoryTree", fields: [parentId], references: [id])
+  children SupplierCategory[] @relation("SupplierCategoryTree")
+  suppliers SupplierCategoryMap[]
+
+  @@map("supplier_categories")
+}
+
+model Supplier {
+  id                  String        @id @default(cuid())
+  slug                String        @unique
+  name                String
+  nameAr              String?
+  shortDescription    String?
+  fullDescriptionHtml String?
+  governorateId       String?
+  governorate         Governorate?  @relation(fields: [governorateId], references: [id])
+  addressText         String?
+  phone               String?
+  email               String?
+  website             String?
+  status              ListingStatus @default(DRAFT)
+  source              ListingSource @default(ADMIN_CREATED)
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+
+  images     SupplierImage[]
+  categories SupplierCategoryMap[]
+  managers   BusinessManager[]
+
+  @@index([status])
+  @@map("suppliers")
+}
+
+model SupplierImage {
+  id         String   @id @default(cuid())
+  supplierId String
+  supplier   Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  url        String
+  altTextEn  String?
+  altTextAr  String?
+  sortOrder  Int      @default(0)
+  isPrimary  Boolean  @default(false)
+
+  @@index([supplierId])
+  @@map("supplier_images")
+}
+
+model SupplierCategoryMap {
+  supplierId String
+  supplier   Supplier         @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   SupplierCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([supplierId, categoryId])
+  @@map("supplier_category_map")
+}
+
+// ---------------------------------------------------------------------------
+// Membership
+// ---------------------------------------------------------------------------
+
+enum ApplicantType {
+  ACTIVE_RESTAURANT
+  ASSOCIATE_SUPPLIER
+}
+
+enum ApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  MORE_INFO
+}
+
+model MembershipApplication {
+  id                 String            @id @default(cuid())
+  applicantType      ApplicantType
+  businessName       String
+  contactName        String
+  email              String
+  phone              String
+  governorateId      String?
+  classificationClaim String?
+  documents          Json?
+  status             ApplicationStatus @default(PENDING)
+  reviewedById       String?
+  reviewedBy         User?             @relation("ReviewedApplications", fields: [reviewedById], references: [id])
+  reviewedAt         DateTime?
+  notes              String?
+  createdAt          DateTime          @default(now())
+
+  @@index([status])
+  @@map("membership_applications")
+}
+
+// ---------------------------------------------------------------------------
+// Generic moderation / workflow engine
+// ---------------------------------------------------------------------------
+
+enum ChangeRequestEntityType {
+  RESTAURANT
+  SUPPLIER
+  MARKETPLACE_LISTING
+}
+
+enum ChangeRequestAction {
+  CREATE
+  UPDATE
+  DELETE
+}
+
+enum ChangeRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model ChangeRequest {
+  id           String                  @id @default(cuid())
+  entityType   ChangeRequestEntityType
+  entityId     String?
+  action       ChangeRequestAction
+  payload      Json
+  submittedById String
+  submittedBy  User                    @relation("SubmittedChangeRequests", fields: [submittedById], references: [id])
+  status       ChangeRequestStatus     @default(PENDING)
+  reviewedById String?
+  reviewedBy   User?                   @relation("ReviewedChangeRequests", fields: [reviewedById], references: [id])
+  reviewedAt   DateTime?
+  reviewNote   String?
+  createdAt    DateTime                @default(now())
+
+  @@index([status])
+  @@index([entityType, entityId])
+  @@map("change_requests")
+}
+
+model AuditLog {
+  id           String   @id @default(cuid())
+  actorUserId  String?
+  actor        User?    @relation(fields: [actorUserId], references: [id])
+  action       String
+  entityType   String
+  entityId     String
+  diff         Json?
+  createdAt    DateTime @default(now())
+
+  @@index([entityType, entityId])
+  @@map("audit_log")
+}
+
+// ---------------------------------------------------------------------------
+// News & Events
+// ---------------------------------------------------------------------------
+
+enum NewsCategory {
+  NEWS
+  PRESS_RELEASE
+}
+
+model NewsArticle {
+  id            String        @id @default(cuid())
+  slug          String        @unique
+  category      NewsCategory  @default(NEWS)
+  publishedAt   DateTime?
+  coverImageUrl String?
+  status        ListingStatus @default(DRAFT)
+  authorId      String?
+  author        User?         @relation(fields: [authorId], references: [id])
+  sourceUrl     String?
+  createdAt     DateTime      @default(now())
+
+  translations NewsTranslation[]
+  gallery      MediaGalleryItem[]
+
+  @@index([status, publishedAt])
+  @@map("news_articles")
+}
+
+model NewsTranslation {
+  newsArticleId String
+  newsArticle   NewsArticle @relation(fields: [newsArticleId], references: [id], onDelete: Cascade)
+  locale        Locale
+  title         String
+  bodyHtml      String
+  excerpt       String?
+
+  @@id([newsArticleId, locale])
+  @@map("news_translations")
+}
+
+model Event {
+  id               String        @id @default(cuid())
+  slug             String        @unique
+  startAt          DateTime
+  endAt            DateTime?
+  locationText     String?
+  registrationUrl  String?
+  coverImageUrl    String?
+  status           ListingStatus @default(DRAFT)
+
+  translations EventTranslation[]
+  gallery      MediaGalleryItem[]
+
+  @@map("events")
+}
+
+model EventTranslation {
+  eventId         String
+  event           Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  locale          Locale
+  title           String
+  descriptionHtml String
+
+  @@id([eventId, locale])
+  @@map("event_translations")
+}
+
+model MediaGalleryItem {
+  id            String       @id @default(cuid())
+  eventId       String?
+  event         Event?       @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  newsArticleId String?
+  newsArticle   NewsArticle? @relation(fields: [newsArticleId], references: [id], onDelete: Cascade)
+  imageUrl      String
+  caption       String?
+
+  @@map("media_gallery_items")
+}
+
+// ---------------------------------------------------------------------------
+// Contact & Newsletter
+// ---------------------------------------------------------------------------
+
+enum InquiryStatus {
+  NEW
+  HANDLED
+}
+
+model ContactInquiry {
+  id        String        @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String
+  status    InquiryStatus @default(NEW)
+  createdAt DateTime      @default(now())
+
+  @@map("contact_inquiries")
+}
+
+enum SubscriberStatus {
+  SUBSCRIBED
+  UNSUBSCRIBED
+}
+
+model NewsletterSubscriber {
+  id           String           @id @default(cuid())
+  email        String           @unique
+  interests    String[]
+  localePref   Locale           @default(en)
+  status       SubscriberStatus @default(SUBSCRIBED)
+  confirmedAt  DateTime?
+  createdAt    DateTime         @default(now())
+
+  @@map("newsletter_subscribers")
+}
+
+// ---------------------------------------------------------------------------
+// Marketplace
+// ---------------------------------------------------------------------------
+
+enum MarketplaceCategory {
+  RESTAURANT_FOR_SALE
+  EQUIPMENT_SALE
+  EQUIPMENT_RENT
+  INVESTMENT_OPPORTUNITY
+}
+
+enum MarketplaceStatus {
+  PENDING
+  PUBLISHED
+  REJECTED
+  EXPIRED
+}
+
+model MarketplaceListing {
+  id              String              @id @default(cuid())
+  category        MarketplaceCategory
+  title           String
+  descriptionHtml String
+  price           Float?
+  priceCurrency   String              @default("JOD")
+  contactPhone    String?
+  contactEmail    String?
+  postedById      String
+  postedBy        User                @relation(fields: [postedById], references: [id])
+  status          MarketplaceStatus   @default(PENDING)
+  expiresAt       DateTime?
+  createdAt       DateTime            @default(now())
+
+  images MarketplaceListingImage[]
+
+  @@index([status, category])
+  @@map("marketplace_listings")
+}
+
+model MarketplaceListingImage {
+  id        String             @id @default(cuid())
+  listingId String
+  listing   MarketplaceListing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  url       String
+  sortOrder Int                @default(0)
+
+  @@map("marketplace_listing_images")
+}
+
+// ---------------------------------------------------------------------------
+// Classification Hub — real criteria extracted from JRA's own PDFs
+// ---------------------------------------------------------------------------
+
+model ClassificationStandard {
+  id                  String            @id @default(cuid())
+  establishmentType   EstablishmentType @unique
+  sourcePdfUrl        String?
+  titleEn             String
+  titleAr             String?
+  totalPossiblePoints Float
+
+  sections    ClassificationSection[]
+  starBands   ClassificationStarBand[]
+
+  @@map("classification_standards")
+}
+
+model ClassificationSection {
+  id            String                @id @default(cuid())
+  standardId    String
+  standard      ClassificationStandard @relation(fields: [standardId], references: [id], onDelete: Cascade)
+  code          String
+  nameEn        String
+  nameAr        String?
+  sortOrder     Int                    @default(0)
+
+  criteria ClassificationCriterion[]
+
+  @@index([standardId])
+  @@map("classification_sections")
+}
+
+model ClassificationCriterion {
+  id         String                @id @default(cuid())
+  sectionId  String
+  section    ClassificationSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  textEn     String
+  textAr     String?
+  maxPoints  Float
+  sortOrder  Int                   @default(0)
+
+  answers AssessmentAnswer[]
+
+  @@index([sectionId])
+  @@map("classification_criteria")
+}
+
+model ClassificationStarBand {
+  id                String                 @id @default(cuid())
+  standardId        String
+  standard          ClassificationStandard @relation(fields: [standardId], references: [id], onDelete: Cascade)
+  minScore           Float
+  maxScore           Float
+  stars              Int
+
+  @@index([standardId])
+  @@map("classification_star_bands")
+}
+
+enum AssessmentStatus {
+  IN_PROGRESS
+  SUBMITTED
+  SCORED
+}
+
+model AssessmentSession {
+  id                   String            @id @default(cuid())
+  restaurantId         String
+  restaurant           Restaurant        @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  establishmentType    EstablishmentType
+  criteriaVersionLabel String?
+  status               AssessmentStatus  @default(IN_PROGRESS)
+  totalScore           Float?
+  resultingStars       Int?
+  startedById          String
+  startedBy            User              @relation(fields: [startedById], references: [id])
+  submittedAt          DateTime?
+  createdAt            DateTime          @default(now())
+
+  answers AssessmentAnswer[]
+
+  @@index([restaurantId])
+  @@map("assessment_sessions")
+}
+
+enum AnswerStatus {
+  MET
+  PARTIAL
+  NOT_MET
+  NOT_APPLICABLE
+}
+
+model AssessmentAnswer {
+  id              String                  @id @default(cuid())
+  sessionId       String
+  session         AssessmentSession       @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  criterionId     String
+  criterion       ClassificationCriterion @relation(fields: [criterionId], references: [id], onDelete: Cascade)
+  status          AnswerStatus
+  achievedPoints  Float
+  note            String?
+  evidenceFileUrl String?
+
+  @@unique([sessionId, criterionId])
+  @@map("assessment_answers")
+}
+
+// ---------------------------------------------------------------------------
+// Sustainability Hub
+// ---------------------------------------------------------------------------
+
+enum SustainabilityStatus {
+  IN_PROGRESS
+  SUBMITTED
+}
+
+model SustainabilityAssessment {
+  id           String   @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  periodStart  DateTime
+  periodEnd    DateTime
+  status       SustainabilityStatus @default(IN_PROGRESS)
+
+  inputs SustainabilityInput[]
+  scores SustainabilityScoreEntry[]
+
+  @@index([restaurantId])
+  @@map("sustainability_assessments")
+}
+
+model SustainabilityInput {
+  id           String                   @id @default(cuid())
+  assessmentId String
+  assessment   SustainabilityAssessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  metricKey    String
+  value        Float
+  unit         String
+
+  @@map("sustainability_inputs")
+}
+
+model SustainabilityBenchmark {
+  metricKey String @id
+  sectorAvg Float
+  unit      String
+
+  @@map("sustainability_benchmarks")
+}
+
+model SustainabilityScoreEntry {
+  id           String                   @id @default(cuid())
+  assessmentId String
+  assessment   SustainabilityAssessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  category     String
+  score        Float
+  computedAt   DateTime                 @default(now())
+
+  @@map("sustainability_scores")
+}
+
+// ---------------------------------------------------------------------------
+// Legal & Regulatory Hub
+// ---------------------------------------------------------------------------
+
+enum LegalDocumentType {
+  LAW
+  REGULATION
+  INSTRUCTION
+}
+
+model LegalDocument {
+  id            String            @id @default(cuid())
+  slug          String            @unique
+  type          LegalDocumentType
+  topic         String?
+  entity        String?
+  year          Int?
+  isCurrent     Boolean           @default(true)
+  supersedesId  String?           @unique
+  supersedes    LegalDocument?    @relation("LegalDocumentHistory", fields: [supersedesId], references: [id])
+  supersededBy  LegalDocument?    @relation("LegalDocumentHistory")
+
+  versions LegalDocumentVersion[]
+
+  @@map("legal_documents")
+}
+
+model LegalDocumentVersion {
+  id              String        @id @default(cuid())
+  legalDocumentId String
+  legalDocument   LegalDocument @relation(fields: [legalDocumentId], references: [id], onDelete: Cascade)
+  versionLabel    String
+  publishedAt     DateTime?
+  fileUrl         String?
+  bodyHtml        String?
+
+  @@map("legal_document_versions")
+}
+
+model LegalAlertSubscription {
+  id        String   @id @default(cuid())
+  userId    String?
+  email     String
+  topics    String[]
+  createdAt DateTime @default(now())
+
+  @@map("legal_alert_subscriptions")
+}
+
+// ---------------------------------------------------------------------------
+// Magazine
+// ---------------------------------------------------------------------------
+
+model MagazineIssue {
+  id            String        @id @default(cuid())
+  issueNumber   Int?
+  month         Int
+  year          Int
+  coverImageUrl String?
+  pdfUrl        String?
+  status        ListingStatus @default(DRAFT)
+
+  articles MagazineArticle[]
+
+  @@map("magazine_issues")
+}
+
+enum MagazineAccessLevel {
+  PUBLIC
+  MEMBERS_ONLY
+}
+
+model MagazineArticle {
+  id          String              @id @default(cuid())
+  issueId     String
+  issue       MagazineIssue       @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  slug        String              @unique
+  category    String?
+  accessLevel MagazineAccessLevel @default(PUBLIC)
+  sortOrder   Int                 @default(0)
+
+  translations MagazineArticleTranslation[]
+
+  @@map("magazine_articles")
+}
+
+model MagazineArticleTranslation {
+  articleId String
+  article   MagazineArticle @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  locale    Locale
+  title     String
+  bodyHtml  String
+
+  @@id([articleId, locale])
+  @@map("magazine_article_translations")
+}
+
+// ---------------------------------------------------------------------------
+// Training & Academy
+// ---------------------------------------------------------------------------
+
+enum CourseTrack {
+  CHEFS
+  SERVICE
+  BARISTA
+  MANAGEMENT
+  OTHER
+}
+
+model Course {
+  id            String        @id @default(cuid())
+  slug          String        @unique
+  track         CourseTrack
+  coverImageUrl String?
+  status        ListingStatus @default(DRAFT)
+
+  translations CourseTranslation[]
+  sessions     CourseSession[]
+
+  @@map("courses")
+}
+
+model CourseTranslation {
+  courseId        String
+  course          Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  locale          Locale
+  title           String
+  descriptionHtml String
+
+  @@id([courseId, locale])
+  @@map("course_translations")
+}
+
+model CourseSession {
+  id           String   @id @default(cuid())
+  courseId     String
+  course       Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  startDate    DateTime
+  endDate      DateTime?
+  locationText String?
+  capacity     Int?
+
+  registrations CourseRegistration[]
+
+  @@map("course_sessions")
+}
+
+enum RegistrationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+model CourseRegistration {
+  id              String              @id @default(cuid())
+  courseSessionId String
+  courseSession   CourseSession       @relation(fields: [courseSessionId], references: [id], onDelete: Cascade)
+  fullName        String
+  email           String
+  phone           String?
+  restaurantId    String?
+  status          RegistrationStatus  @default(PENDING)
+  createdAt       DateTime            @default(now())
+
+  @@map("course_registrations")
+}
+
+// ---------------------------------------------------------------------------
+// Knowledge Center / Projects / Opportunities — unified
+// ---------------------------------------------------------------------------
+
+enum ResourceType {
+  STUDY
+  GUIDE
+  TEMPLATE
+  PROJECT
+  OPPORTUNITY
+  CASE_STUDY
+  ANNUAL_REPORT
+  HR_MANUAL
+}
+
+model Resource {
+  id            String       @id @default(cuid())
+  type          ResourceType
+  slug          String       @unique
+  fileUrl       String?
+  deadlineAt    DateTime?
+  coverImageUrl String?
+  status        ListingStatus @default(DRAFT)
+  createdAt     DateTime     @default(now())
+
+  translations ResourceTranslation[]
+
+  @@index([type, status])
+  @@map("resources")
+}
+
+model ResourceTranslation {
+  resourceId String
+  resource   Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  locale     Locale
+  title      String
+  bodyHtml   String?
+  summary    String?
+
+  @@id([resourceId, locale])
+  @@map("resource_translations")
+}
+
+// ---------------------------------------------------------------------------
+// About JRA — board & team
+// ---------------------------------------------------------------------------
+
+enum PersonKind {
+  BOARD_MEMBER
+  STAFF
+}
+
+model Person {
+  id          String     @id @default(cuid())
+  kind        PersonKind
+  name        String
+  positionEn  String?
+  positionAr  String?
+  photoUrl    String?
+  email       String?
+  bioHtml     String?
+  termLabel   String?
+  sortOrder   Int        @default(0)
+
+  @@index([kind])
+  @@map("people")
+}
+
+// ---------------------------------------------------------------------------
+// Site-wide settings — a single row holding admin-editable global content
+// (e.g. the homepage hero image), as opposed to per-entity content.
+// ---------------------------------------------------------------------------
+
+model SiteSetting {
+  id           String   @id @default("singleton")
+  heroImageUrl String?
+  // The two photos that overlap the homepage hero card. Null falls back to
+  // the bundled JRA defaults under /public/brand.
+  showcaseOneUrl String?
+  showcaseTwoUrl String?
+  updatedAt    DateTime @updatedAt
+
+  @@map("site_settings")
+}

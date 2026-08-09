@@ -1,0 +1,498 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About JRA",
+    "aboutWhoWeAre": "Who We Are",
+    "aboutBoard": "Board Members",
+    "aboutTeam": "JRA Team",
+    "aboutReports": "Annual Reports",
+    "restaurants": "Restaurants",
+    "suppliers": "Suppliers",
+    "classification": "Classification",
+    "sustainability": "Sustainability",
+    "legal": "Legal & Regulatory",
+    "marketplace": "Marketplace",
+    "training": "Training & Academy",
+    "jobs": "Jobs",
+    "projects": "Projects",
+    "opportunities": "Opportunities",
+    "knowledge": "Knowledge Center",
+    "news": "News & Events",
+    "magazine": "Magazine",
+    "newsletter": "Newsletter",
+    "membership": "Join JRA",
+    "contact": "Contact Us",
+    "login": "Log In",
+    "portal": "My Account",
+    "logout": "Log Out"
+  },
+  "common": {
+    "learnMore": "Learn more",
+    "viewAll": "View all",
+    "readMore": "Read more",
+    "search": "Search",
+    "filter": "Filter",
+    "clearAll": "Clear all",
+    "noResults": "No results found.",
+    "comingSoon": "This section is being built — check back soon.",
+    "star": "star",
+    "stars": "stars",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "back": "Back",
+    "result": "result",
+    "results": "results",
+    "noRestaurantsLinked": "No restaurants are linked to your account yet.",
+    "pagination": "Pagination"
+  },
+  "home": {
+    "heroKicker": "Jordan Restaurant Association",
+    "heroTitle": "The home of Jordan's tourism restaurant sector",
+    "heroSubtitle": "A mandatory, member-run association representing over 1,300 restaurants, coffee shops, and entertainment venues across Jordan since 2002.",
+    "heroCtaDirectory": "Explore the directory",
+    "heroCtaJoin": "Join JRA",
+    "servicesTitle": "What JRA offers",
+    "serviceDirectory": "Restaurant Directory",
+    "serviceDirectoryDesc": "Browse classified restaurants by governorate, cuisine, and classification.",
+    "serviceClassification": "Classification Self-Assessment",
+    "serviceClassificationDesc": "Score your establishment against JRA's real classification standards.",
+    "serviceMembership": "Membership",
+    "serviceMembershipDesc": "Join the association and access member-only services.",
+    "serviceSustainability": "Sustainability",
+    "serviceSustainabilityDesc": "Energy, water, and food-waste tools for a greener sector.",
+    "statsTitle": "JRA in numbers",
+    "statMembers": "Classified members",
+    "statGovernorates": "Governorates represented",
+    "statFounded": "Founded",
+    "newsTitle": "Latest news",
+    "newsletterTitle": "Stay informed",
+    "newsletterSubtitle": "Subscribe for sector news, legislation updates, and opportunities.",
+    "newsletterPlaceholder": "you@example.com",
+    "newsletterCta": "Subscribe",
+    "showcaseAltOne": "A chef plating a dish in a Jordanian restaurant kitchen",
+    "showcaseAltTwo": "Members of the Jordan Restaurant Association board"
+  },
+  "footer": {
+    "tagline": "One network. One voice. Endless opportunities.",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "addressLine": "2nd Circle, Jabal Amman, Amman, Jordan",
+    "sitemap": "Sitemap",
+    "rights": "All rights reserved."
+  },
+  "about": {
+    "intro": "The Jordan Restaurant Association (JRA) is a mandatory, not-for-profit membership association empowered by Law No. 47 of 2002, amended by Law No. 33 of 2018 and Bylaw No. 59 of 2025. JRA represents over 1,300 classified establishments — restaurants, entertainment cities, coffee shops, fast food, discos, bars, and cabarets rated 1 to 5 stars — and is a member of the Jordan Tourism Board and an affiliate of UN Tourism."
+  },
+  "membership": {
+    "intro": "Joining the Jordan Restaurant Association is one of the smartest investments you can make for your establishment's success — advocacy, classification support, training, and a directory presence that reaches visitors and residents across Jordan. Submit your details below and our membership team will follow up.",
+    "classificationPromptBold": "Not sure what star rating to expect?",
+    "classificationPromptText": "Try the free classification self-assessment first — no account needed."
+  },
+  "jobs": {
+    "title": "Jobs & Employment",
+    "description": "JRA does not run a separate jobs board — employment listings for the tourism restaurant sector live on SiyahaJobs, the national tourism jobs platform.",
+    "cta": "Visit SiyahaJobs"
+  },
+  "projects": {
+    "description": "Current and completed JRA projects, their outputs, and success stories from across the sector."
+  },
+  "opportunities": {
+    "description": "Funding, exhibitions, and participation calls relevant to the tourism restaurant sector."
+  },
+  "knowledge": {
+    "description": "Studies, guides, and HR resources for restaurant owners and operators — sourced directly from JRA's own publications and workforce research."
+  },
+  "legal": {
+    "description": "Laws, regulations, and instructions affecting the tourism restaurant sector, kept current with version history and amendment tracking.",
+    "all": "All",
+    "versionHistory": "Version history",
+    "downloadDocument": "Download document"
+  },
+  "resourceTypes": {
+    "STUDY": "Study",
+    "GUIDE": "Guide",
+    "TEMPLATE": "Template",
+    "HR_MANUAL": "HR Manual",
+    "ANNUAL_REPORT": "Annual Report",
+    "PROJECT": "Project",
+    "OPPORTUNITY": "Opportunity",
+    "CASE_STUDY": "Case Study"
+  },
+  "legalTypes": {
+    "LAW": "Law",
+    "REGULATION": "Regulation",
+    "INSTRUCTION": "Instruction"
+  },
+  "restaurants": {
+    "description": "Search classified restaurants, coffee shops, and entertainment venues across Jordan.",
+    "cuisine": "Cuisine",
+    "features": "Features",
+    "contact": "Contact",
+    "greenKeyCertified": "Green Key certified",
+    "sustainabilityScore": "Sustainability score",
+    "allGovernorates": "All governorates",
+    "allCuisines": "All cuisines"
+  },
+  "suppliers": {
+    "description": "A directory of associate members — companies supplying food, equipment, technology, and services to JRA restaurants.",
+    "emptyTitle": "This directory is just getting started",
+    "emptyBody": "We're building the supplier directory from scratch. If your company supplies food, beverages, equipment, or services to the hospitality sector, be one of the first to join.",
+    "applyAsSupplier": "Apply as a supplier"
+  },
+  "classification": {
+    "heroTitle": "Know exactly where your establishment stands",
+    "heroBody": "JRA classifies tourist restaurants, coffee shops, bars, and entertainment venues from 1 to 5 stars against official published standards. Score your own establishment against the real criteria before applying — building & facade, service, dining hall, kitchen, staff, and food quality all count toward your rating.",
+    "startCta": "Start your free self-assessment",
+    "noAccountNote": "No account needed — this is for anyone considering joining. Already a member? Your portal saves an official-facing version tied to your restaurant.",
+    "standardsLibrary": "Standards library",
+    "pointsAcross": "{points} points across 10 sections — interactive self-assessment available",
+    "scoringComingSoon": "Standard published — interactive scoring coming soon",
+    "takeAssessment": "Take the assessment",
+    "downloadPdf": "Download PDF",
+    "selfAssessmentKicker": "Self-assessment",
+    "publicIntro": "Answer each item the way JRA's own classification standard groups it. No account needed — your score updates live and nothing is saved until you decide to apply.",
+    "portalTitle": "Classification Self-Assessment",
+    "portalIntro": "Choose a restaurant to start or resume a self-assessment against JRA's real classification standard.",
+    "lastAssessment": "Last assessment: {status}",
+    "noAssessmentYet": "No assessment yet",
+    "resume": "Resume",
+    "startNew": "Start new",
+    "sessionIntro": "Answer each item exactly as JRA's own classification standard groups it. Your score and projected star rating update live as you go.",
+    "assessmentSubmitted": "Assessment submitted",
+    "resultPrefix": "Based on your answers, this establishment projects to",
+    "resultSuffix": "({score} of {total} points). This is a self-assessment — JRA's classification team will confirm the official rating during inspection.",
+    "savePdf": "Save report as PDF",
+    "answeredCount": "{answered} / {total} answered",
+    "submitAssessment": "Submit assessment",
+    "seeMyResult": "See my result",
+    "projectsTo": "Projects to",
+    "applyToJoin": "Ready? Apply to join JRA",
+    "rateNote": "Rate each item 0–10, or mark it as something you don't have. Nothing is saved unless you choose to submit your result to JRA.",
+    "sentToJra": "Sent to JRA — your results and contact details are with our membership team.",
+    "submitResultsHeading": "Submit these results to JRA for review",
+    "restaurantNamePlaceholder": "Restaurant name",
+    "yourNamePlaceholder": "Your name",
+    "emailPlaceholder": "Email",
+    "phonePlaceholder": "Phone",
+    "submitForReview": "Submit for review",
+    "pts": "pts",
+    "rateLabel": "Rate",
+    "dontHaveThis": "We don't have this",
+    "projectedRating": "Projected rating",
+    "statusLabels": {
+      "in_progress": "In progress",
+      "submitted": "Submitted",
+      "scored": "Scored"
+    },
+    "typeLabels": {
+      "RESTAURANT": "Restaurant",
+      "FAST_FOOD": "Fast Food / Quick Service",
+      "COFFEE_SHOP": "Tourist Coffee Shop",
+      "BAR": "Bar",
+      "DISCO": "Disco",
+      "NIGHTCLUB": "Nightclub",
+      "TOURIST_PARK": "Tourist Park"
+    }
+  },
+  "sustainability": {
+    "heroTitle": "A greener sector, measured simply",
+    "heroBody": "JRA's sustainability tools give restaurant owners a quick, indicative score across energy, water, and food waste — not a formal audit, but a starting point for improvement and for Green Key readiness.",
+    "runAssessment": "Run your assessment",
+    "completedCount": "{count} restaurants have completed one so far",
+    "pillarEnergyTitle": "Energy",
+    "pillarEnergyDesc": "Electricity use per seat, benchmarked against simple efficiency bands.",
+    "pillarWaterTitle": "Water",
+    "pillarWaterDesc": "Monthly water consumption per seat.",
+    "pillarWasteTitle": "Food waste",
+    "pillarWasteDesc": "Weekly food waste per seat, the largest lever for most kitchens.",
+    "portalTitle": "Sustainability Self-Assessment",
+    "portalIntro": "Enter your monthly energy and water use and weekly food waste to get an indicative sustainability score for each restaurant you manage.",
+    "currentScore": "Current score: {score}",
+    "overallScore": "Overall score: {score} / 100",
+    "indicativeNote": "An indicative self-assessment, not an official audit.",
+    "seats": "Seats",
+    "monthlyElectricity": "Monthly electricity (kWh)",
+    "monthlyWater": "Monthly water use (m³)",
+    "weeklyFoodWaste": "Weekly food waste (kg)",
+    "calculateScore": "Calculate score"
+  },
+  "marketplace": {
+    "description": "Restaurants for sale, equipment for sale or rent, and investment opportunities — posted by JRA members and reviewed before publishing.",
+    "all": "All",
+    "priceOnRequest": "Price on request",
+    "membersNote": "Members can post listings from their portal.",
+    "goToPortal": "Go to member portal",
+    "myListings": "My Marketplace Listings",
+    "postNewListing": "Post a new listing",
+    "noListingsYet": "No listings yet.",
+    "listingSubmitted": "Listing submitted — it will appear once an admin approves it.",
+    "titlePlaceholder": "Title",
+    "descriptionPlaceholder": "Description",
+    "pricePlaceholder": "Price (optional)",
+    "contactPhonePlaceholder": "Contact phone",
+    "contactEmailPlaceholder": "Contact email",
+    "submitListing": "Submit listing",
+    "moderationTitle": "Marketplace Moderation",
+    "noPendingListings": "No pending listings.",
+    "approve": "Approve",
+    "reject": "Reject",
+    "categoryLabels": {
+      "RESTAURANT_FOR_SALE": "Restaurant for sale",
+      "EQUIPMENT_SALE": "Equipment for sale",
+      "EQUIPMENT_RENT": "Equipment for rent",
+      "INVESTMENT_OPPORTUNITY": "Investment opportunity"
+    },
+    "statusLabels": {
+      "published": "Published",
+      "rejected": "Rejected",
+      "pending": "Pending",
+      "expired": "Expired"
+    }
+  },
+  "training": {
+    "description": "Courses and tracks for chefs, service staff, baristas, and managers.",
+    "fullNamePlaceholder": "Full name",
+    "emailPlaceholder": "Email",
+    "phonePlaceholder": "Phone",
+    "register": "Register",
+    "registered": "Registered — see you there."
+  },
+  "magazine": {
+    "description": "JRA's newsletter archive — sector news, interviews, and updates for members.",
+    "issue": "Issue {number}",
+    "downloadFullPdf": "Download full PDF",
+    "membersOnlyNote": "Members-only content — log in to read.",
+    "noArticlesYet": "No articles added to this issue yet."
+  },
+  "login": {
+    "welcomeBack": "Welcome back",
+    "intro": "Log in to manage your restaurant or supplier profile.",
+    "incorrectCredentials": "Incorrect email or password.",
+    "email": "Email",
+    "password": "Password",
+    "logIn": "Log in",
+    "memberAccountsNote": "Member accounts are created by JRA after a membership application is approved."
+  },
+  "portal": {
+    "welcome": "Welcome, {name}",
+    "logOut": "Log out",
+    "noBusinessLinked": "No business is linked to your account yet. Contact JRA if this seems wrong.",
+    "restaurant": "Restaurant",
+    "supplier": "Supplier",
+    "startClassification": "Start a classification self-assessment",
+    "suggestProfileUpdate": "Suggest a profile update",
+    "sentForApproval": "Sent for admin approval.",
+    "suggestThisUpdate": "Suggest this update"
+  },
+  "admin": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "siteSettings": "Site Settings",
+      "restaurants": "Restaurants",
+      "news": "News",
+      "contactInbox": "Contact Inbox",
+      "membershipApplications": "Membership Applications",
+      "selfAssessments": "Member Self-Assessments",
+      "changeRequests": "Change Requests",
+      "marketplaceModeration": "Marketplace Moderation",
+      "sustainabilityBenchmarks": "Sustainability Benchmarks",
+      "legalDocuments": "Legal Documents",
+      "trainingCourses": "Training & Courses",
+      "magazineArticles": "Magazine Articles",
+      "knowledgeHub": "Knowledge / Projects / Opportunities",
+      "newsletterSubscribers": "Newsletter Subscribers"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "restaurants": "Restaurants",
+      "publishedDraft": "{published} published, {draft} draft",
+      "newsArticles": "News articles",
+      "newContactInquiries": "New contact inquiries",
+      "pendingMembershipApplications": "Pending membership applications",
+      "pendingChangeRequests": "Pending change requests",
+      "submittedSelfAssessments": "Submitted self-assessments"
+    },
+    "settings": {
+      "title": "Site Settings",
+      "heroImageTitle": "Homepage hero image",
+      "heroImageDesc": "Shown as the faded background behind the homepage hero text. Falls back to the JRA mark if nothing is uploaded.",
+      "upload": "Upload",
+      "resetToDefault": "Reset to default",
+      "showcaseTitle": "Homepage showcase photos",
+      "showcaseDesc": "The two photographs that overlap the homepage hero card. Use images that represent the association itself. Falls back to the bundled JRA photos if cleared.",
+      "showcaseOne": "Large photo (left)",
+      "showcaseTwo": "Small photo (right)"
+    },
+    "common": {
+      "edit": "Edit",
+      "create": "Create",
+      "save": "Save",
+      "saveChanges": "Save changes",
+      "delete": "Delete",
+      "remove": "Remove",
+      "approve": "Approve",
+      "reject": "Reject",
+      "manage": "Manage",
+      "add": "Add",
+      "upload": "Upload",
+      "exportCsv": "Export CSV",
+      "titlePlaceholder": "Title",
+      "bodyHtmlPlaceholder": "Body (HTML)",
+      "status": "Status",
+      "name": "Name"
+    },
+    "restaurants": {
+      "searchPlaceholder": "Search by name…",
+      "governorate": "Governorate",
+      "showingFirst50": "Showing first 50 results.",
+      "editRestaurant": "Edit restaurant",
+      "photos": "Photos",
+      "shortDescription": "Short description",
+      "statusOptions": {
+        "DRAFT": "Draft",
+        "PUBLISHED": "Published",
+        "ARCHIVED": "Archived"
+      },
+      "deleteConfirm": "Delete \"{name}\"? This permanently removes its profile, photos, and assessment history. This cannot be undone."
+    },
+    "news": {
+      "newArticle": "+ New article",
+      "statusOptions": {
+        "DRAFT": "Draft",
+        "PUBLISHED": "Published"
+      }
+    },
+    "contact": {
+      "markHandled": "Mark handled",
+      "handled": "Handled",
+      "noInquiriesYet": "No inquiries yet."
+    },
+    "membership": {
+      "noPendingApplications": "No pending applications.",
+      "approvedAccountCreated": "Approved — account created for {name}.",
+      "loginLabel": "Login:",
+      "tempPasswordLabel": "Temp password:",
+      "shareSecurely": "Share this securely; ask them to change it after first login.",
+      "rejectedFor": "Application from {name} rejected.",
+      "selfAssessmentAttached": "Self-assessment attached",
+      "pointsSummary": "{score} / {total} points",
+      "projectsToStars": "— projects to {stars} {starWord}",
+      "attachedDocuments": "Attached documents"
+    },
+    "assessments": {
+      "description": "Submitted classification self-assessments from logged-in members, saved against their real restaurant profile.",
+      "noSubmittedYet": "No submitted assessments yet.",
+      "pts": "pts",
+      "points": "points",
+      "statusLabels": {
+        "MET": "Met",
+        "PARTIAL": "Partial",
+        "NOT_MET": "Not met",
+        "NOT_APPLICABLE": "N/A"
+      }
+    },
+    "changeRequests": {
+      "description": "One inbox for every member-submitted change — profile edits, marketplace listings, and more — regardless of entity type.",
+      "noPending": "No pending change requests.",
+      "resultLine": "{entityType} change request {status}.",
+      "byLine": "{action} · by {name}",
+      "statusLabels": {
+        "approved": "approved",
+        "rejected": "rejected"
+      }
+    },
+    "sustainability": {
+      "description": "Optional sector-average reference values. Add real figures here once JRA has them — the calculator works without them, using indicative efficiency bands.",
+      "metricKeyPlaceholder": "metric key (e.g. energy_kwh_monthly)",
+      "sectorAveragePlaceholder": "Sector average",
+      "unitPlaceholder": "unit",
+      "noBenchmarksYet": "No benchmarks set yet."
+    },
+    "training": {
+      "newCourse": "+ New course",
+      "courseTitlePlaceholder": "Course title",
+      "trackOptions": {
+        "CHEFS": "Chefs",
+        "SERVICE": "Service",
+        "BARISTA": "Barista",
+        "MANAGEMENT": "Management",
+        "OTHER": "Other"
+      },
+      "locationPlaceholder": "Location",
+      "capacityPlaceholder": "Capacity",
+      "descriptionPlaceholder": "Description",
+      "registeredCount": "{count} registered",
+      "noCoursesYet": "No courses yet."
+    },
+    "magazine": {
+      "noArticlesYet": "No articles yet.",
+      "addArticle": "+ Add article",
+      "articleTitlePlaceholder": "Article title",
+      "categoryPlaceholder": "Category",
+      "accessLevelOptions": {
+        "PUBLIC": "Public",
+        "MEMBERS_ONLY": "Members only"
+      }
+    },
+    "knowledge": {
+      "title": "Knowledge Center / Projects / Opportunities",
+      "description": "One shared table powers all three public sections — pick the type below and it appears in the right place automatically.",
+      "newEntry": "+ New entry",
+      "fileUrlPlaceholder": "File URL (optional)",
+      "deadlinePlaceholder": "Deadline (opportunities only)",
+      "summaryPlaceholder": "Summary",
+      "noEntriesYet": "No entries yet."
+    },
+    "newsletter": {
+      "activeSubscribers": "{count} active subscribers.",
+      "email": "Email",
+      "interests": "Interests",
+      "locale": "Locale"
+    },
+    "legal": {
+      "newDocument": "+ New document",
+      "titlePlaceholder": "Title",
+      "topicPlaceholder": "Topic (e.g. Licensing)",
+      "entityPlaceholder": "Issuing entity",
+      "yearPlaceholder": "Year",
+      "versionLabelPlaceholder": "Version label (e.g. 1.0)",
+      "fileUrlPlaceholder": "File URL (optional)",
+      "summaryPlaceholder": "Summary (HTML, optional)",
+      "versionsCount": "{count} version(s)",
+      "noDocumentsYet": "No documents yet.",
+      "addNewVersion": "Add new version",
+      "versionLabelOnly": "Version label",
+      "fileUrlOnly": "File URL",
+      "amendmentSummaryPlaceholder": "Amendment summary (HTML)",
+      "addVersion": "Add version"
+    }
+  },
+  "contactForm": {
+    "thanks": "Thanks — we'll be in touch shortly.",
+    "fullNamePlaceholder": "Full name",
+    "emailPlaceholder": "Email",
+    "phoneOptionalPlaceholder": "Phone (optional)",
+    "subjectPlaceholder": "Subject",
+    "messagePlaceholder": "Message"
+  },
+  "newsletterForm": {
+    "subscribed": "Thank you — you're subscribed."
+  },
+  "membershipForm": {
+    "received": "Application received — our membership team will review it and follow up by email.",
+    "restaurantVenue": "Restaurant / venue",
+    "supplier": "Supplier",
+    "restaurantNamePlaceholder": "Restaurant name",
+    "companyNamePlaceholder": "Company name",
+    "contactPersonPlaceholder": "Contact person",
+    "emailPlaceholder": "Email",
+    "phonePlaceholder": "Phone",
+    "classificationClaimPlaceholder": "Current or expected classification (optional)",
+    "supportingDocuments": "Supporting documents",
+    "optional": "(optional)",
+    "documentsHint": "Business license, ID, or photos — PDF, Word, or image, up to 10MB each.",
+    "submitApplication": "Submit application"
+  }
+}

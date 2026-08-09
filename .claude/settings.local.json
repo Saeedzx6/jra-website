@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.jra.jo)",
+      "Bash(curl -s -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0 Safari/537.36\" -L \"https://www.jra.jo/\" -o /tmp/jra_home.html -D /tmp/jra_headers.txt)",
+      "Bash(echo \"EXIT:$?\")",
+      "Read(//tmp/**)",
+      "WebSearch",
+      "Bash(pwd -W)",
+      "Bash(cygpath -w /tmp)",
+      "Bash(python3 -c ' *)",
+      "Bash(/c/Users/dvd/AppData/Local/Programs/Python/Python314/python -c ' *)",
+      "Bash(\"/c/Users/dvd/AppData/Local/Programs/Python/Python314/python\" -m pip show openpyxl)",
+      "Bash(find 'C:\\\\Users\\\\dvd\\\\Desktop\\\\project\\\\JRA-moreassets\\\\JRA' -iname *.txt -o -iname *board*)",
+      "Artifact"
+    ]
+  }
+}
