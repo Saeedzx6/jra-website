@@ -480,6 +480,18 @@
       "fileUrlOnly": "File URL",
       "amendmentSummaryPlaceholder": "Amendment summary (HTML)",
       "addVersion": "Add version"
+    },
+    "map": {
+      "sectionTitle": "Location on the map",
+      "clickToPlace": "Click the map to place this restaurant.",
+      "dragToAdjust": "Drag the pin to adjust, or click elsewhere to move it.",
+      "mapLabel": "Map for placing the restaurant pin",
+      "noPin": "No pin set",
+      "savePin": "Save location",
+      "saving": "Saving…",
+      "saved": "Saved",
+      "saveFailed": "Could not save. Try again.",
+      "clearPin": "Clear location"
     }
   },
   "contactForm": {
