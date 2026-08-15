@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { updateRestaurant, uploadRestaurantImage } from "@/lib/actions/admin";
 import { RestaurantPhotoManager } from "@/components/admin/restaurant-photos";
 import { DeleteRestaurantButton } from "@/components/admin/delete-restaurant-button";
+import { PinDropMap } from "@/components/admin/pin-drop-map";
 
 export default async function AdminEditRestaurantPage({
   params,
@@ -14,12 +15,16 @@ export default async function AdminEditRestaurantPage({
   const { id } = await params;
   const restaurant = await db.restaurant.findUnique({
     where: { id },
-    include: { images: { orderBy: { sortOrder: "asc" } } },
+    include: {
+      images: { orderBy: { sortOrder: "asc" } },
+      governorate: { select: { nameEn: true } },
+    },
   });
   if (!restaurant) notFound();
 
   const ta = await getTranslations("admin.common");
   const tr = await getTranslations("admin.restaurants");
+  const tm = await getTranslations("admin.map");
   const tStatus = await getTranslations("admin.restaurants.statusOptions");
 
   const action = updateRestaurant.bind(null, id);
@@ -49,6 +54,18 @@ export default async function AdminEditRestaurantPage({
             <ImagePlus className="h-3.5 w-3.5" /> {ta("upload")}
           </button>
         </form>
+      </section>
+
+      <section className="mt-6 max-w-2xl rounded-2xl border border-rule bg-surface p-5">
+        <h2 className="font-display text-base font-semibold text-ink">{tm("sectionTitle")}</h2>
+        <div className="mt-4">
+          <PinDropMap
+            restaurantId={restaurant.id}
+            latitude={restaurant.latitude}
+            longitude={restaurant.longitude}
+            governorateName={restaurant.governorate?.nameEn ?? null}
+          />
+        </div>
       </section>
 
       <form action={action} className="mt-6 max-w-xl space-y-4">
