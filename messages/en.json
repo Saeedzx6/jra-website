@@ -75,7 +75,11 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterCta": "Subscribe",
     "showcaseAltOne": "A chef plating a dish in a Jordanian restaurant kitchen",
-    "showcaseAltTwo": "Members of the Jordan Restaurant Association board"
+    "showcaseAltTwo": "Members of the Jordan Restaurant Association board",
+    "heroSearchLabel": "Search restaurants",
+    "heroSearchPlaceholder": "Search by name, cuisine or area…",
+    "heroSearchHint": "{count} classified restaurants, coffee shops and venues across Jordan.",
+    "browseByCuisine": "Browse by cuisine"
   },
   "footer": {
     "tagline": "One network. One voice. Endless opportunities.",
