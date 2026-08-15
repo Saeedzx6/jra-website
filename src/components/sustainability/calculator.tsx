@@ -39,7 +39,7 @@ export function SustainabilityCalculator({ restaurantId }: { restaurantId: strin
   if (result) {
     return (
       <div className="rounded-2xl border border-rule bg-surface p-6">
-        <div className="flex items-center gap-2 text-olive">
+        <div className="flex items-center gap-2 text-olive-text">
           <Leaf className="h-5 w-5" />
           <span className="font-display text-lg font-semibold text-ink">
             {ts("overallScore", { score: result.overall })}

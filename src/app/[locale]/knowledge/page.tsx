@@ -2,6 +2,10 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FileText } from "lucide-react";
 import { db } from "@/lib/db";
 
+// Cached and revalidated every 3600s. Set per route since the site-wide
+// force-dynamic was removed from the locale layout (blueprint §4.2).
+export const revalidate = 3600;
+
 export default async function KnowledgeCenterPage({
   params,
 }: {
@@ -35,7 +39,7 @@ export default async function KnowledgeCenterPage({
             >
               <FileText className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
               <div>
-                <span className="text-xs font-semibold uppercase tracking-wide text-brass">
+                <span className="text-xs font-semibold uppercase tracking-wide text-brass-text">
                   {tType(r.type)}
                 </span>
                 <p className="text-sm font-medium text-ink">{tr?.title ?? r.slug}</p>

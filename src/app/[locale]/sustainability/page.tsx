@@ -3,6 +3,10 @@ import { Leaf, Droplet, Zap, ClipboardCheck } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 
+// Cached and revalidated every 3600s. Set per route since the site-wide
+// force-dynamic was removed from the locale layout (blueprint §4.2).
+export const revalidate = 3600;
+
 export default async function SustainabilityPage({
   params,
 }: {
@@ -49,7 +53,7 @@ export default async function SustainabilityPage({
       <div className="mt-12 grid gap-4 sm:grid-cols-3">
         {pillars.map((p) => (
           <div key={p.title} className="rounded-2xl border border-rule bg-surface p-5">
-            <p.icon className="h-6 w-6 text-olive" />
+            <p.icon className="h-6 w-6 text-olive-text" />
             <h3 className="mt-3 font-display text-base font-semibold text-ink">{p.title}</h3>
             <p className="mt-1 text-sm text-ink-soft">{p.desc}</p>
           </div>

@@ -4,6 +4,10 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/rbac";
 
+// Cached and revalidated every 3600s. Set per route since the site-wide
+// force-dynamic was removed from the locale layout (blueprint §4.2).
+export const revalidate = 3600;
+
 export default async function MagazineIssuePage({
   params,
 }: {
@@ -44,7 +48,7 @@ export default async function MagazineIssuePage({
           return (
             <article key={a.id} className="rounded-2xl border border-rule bg-surface p-6">
               {a.category ? (
-                <span className="text-xs font-semibold uppercase tracking-wide text-brass">
+                <span className="text-xs font-semibold uppercase tracking-wide text-brass-text">
                   {a.category}
                 </span>
               ) : null}

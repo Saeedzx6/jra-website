@@ -38,7 +38,7 @@ export default async function AdminAssessmentsPage() {
                 {s.totalScore !== null ? Math.round(s.totalScore) : "—"} {ta("pts")}
               </span>
               {s.resultingStars ? (
-                <span className="flex items-center gap-1 rounded-full bg-brass-soft px-2.5 py-1 text-xs font-semibold text-brass">
+                <span className="flex items-center gap-1 rounded-full bg-brass-soft px-2.5 py-1 text-xs font-semibold text-brass-text">
                   <Star className="h-3 w-3 fill-brass" />
                   {s.resultingStars}
                 </span>

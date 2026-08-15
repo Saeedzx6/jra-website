@@ -3,6 +3,10 @@ import { Scale } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 
+// Cached and revalidated every 3600s. Set per route since the site-wide
+// force-dynamic was removed from the locale layout (blueprint §4.2).
+export const revalidate = 3600;
+
 export default async function LegalHubPage({
   params,
   searchParams,
@@ -48,7 +52,7 @@ export default async function LegalHubPage({
             <Link key={d.id} href={`/legal/${d.slug}`} className="flex items-center gap-3 px-5 py-4 hover:bg-surface-2/40">
               <Scale className="h-4 w-4 shrink-0 text-accent" />
               <div className="flex-1">
-                <span className="text-xs font-semibold uppercase tracking-wide text-brass">
+                <span className="text-xs font-semibold uppercase tracking-wide text-brass-text">
                   {tType(d.type)} {d.year ? `· ${d.year}` : ""}
                 </span>
                 <p className="text-sm font-medium text-ink">

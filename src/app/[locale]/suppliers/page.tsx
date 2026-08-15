@@ -3,6 +3,10 @@ import { Boxes } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 
+// Cached and revalidated every 3600s. Set per route since the site-wide
+// force-dynamic was removed from the locale layout (blueprint §4.2).
+export const revalidate = 3600;
+
 export default async function SuppliersPage({
   params,
 }: {
@@ -26,7 +30,7 @@ export default async function SuppliersPage({
 
       {suppliers.length === 0 ? (
         <div className="mt-12 rounded-2xl border border-dashed border-rule bg-surface p-12 text-center">
-          <Boxes className="mx-auto h-10 w-10 text-brass" strokeWidth={1.5} />
+          <Boxes className="mx-auto h-10 w-10 text-brass-text" strokeWidth={1.5} />
           <h2 className="mt-4 font-display text-xl font-semibold text-ink">
             {ts("emptyTitle")}
           </h2>

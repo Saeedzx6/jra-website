@@ -3,6 +3,10 @@ import { Tag } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 
+// Cached and revalidated every 600s. Set per route since the site-wide
+// force-dynamic was removed from the locale layout (blueprint §4.2).
+export const revalidate = 600;
+
 const CATEGORY_KEYS = [
   "RESTAURANT_FOR_SALE",
   "EQUIPMENT_SALE",
@@ -67,7 +71,7 @@ export default async function MarketplacePage({
               href={`/marketplace/${l.id}`}
               className="motion-card block rounded-2xl border border-rule bg-surface p-5"
             >
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-brass-soft px-2.5 py-0.5 text-xs font-medium text-brass">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-brass-soft px-2.5 py-0.5 text-xs font-medium text-brass-text">
                 <Tag className="h-3 w-3" />
                 {tCategory(l.category)}
               </span>

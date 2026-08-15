@@ -44,7 +44,11 @@
     "result": "result",
     "results": "results",
     "noRestaurantsLinked": "No restaurants are linked to your account yet.",
-    "pagination": "Pagination"
+    "pagination": "Pagination",
+    "skipToContent": "Skip to main content",
+    "visitWebsite": "Visit website",
+    "callRestaurant": "Call",
+    "messageOnWhatsapp": "Message on WhatsApp"
   },
   "home": {
     "heroKicker": "Jordan Restaurant Association",
@@ -133,7 +137,16 @@
     "greenKeyCertified": "Green Key certified",
     "sustainabilityScore": "Sustainability score",
     "allGovernorates": "All governorates",
-    "allCuisines": "All cuisines"
+    "allCuisines": "All cuisines",
+    "location": "Location",
+    "details": "Details",
+    "noContactTitle": "No contact details on file",
+    "noContactBody": "JRA doesn't hold a phone number or website for this listing yet.",
+    "claimListingCta": "Own this restaurant? Add them",
+    "unclassified": "Not yet classified",
+    "unclassifiedHint": "This establishment hasn't completed a JRA classification assessment.",
+    "openingHours": "Opening hours",
+    "priceRange": "Price range"
   },
   "suppliers": {
     "description": "A directory of associate members — companies supplying food, equipment, technology, and services to JRA restaurants.",
@@ -467,6 +480,18 @@
       "fileUrlOnly": "File URL",
       "amendmentSummaryPlaceholder": "Amendment summary (HTML)",
       "addVersion": "Add version"
+    },
+    "map": {
+      "sectionTitle": "Location on the map",
+      "clickToPlace": "Click the map to place this restaurant.",
+      "dragToAdjust": "Drag the pin to adjust, or click elsewhere to move it.",
+      "mapLabel": "Map for placing the restaurant pin",
+      "noPin": "No pin set",
+      "savePin": "Save location",
+      "saving": "Saving…",
+      "saved": "Saved",
+      "saveFailed": "Could not save. Try again.",
+      "clearPin": "Clear location"
     }
   },
   "contactForm": {
@@ -494,5 +519,48 @@
     "optional": "(optional)",
     "documentsHint": "Business license, ID, or photos — PDF, Word, or image, up to 10MB each.",
     "submitApplication": "Submit application"
+  },
+  "errors": {
+    "notFoundTitle": "We can't find that page",
+    "notFoundBody": "The link may be out of date, or the page may have moved. The restaurant directory is a good place to pick things back up.",
+    "notFoundCta": "Browse the directory",
+    "errorTitle": "Something went wrong at our end",
+    "errorBody": "The page didn't load. This is a fault on our side, not yours — trying again will often work.",
+    "errorRetry": "Try again",
+    "errorHome": "Go to the homepage",
+    "loading": "Loading"
+  },
+  "meta": {
+    "siteTitle": "Jordan Restaurant Association",
+    "siteDescription": "The official platform of the Jordan Restaurant Association — a directory of classified restaurants across Jordan, classification standards, membership, and sector resources.",
+    "directoryTitle": "Restaurant Directory",
+    "directoryDescription": "Browse restaurants, coffee shops and entertainment venues across Jordan, classified by the Jordan Restaurant Association. Filter by governorate, cuisine and star rating.",
+    "newsTitle": "News & Press",
+    "newsDescription": "Announcements, press releases and sector news from the Jordan Restaurant Association."
+  },
+  "priceTier": {
+    "UNKNOWN": "Not listed",
+    "BUDGET": "Budget",
+    "MODERATE": "Moderate",
+    "UPSCALE": "Upscale",
+    "FINE_DINING": "Fine dining"
+  },
+  "membershipHealth": {
+    "title": "Membership health",
+    "good": "In good standing",
+    "grace": "In grace period",
+    "lapsed": "Lapsed",
+    "suspended": "Suspended",
+    "expiringSoon": "Expiring within 30 days",
+    "total": "Total memberships",
+    "empty": "No memberships yet. Approving an application creates one."
+  },
+  "revenue": {
+    "title": "Dues & revenue",
+    "invoiced": "Invoiced",
+    "collected": "Collected",
+    "outstanding": "Outstanding",
+    "overdue": "Overdue",
+    "empty": "No invoices raised yet."
   }
 }

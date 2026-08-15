@@ -44,7 +44,7 @@ export default async function AdminKnowledgePage() {
             <span className="text-sm font-medium text-ink">
               {r.translations[0]?.title ?? r.slug}
             </span>
-            <span className="rounded-full bg-brass-soft px-2.5 py-0.5 text-xs font-medium text-brass">
+            <span className="rounded-full bg-brass-soft px-2.5 py-0.5 text-xs font-medium text-brass-text">
               {tType(r.type)}
             </span>
           </div>

@@ -21,7 +21,7 @@ export function SubmitAssessmentForm({ payload }: { payload: AssessmentPayload }
 
   if (state.ok) {
     return (
-      <div className="mt-4 flex items-center gap-2 rounded-xl bg-olive-soft p-3 text-sm text-olive">
+      <div className="mt-4 flex items-center gap-2 rounded-xl bg-olive-soft p-3 text-sm text-olive-text">
         <Check className="h-4 w-4 shrink-0" />
         {tc("sentToJra")}
       </div>
