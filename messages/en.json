@@ -542,5 +542,13 @@
     "expiringSoon": "Expiring within 30 days",
     "total": "Total memberships",
     "empty": "No memberships yet. Approving an application creates one."
+  },
+  "revenue": {
+    "title": "Dues & revenue",
+    "invoiced": "Invoiced",
+    "collected": "Collected",
+    "outstanding": "Outstanding",
+    "overdue": "Overdue",
+    "empty": "No invoices raised yet."
   }
 }
