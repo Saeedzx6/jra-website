@@ -1,11 +1,13 @@
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { membershipHealth } from "@/lib/membership";
+import { revenueSummary, formatMoney } from "@/lib/billing";
 
 export default async function AdminDashboard() {
   const td = await getTranslations("admin.dashboard");
   const tm = await getTranslations("membershipHealth");
-  const health = await membershipHealth();
+  const trv = await getTranslations("revenue");
+  const [health, revenue] = await Promise.all([membershipHealth(), revenueSummary()]);
   const [restaurants, published, draft, news, contacts, applications, changeRequests, assessments] =
     await Promise.all([
       db.restaurant.count(),
@@ -69,6 +71,34 @@ export default async function AdminDashboard() {
               </p>
             ) : null}
           </>
+        )}
+      </section>
+
+      <section className="mt-8">
+        <h2 className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
+          {trv("title")}
+        </h2>
+        {revenue.count === 0 ? (
+          <p className="mt-3 rounded-2xl border border-rule bg-surface p-5 text-sm text-ink-soft">
+            {trv("empty")}
+          </p>
+        ) : (
+          <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { label: trv("invoiced"), value: revenue.invoiced, tone: "text-ink" },
+              { label: trv("collected"), value: revenue.collected, tone: "text-success-text" },
+              { label: trv("outstanding"), value: revenue.outstanding, tone: "text-ink-soft" },
+              { label: trv("overdue"), value: revenue.overdue, tone: "text-danger-text" },
+            ].map((r) => (
+              <div key={r.label} className="rounded-2xl border border-rule bg-surface p-5">
+                {/* Tabular figures so the columns line up rather than jittering. */}
+                <div className={`tabular font-display text-xl font-semibold ${r.tone}`}>
+                  {formatMoney(r.value)}
+                </div>
+                <div className="mt-1 text-sm text-ink-soft">{r.label}</div>
+              </div>
+            ))}
+          </div>
         )}
       </section>
 
