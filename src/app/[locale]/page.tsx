@@ -18,6 +18,10 @@ import { getFeaturedRestaurants } from "@/lib/restaurants";
 import { getSiteSettings } from "@/lib/actions/settings";
 import { db } from "@/lib/db";
 
+// Cached and revalidated every 300s. Set per route since the site-wide
+// force-dynamic was removed from the locale layout (blueprint §4.2).
+export const revalidate = 300;
+
 export default async function HomePage({
   params,
 }: {

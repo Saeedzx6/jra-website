@@ -11,7 +11,11 @@ export function CountUp({
   suffix?: string;
   duration?: number;
 }) {
-  const [display, setDisplay] = useState(0);
+  // Seeded with the real value, not 0, so the server-rendered HTML contains the
+  // number. This used to start at 0, which meant the markup crawlers and
+  // no-JS visitors received read "0+ classified members" — the animation only
+  // ever filled it in client-side, after an IntersectionObserver fired.
+  const [display, setDisplay] = useState(value);
   const ref = useRef<HTMLSpanElement>(null);
   const started = useRef(false);
 
@@ -24,6 +28,11 @@ export function CountUp({
       setDisplay(value);
       return;
     }
+
+    // Drop to zero once we know scripting is available and the counter will be
+    // animated. The stats band sits below the fold, so this happens well before
+    // it is scrolled into view and is not visible as a flash.
+    if (!started.current) setDisplay(0);
 
     const observer = new IntersectionObserver(
       (entries) => {

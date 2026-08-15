@@ -3,6 +3,10 @@ import { Tag } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 
+// Cached and revalidated every 600s. Set per route since the site-wide
+// force-dynamic was removed from the locale layout (blueprint §4.2).
+export const revalidate = 600;
+
 const CATEGORY_KEYS = [
   "RESTAURANT_FOR_SALE",
   "EQUIPMENT_SALE",

@@ -3,6 +3,10 @@ import { Mail, Phone } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { db } from "@/lib/db";
 
+// Cached and revalidated every 600s. Set per route since the site-wide
+// force-dynamic was removed from the locale layout (blueprint §4.2).
+export const revalidate = 600;
+
 export default async function ListingDetailPage({
   params,
 }: {
