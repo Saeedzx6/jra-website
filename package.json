@@ -22,6 +22,7 @@
     "seed:contacts": "tsx prisma/seed/12-restaurant-contacts.ts",
     "seed:dues": "tsx prisma/seed/13-dues-schedule.ts",
     "seed:geocode": "tsx prisma/seed/14-geocode-restaurants.ts",
+    "seed:cuisine-ar": "tsx prisma/seed/15-cuisine-arabic-names.ts",
     "seed:content": "tsx prisma/seed/04-content.ts",
     "seed:classification": "tsx prisma/seed/05-classification.ts",
     "seed:admin": "tsx prisma/seed/06-admin-user.ts",
