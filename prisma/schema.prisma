@@ -183,6 +183,11 @@ model Restaurant {
   addressText            String?
   latitude               Float?
   longitude              Float?
+  // Provenance for the coordinates above: which service resolved them and
+  // when. Lets a bad geocoding run be identified and redone without touching
+  // pins an admin has corrected by hand.
+  geocodeSource          String?
+  geocodedAt             DateTime?
   classificationLevelId  String?
   classificationLevel    ClassificationLevel? @relation(fields: [classificationLevelId], references: [id])
   establishmentType      EstablishmentType   @default(RESTAURANT)
