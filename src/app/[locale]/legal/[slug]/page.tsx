@@ -24,7 +24,7 @@ export default async function LegalDocumentPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-      <span className="text-xs font-semibold uppercase tracking-wide text-brass">
+      <span className="text-xs font-semibold uppercase tracking-wide text-brass-text">
         {tType(doc.type)} {doc.year ? `· ${doc.year}` : ""}
       </span>
       <h1 className="mt-1 font-display text-2xl font-semibold text-ink">

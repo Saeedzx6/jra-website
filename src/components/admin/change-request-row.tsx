@@ -34,7 +34,7 @@ export function ChangeRequestRow({
     <div className="rounded-2xl border border-rule bg-surface p-5">
       <div className="flex items-center justify-between">
         <div>
-          <span className="rounded-full bg-brass-soft px-2 py-0.5 text-xs font-medium text-brass">
+          <span className="rounded-full bg-brass-soft px-2 py-0.5 text-xs font-medium text-brass-text">
             {entityType}
           </span>
           <span className="ms-2 text-sm text-ink-soft">

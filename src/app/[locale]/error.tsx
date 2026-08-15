@@ -30,7 +30,7 @@ export default function LocaleError({
   return (
     <div className="mx-auto flex max-w-xl flex-col items-center px-4 py-24 text-center sm:px-6">
       <div className="flex h-14 w-14 items-center justify-center rounded-full bg-brass-soft">
-        <AlertTriangle className="h-6 w-6 text-brass" aria-hidden="true" />
+        <AlertTriangle className="h-6 w-6 text-brass-text" aria-hidden="true" />
       </div>
       <h1 className="mt-6 font-display text-3xl font-semibold text-ink">{t("errorTitle")}</h1>
       <p className="mt-3 leading-relaxed text-ink-soft">{t("errorBody")}</p>

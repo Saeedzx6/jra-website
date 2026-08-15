@@ -26,7 +26,7 @@ export default async function AdminAssessmentDetailPage({
 
   return (
     <div>
-      <p className="text-xs font-semibold uppercase tracking-wide text-brass">
+      <p className="text-xs font-semibold uppercase tracking-wide text-brass-text">
         {session.establishmentType}
       </p>
       <h1 className="mt-1 font-display text-2xl font-semibold text-ink">
@@ -38,7 +38,7 @@ export default async function AdminAssessmentDetailPage({
           {standard.totalPossiblePoints} {ta("points")}
         </span>
         {session.resultingStars ? (
-          <span className="flex items-center gap-1 text-brass">
+          <span className="flex items-center gap-1 text-brass-text">
             {Array.from({ length: session.resultingStars }).map((_, i) => (
               <Star key={i} className="h-4 w-4 fill-brass" />
             ))}

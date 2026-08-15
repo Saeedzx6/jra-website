@@ -137,7 +137,16 @@
     "greenKeyCertified": "Green Key certified",
     "sustainabilityScore": "Sustainability score",
     "allGovernorates": "All governorates",
-    "allCuisines": "All cuisines"
+    "allCuisines": "All cuisines",
+    "location": "Location",
+    "details": "Details",
+    "noContactTitle": "No contact details on file",
+    "noContactBody": "JRA doesn't hold a phone number or website for this listing yet.",
+    "claimListingCta": "Own this restaurant? Add them",
+    "unclassified": "Not yet classified",
+    "unclassifiedHint": "This establishment hasn't completed a JRA classification assessment.",
+    "openingHours": "Opening hours",
+    "priceRange": "Price range"
   },
   "suppliers": {
     "description": "A directory of associate members — companies supplying food, equipment, technology, and services to JRA restaurants.",
@@ -516,5 +525,12 @@
     "directoryDescription": "Browse restaurants, coffee shops and entertainment venues across Jordan, classified by the Jordan Restaurant Association. Filter by governorate, cuisine and star rating.",
     "newsTitle": "News & Press",
     "newsDescription": "Announcements, press releases and sector news from the Jordan Restaurant Association."
+  },
+  "priceTier": {
+    "UNKNOWN": "Not listed",
+    "BUDGET": "Budget",
+    "MODERATE": "Moderate",
+    "UPSCALE": "Upscale",
+    "FINE_DINING": "Fine dining"
   }
 }

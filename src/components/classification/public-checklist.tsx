@@ -81,8 +81,8 @@ export function PublicClassificationChecklist({
         {revealed && (
           <>
             <div className="mt-4 rounded-xl bg-olive-soft p-4 text-center">
-              <Sparkles className="mx-auto h-5 w-5 text-olive" />
-              <p className="mt-1 text-sm font-medium text-olive">
+              <Sparkles className="mx-auto h-5 w-5 text-olive-text" />
+              <p className="mt-1 text-sm font-medium text-olive-text">
                 {tc("projectsTo")} {projectedStars}{" "}
                 {projectedStars === 1 ? tCommon("star") : tCommon("stars")}
               </p>

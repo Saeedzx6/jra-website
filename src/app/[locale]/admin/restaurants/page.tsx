@@ -54,9 +54,9 @@ export default async function AdminRestaurantsPage({
                   <span
                     className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
                       r.status === "PUBLISHED"
-                        ? "bg-olive-soft text-olive"
+                        ? "bg-olive-soft text-olive-text"
                         : r.status === "DRAFT"
-                          ? "bg-brass-soft text-brass"
+                          ? "bg-brass-soft text-brass-text"
                           : "bg-surface-2 text-ink-faint"
                     }`}
                   >
