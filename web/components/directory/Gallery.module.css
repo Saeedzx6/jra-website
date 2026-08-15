@@ -1,0 +1,98 @@
+.grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 700px) {
+  /* One photo fills the row; two split it; three or more get a feature plus a
+     stacked pair, so a two-photo entry never looks like a broken three-up. */
+  .grid[data-count="2"] {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid[data-count="3"] {
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+  }
+  .grid[data-count="3"] > li:first-child {
+    grid-row: span 2;
+  }
+}
+
+.thumb {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 12rem;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: var(--media-bg);
+  cursor: zoom-in;
+}
+.grid[data-count="3"] > li:first-child .thumb {
+  min-block-size: 24.75rem;
+}
+
+.thumb img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-media);
+}
+.thumb:hover img {
+  transform: scale(1.04);
+}
+
+.empty {
+  padding: 2.5rem 1.5rem;
+  background: var(--grey-50);
+  border-radius: var(--r-lg);
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* --- lightbox ------------------------------------------------------------- */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 1rem;
+  padding: clamp(1rem, 4vw, 2.5rem);
+  /* Strong enough to isolate the photo from whatever is behind it. */
+  background: rgb(4 31 58 / 0.92);
+  backdrop-filter: blur(6px);
+  color: #fff;
+}
+
+.stage {
+  display: grid;
+  place-items: center;
+  min-block-size: 0;
+}
+
+.full {
+  inline-size: auto;
+  block-size: auto;
+  max-inline-size: 100%;
+  max-block-size: 100%;
+  object-fit: contain;
+  border-radius: var(--r-md);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding-block-end: env(safe-area-inset-bottom);
+}
+
+.counter {
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  min-inline-size: 4rem;
+  text-align: center;
+}

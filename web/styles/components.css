@@ -1,0 +1,303 @@
+/* ==========================================================================
+   Direction B — "Kingdom of Flavour"
+   Full-bleed imagery, oversized display type, and a six-tile coloured grid
+   whose panels expand over the photograph.
+
+   Deviation from the mockup: the hero's decorative pill searchbox has been
+   replaced by the multi-field search console carried over from Direction C.
+   A directory product's primary task is finding a listing, so the search
+   control is the hero's payload rather than an ornament. The console keeps
+   B's rounded, shadowed surface language rather than C's 4px utility corners.
+   ========================================================================== */
+
+/* --- buttons -------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-block-size: 44px;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--r-pill);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: var(--btn-tracking);
+  text-transform: var(--eyebrow-transform);
+  background: var(--accent);
+  color: #fff;
+  border: 2px solid var(--accent);
+  cursor: pointer;
+  /* Labels are short and uppercase with wide tracking; letting them wrap
+     doubles the button's height and, in the header, silently inflated the
+     whole bar from 73px to 97px. */
+  white-space: nowrap;
+  transition:
+    transform var(--dur-fast) ease,
+    background var(--dur-mid) ease,
+    color var(--dur-mid) ease;
+}
+.btn:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  transform: translateY(-1px);
+}
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-outline {
+  background: none;
+  color: var(--ink);
+  border-color: currentColor;
+}
+.btn-outline:hover {
+  background: var(--ink);
+  color: var(--cream);
+  border-color: var(--ink);
+}
+
+.btn-light {
+  background: #fff;
+  border-color: #fff;
+  color: var(--ink);
+}
+.btn-light:hover {
+  background: transparent;
+  color: #fff;
+  border-color: #fff;
+}
+
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 44px;
+  block-size: 44px;
+  border-radius: var(--r-pill);
+  border: 2px solid currentColor;
+  transition: background var(--dur-mid) ease;
+}
+.icon-btn:hover {
+  background: rgb(0 0 0 / 0.06);
+}
+.icon-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* --- section heads -------------------------------------------------------- */
+
+.section-head {
+  text-align: center;
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+  margin-block-end: clamp(2.25rem, 5vw, 3.5rem);
+}
+.section-head h2 {
+  font-size: clamp(2.1rem, 5.5vw, 3.75rem);
+}
+.section-head .eyebrow {
+  color: var(--accent);
+}
+.section-head .lede {
+  text-align: center;
+}
+
+/* --- hero ----------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-block-size: min(88vh, 46rem);
+  color: #fff;
+  isolation: isolate;
+  text-align: center;
+}
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+/* Covers both the <video> and the still <img> the reduced-motion path renders
+   in its place, so the two are visually interchangeable. */
+.hero-media :is(img, video) {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  /* Belt and braces: the poster is a still frame of the same scene, so any
+     gap before the first video frame paints is invisible rather than black. */
+  background: var(--navy);
+}
+/* Two-layer scrim.
+   The mockup used a single linear gradient whose weakest stop — 34% — sat at
+   45% height, which is exactly where the headline and lede sit. Over a bright
+   photograph that composites to roughly 3.3:1: fine for the 44px headline,
+   below AA for the 16px lede.
+   The radial layer adds a localised scrim behind the copy column, taking the
+   effective alpha there to ~0.74 (AA at any photo brightness), while the edges
+   keep the lighter linear wash so the photography still reads as full-bleed. */
+.hero-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 92% 72% at 50% 50%,
+      rgb(4 31 58 / 0.55),
+      transparent 72%
+    ),
+    linear-gradient(
+      to bottom,
+      rgb(4 31 58 / 0.66),
+      rgb(4 31 58 / 0.42) 45%,
+      rgb(0 83 160 / 0.62)
+    );
+}
+/* Leading padding includes the fixed header's height. On mobile the search
+   console makes this block tall enough to outgrow the hero's min-height, at
+   which point the content stops being vertically centred and the eyebrow would
+   otherwise sit underneath the header. */
+.hero .wrap {
+  padding-block: calc(var(--header-h) + clamp(2rem, 8vw, 4rem))
+    clamp(5rem, 12vw, 8rem);
+  display: grid;
+  gap: 1.5rem;
+  justify-items: center;
+}
+.hero .eyebrow {
+  color: rgb(255 255 255 / 0.85);
+}
+.hero h1 {
+  font-size: clamp(2.75rem, 9vw, 6rem);
+  text-shadow: 0 2px 30px rgb(0 0 0 / 0.35);
+}
+.hero .lede {
+  color: rgb(255 255 255 / 0.9);
+  text-align: center;
+}
+
+/* --- stats ---------------------------------------------------------------- */
+
+.stats {
+  background: var(--navy);
+  color: #fff;
+}
+.stats ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(2rem, 5vw, 3rem);
+  text-align: center;
+}
+@media (min-width: 900px) {
+  .stats ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.stats .num {
+  display: block;
+  font-family: var(--display);
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--pale);
+}
+.stats .num .suffix {
+  font-size: 0.5em;
+}
+.stats .label {
+  display: block;
+  margin-block-start: 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: var(--label-tracking);
+  text-transform: var(--eyebrow-transform);
+  color: rgb(255 255 255 / 0.7);
+}
+
+/* --- cards ---------------------------------------------------------------- */
+
+.card-title {
+  font-family: var(--display);
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+}
+
+.tag {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.28rem 0.6rem;
+  border-radius: var(--r-pill);
+  background: var(--cream);
+  color: var(--ink-soft);
+}
+[dir="rtl"] .tag {
+  letter-spacing: 0;
+}
+
+/* --- forms ---------------------------------------------------------------- */
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+}
+.field label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: var(--label-tracking);
+  text-transform: var(--eyebrow-transform);
+  color: var(--ink-soft);
+}
+.field input,
+.field select,
+.field textarea {
+  min-block-size: 44px;
+  padding: 0.85rem 1.15rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: #fff;
+  color: var(--ink);
+}
+.field textarea {
+  border-radius: var(--r-md);
+  min-block-size: 8rem;
+  resize: vertical;
+}
+.field-error {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--status-alert);
+}
+.field :is(input, select, textarea)[aria-invalid="true"] {
+  border-color: var(--status-alert);
+}
+
+.checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.checks label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-block-size: 44px;
+  padding: 0.55rem 1rem;
+  border-radius: var(--r-pill);
+  background: #fff;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+.checks input {
+  accent-color: var(--accent);
+  inline-size: 1rem;
+  block-size: 1rem;
+}

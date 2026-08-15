@@ -1,0 +1,158 @@
+/* The six destination tiles — Direction B's centrepiece.
+
+   Change from the mockup: tiles are a FIXED height (HANDOFF next-step 2). The
+   mockup used min-block-size with an auto-growing panel, so a hovered tile
+   grew and shoved its row-mates down. Fixed height plus an absolutely
+   positioned panel means the reveal happens inside the tile's own box and the
+   grid never reflows. */
+
+.tiles {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 700px) {
+  .tiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1040px) {
+  .tiles {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.tile {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  block-size: 26rem;
+  border-radius: var(--r-lg);
+  background: var(--tile, var(--navy));
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.media img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease-media);
+}
+
+/* The panel sits at the bottom of the tile and grows upward over the image. */
+.panel {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  z-index: 2;
+  background: var(--tile, var(--navy));
+  color: #fff;
+  padding: 1.6rem 1.5rem;
+  text-align: center;
+  display: grid;
+  gap: 0.5rem;
+  align-content: end;
+  transition: padding var(--dur-slow) var(--ease-out);
+}
+
+.panel .eyebrow {
+  color: #fff;
+}
+
+.panel h3 {
+  font-family: var(--display);
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: 1.5rem;
+  line-height: 1.15;
+}
+
+/* Body + CTA are laid out but clipped until the tile opens, so nothing jumps. */
+.reveal {
+  display: grid;
+  gap: 1.1rem;
+  justify-items: center;
+  overflow: hidden;
+  max-block-size: 0;
+  opacity: 0;
+  transition:
+    max-block-size var(--dur-slow) var(--ease-out),
+    opacity var(--dur-mid) ease,
+    margin var(--dur-slow) ease;
+}
+
+.reveal p {
+  font-size: 0.875rem;
+  /* Full white, not translucent: the tile fills are chosen so white type
+     clears AA, and dropping opacity is what broke that in the mockup. */
+  color: #fff;
+  max-inline-size: 34ch;
+}
+
+.cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: var(--btn-tracking);
+  text-transform: var(--eyebrow-transform);
+  color: #fff;
+  border-block-end: 2px solid rgb(255 255 255 / 0.5);
+  padding-block-end: 0.3rem;
+  transition: border-color var(--dur-mid) ease;
+}
+.tile:hover .cue,
+.tile:focus-within .cue {
+  border-block-end-color: #fff;
+}
+
+.tile:hover .media img,
+.tile:focus-within .media img {
+  transform: scale(1.06);
+}
+
+.tile:hover .panel,
+.tile:focus-within .panel {
+  padding-block: 2rem 2.25rem;
+}
+
+.tile:hover .reveal,
+.tile:focus-within .reveal {
+  max-block-size: 16rem;
+  opacity: 1;
+  margin-block-start: 0.4rem;
+}
+
+/* The whole tile is one target. The visually hidden span carries the
+   accessible name so the link is never announced as bare "link". */
+.link {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+}
+
+/* Touch devices can't hover, so the panel is simply always open there. */
+@media (hover: none) {
+  .reveal {
+    max-block-size: 16rem;
+    opacity: 1;
+    margin-block-start: 0.4rem;
+  }
+  .panel {
+    padding-block: 1.75rem 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .panel,
+  .media img {
+    transition: none;
+  }
+}

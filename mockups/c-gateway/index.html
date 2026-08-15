@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JRA — Direction C: Sector Gateway</title>
+<meta name="description" content="Jordan Restaurant Association home page mockup — institutional, utility-first direction.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/brand.css">
+<link rel="stylesheet" href="theme.css">
+<link rel="icon" href="../assets/SmallLogo.gif">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="utility">
+  <div class="wrap">
+    <span>The official body of Jordan&rsquo;s tourist restaurants &mdash; established 1976</span>
+    <span class="flow-row" style="gap:1.25rem">
+      <a href="tel:+96264621558">+962 6 462 1558</a>
+      <a href="mailto:info@jra.jo">info@jra.jo</a>
+      <button type="button" data-lang-toggle aria-pressed="false">عربي</button>
+    </span>
+  </div>
+</div>
+
+<header class="site-header" data-header>
+  <div class="wrap">
+    <a class="wordmark" href="#" aria-label="Jordan Restaurant Association, home">
+      <img class="logo logo-dark" src="../assets/logo.png" alt="Jordan Restaurant Association">
+      <img class="logo logo-white" src="../assets/logo-white.png" alt="Jordan Restaurant Association">
+    </a>
+    <nav class="site-nav" aria-label="Primary"></nav>
+    <div class="header-actions">
+      <a class="btn" href="#" data-i18n="nav.login">Member login</a>
+      <button class="icon-btn nav-toggle tap" type="button" data-nav-toggle="#mobile-nav"
+              aria-expanded="false" aria-controls="mobile-nav" data-i18n-label="nav.menu" aria-label="Menu">
+        <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M0 1h20M0 7h20M0 13h20"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobile-nav" hidden aria-label="Mobile"></nav>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="hero-media">
+      <img src="https://jra.jo/content/images/thumbs/0012234_peking.jpeg" alt="">
+    </div>
+    <div class="wrap">
+      <div class="stack" style="--gap:.9rem">
+        <p class="eyebrow">Sector gateway</p>
+        <h1 class="display">The directory, the standards and the rules for Jordan&rsquo;s restaurant sector.</h1>
+        <p class="lede">Search 757 member establishments and their suppliers, check classification criteria, track legislation, and apply for membership — all in one place.</p>
+      </div>
+
+      <form class="console" role="search" onsubmit="return false" aria-label="Search the member directory">
+        <div class="console-row">
+          <div class="field">
+            <label for="q-c">Name, cuisine or area</label>
+            <input id="q-c" type="search" autocomplete="off" role="combobox"
+                   aria-expanded="false" aria-controls="suggest-c"
+                   placeholder="e.g. Shams El Balad, Lebanese, Abdoun" data-search="#suggest-c">
+            <ul class="suggest" id="suggest-c" role="listbox" aria-label="Search suggestions" hidden></ul>
+          </div>
+          <div class="field">
+            <label for="cuisine-c">Cuisine</label>
+            <select id="cuisine-c"></select>
+          </div>
+          <div class="field">
+            <label for="city-c">Governorate</label>
+            <select id="city-c"></select>
+          </div>
+          <div class="field">
+            <label for="feature-c">Feature</label>
+            <select id="feature-c"></select>
+          </div>
+          <button class="btn" type="submit">Search directory</button>
+        </div>
+        <p class="console-note">Indexing <b>757</b> establishments &middot; <b>22</b> cuisines &middot; <b>17</b> governorates &middot; <b>214</b> features</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="JRA in numbers">
+    <div class="wrap"><ul id="stats-c"></ul></div>
+  </section>
+
+  <section class="actions" aria-label="Quick access">
+    <div class="wrap"><ul id="actions-c"></ul></div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Services</p>
+        <h2 class="display">What the association does</h2>
+        <p class="lede">Six service areas, each with its own tools, documents and application routes.</p>
+      </div>
+      <div class="dest-grid" id="dest-c"></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-block-start:0">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Directory preview</p>
+        <h2 class="display">Member establishments</h2>
+      </div>
+      <div class="dir-panel" id="dir-c"></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-block-start:0">
+    <div class="wrap">
+      <div class="info-grid">
+        <div class="panel">
+          <div class="panel-head">
+            <h3>News &amp; events</h3>
+            <a href="#" data-i18n="news.all">All news and events</a>
+          </div>
+          <div id="news-c"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Legislative alerts</h3><a href="#">Legislation hub</a></div>
+          <div id="alerts-c"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Opportunities</h3><a href="#">Opportunities center</a></div>
+          <div id="opps-c"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="member">
+    <div data-deck id="deck-c"></div>
+  </section>
+
+  <section class="section signup">
+    <div class="wrap signup-grid">
+      <div class="stack">
+        <p class="eyebrow">Newsletter</p>
+        <h2 class="display">Stay ahead of the sector</h2>
+        <p class="lede">Legislation changes, funding calls, training intakes and the monthly magazine — sent only about what you pick.</p>
+      </div>
+      <form class="stack" style="--gap:1.25rem" onsubmit="return false">
+        <div class="field">
+          <label for="email-c" data-i18n="newsletter.email">Email address</label>
+          <input id="email-c" type="email" autocomplete="email" placeholder="you@restaurant.jo" required>
+        </div>
+        <fieldset style="border:0;padding:0;margin:0">
+          <legend class="eyebrow" style="padding:0;margin-block-end:.6rem;color:var(--ink-soft)" data-i18n="newsletter.interests">What should we send you?</legend>
+          <div class="checks" id="interests-c"></div>
+        </fieldset>
+        <div><button class="btn" type="submit">Subscribe</button></div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer on-dark">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img class="logo logo-white" src="../assets/logo-white.png" alt="Jordan Restaurant Association" style="display:block">
+        <p>2nd Circle, Jabal Amman, Jordan<br>+962 6 462 1558<br>info@jra.jo</p>
+      </div>
+      <div id="footer-c" style="display:contents"></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Jordan Restaurant Association. All rights reserved.</span>
+      <span>Direction C — Sector Gateway</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../shared/content.js"></script>
+<script src="../shared/data.js"></script>
+<script>
+(function () {
+  var C = JRA_CONTENT, D = JRA_DATA;
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+
+  /* Stroke icons, one family, one 1.6 stroke width. */
+  var ICONS = {
+    directory: '<path d="M3 3h14v18l-7-3.5L3 21z"/>',
+    suppliers: '<path d="M2 8h16v9H2zM6 8V5h8v3M2 12h16"/>',
+    classification: '<path d="M10 2l2.4 5 5.6.7-4 3.9 1 5.4L10 14.5 5 17l1-5.4L2 7.7 7.6 7z"/>',
+    sustainability: '<path d="M10 18c6-1 8-6 8-13-7 0-12 2-13 8-1 4 1 5 5 5zM4 18c1-4 3-6 6-8"/>',
+    legal: '<path d="M10 2v16M4 6h12M6 6l-3 6a3 3 0 006 0zM14 6l-3 6a3 3 0 006 0zM6 18h8"/>',
+    marketplace: '<path d="M3 7h14l-1 11H4zM7 7V4h6v3M7 11v4M13 11v4"/>',
+  };
+  function icon(key) {
+    return '<span class="dest-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" ' +
+      'stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" ' +
+      'aria-hidden="true">' + (ICONS[key] || "") + "</svg></span>";
+  }
+
+  document.querySelector(".site-nav").innerHTML =
+    C.nav.map(function (n) { return '<a href="' + n.href + '">' + esc(n.label) + "</a>"; }).join("");
+  document.getElementById("mobile-nav").innerHTML =
+    C.nav.map(function (n) { return '<a href="' + n.href + '">' + esc(n.label) + "</a>"; }).join("") +
+    '<a href="#">Member login</a>';
+
+  function fillSelect(id, label, values) {
+    document.getElementById(id).innerHTML =
+      '<option value="">' + label + "</option>" +
+      values.map(function (v) { return "<option>" + esc(v) + "</option>"; }).join("");
+  }
+  fillSelect("cuisine-c", "All cuisines", D.cuisines);
+  fillSelect("city-c", "All governorates", D.cities);
+  fillSelect("feature-c", "Any feature", D.features);
+
+  document.getElementById("stats-c").innerHTML = C.stats.map(function (s) {
+    return '<li><span class="num"><span data-count="' + s.value + '"' +
+      (s.decimals ? ' data-decimals="' + s.decimals + '"' : "") + ">0</span>" +
+      (s.suffix ? '<span class="suffix">' + esc(s.suffix) + "</span>" : "") + "</span>" +
+      '<span class="label">' + esc(s.label) + "</span></li>";
+  }).join("");
+
+  document.getElementById("actions-c").innerHTML = C.actions.map(function (a) {
+    return '<li><a href="' + a.href + '"><strong>' + esc(a.label) + "</strong><span>" +
+      esc(a.note) + "</span></a></li>";
+  }).join("");
+
+  document.getElementById("dest-c").innerHTML = C.destinations.map(function (d) {
+    return '<article class="dest-card reveal">' + icon(d.key) +
+      '<h3><a href="#">' + esc(d.eyebrow) + "</a></h3>" +
+      "<p>" + esc(d.body) + "</p>" +
+      '<span class="go">' + esc(d.cta) + " &rarr;</span></article>";
+  }).join("");
+
+  document.getElementById("dir-c").innerHTML =
+    D.restaurants.slice(0, 6).map(function (r) {
+      return '<div class="dir-row">' +
+        '<div class="media"><img loading="lazy" src="' + r.image + '" alt="' + esc(r.name) + '"></div>' +
+        '<div class="dir-name">' + esc(r.name) + "<small>" + esc(r.address) + "</small></div>" +
+        '<div class="dir-cuisine">' + esc(r.cuisine) + " &middot; " + esc(r.city) + "</div>" +
+        '<div class="dir-tags">' + r.tags.slice(0, 3).map(function (t) {
+          return "<span>" + esc(t) + "</span>"; }).join("") + "</div>" +
+        '<a class="dir-go" href="#">View profile &rarr;</a></div>';
+    }).join("") +
+    '<div class="dir-foot"><span class="console-note">Showing <b>6</b> of <b>757</b> member establishments</span>' +
+    '<a class="btn btn-outline" href="#">Open the full directory</a></div>';
+
+  document.getElementById("news-c").innerHTML = C.news.map(function (n, i) {
+    return '<article class="news-item">' +
+      (i === 0 ? '<div class="media"><img loading="lazy" src="' + n.image + '" alt=""></div>' : "") +
+      '<p class="news-date"><b>' + esc(n.kicker) + "</b> &middot; " + esc(n.date) + "</p>" +
+      "<h4>" + esc(n.title) + "</h4>" +
+      (i === 0 ? '<p class="news-body">' + esc(n.body) + "</p>" : "") + "</article>";
+  }).join("");
+
+  function panelItems(list, cls) {
+    return list.map(function (a) {
+      return '<article class="alert-item ' + cls + '"><p class="tag">' + esc(a.tag) + "</p>" +
+        "<h4>" + esc(a.title) + "</h4><p>" + esc(a.body) + "</p></article>";
+    }).join("");
+  }
+  document.getElementById("alerts-c").innerHTML = panelItems(C.alerts, "");
+  document.getElementById("opps-c").innerHTML = panelItems(C.opportunities, "opp-item");
+
+  document.getElementById("deck-c").innerHTML =
+    C.membership.map(function (m, i) {
+      return '<div class="member-slide" data-slide' + (i ? " hidden" : "") + ">" +
+        '<div class="member-copy"><p class="eyebrow">' + esc(m.eyebrow) + "</p>" +
+        "<h2>" + esc(m.title) + "</h2><p>" + esc(m.body) + "</p>" +
+        '<div><a class="btn btn-light" href="#">' + esc(m.cta) + "</a></div></div>" +
+        '<div class="media"><img loading="lazy" src="' + m.image + '" alt=""></div></div>';
+    }).join("") +
+    '<div class="deck-foot"><div class="deck-nav">' +
+      '<button class="icon-btn tap" type="button" data-deck-prev aria-label="Previous slide">' +
+      '<svg class="mirror" width="16" height="14" viewBox="0 0 16 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 1L1 7l6 6M1 7h15"/></svg></button>' +
+      '<button class="icon-btn tap" type="button" data-deck-next aria-label="Next slide">' +
+      '<svg class="mirror" width="16" height="14" viewBox="0 0 16 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 1l6 6-6 6M15 7H0"/></svg></button>' +
+      '<span class="deck-count" data-deck-count></span></div></div>';
+
+  document.getElementById("interests-c").innerHTML = C.newsletter.interests.map(function (t, i) {
+    return '<label><input type="checkbox" name="interest" value="' + esc(t) + '"' +
+      (i === 0 ? " checked" : "") + "> " + esc(t) + "</label>";
+  }).join("");
+
+  document.getElementById("footer-c").innerHTML = C.footer.map(function (col) {
+    return "<div><h4>" + esc(col.heading) + "</h4><ul>" +
+      col.links.map(function (l) { return '<li><a href="#">' + esc(l) + "</a></li>"; }).join("") +
+      "</ul></div>";
+  }).join("");
+})();
+</script>
+<script src="../shared/behavior.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+/* ==========================================================================
+   JRA brand tokens
+   Sampled directly from logo.png. The identity is strictly two colours:
+     #0053A0  blue  — the ellipse mark
+     #6C6D70  grey  — all type, Arabic and Latin
+   Everything below is a tonal derivation of those two. No third hue is
+   introduced anywhere except the status colours, which exist because "alert"
+   and "opportunity" must be told apart at a glance.
+
+   See design-system/MASTER.md before adding a colour.
+   ========================================================================== */
+
+:root {
+  /* --- the two brand colours, unmodified --- */
+  --jra-blue: #0053a0;
+  --jra-grey: #6c6d70;
+
+  /* --- blue ramp ------------------------------------------------------- */
+  --blue-950: #041f3a; /* deepest surface */
+  --blue-900: #062e55;
+  --blue-800: #003a73;
+  --blue-600: #0053a0; /* brand */
+  --blue-500: #0a66bc; /* hover lift */
+  --blue-300: #7fb3e3; /* on dark: eyebrows, links */
+  --blue-100: #d6e5f3;
+  --blue-50: #edf3f9; /* washes, hover rows */
+
+  /* --- neutral ramp, anchored on the logo grey ------------------------- */
+  --grey-900: #232427; /* headings */
+  --grey-800: #333437;
+  --grey-700: #4a4b4e;
+  --grey-600: #6c6d70; /* brand — body/secondary text, 5.2:1 on white */
+  --grey-400: #a0a1a4;
+  --grey-300: #c8c9cb;
+  --grey-200: #dfe0e2; /* rules and borders */
+  --grey-100: #efeff0;
+  --grey-50: #f7f7f8;
+  --white: #ffffff;
+
+  /* --- status only. Not brand colours; never used decoratively. -------- */
+  --status-alert: #8a5a12;
+  --status-good: #12645a;
+
+  /* --- Direction B semantic layer -------------------------------------- */
+  --cream: #f7f7f8;
+  --ink: var(--grey-900);
+  --ink-soft: var(--jra-grey);
+  --navy: var(--blue-950);
+  --accent: var(--jra-blue);
+  --accent-alt: var(--blue-800);
+  --pale: var(--blue-300);
+  --focus: var(--jra-blue);
+  --line: var(--grey-200);
+  --surface: var(--white);
+
+  /* Six tile colours: four blues, two greys — alternated so no two adjacent
+     tiles in the 3-column grid share a tone.
+     The brand grey #6C6D70 is deliberately NOT a tile fill: white text on it
+     only reaches 5.2:1 at full opacity and fails AA once the panel copy is
+     set translucent. It stays as body text on light surfaces instead. */
+  --c1: #0053a0; /* brand blue */
+  --c2: #4a4b4e; /* deep grey */
+  --c3: #062e55; /* navy blue */
+  --c4: #0a66bc; /* lifted blue */
+  --c5: #333437; /* darkest grey */
+  --c6: #003a73; /* deep blue */
+
+  --maxw: 1280px;
+  --media-bg: var(--grey-200);
+
+  /* Header height. The header is fixed and overlays the hero, so anything that
+     must clear it (page heroes, scroll anchors) measures against this.
+     Measured: 78px at desktop (49px login button + 2x0.9rem padding), 73px
+     below 640px where that button is hidden. Rounded up to 5rem so the value
+     is never short — being a few pixels generous is invisible, being short
+     puts content under the header. */
+  --header-h: 5rem;
+
+  /* --- radius scale ----------------------------------------------------- */
+  --r-pill: 999px;
+  --r-lg: 20px;
+  --r-md: 16px;
+  --r-sm: 10px;
+
+  /* --- elevation scale -------------------------------------------------- */
+  --shadow-card: 0 24px 44px -36px rgb(0 0 0 / 0.6);
+  --shadow-raised: 0 20px 40px -32px rgb(0 0 0 / 0.65);
+  --shadow-float: 0 24px 50px -30px rgb(0 0 0 / 0.7);
+  --shadow-pop: 0 30px 60px -30px rgb(0 0 0 / 0.6);
+  --shadow-stuck: 0 14px 34px -30px rgb(0 0 0 / 0.8);
+
+  /* --- motion ----------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-media: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --dur-fast: 0.18s;
+  --dur-mid: 0.3s;
+  --dur-slow: 0.45s;
+
+  /* ======================================================================
+     Bilingual typography
+     ----------------------------------------------------------------------
+     Latin default. The ar overrides below are not cosmetic preferences —
+     each one corrects a way Direction B's Latin styling actively damages
+     Arabic text. Read the [dir="rtl"] block before changing anything here.
+     ====================================================================== */
+  --display: var(--font-display-latin), "Poppins", system-ui, sans-serif;
+  --sans: var(--font-sans-latin), "DM Sans", system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+
+  --display-style: italic;
+  --display-tracking: -0.02em;
+  --display-weight: 700;
+
+  --eyebrow-tracking: 0.22em;
+  --eyebrow-transform: uppercase;
+  --label-tracking: 0.14em;
+  --btn-tracking: 0.12em;
+  --nav-tracking: 0.1em;
+}
+
+
+/* ==========================================================================
+   Arabic overrides
+   --------------------------------------------------------------------------
+   1. font-style: italic — Arabic has no italic tradition. A slanted Arabic
+      word reads as a rendering fault, not as emphasis. Direction B's entire
+      display voice is italic Poppins, so the Arabic build carries the same
+      weight through Cairo 700 upright instead.
+
+   2. letter-spacing — this is the destructive one. Arabic script is cursive:
+      letters join. Positive tracking pulls those joins apart and renders the
+      word as disconnected glyphs. Every tracked style is therefore zeroed,
+      not reduced.
+
+   3. text-transform: uppercase — Arabic is unicameral, so the declaration is
+      a no-op on Arabic glyphs but still uppercases any Latin (brand names,
+      "JRA") mixed into the same run, which looks accidental. Set to none.
+   ========================================================================== */
+[dir="rtl"] {
+  --display: var(--font-arabic), "Cairo", system-ui, sans-serif;
+  --sans: var(--font-arabic), "Cairo", system-ui, sans-serif;
+
+  --display-style: normal;
+  --display-tracking: 0;
+  --display-weight: 700;
+
+  --eyebrow-tracking: 0;
+  --eyebrow-transform: none;
+  --label-tracking: 0;
+  --btn-tracking: 0;
+  --nav-tracking: 0;
+}

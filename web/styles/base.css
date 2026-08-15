@@ -1,0 +1,244 @@
+/* ==========================================================================
+   Structure only — no visual opinions.
+   Every directional property is logical, so flipping <html dir="rtl"> mirrors
+   the whole layout without a second stylesheet. Do not introduce left/right,
+   margin-left, text-align: left, or padding-right anywhere in this codebase.
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* The header is fixed, so in-page anchors (#apply, #board...) would otherwise
+     land with their heading hidden underneath it. */
+  scroll-padding-block-start: var(--header-h);
+}
+
+body {
+  margin: 0;
+  min-block-size: 100dvh;
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Author `display` declarations outrank the UA rule for [hidden], and several
+   components set display on the same elements the nav/deck toggles hide. */
+[hidden] {
+  display: none !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+img {
+  max-inline-size: 100%;
+  display: block;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+svg {
+  display: block;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* --- layout primitives ---------------------------------------------------- */
+
+.wrap {
+  inline-size: min(100% - 2.5rem, var(--maxw));
+  margin-inline: auto;
+}
+@media (min-width: 768px) {
+  .wrap {
+    inline-size: min(100% - 4rem, var(--maxw));
+  }
+}
+
+.stack > * + * {
+  margin-block-start: var(--gap, 1rem);
+}
+.section {
+  padding-block: var(--section-pad, clamp(3.5rem, 7vw, 7rem));
+}
+
+.grid {
+  display: grid;
+  gap: var(--gap, 1.5rem);
+}
+.cols-2,
+.cols-3 {
+  grid-template-columns: 1fr;
+}
+@media (min-width: 720px) {
+  .cols-2,
+  .cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1040px) {
+  .cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.flow-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap, 1rem);
+}
+
+/* Accessible label that stays available to screen readers only. */
+.sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  inset-block-start: -100%;
+  inset-inline-start: 1rem;
+  z-index: 999;
+  padding: 0.75rem 1.25rem;
+  background: #fff;
+  color: #000;
+  border-radius: 0 0 var(--r-sm) var(--r-sm);
+}
+.skip-link:focus {
+  inset-block-start: 0;
+}
+
+/* Media that must fill a fixed-ratio box without distorting. */
+.media {
+  position: relative;
+  overflow: hidden;
+  background: var(--media-bg);
+}
+.media > img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+/* Horizontal carousels scroll natively; arrows just nudge scroll position. */
+.rail {
+  display: flex;
+  gap: var(--gap, 1.5rem);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline-start: 1px;
+  padding-block-end: 1rem;
+  scrollbar-width: thin;
+}
+.rail > * {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+}
+
+/* Arrows and chevrons are the only things that must physically mirror. */
+[dir="rtl"] .mirror {
+  transform: scaleX(-1);
+}
+
+/* Touch targets stay at or above 44px regardless of theme. */
+.tap {
+  min-block-size: 44px;
+  min-inline-size: 44px;
+}
+
+/* --- shared type ---------------------------------------------------------- */
+
+.display {
+  font-family: var(--display);
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  line-height: 1.04;
+  letter-spacing: var(--display-tracking);
+}
+
+.eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: var(--eyebrow-tracking);
+  text-transform: var(--eyebrow-transform);
+}
+
+.lede {
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  color: var(--ink-soft);
+  max-inline-size: 62ch;
+}
+
+/* Arabic sits on a larger optical size than Latin at the same nominal px,
+   but its x-height is smaller and its ascenders/descenders are taller, so
+   body copy needs more leading to stay readable. */
+[dir="rtl"] body {
+  line-height: 1.8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

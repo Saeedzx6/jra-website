@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JRA home page — three directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/base.css">
+<link rel="stylesheet" href="shared/brand.css">
+<style>
+:root {
+  --ink: var(--grey-900); --soft: var(--jra-grey); --line: var(--grey-200);
+  --blue: var(--jra-blue); --navy: var(--blue-900); --canvas: var(--grey-50);
+  --focus: var(--jra-blue); --maxw: 1180px;
+}
+body { background: var(--canvas); color: var(--ink); font-family: "IBM Plex Sans", system-ui, sans-serif; }
+.mono { font-family: "IBM Plex Mono", monospace; font-size: .6875rem; letter-spacing: .1em; text-transform: uppercase; }
+
+.head { background: var(--navy); color: #fff; padding-block: clamp(2.5rem, 6vw, 4.5rem); }
+.head .mono { color: var(--blue-300); }
+.head h1 { font-size: clamp(1.9rem, 4.5vw, 3rem); font-weight: 600; letter-spacing: -.02em; margin-block: .75rem; }
+.head p { color: rgba(255,255,255,.8); max-inline-size: 62ch; }
+
+.cards { display: grid; gap: 1.5rem; padding-block: clamp(2.5rem, 5vw, 4rem); }
+@media (min-width: 980px) { .cards { grid-template-columns: repeat(3, 1fr); } }
+
+.card {
+  background: #fff; border: 1px solid var(--line); border-radius: 10px;
+  overflow: hidden; display: grid; grid-template-rows: auto 1fr auto;
+}
+.swatchbar { display: flex; block-size: 8px; }
+.swatchbar span { flex: 1; }
+
+.preview {
+  aspect-ratio: 16 / 10; border-block-end: 1px solid var(--line);
+  display: grid; place-items: center; padding: 1.5rem; text-align: center;
+  gap: .5rem;
+}
+.preview .big { font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.1; }
+.preview .small { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; opacity: .7; }
+
+.p-a { background: #FAFAF9; color: var(--grey-900); font-family: "Playfair Display", Georgia, serif; }
+.p-b { background: linear-gradient(135deg, #0053A0, #062E55); color: #fff; font-family: "Poppins", system-ui, sans-serif; font-style: italic; font-weight: 700; }
+.p-c { background: #062E55; color: #fff; }
+
+.card-body { padding: 1.5rem; display: grid; gap: .75rem; align-content: start; }
+.card-body h2 { font-size: 1.25rem; font-weight: 600; }
+.card-body p { font-size: .9375rem; color: var(--soft); }
+.card-body dl { display: grid; gap: .5rem; margin-block-start: .25rem; }
+.card-body dt { font-family: "IBM Plex Mono", monospace; font-size: .625rem; letter-spacing: .1em; text-transform: uppercase; color: var(--soft); }
+.card-body dd { font-size: .875rem; margin: 0; }
+
+.card-foot { padding: 1.25rem 1.5rem; border-block-start: 1px solid var(--line); display: flex; gap: .75rem; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-block-size: 44px; padding: .6rem 1.15rem; border-radius: 4px;
+  font-size: .875rem; font-weight: 600;
+  background: var(--blue); color: #fff; border: 1px solid var(--blue);
+}
+.btn:hover { background: var(--blue-500); border-color: var(--blue-500); }
+.btn-outline { background: none; color: var(--blue); }
+.btn-outline:hover { background: var(--blue-50); }
+
+.notes { background: #fff; border-block-start: 1px solid var(--line); padding-block: clamp(2.5rem, 5vw, 4rem); }
+.notes h2 { font-size: 1.375rem; font-weight: 600; margin-block-end: 1rem; }
+.notes ul { display: grid; gap: .65rem; }
+.notes li { font-size: .9375rem; color: var(--soft); padding-inline-start: 1.1rem; position: relative; max-inline-size: 90ch; }
+.notes li::before { content: "—"; position: absolute; inset-inline-start: 0; color: var(--blue); }
+.notes b { color: var(--ink); font-weight: 600; }
+</style>
+<link rel="icon" href="assets/SmallLogo.gif">
+</head>
+<body>
+
+<header class="head">
+  <div class="wrap">
+    <p class="mono">JRA.jo redesign · step zero</p>
+    <h1>Three directions for the home page.</h1>
+    <p>Same content, same sections, same real data — 757 member restaurants pulled from the current nopCommerce export, with their real photography. Only the design changes, so the comparison is about design and nothing else. Open each one, then tell me which direction to take forward (or which parts to mix).</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="cards">
+
+    <article class="card">
+      <div class="swatchbar">
+        <span style="background:#FAFAF9"></span><span style="background:#EFEFF0"></span>
+        <span style="background:#0053A0"></span><span style="background:#6C6D70"></span>
+        <span style="background:#232427"></span>
+      </div>
+      <div class="preview p-a">
+        <span class="small" style="font-family:'IBM Plex Sans',sans-serif">Direction A</span>
+        <span class="big">Every table in Jordan,<br>one association.</span>
+      </div>
+      <div class="card-body">
+        <h2>A — Editorial Guide</h2>
+        <p>Paper, whitespace and big photography, in the manner of a printed restaurant guide. Blue appears once per screen; everything else is the logo grey. Sector services are a numbered editorial index, not coloured blocks.</p>
+        <dl>
+          <dt>Type</dt><dd>Playfair Display + Inter</dd>
+          <dt>Hero</dt><dd>Photograph with a large search field</dd>
+          <dt>Commits you to</dt><dd>Good photography and disciplined copy. Reads premium and food-first; makes JRA a curator. Weakest at signalling &ldquo;regulator&rdquo;.</dd>
+        </dl>
+      </div>
+      <div class="card-foot">
+        <a class="btn" href="a-editorial/">Open Direction A</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="swatchbar">
+        <span style="background:#0053A0"></span><span style="background:#4A4B4E"></span>
+        <span style="background:#062E55"></span><span style="background:#0A66BC"></span>
+        <span style="background:#6C6D70"></span>
+      </div>
+      <div class="preview p-b">
+        <span class="small" style="font-family:'IBM Plex Sans',sans-serif;font-style:normal;font-weight:400">Direction B</span>
+        <span class="big">kingdom of flavour</span>
+      </div>
+      <div class="card-body">
+        <h2>B — Kingdom of Flavour</h2>
+        <p>Full-bleed hero, oversized italic display type, and a six-tile coloured grid whose panels expand over the photograph on hover. The Visit Jordan structure, rebuilt on a blue-and-grey ladder instead of its warm palette.</p>
+        <dl>
+          <dt>Type</dt><dd>Poppins Italic + DM Sans</dd>
+          <dt>Hero</dt><dd>Full-bleed image, centered headline, pill search</dd>
+          <dt>Commits you to</dt><dd>Bold colour blocking within a two-colour identity. Most distinctive of the three; if you later want warmth back, this is the direction that would need a sanctioned accent colour added to the brand.</dd>
+        </dl>
+      </div>
+      <div class="card-foot">
+        <a class="btn" href="b-kingdom/">Open Direction B</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="swatchbar">
+        <span style="background:#062E55"></span><span style="background:#0053A0"></span>
+        <span style="background:#7FB3E3"></span><span style="background:#8A5A12"></span>
+        <span style="background:#12645A"></span>
+      </div>
+      <div class="preview p-c">
+        <span class="small">Direction C</span>
+        <span class="big" style="font-weight:600;letter-spacing:-.02em;font-size:clamp(1.15rem,2.2vw,1.5rem)">The directory, the standards and the rules for Jordan&rsquo;s restaurant sector.</span>
+      </div>
+      <div class="card-body">
+        <h2>C — Sector Gateway</h2>
+        <p>Navy, tight grid, information-dense. The fold is a working search console with cuisine, governorate and feature filters. Legislative alerts and opportunities get their own columns.</p>
+        <dl>
+          <dt>Type</dt><dd>IBM Plex Sans + IBM Plex Mono</dd>
+          <dt>Hero</dt><dd>Search-and-filter console over a muted image</dd>
+          <dt>Commits you to</dt><dd>Credibility with ministries, members and press, and fast task completion. Least &ldquo;delicious&rdquo;, most defensible as the official association site.</dd>
+        </dl>
+      </div>
+      <div class="card-foot">
+        <a class="btn" href="c-gateway/">Open Direction C</a>
+      </div>
+    </article>
+
+  </div>
+</main>
+
+<section class="notes">
+  <div class="wrap">
+    <h2>Notes on all three</h2>
+    <ul>
+      <li><b>Same skeleton.</b> Header &rarr; hero &rarr; primary actions &rarr; sector destinations &rarr; member restaurants &rarr; JRA in numbers &rarr; news &rarr; membership &rarr; newsletter &rarr; footer. Nothing is dropped in any direction; each expresses the sections differently.</li>
+      <li><b>Real data.</b> Restaurants, cuisines, governorates and features come from <code>resutaurants.xlsx</code> via <code>tools/extract.py</code>. Picture&nbsp;1 in the export is always the venue logo; Picture&nbsp;2 is the actual photograph, which is what these pages use.</li>
+      <li><b>Palettes come from the logo, not from taste.</b> The artwork uses exactly two colours &mdash; <span class="mono" style="text-transform:none">#0053A0</span> for the ellipse mark and <span class="mono" style="text-transform:none">#6C6D70</span> for all type. Every surface, rule and accent in all three directions is a tonal step on those two. Direction C adds a muted amber and green, used <em>only</em> to distinguish a legislative alert from an opportunity; they are status indicators, not brand colours.</li>
+      <li><b>The logo needs an official reversed version.</b> The supplied lockup is blue-and-grey on white and disappears on dark footers, so the knockout used here was generated by forcing the artwork white. Ask the association for a sanctioned reversed lockup before production.</li>
+      <li><b>Photos are hotlinked from jra.jo</b> for mockup purposes. They must be self-hosted and resized before production.</li>
+      <li><b>Arabic is wired but not translated.</b> Every string carries a translation key and all CSS uses logical properties, so the <span class="mono" style="text-transform:none">عربي</span> toggle already flips the whole layout to RTL. Only the dictionary is empty.</li>
+      <li><b>Accessibility.</b> Visible focus rings, 44px touch targets, keyboard-reachable tile panels, <code>prefers-reduced-motion</code> honoured, no horizontal scroll at 375px.</li>
+      <li><b>Not built yet.</b> Backend, CMS, member login, and every page other than home — this is a look-and-feel decision, not the build.</li>
+    </ul>
+  </div>
+</section>
+
+</body>
+</html>

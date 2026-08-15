@@ -1,0 +1,52 @@
+/* JRA brand tokens, sampled directly from logo.png.
+   The identity is strictly two colours:
+     #0053A0  blue  — the ellipse mark
+     #6C6D70  grey  — all type, Arabic and Latin
+   Everything below is a tonal derivation of those two. No third hue is
+   introduced anywhere except the status colours at the bottom, which exist
+   because "alert" and "opportunity" must be told apart at a glance. */
+
+:root {
+  /* --- the two brand colours, unmodified --- */
+  --jra-blue: #0053A0;
+  --jra-grey: #6C6D70;
+
+  /* --- blue ramp ------------------------------------------------------- */
+  --blue-950: #041F3A;   /* deepest surface */
+  --blue-900: #062E55;
+  --blue-800: #003A73;
+  --blue-600: #0053A0;   /* brand */
+  --blue-500: #0A66BC;   /* hover lift */
+  --blue-300: #7FB3E3;   /* on dark: eyebrows, links */
+  --blue-100: #D6E5F3;
+  --blue-50:  #EDF3F9;   /* washes, hover rows */
+
+  /* --- neutral ramp, anchored on the logo grey ------------------------- */
+  --grey-900: #232427;   /* headings */
+  --grey-800: #333437;
+  --grey-700: #4A4B4E;
+  --grey-600: #6C6D70;   /* brand — body/secondary text, 5.2:1 on white */
+  --grey-400: #A0A1A4;
+  --grey-300: #C8C9CB;
+  --grey-200: #DFE0E2;   /* rules and borders */
+  --grey-100: #EFEFF0;
+  --grey-50:  #F7F7F8;
+  --white:    #FFFFFF;
+
+  /* --- status only. Not brand colours; never used decoratively. -------- */
+  --status-alert: #8A5A12;
+  --status-good:  #12645A;
+}
+
+/* The logo lockup. `--logo-h` lets each direction size it without touching
+   the aspect ratio (the artwork is 324x61). */
+.logo {
+  display: block;
+  block-size: var(--logo-h, 34px);
+  inline-size: auto;
+}
+.logo-white { display: none; }
+
+/* On dark surfaces the knockout version is swapped in. */
+.on-dark .logo-dark { display: none; }
+.on-dark .logo-white { display: block; }

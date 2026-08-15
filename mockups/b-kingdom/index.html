@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JRA — Direction B: Kingdom of Flavour</title>
+<meta name="description" content="Jordan Restaurant Association home page mockup — bold tile-grid direction.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/brand.css">
+<link rel="stylesheet" href="theme.css">
+<link rel="icon" href="../assets/SmallLogo.gif">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="utility">
+  <div class="wrap">
+    <span>The official body of Jordan&rsquo;s tourist restaurants</span>
+    <span class="flow-row" style="gap:1.25rem">
+      <a href="tel:+96264621558">+962 6 462 1558</a>
+      <a href="mailto:info@jra.jo">info@jra.jo</a>
+      <button type="button" data-lang-toggle aria-pressed="false">عربي</button>
+    </span>
+  </div>
+</div>
+
+<header class="site-header" data-header>
+  <div class="wrap">
+    <a class="wordmark" href="#" aria-label="Jordan Restaurant Association, home">
+      <img class="logo logo-dark" src="../assets/logo.png" alt="Jordan Restaurant Association">
+      <img class="logo logo-white" src="../assets/logo-white.png" alt="Jordan Restaurant Association">
+    </a>
+    <nav class="site-nav" aria-label="Primary"></nav>
+    <div class="header-actions">
+      <a class="btn" href="#" data-i18n="nav.login">Member login</a>
+      <button class="icon-btn nav-toggle tap" type="button" data-nav-toggle="#mobile-nav"
+              aria-expanded="false" aria-controls="mobile-nav" data-i18n-label="nav.menu" aria-label="Menu">
+        <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M0 1h20M0 7h20M0 13h20"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobile-nav" hidden aria-label="Mobile"></nav>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="hero-media">
+      <img src="https://jra.jo/content/images/thumbs/0018495_vintage-restaurant.jpeg"
+           alt="Dining room of a member restaurant in Amman">
+    </div>
+    <div class="wrap">
+      <p class="eyebrow">Jordan Restaurant Association</p>
+      <h1 class="display">kingdom of flavour</h1>
+      <p class="lede">757 restaurants, cafés and suppliers — one association speaking for the sector that feeds a country and welcomes the world.</p>
+      <div class="searchbox">
+        <form role="search" onsubmit="return false">
+          <label class="sr-only" for="q-b">Search the JRA directory</label>
+          <input id="q-b" type="search" autocomplete="off" role="combobox"
+                 aria-expanded="false" aria-controls="suggest-b"
+                 placeholder="Search restaurants, cuisines, or areas…" data-search="#suggest-b">
+          <button type="submit" data-i18n="search.submit">Search</button>
+        </form>
+        <ul class="suggest" id="suggest-b" role="listbox" aria-label="Search suggestions" hidden></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="actions" aria-label="Quick access">
+    <div class="wrap"><ul id="actions-b"></ul></div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">What the association does</p>
+        <h2 class="display">explore</h2>
+        <p class="lede" style="text-align:center">Six doors into the sector — for restaurateurs, suppliers, investors and anyone who eats out in Jordan.</p>
+      </div>
+      <div class="tiles" id="tiles-b"></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-block-start:0">
+    <div class="wrap">
+      <div class="rail-head" style="margin-block-end:2rem">
+        <div class="stack" style="--gap:.5rem">
+          <p class="eyebrow" style="color:var(--terracotta)">From the directory</p>
+          <h2 class="display" style="font-size:clamp(1.9rem,4vw,2.75rem)">member restaurants</h2>
+        </div>
+        <div class="rail-nav">
+          <button class="icon-btn tap" type="button" data-rail-prev="#rail-b" aria-label="Previous restaurants">
+            <svg class="mirror" width="16" height="14" viewBox="0 0 16 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 1L1 7l6 6M1 7h15"/></svg>
+          </button>
+          <button class="icon-btn tap" type="button" data-rail-next="#rail-b" aria-label="Next restaurants">
+            <svg class="mirror" width="16" height="14" viewBox="0 0 16 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 1l6 6-6 6M15 7H0"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="rail" id="rail-b"></div>
+    </div>
+  </section>
+
+  <section class="section stats">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" style="color:var(--sand)">JRA in numbers</p>
+        <h2 class="display">the sector, measured</h2>
+      </div>
+      <ul id="stats-b"></ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">News &amp; events</p>
+        <h2 class="display">what we&rsquo;re working on</h2>
+      </div>
+      <div class="news-grid" id="news-b"></div>
+      <div style="display:flex;justify-content:center;margin-block-start:2.5rem">
+        <a class="btn btn-outline" href="#" data-i18n="news.all">All news and events</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="member">
+    <div data-deck id="deck-b"></div>
+  </section>
+
+  <section class="section signup">
+    <div class="wrap signup-grid">
+      <div class="stack">
+        <p class="eyebrow" style="color:var(--terracotta)">Newsletter</p>
+        <h2 class="display">stay ahead of the sector</h2>
+        <p class="lede">Legislation changes, funding calls, training intakes and the monthly magazine — sent only about what you pick.</p>
+      </div>
+      <form class="stack" style="--gap:1.25rem" onsubmit="return false">
+        <div class="field">
+          <label for="email-b" data-i18n="newsletter.email">Email address</label>
+          <input id="email-b" type="email" autocomplete="email" placeholder="you@restaurant.jo" required>
+        </div>
+        <fieldset style="border:0;padding:0;margin:0">
+          <legend class="eyebrow" style="padding:0;margin-block-end:.6rem;color:var(--ink-soft)" data-i18n="newsletter.interests">What should we send you?</legend>
+          <div class="checks" id="interests-b"></div>
+        </fieldset>
+        <div><button class="btn" type="submit">Subscribe</button></div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer on-dark">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img class="logo logo-white" src="../assets/logo-white.png" alt="Jordan Restaurant Association" style="display:block">
+        <p>2nd Circle, Jabal Amman, Jordan<br>+962 6 462 1558<br>info@jra.jo</p>
+      </div>
+      <div id="footer-b" style="display:contents"></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Jordan Restaurant Association. All rights reserved.</span>
+      <span>Direction B — Kingdom of Flavour</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../shared/content.js"></script>
+<script src="../shared/data.js"></script>
+<script>
+(function () {
+  var C = JRA_CONTENT, D = JRA_DATA;
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+
+  document.querySelector(".site-nav").innerHTML =
+    C.nav.map(function (n) { return '<a href="' + n.href + '">' + esc(n.label) + "</a>"; }).join("");
+  document.getElementById("mobile-nav").innerHTML =
+    C.nav.map(function (n) { return '<a href="' + n.href + '">' + esc(n.label) + "</a>"; }).join("") +
+    '<a href="#">Member login</a>';
+
+  document.getElementById("actions-b").innerHTML = C.actions.map(function (a) {
+    return '<li><a href="' + a.href + '"><strong>' + esc(a.label) + "</strong><span>" +
+      esc(a.note) + "</span></a></li>";
+  }).join("");
+
+  document.getElementById("tiles-b").innerHTML = C.destinations.map(function (d) {
+    return '<article class="tile reveal" style="--tile:var(--' + d.color + ')">' +
+      '<div class="media"><img loading="lazy" src="' + d.image + '" alt=""></div>' +
+      '<div class="tile-panel">' +
+        '<p class="eyebrow">' + esc(d.eyebrow) + "</p>" +
+        "<h3>" + esc(d.title) + "</h3>" +
+        '<div class="tile-reveal"><p>' + esc(d.body) + "</p>" +
+        '<span class="btn btn-light" aria-hidden="true">' + esc(d.cta) + "</span></div>" +
+      "</div>" +
+      '<a class="tile-link" href="#"><span>' + esc(d.eyebrow) + ": " + esc(d.cta) + "</span></a>" +
+      "</article>";
+  }).join("");
+
+  document.getElementById("rail-b").innerHTML = D.restaurants.map(function (r) {
+    return '<article class="rest-card reveal"><div class="media"><img loading="lazy" src="' +
+      r.image + '" alt="' + esc(r.name) + '"></div><div class="body">' +
+      "<h3>" + esc(r.name) + "</h3>" +
+      '<p class="rest-meta">' + esc(r.cuisine) + " &middot; " + esc(r.city) + "</p>" +
+      '<div class="rest-tags">' + r.tags.slice(0, 3).map(function (t) {
+        return "<span>" + esc(t) + "</span>"; }).join("") + "</div></div></article>";
+  }).join("");
+
+  document.getElementById("stats-b").innerHTML = C.stats.map(function (s) {
+    return '<li class="reveal"><span class="num"><span data-count="' + s.value + '"' +
+      (s.decimals ? ' data-decimals="' + s.decimals + '"' : "") + ">0</span>" +
+      (s.suffix ? '<span class="suffix">' + esc(s.suffix) + "</span>" : "") + "</span>" +
+      '<span class="label">' + esc(s.label) + "</span></li>";
+  }).join("");
+
+  document.getElementById("news-b").innerHTML = C.news.map(function (n) {
+    return '<article class="news-card reveal"><div class="media"><img loading="lazy" src="' +
+      n.image + '" alt=""></div><div class="body"><p class="news-date"><b>' + esc(n.kicker) +
+      "</b> &middot; " + esc(n.date) + "</p><h3>" + esc(n.title) + '</h3><p class="news-body">' +
+      esc(n.body) + "</p></div></article>";
+  }).join("");
+
+  document.getElementById("deck-b").innerHTML =
+    C.membership.map(function (m, i) {
+      return '<div class="member-slide" data-slide' + (i ? " hidden" : "") + ">" +
+        '<div class="member-copy"><p class="eyebrow">' + esc(m.eyebrow) + "</p>" +
+        "<h2>" + esc(m.title) + "</h2><p>" + esc(m.body) + "</p>" +
+        '<div><a class="btn btn-light" href="#">' + esc(m.cta) + "</a></div></div>" +
+        '<div class="media"><img loading="lazy" src="' + m.image + '" alt=""></div></div>';
+    }).join("") +
+    '<div class="deck-foot"><div class="deck-nav">' +
+      '<button class="icon-btn tap" type="button" data-deck-prev aria-label="Previous slide">' +
+      '<svg class="mirror" width="16" height="14" viewBox="0 0 16 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 1L1 7l6 6M1 7h15"/></svg></button>' +
+      '<button class="icon-btn tap" type="button" data-deck-next aria-label="Next slide">' +
+      '<svg class="mirror" width="16" height="14" viewBox="0 0 16 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 1l6 6-6 6M15 7H0"/></svg></button>' +
+      '<span class="deck-count" data-deck-count></span></div></div>';
+
+  document.getElementById("interests-b").innerHTML = C.newsletter.interests.map(function (t, i) {
+    return '<label><input type="checkbox" name="interest" value="' + esc(t) + '"' +
+      (i === 0 ? " checked" : "") + "> " + esc(t) + "</label>";
+  }).join("");
+
+  document.getElementById("footer-b").innerHTML = C.footer.map(function (col) {
+    return "<div><h4>" + esc(col.heading) + "</h4><ul>" +
+      col.links.map(function (l) { return '<li><a href="#">' + esc(l) + "</a></li>"; }).join("") +
+      "</ul></div>";
+  }).join("");
+})();
+</script>
+<script src="../shared/behavior.js"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+/* Structure only — no visual opinions. Each mockup's theme.css supplies the look.
+   Every directional property here is logical, so flipping <html dir="rtl"> mirrors
+   the whole layout without a second stylesheet. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Author `display` declarations outrank the UA rule for [hidden], and several
+   components here set display on the same elements the deck/nav toggles hide. */
+[hidden] { display: none !important; }
+
+h1, h2, h3, h4, p, figure, blockquote, dl, dd { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { background: none; border: 0; cursor: pointer; }
+svg { display: block; }
+
+:focus-visible {
+  outline: 3px solid var(--focus, #0254A1);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* --- layout primitives ---------------------------------------------------- */
+
+.wrap {
+  inline-size: min(100% - 2.5rem, var(--maxw, 1240px));
+  margin-inline: auto;
+}
+@media (min-width: 768px) { .wrap { inline-size: min(100% - 4rem, var(--maxw, 1240px)); } }
+
+.stack > * + * { margin-block-start: var(--gap, 1rem); }
+.section { padding-block: var(--section-pad, clamp(3.5rem, 7vw, 7rem)); }
+
+.grid { display: grid; gap: var(--gap, 1.5rem); }
+.cols-2 { grid-template-columns: 1fr; }
+.cols-3 { grid-template-columns: 1fr; }
+@media (min-width: 720px) {
+  .cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .cols-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1040px) {
+  .cols-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+.flow-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap, 1rem);
+}
+
+/* Accessible label that stays available to screen readers only. */
+.sr-only {
+  position: absolute;
+  inline-size: 1px; block-size: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  inset-block-start: -100%;
+  inset-inline-start: 1rem;
+  z-index: 999;
+  padding: 0.75rem 1.25rem;
+  background: #fff;
+  color: #000;
+}
+.skip-link:focus { inset-block-start: 1rem; }
+
+/* Media that must fill a fixed-ratio box without distorting. */
+.media { position: relative; overflow: hidden; background: var(--media-bg, #ddd); }
+.media > img {
+  inline-size: 100%; block-size: 100%;
+  object-fit: cover;
+}
+
+/* --- shared behaviour hooks ---------------------------------------------- */
+
+/* Scroll reveal: JS adds .is-in once the element enters the viewport. */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .6s ease-out, transform .6s ease-out;
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* Horizontal carousels scroll natively; JS arrows just nudge scrollLeft. */
+.rail {
+  display: flex;
+  gap: var(--gap, 1.5rem);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline-start: 1px;
+  padding-block-end: 1rem;
+  scrollbar-width: thin;
+}
+.rail > * { scroll-snap-align: start; flex: 0 0 auto; }
+
+/* Arrows and chevrons are the only things that must physically mirror. */
+[dir="rtl"] .mirror { transform: scaleX(-1); }
+
+/* Touch targets stay at or above 44px regardless of theme. */
+.tap { min-block-size: 44px; min-inline-size: 44px; }
+
+/* The language toggle sits in a deliberately thin utility bar, so it gets its
+   44px hit area from padding and gives the height back with negative margin. */
+[data-lang-toggle] {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+  padding-inline: 0.5rem;
+  margin-block: -0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

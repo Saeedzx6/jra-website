@@ -1,0 +1,94 @@
+/* Home page composition. Section internals live with their components; this
+   file only positions them relative to one another. */
+
+.heroConsole {
+  inline-size: min(100%, 62rem);
+  margin-block-start: 0.5rem;
+}
+
+/* Quick-access pills overlap the hero, as in Direction B. */
+.actions {
+  position: relative;
+  z-index: 10;
+  margin-block-start: -2.75rem;
+}
+
+.actionsList {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .actionsList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1040px) {
+  .actionsList {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.actionsList a {
+  display: grid;
+  gap: 0.2rem;
+  align-content: center;
+  min-block-size: 96px;
+  padding: 1.1rem 1.25rem;
+  background: #fff;
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-raised);
+  transition:
+    transform var(--dur-mid) ease,
+    background var(--dur-mid) ease,
+    color var(--dur-mid) ease;
+}
+.actionsList a:hover {
+  transform: translateY(-3px);
+  background: var(--navy);
+  color: #fff;
+}
+.actionsList strong {
+  font-size: 1rem;
+  font-weight: 700;
+}
+.actionsList span {
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+.actionsList a:hover span {
+  color: rgb(255 255 255 / 0.75);
+}
+
+.railHead {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-block-end: 2rem;
+}
+
+.signup {
+  background: var(--blue-50);
+}
+
+.signupGrid {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3rem);
+}
+@media (min-width: 900px) {
+  .signupGrid {
+    grid-template-columns: 1fr 1.1fr;
+    align-items: center;
+  }
+}
+.signupGrid h2 {
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  margin-block-start: 2.5rem;
+}
