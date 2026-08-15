@@ -28,7 +28,7 @@ export default async function AdminContactPage() {
                   </button>
                 </form>
               ) : (
-                <span className="shrink-0 rounded-full bg-olive-soft px-3 py-1 text-xs font-medium text-olive">
+                <span className="shrink-0 rounded-full bg-olive-soft px-3 py-1 text-xs font-medium text-olive-text">
                   {tc("handled")}
                 </span>
               )}

@@ -11,7 +11,10 @@
   --color-surface-2: #f2f3f5;
   --color-ink: #1c1e22;
   --color-ink-soft: #585d64;
-  --color-ink-faint: #8b9098;
+  /* Was #8b9098, which measured 3.00:1 on --color-paper — below the 4.5:1 AA
+     floor for the captions and metadata it is used for. Darkened to the
+     lightest value that clears 4.5:1 on surface, paper and surface-2. */
+  --color-ink-faint: #6b6f75;
   --color-accent: #0050a0;
   --color-accent-strong: #003d7a;
   --color-accent-soft: #e8f1fb;
@@ -20,6 +23,37 @@
   --color-brass: #b8901f;
   --color-brass-soft: #f3e8cc;
   --color-rule: #e5e7eb;
+
+  /* -- Readable text variants -------------------------------------------
+     The brand olive and brass are correct as *fills* — icons, stars,
+     borders, chip backgrounds — where 3:1 is the bar (WCAG 1.4.11). As
+     text they failed: brass measured 2.98:1 on white and 2.44:1 on its own
+     soft chip. These are the darkened equivalents that clear 4.5:1 on
+     surface, paper and their soft background. Use *-text for glyphs,
+     the base token for fills. The dark theme needs no equivalent — it
+     already measures 8:1+, so both map back to the base there. */
+  --color-olive-text: #1a7853;
+  --color-brass-text: #816516;
+
+  /* -- Semantic status ---------------------------------------------------
+     Distinct from the brand accents, which were previously doing double
+     duty. The schema carries eight status enums (DRAFT/PUBLISHED/ARCHIVED,
+     PENDING/APPROVED/REJECTED/MORE_INFO, MET/PARTIAL/NOT_MET, EXPIRED …)
+     and there was no danger token at all to render the negative half.
+     Never use these alone to carry meaning — always pair with an icon or
+     text label (WCAG 1.4.1). */
+  --color-success: #1e8a5f;
+  --color-success-soft: #dceee3;
+  --color-success-text: #1a7853;
+  --color-warning: #b8901f;
+  --color-warning-soft: #f3e8cc;
+  --color-warning-text: #816516;
+  --color-danger: #d92d20;
+  --color-danger-soft: #fee4e2;
+  --color-danger-text: #ca2a1e;
+  --color-info: #0050a0;
+  --color-info-soft: #e8f1fb;
+  --color-info-text: #0050a0;
   --shadow-card: 0 1px 2px rgba(20, 20, 20, 0.05), 0 10px 28px rgba(20, 20, 20, 0.07);
 
   /* Editorial layer — floating white surfaces over an atmospheric backdrop.
@@ -41,7 +75,8 @@
   --color-surface-2: #16283a;
   --color-ink: #e7eef5;
   --color-ink-soft: #a9b7c3;
-  --color-ink-faint: #6e7c89;
+  /* Was #6e7c89 — lightened to clear 4.5:1 on paper, surface and surface-2. */
+  --color-ink-faint: #828f9c;
   --color-accent: #4a9be0;
   --color-accent-strong: #6fb4ec;
   --color-accent-soft: #123354;
@@ -50,6 +85,26 @@
   --color-brass: #e0bb4e;
   --color-brass-soft: #2e2610;
   --color-rule: #223244;
+
+  /* Dark-theme brand hues already measure 8:1+ as text, so the readable
+     variants are the base tokens — no separate value needed. */
+  --color-olive-text: #4cc08a;
+  --color-brass-text: #e0bb4e;
+
+  --color-success: #4cc08a;
+  --color-success-soft: #123b2a;
+  --color-success-text: #4cc08a;
+  --color-warning: #e0bb4e;
+  --color-warning-soft: #2e2610;
+  --color-warning-text: #e0bb4e;
+  --color-danger: #f97066;
+  --color-danger-soft: #3b1412;
+  --color-danger-text: #f97066;
+  --color-info: #4a9be0;
+  --color-info-soft: #123354;
+  /* Slightly lighter than --color-info: the base measured 4.34:1 on
+     info-soft, just under the AA floor. */
+  --color-info-text: #509fe1;
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 32px rgba(0, 0, 0, 0.4);
   /* Dark mode can't lean on shadow for elevation — the ambient light is gone.
      Keep a soft cast for grounding and let borders carry the separation. */
@@ -70,7 +125,7 @@
   --color-surface-2: #f2f3f5;
   --color-ink: #1c1e22;
   --color-ink-soft: #585d64;
-  --color-ink-faint: #8b9098;
+  --color-ink-faint: #6b6f75;
   --color-accent: #0050a0;
   --color-accent-strong: #003d7a;
   --color-accent-soft: #e8f1fb;
@@ -79,6 +134,22 @@
   --color-brass: #b8901f;
   --color-brass-soft: #f3e8cc;
   --color-rule: #e5e7eb;
+
+  --color-olive-text: #1a7853;
+  --color-brass-text: #816516;
+
+  --color-success: #1e8a5f;
+  --color-success-soft: #dceee3;
+  --color-success-text: #1a7853;
+  --color-warning: #b8901f;
+  --color-warning-soft: #f3e8cc;
+  --color-warning-text: #816516;
+  --color-danger: #d92d20;
+  --color-danger-soft: #fee4e2;
+  --color-danger-text: #ca2a1e;
+  --color-info: #0050a0;
+  --color-info-soft: #e8f1fb;
+  --color-info-text: #0050a0;
   --shadow-card: 0 1px 2px rgba(20, 20, 20, 0.05), 0 10px 28px rgba(20, 20, 20, 0.07);
   --shadow-float:
     0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.06),
@@ -105,9 +176,24 @@
   --color-accent-soft: var(--color-accent-soft);
   --color-olive: var(--color-olive);
   --color-olive-soft: var(--color-olive-soft);
+  --color-olive-text: var(--color-olive-text);
   --color-brass: var(--color-brass);
   --color-brass-soft: var(--color-brass-soft);
+  --color-brass-text: var(--color-brass-text);
   --color-rule: var(--color-rule);
+
+  --color-success: var(--color-success);
+  --color-success-soft: var(--color-success-soft);
+  --color-success-text: var(--color-success-text);
+  --color-warning: var(--color-warning);
+  --color-warning-soft: var(--color-warning-soft);
+  --color-warning-text: var(--color-warning-text);
+  --color-danger: var(--color-danger);
+  --color-danger-soft: var(--color-danger-soft);
+  --color-danger-text: var(--color-danger-text);
+  --color-info: var(--color-info);
+  --color-info-soft: var(--color-info-soft);
+  --color-info-text: var(--color-info-text);
 
   --font-display-en: var(--font-display-en);
   --font-editorial-en: var(--font-editorial-en);

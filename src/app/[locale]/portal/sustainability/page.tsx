@@ -27,7 +27,7 @@ export default async function PortalSustainabilityPage() {
               <div className="flex items-center justify-between">
                 <h2 className="font-display text-lg font-semibold text-ink">{restaurant.name}</h2>
                 {restaurant.sustainabilityScore ? (
-                  <span className="tabular rounded-full bg-olive-soft px-3 py-1 text-sm font-medium text-olive">
+                  <span className="tabular rounded-full bg-olive-soft px-3 py-1 text-sm font-medium text-olive-text">
                     {ts("currentScore", { score: Math.round(restaurant.sustainabilityScore) })}
                   </span>
                 ) : null}

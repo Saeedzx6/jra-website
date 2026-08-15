@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { MapPin, Phone, Mail, Globe, Star, Clock } from "lucide-react";
+import { MapPin, Phone, Mail, Globe, Star, Clock, Leaf, ArrowRight, Building2 } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import { getRestaurantBySlug } from "@/lib/restaurants";
 import { buildMetadata, toDescription } from "@/lib/seo";
 import { jsonLdScript, restaurantLd, breadcrumbLd } from "@/lib/json-ld";
@@ -79,6 +80,63 @@ export default async function RestaurantDetailPage({
         ? { href: `tel:${digits(restaurant.phone)}`, label: t("callRestaurant"), external: false }
         : null;
 
+  const areaName =
+    locale === "ar" && restaurant.area?.nameAr ? restaurant.area.nameAr : restaurant.area?.nameEn;
+  const govName =
+    locale === "ar" && restaurant.governorate?.nameAr
+      ? restaurant.governorate.nameAr
+      : restaurant.governorate?.nameEn;
+  const place = [areaName, govName].filter(Boolean).join(" · ");
+
+  const locationRows = [
+    restaurant.addressText && {
+      key: "address",
+      Icon: MapPin,
+      value: restaurant.addressText,
+    },
+    place && { key: "place", Icon: Building2, value: place },
+    restaurant.openingHoursText && {
+      key: "hours",
+      Icon: Clock,
+      value: restaurant.openingHoursText,
+    },
+  ].filter((r): r is { key: string; Icon: typeof MapPin; value: string } => Boolean(r));
+
+  const contactRows = [
+    restaurant.phone && {
+      key: "phone",
+      Icon: Phone,
+      value: restaurant.phone,
+      href: `tel:${digits(restaurant.phone)}`,
+      // Phone numbers stay left-to-right even in the Arabic layout.
+      ltr: true,
+    },
+    restaurant.whatsapp && {
+      key: "whatsapp",
+      Icon: Phone,
+      value: restaurant.whatsapp,
+      href: `https://wa.me/${digits(restaurant.whatsapp)}`,
+      ltr: true,
+    },
+    restaurant.email && {
+      key: "email",
+      Icon: Mail,
+      value: restaurant.email,
+      href: `mailto:${restaurant.email}`,
+      ltr: true,
+    },
+    restaurant.website && {
+      key: "website",
+      Icon: Globe,
+      value: restaurant.website.replace(/^https?:\/\//, "").replace(/\/$/, ""),
+      href: restaurant.website,
+      ltr: true,
+    },
+  ].filter(
+    (r): r is { key: string; Icon: typeof Phone; value: string; href: string; ltr: boolean } =>
+      Boolean(r)
+  );
+
   return (
     <div>
       <script
@@ -112,6 +170,8 @@ export default async function RestaurantDetailPage({
           <h1 className="font-display text-3xl font-semibold text-white sm:text-4xl">
             {displayName}
           </h1>
+          {/* Stars sit over the dark hero gradient, so the brand brass is the
+              readable choice — the darkened -text variant is for light surfaces. */}
           {restaurant.classificationLevel ? (
             <div className="mt-2 flex items-center gap-1 text-brass">
               {Array.from({ length: restaurant.classificationLevel.stars }).map((_, i) => (
@@ -140,7 +200,7 @@ export default async function RestaurantDetailPage({
                 {restaurant.cuisines.map((c) => (
                   <span
                     key={c.cuisineId}
-                    className="rounded-full bg-olive-soft px-3 py-1 text-sm text-olive"
+                    className="rounded-full bg-olive-soft px-3 py-1 text-sm text-olive-text"
                   >
                     {locale === "ar" && c.cuisine.nameAr ? c.cuisine.nameAr : c.cuisine.nameEn}
                   </span>
@@ -178,60 +238,100 @@ export default async function RestaurantDetailPage({
           )}
         </div>
 
-        <aside className="space-y-4 rounded-2xl border border-rule bg-surface p-6 h-fit">
-          <h2 className="font-display text-lg font-semibold text-ink">{tr("contact")}</h2>
-          {restaurant.addressText ? (
-            <div className="flex items-start gap-2 text-sm text-ink-soft">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-              <span>{restaurant.addressText}</span>
-            </div>
+        <aside className="h-fit rounded-2xl border border-rule bg-surface p-6">
+          {/* Grouped by what the reader is actually looking for, and each group
+              renders only when it has content. The directory holds an address
+              for ~92% of listings and no contact channel at all for any of
+              them, so a single "Contact" heading over one address line was the
+              norm rather than the exception. */}
+          {locationRows.length > 0 ? (
+            <section>
+              <h2 className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
+                {tr("location")}
+              </h2>
+              <div className="mt-3 space-y-2.5">
+                {locationRows.map(({ key, Icon, value }) => (
+                  <div key={key} className="flex items-start gap-2.5 text-sm text-ink-soft">
+                    <Icon className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+                    <span>{value}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
           ) : null}
-          {restaurant.phone ? (
-            <div className="flex items-center gap-2 text-sm text-ink-soft">
-              <Phone className="h-4 w-4 shrink-0 text-accent" />
-              <span dir="ltr">{restaurant.phone}</span>
-            </div>
-          ) : null}
-          {restaurant.email ? (
-            <div className="flex items-center gap-2 text-sm text-ink-soft">
-              <Mail className="h-4 w-4 shrink-0 text-accent" />
-              <span>{restaurant.email}</span>
-            </div>
-          ) : null}
-          {restaurant.website ? (
-            <div className="flex items-center gap-2 text-sm text-ink-soft">
-              <Globe className="h-4 w-4 shrink-0 text-accent" />
-              <a href={restaurant.website} className="truncate hover:text-accent">
-                {restaurant.website}
-              </a>
-            </div>
-          ) : null}
-          {restaurant.openingHoursText ? (
-            <div className="flex items-start gap-2 text-sm text-ink-soft">
-              <Clock className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-              <span>{restaurant.openingHoursText}</span>
-            </div>
-          ) : null}
-          {restaurant.greenKeyCertified && (
-            <div className="rounded-lg bg-olive-soft px-3 py-2 text-sm font-medium text-olive">
-              {tr("greenKeyCertified")}
-            </div>
+
+          {contactRows.length > 0 ? (
+            <section className={locationRows.length > 0 ? "mt-6 border-t border-rule pt-6" : ""}>
+              <h2 className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
+                {tr("contact")}
+              </h2>
+              <div className="mt-3 space-y-2.5">
+                {contactRows.map(({ key, Icon, value, href, ltr }) => (
+                  <div key={key} className="flex items-start gap-2.5 text-sm text-ink-soft">
+                    <Icon className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+                    {href ? (
+                      <a
+                        href={href}
+                        className="truncate hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                        {...(href.startsWith("http")
+                          ? { target: "_blank", rel: "noopener noreferrer" }
+                          : {})}
+                      >
+                        {value}
+                      </a>
+                    ) : (
+                      <span {...(ltr ? { dir: "ltr" } : {})}>{value}</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          ) : (
+            /* The honest empty state. It says what is missing and gives the one
+               person who can fix it — the owner — a way to do so, which is also
+               how the directory's missing contact data gets filled in. */
+            <section className={locationRows.length > 0 ? "mt-6 border-t border-rule pt-6" : ""}>
+              <h2 className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
+                {tr("contact")}
+              </h2>
+              <p className="mt-3 text-sm font-medium text-ink">{tr("noContactTitle")}</p>
+              <p className="mt-1 text-sm leading-relaxed text-ink-soft">{tr("noContactBody")}</p>
+              <Link
+                href="/membership"
+                className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              >
+                {tr("claimListingCta")}
+                <ArrowRight className="h-3.5 w-3.5 shrink-0 rtl:-scale-x-100" aria-hidden="true" />
+              </Link>
+            </section>
           )}
-          {restaurant.sustainabilityScore ? (
-            <div className="flex items-center justify-between rounded-lg bg-surface-2 px-3 py-2 text-sm">
-              <span className="text-ink-soft">{tr("sustainabilityScore")}</span>
-              <span className="tabular font-semibold text-olive">
-                {Math.round(restaurant.sustainabilityScore)}/100
-              </span>
-            </div>
+
+          {restaurant.greenKeyCertified || restaurant.sustainabilityScore ? (
+            <section className="mt-6 space-y-2 border-t border-rule pt-6">
+              {restaurant.greenKeyCertified ? (
+                <div className="flex items-center gap-2 rounded-lg bg-success-soft px-3 py-2 text-sm font-medium text-success-text">
+                  <Leaf className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  {tr("greenKeyCertified")}
+                </div>
+              ) : null}
+              {restaurant.sustainabilityScore ? (
+                <div className="flex items-center justify-between rounded-lg bg-surface-2 px-3 py-2 text-sm">
+                  <span className="text-ink-soft">{tr("sustainabilityScore")}</span>
+                  <span className="tabular font-semibold text-success-text">
+                    {Math.round(restaurant.sustainabilityScore)}/100
+                  </span>
+                </div>
+              ) : null}
+            </section>
           ) : null}
+
           {primaryAction ? (
             <a
               href={primaryAction.href}
               {...(primaryAction.external
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {})}
-              className="mt-2 block rounded-full bg-accent px-4 py-2.5 text-center text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              className="mt-6 block rounded-full bg-accent px-4 py-2.5 text-center text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               {primaryAction.label}
             </a>

@@ -71,7 +71,7 @@ export default async function MarketplacePage({
               href={`/marketplace/${l.id}`}
               className="motion-card block rounded-2xl border border-rule bg-surface p-5"
             >
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-brass-soft px-2.5 py-0.5 text-xs font-medium text-brass">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-brass-soft px-2.5 py-0.5 text-xs font-medium text-brass-text">
                 <Tag className="h-3 w-3" />
                 {tCategory(l.category)}
               </span>

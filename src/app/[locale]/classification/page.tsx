@@ -62,11 +62,11 @@ export default async function ClassificationHubPage({
               {s.titleAr}
             </p>
             {s.totalPossiblePoints > 0 ? (
-              <p className="mt-2 text-xs font-medium text-olive">
+              <p className="mt-2 text-xs font-medium text-olive-text">
                 {tc("pointsAcross", { points: s.totalPossiblePoints })}
               </p>
             ) : (
-              <p className="mt-2 text-xs font-medium text-brass">{tc("scoringComingSoon")}</p>
+              <p className="mt-2 text-xs font-medium text-brass-text">{tc("scoringComingSoon")}</p>
             )}
             <div className="mt-3 flex flex-wrap items-center gap-4">
               {s.totalPossiblePoints > 0 ? (
