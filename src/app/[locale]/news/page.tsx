@@ -2,6 +2,10 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 
+// Cached and revalidated every 900s. Set per route since the site-wide
+// force-dynamic was removed from the locale layout (blueprint §4.2).
+export const revalidate = 900;
+
 export default async function NewsListPage({
   params,
 }: {
