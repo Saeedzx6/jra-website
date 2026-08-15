@@ -123,6 +123,25 @@ assets and are served only via `/api/documents/...`, which checks for an admin
 session and then mints a URL that expires in five minutes. Do not store their
 raw CDN URLs anywhere.
 
+**`npm run build` and `npm start` read `.env.production.local` — which points at
+production.** Next loads env files by precedence, and in production mode
+`.env.production.local` wins over `.env.local` and `.env`. So if that file is
+present, a local `npm start` serves pages from the **live Neon database** using
+the **production `AUTH_SECRET`**, not your local Postgres. Symptoms: your local
+admin password is rejected, and page content does not match what `npm run
+db:studio` shows.
+
+`npm run dev` is unaffected — it runs in development mode and uses `.env.local`
+then `.env`.
+
+The file is there on purpose for the `prod:*` scripts (`dotenv -e
+.env.production.local -- …`). To build or serve against your local database,
+move it aside first:
+
+```bash
+mv .env.production.local .env.production.local.off   # remember to move it back
+```
+
 **Schema changes need a migration.** Edit `prisma/schema.prisma`, then:
 
 ```bash
