@@ -3,6 +3,10 @@ import { FileText, ClipboardCheck } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { getAllStandards } from "@/lib/classification";
 
+// Cached and revalidated every 3600s. Set per route since the site-wide
+// force-dynamic was removed from the locale layout (blueprint §4.2).
+export const revalidate = 3600;
+
 const TYPE_SLUGS: Record<string, string> = {
   RESTAURANT: "restaurant",
   FAST_FOOD: "fast-food",
@@ -58,11 +62,11 @@ export default async function ClassificationHubPage({
               {s.titleAr}
             </p>
             {s.totalPossiblePoints > 0 ? (
-              <p className="mt-2 text-xs font-medium text-olive">
+              <p className="mt-2 text-xs font-medium text-olive-text">
                 {tc("pointsAcross", { points: s.totalPossiblePoints })}
               </p>
             ) : (
-              <p className="mt-2 text-xs font-medium text-brass">{tc("scoringComingSoon")}</p>
+              <p className="mt-2 text-xs font-medium text-brass-text">{tc("scoringComingSoon")}</p>
             )}
             <div className="mt-3 flex flex-wrap items-center gap-4">
               {s.totalPossiblePoints > 0 ? (

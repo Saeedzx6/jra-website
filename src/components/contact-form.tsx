@@ -12,7 +12,7 @@ export function ContactForm() {
 
   if (state.ok) {
     return (
-      <div className="flex items-center gap-2 rounded-xl bg-olive-soft p-4 text-olive">
+      <div className="flex items-center gap-2 rounded-xl bg-olive-soft p-4 text-olive-text">
         <Check className="h-5 w-5" />
         <span>{tf("thanks")}</span>
       </div>

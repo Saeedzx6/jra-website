@@ -36,7 +36,7 @@ export function HeaderSearch() {
         type="button"
         onClick={() => setOpen(true)}
         aria-label={t("search")}
-        className="flex h-9 w-9 items-center justify-center rounded-full text-ink-soft transition-colors hover:bg-surface-2 hover:text-ink"
+        className="flex h-11 w-11 items-center justify-center rounded-full text-ink-soft transition-colors hover:bg-surface-2 hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
       >
         <Search className="h-4 w-4" />
       </button>

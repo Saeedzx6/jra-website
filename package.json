@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "verify": "npm run typecheck && npm run test",
     "db:migrate": "prisma migrate dev",
     "db:generate": "prisma generate",
     "db:studio": "prisma studio",
@@ -16,6 +19,9 @@
     "seed:images": "tsx prisma/seed/03-images.ts",
     "seed:photos": "tsx prisma/seed/07-restaurant-photos.ts",
     "seed:photos-csv": "tsx prisma/seed/09-restaurant-photos-csv.ts",
+    "seed:contacts": "tsx prisma/seed/12-restaurant-contacts.ts",
+    "seed:dues": "tsx prisma/seed/13-dues-schedule.ts",
+    "seed:geocode": "tsx prisma/seed/14-geocode-restaurants.ts",
     "seed:content": "tsx prisma/seed/04-content.ts",
     "seed:classification": "tsx prisma/seed/05-classification.ts",
     "seed:admin": "tsx prisma/seed/06-admin-user.ts",
@@ -28,15 +34,16 @@
     "seed:all": "npm run seed:lookups && npm run seed:restaurants && npm run seed:images && npm run seed:content && npm run seed:classification && npm run seed:admin"
   },
   "dependencies": {
-    "@auth/prisma-adapter": "^2.7.4",
+    "@auth/prisma-adapter": "^2.11.3",
     "@hookform/resolvers": "^3.9.1",
     "@prisma/client": "^6.2.1",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.10.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.469.0",
-    "next": "^15.1.4",
-    "next-auth": "5.0.0-beta.25",
+    "maplibre-gl": "^6.3.0",
+    "next": "^15.5.21",
+    "next-auth": "5.0.0-beta.32",
     "next-intl": "^3.26.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -63,6 +70,7 @@
     "tailwindcss": "^4.0.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
+    "vitest": "^2.1.9",
     "xlsx": "^0.18.5"
   }
 }

@@ -2,20 +2,15 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
+import { authConfig } from "@/lib/auth.config";
 
-const THIRTY_DAYS = 30 * 24 * 60 * 60;
-
+/**
+ * Node-runtime Auth.js instance: the Edge-safe base from `auth.config.ts` plus
+ * the Credentials provider, which needs Prisma and bcrypt and therefore cannot
+ * be part of the config the middleware imports.
+ */
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  session: {
-    strategy: "jwt",
-    // Stay signed in for 30 days of inactivity; each visit within that
-    // window resets the clock (updateAge), so an active member effectively
-    // never gets logged out until they choose to.
-    maxAge: THIRTY_DAYS,
-    updateAge: 24 * 60 * 60,
-  },
-  pages: { signIn: "/login" },
-  trustHost: true,
+  ...authConfig,
   providers: [
     Credentials({
       credentials: {
@@ -42,20 +37,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  callbacks: {
-    jwt: async ({ token, user }) => {
-      if (user) {
-        token.role = (user as { role: string }).role;
-        token.id = user.id as string;
-      }
-      return token;
-    },
-    session: async ({ session, token }) => {
-      if (session.user) {
-        session.user.id = token.id as string;
-        session.user.role = token.role as string;
-      }
-      return session;
-    },
-  },
 });

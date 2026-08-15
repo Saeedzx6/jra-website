@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 import { requireRole } from "@/lib/rbac";
 import { putFile, usingCloudinary } from "@/lib/storage";
+import { provisionMembership } from "@/lib/membership";
 import slugifyLib from "slugify";
 
 async function requireAdmin() {
@@ -170,6 +171,52 @@ export async function markInquiryHandled(id: string) {
   revalidatePath("/[locale]/admin/contact", "page");
 }
 
+/**
+ * Sets or clears a restaurant's coordinates from the admin pin-drop.
+ *
+ * Recorded with geocodeSource "admin" so a future bulk geocoding run can tell
+ * hand-placed pins from machine-guessed ones and leave the former alone —
+ * a person who confirmed a location should not be overwritten by a text search.
+ */
+export async function setRestaurantCoordinates(
+  id: string,
+  latitude: number | null,
+  longitude: number | null
+) {
+  const session = await requireAdmin();
+
+  if (latitude != null && longitude != null) {
+    // Guard against a malformed client payload writing nonsense to the map.
+    const valid =
+      Number.isFinite(latitude) &&
+      Number.isFinite(longitude) &&
+      latitude >= -90 &&
+      latitude <= 90 &&
+      longitude >= -180 &&
+      longitude <= 180;
+    if (!valid) throw new Error("Invalid coordinates");
+  }
+
+  const clearing = latitude == null || longitude == null;
+  await db.restaurant.update({
+    where: { id },
+    data: {
+      latitude: clearing ? null : latitude,
+      longitude: clearing ? null : longitude,
+      geocodeSource: clearing ? null : "admin",
+      geocodedAt: clearing ? null : new Date(),
+    },
+  });
+
+  await writeAudit(session.user.id, clearing ? "CLEAR_PIN" : "SET_PIN", "RESTAURANT", id, {
+    latitude,
+    longitude,
+  });
+
+  revalidatePath("/[locale]/admin/restaurants/[id]", "page");
+  revalidatePath("/[locale]/restaurants/[slug]", "page");
+}
+
 // --- Membership applications --------------------------------------------
 
 export async function approveMembershipApplication(id: string) {
@@ -193,6 +240,8 @@ export async function approveMembershipApplication(id: string) {
   // it should appear in the public directory and count in site stats
   // immediately, not sit hidden as a draft waiting for a second manual
   // "publish" step nobody was told about.
+  let membership: Awaited<ReturnType<typeof provisionMembership>> | null = null;
+
   if (application.applicantType === "ACTIVE_RESTAURANT") {
     const slug = slugifyLib(application.businessName, { lower: true, strict: true });
     const restaurant = await db.restaurant.upsert({
@@ -213,6 +262,14 @@ export async function approveMembershipApplication(id: string) {
       update: {},
       create: { id: `app-${application.id}`, userId: user.id, restaurantId: restaurant.id },
     });
+    // Approval is also the moment the business becomes a member with a term
+    // and a standing — without this the application was a dead end and the
+    // association could not say who was in good standing.
+    membership = await provisionMembership({
+      applicationId: application.id,
+      applicantType: application.applicantType,
+      restaurantId: restaurant.id,
+    });
   } else {
     const slug = slugifyLib(application.businessName, { lower: true, strict: true });
     const supplier = await db.supplier.upsert({
@@ -232,19 +289,29 @@ export async function approveMembershipApplication(id: string) {
       update: {},
       create: { id: `app-${application.id}`, userId: user.id, supplierId: supplier.id },
     });
+    membership = await provisionMembership({
+      applicationId: application.id,
+      applicantType: application.applicantType,
+      supplierId: supplier.id,
+    });
   }
 
   await db.membershipApplication.update({
     where: { id },
     data: { status: "APPROVED", reviewedById: session.user.id, reviewedAt: new Date() },
   });
-  await writeAudit(session.user.id, "APPROVE", "MEMBERSHIP_APPLICATION", id, { tempPassword, email });
+  await writeAudit(session.user.id, "APPROVE", "MEMBERSHIP_APPLICATION", id, {
+    tempPassword,
+    email,
+    memberNumber: membership?.memberNumber,
+    termEnd: membership?.termEnd,
+  });
 
   revalidatePath("/[locale]/admin/membership", "page");
   revalidatePath("/[locale]", "page");
   revalidatePath("/[locale]/restaurants", "page");
   revalidatePath("/[locale]/suppliers", "page");
-  return { email, tempPassword };
+  return { email, tempPassword, memberNumber: membership?.memberNumber ?? null };
 }
 
 export async function rejectMembershipApplication(id: string) {

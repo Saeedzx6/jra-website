@@ -2,6 +2,10 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CalendarClock } from "lucide-react";
 import { db } from "@/lib/db";
 
+// Cached and revalidated every 3600s. Set per route since the site-wide
+// force-dynamic was removed from the locale layout (blueprint §4.2).
+export const revalidate = 3600;
+
 export default async function OpportunitiesPage({
   params,
 }: {
@@ -40,7 +44,7 @@ export default async function OpportunitiesPage({
                   {tr?.summary ? <p className="mt-1 text-sm text-ink-soft">{tr.summary}</p> : null}
                 </div>
                 {o.deadlineAt ? (
-                  <span className={`flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${expired ? "bg-surface-2 text-ink-faint" : "bg-brass-soft text-brass"}`}>
+                  <span className={`flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${expired ? "bg-surface-2 text-ink-faint" : "bg-brass-soft text-brass-text"}`}>
                     <CalendarClock className="h-3.5 w-3.5" />
                     {new Date(o.deadlineAt).toLocaleDateString(locale)}
                   </span>

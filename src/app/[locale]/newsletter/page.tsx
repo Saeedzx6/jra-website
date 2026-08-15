@@ -1,6 +1,10 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { NewsletterForm } from "@/components/newsletter-form";
 
+// Cached and revalidated every 3600s. Set per route since the site-wide
+// force-dynamic was removed from the locale layout (blueprint §4.2).
+export const revalidate = 3600;
+
 export default async function NewsletterPage({
   params,
 }: {

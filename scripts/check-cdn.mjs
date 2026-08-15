@@ -17,6 +17,60 @@ try {
     take: 5,
   });
 
+  const checkResults = await Promise.all(
+    rows.map(async ({ url }) => { 
+      try {
+        const res = await fetch(url, { method: "HEAD" });
+        const kb = Math.round(Number(res.headers.get("content-length") ?? 0) / 1024);
+        const type = res.headers.get("content-type") ?? "?";
+        if (res.ok) {
+          console.log(`  ✓ ${res.status} ${type} ${kb}KB  ${url.slice(-48)}`);
+          return true ; 
+        }
+        else {
+          console.log(`  ✗ ${res.status}  ${url}`);
+          return false ; 
+        }
+      } catch (error) {
+        console.log(`  ✗ Error fetching ${url}: ${error.message}`);
+        return false ; 
+      }
+    })  
+  );
+  failures = checkResults.filter ((paused) => !paused).length ;
+} catch (e) {
+  console.error("FAIL:", e.message);
+  failures++;
+} finally {
+  await db.$disconnect();
+}
+console.log(failures === 0 ? "\nCDN serving correctly.\n" : `\n${failures} failed.\n`);
+process.exitCode = failures === 0 ? 0 : 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   for (const { url } of rows) {
     const res = await fetch(url, { method: "HEAD" });
     const kb = Math.round(Number(res.headers.get("content-length") ?? 0) / 1024);
