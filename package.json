@@ -19,6 +19,7 @@
     "seed:images": "tsx prisma/seed/03-images.ts",
     "seed:photos": "tsx prisma/seed/07-restaurant-photos.ts",
     "seed:photos-csv": "tsx prisma/seed/09-restaurant-photos-csv.ts",
+    "seed:contacts": "tsx prisma/seed/12-restaurant-contacts.ts",
     "seed:content": "tsx prisma/seed/04-content.ts",
     "seed:classification": "tsx prisma/seed/05-classification.ts",
     "seed:admin": "tsx prisma/seed/06-admin-user.ts",
