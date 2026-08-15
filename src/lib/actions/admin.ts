@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 import { requireRole } from "@/lib/rbac";
 import { putFile, usingCloudinary } from "@/lib/storage";
+import { provisionMembership } from "@/lib/membership";
 import slugifyLib from "slugify";
 
 async function requireAdmin() {
@@ -193,6 +194,8 @@ export async function approveMembershipApplication(id: string) {
   // it should appear in the public directory and count in site stats
   // immediately, not sit hidden as a draft waiting for a second manual
   // "publish" step nobody was told about.
+  let membership: Awaited<ReturnType<typeof provisionMembership>> | null = null;
+
   if (application.applicantType === "ACTIVE_RESTAURANT") {
     const slug = slugifyLib(application.businessName, { lower: true, strict: true });
     const restaurant = await db.restaurant.upsert({
@@ -213,6 +216,14 @@ export async function approveMembershipApplication(id: string) {
       update: {},
       create: { id: `app-${application.id}`, userId: user.id, restaurantId: restaurant.id },
     });
+    // Approval is also the moment the business becomes a member with a term
+    // and a standing — without this the application was a dead end and the
+    // association could not say who was in good standing.
+    membership = await provisionMembership({
+      applicationId: application.id,
+      applicantType: application.applicantType,
+      restaurantId: restaurant.id,
+    });
   } else {
     const slug = slugifyLib(application.businessName, { lower: true, strict: true });
     const supplier = await db.supplier.upsert({
@@ -232,19 +243,29 @@ export async function approveMembershipApplication(id: string) {
       update: {},
       create: { id: `app-${application.id}`, userId: user.id, supplierId: supplier.id },
     });
+    membership = await provisionMembership({
+      applicationId: application.id,
+      applicantType: application.applicantType,
+      supplierId: supplier.id,
+    });
   }
 
   await db.membershipApplication.update({
     where: { id },
     data: { status: "APPROVED", reviewedById: session.user.id, reviewedAt: new Date() },
   });
-  await writeAudit(session.user.id, "APPROVE", "MEMBERSHIP_APPLICATION", id, { tempPassword, email });
+  await writeAudit(session.user.id, "APPROVE", "MEMBERSHIP_APPLICATION", id, {
+    tempPassword,
+    email,
+    memberNumber: membership?.memberNumber,
+    termEnd: membership?.termEnd,
+  });
 
   revalidatePath("/[locale]/admin/membership", "page");
   revalidatePath("/[locale]", "page");
   revalidatePath("/[locale]/restaurants", "page");
   revalidatePath("/[locale]/suppliers", "page");
-  return { email, tempPassword };
+  return { email, tempPassword, memberNumber: membership?.memberNumber ?? null };
 }
 
 export async function rejectMembershipApplication(id: string) {

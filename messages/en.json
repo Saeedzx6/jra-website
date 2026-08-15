@@ -532,5 +532,15 @@
     "MODERATE": "Moderate",
     "UPSCALE": "Upscale",
     "FINE_DINING": "Fine dining"
+  },
+  "membershipHealth": {
+    "title": "Membership health",
+    "good": "In good standing",
+    "grace": "In grace period",
+    "lapsed": "Lapsed",
+    "suspended": "Suspended",
+    "expiringSoon": "Expiring within 30 days",
+    "total": "Total memberships",
+    "empty": "No memberships yet. Approving an application creates one."
   }
 }

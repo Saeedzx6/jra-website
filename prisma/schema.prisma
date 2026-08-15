@@ -208,6 +208,7 @@ model Restaurant {
   managers     BusinessManager[]
   assessments  AssessmentSession[]
   sustainabilityAssessments SustainabilityAssessment[]
+  membership   Membership?
 
   @@index([status])
   @@index([governorateId])
@@ -288,6 +289,7 @@ model Supplier {
   images     SupplierImage[]
   categories SupplierCategoryMap[]
   managers   BusinessManager[]
+  membership Membership?
 
   @@index([status])
   @@map("suppliers")
@@ -350,8 +352,152 @@ model MembershipApplication {
   notes              String?
   createdAt          DateTime          @default(now())
 
+  membership Membership?
+
   @@index([status])
   @@map("membership_applications")
+}
+
+// ---------------------------------------------------------------------------
+// Membership lifecycle
+//
+// The application above records someone *asking* to join. Approving one used to
+// create a User, a listing and a manager link and stop there, so the association
+// had applicants but no members: nothing recorded a term, a standing or a
+// balance, and "who is in good standing today?" was unanswerable.
+//
+// Money is Decimal, not the Float used for marketplace asking-prices. Dues get
+// summed, prorated and reconciled against payments, and binary floating point
+// loses fractions doing that. The Jordanian Dinar divides into 1000 fils, hence
+// scale 3.
+// ---------------------------------------------------------------------------
+
+enum MembershipClass {
+  ACTIVE_RESTAURANT
+  ASSOCIATE_SUPPLIER
+  HONORARY
+}
+
+enum MemberStanding {
+  GOOD
+  GRACE
+  LAPSED
+  SUSPENDED
+}
+
+model Membership {
+  id           String          @id @default(cuid())
+  // Human-quotable on invoices and correspondence, e.g. JRA-2026-00412.
+  memberNumber String          @unique
+  class        MembershipClass
+  standing     MemberStanding  @default(GOOD)
+  termStart    DateTime
+  termEnd      DateTime
+
+  // A business holds at most one membership, so these are unique rather than
+  // plain foreign keys — it is the constraint that stops double-provisioning.
+  restaurantId String?     @unique
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: SetNull)
+  supplierId   String?     @unique
+  supplier     Supplier?   @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+
+  // The edge that was missing: which application this membership came from.
+  applicationId String?                @unique
+  application   MembershipApplication? @relation(fields: [applicationId], references: [id], onDelete: SetNull)
+
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  invoices Invoice[]
+
+  // Drives the renewal sweep: find memberships whose term is ending.
+  @@index([standing, termEnd])
+  @@map("memberships")
+}
+
+enum InvoiceStatus {
+  DRAFT
+  ISSUED
+  PAID
+  PART_PAID
+  VOID
+}
+
+model Invoice {
+  id           String        @id @default(cuid())
+  number       String        @unique
+  membershipId String
+  membership   Membership    @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  periodStart  DateTime
+  periodEnd    DateTime
+  issuedAt     DateTime?
+  dueAt        DateTime
+  status       InvoiceStatus @default(DRAFT)
+  currency     String        @default("JOD")
+  // Denormalised from the lines so arrears queries do not have to aggregate.
+  total        Decimal       @db.Decimal(10, 3)
+  notes        String?
+  createdAt    DateTime      @default(now())
+
+  lines    InvoiceLine[]
+  payments Payment[]
+
+  @@index([status, dueAt])
+  @@index([membershipId])
+  @@map("invoices")
+}
+
+model InvoiceLine {
+  id          String  @id @default(cuid())
+  invoiceId   String
+  invoice     Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  description String
+  quantity    Int     @default(1)
+  unitAmount  Decimal @db.Decimal(10, 3)
+  sortOrder   Int     @default(0)
+
+  @@index([invoiceId])
+  @@map("invoice_lines")
+}
+
+enum PaymentMethod {
+  BANK_TRANSFER
+  CASH
+  CHEQUE
+  CARD
+}
+
+model Payment {
+  id        String        @id @default(cuid())
+  invoiceId String
+  invoice   Invoice       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  amount    Decimal       @db.Decimal(10, 3)
+  method    PaymentMethod @default(BANK_TRANSFER)
+  // Bank transfer is the primary rail here, so reconciliation is by reference.
+  reference String?
+  paidAt    DateTime
+  recordedById String?
+  createdAt DateTime      @default(now())
+
+  @@index([invoiceId])
+  @@map("payments")
+}
+
+/// Annual dues by membership class, optionally varying with the star grade —
+/// a five-star establishment is not charged what a café is.
+model DuesSchedule {
+  id            String          @id @default(cuid())
+  class         MembershipClass
+  // Null means "applies to any grade in this class".
+  stars         Int?
+  annualAmount  Decimal         @db.Decimal(10, 3)
+  currency      String          @default("JOD")
+  effectiveFrom DateTime
+  effectiveTo   DateTime?
+
+  @@unique([class, stars, effectiveFrom])
+  @@map("dues_schedules")
 }
 
 // ---------------------------------------------------------------------------
