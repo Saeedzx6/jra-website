@@ -1,8 +1,4 @@
 @import "tailwindcss";
-/* MapLibre's own stylesheet, needed for the canvas, controls and attribution
-   to lay out correctly. Imported globally because the map is a client
-   component and Next does not bundle CSS imported from one. */
-@import "maplibre-gl/dist/maplibre-gl.css";
 
 /* ---------------------------------------------------------------------- */
 /* Design tokens — colors sampled directly from the real JRA logo          */
