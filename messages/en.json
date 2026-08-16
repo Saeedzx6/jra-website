@@ -75,7 +75,11 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterCta": "Subscribe",
     "showcaseAltOne": "A chef plating a dish in a Jordanian restaurant kitchen",
-    "showcaseAltTwo": "Members of the Jordan Restaurant Association board"
+    "showcaseAltTwo": "Members of the Jordan Restaurant Association board",
+    "heroSearchLabel": "Search restaurants",
+    "heroSearchPlaceholder": "Search by name, cuisine or area…",
+    "heroSearchHint": "{count} classified restaurants, coffee shops and venues across Jordan.",
+    "browseByCuisine": "Browse by cuisine"
   },
   "footer": {
     "tagline": "One network. One voice. Endless opportunities.",
@@ -146,7 +150,9 @@
     "unclassified": "Not yet classified",
     "unclassifiedHint": "This establishment hasn't completed a JRA classification assessment.",
     "openingHours": "Opening hours",
-    "priceRange": "Price range"
+    "priceRange": "Price range",
+    "hasPhone": "Phone listed",
+    "hasHours": "Hours listed"
   },
   "suppliers": {
     "description": "A directory of associate members — companies supplying food, equipment, technology, and services to JRA restaurants.",
