@@ -55,13 +55,14 @@ export default async function HomePage({
       take: 3,
       include: { translations: { where: { locale: locale === "ar" ? "ar" : "en" } } },
     }),
-    // Hero mosaic: real member photography rather than stock. One image per
-    // restaurant so the same venue cannot fill two tiles.
+    // Hero corridor: real member photography rather than stock. One image per
+    // restaurant so the same venue never appears twice on a rail. Fourteen
+    // covers the seven cards per rail without the sequence visibly repeating.
     db.restaurantImage.findMany({
       where: { isPrimary: true, restaurant: { status: "PUBLISHED" } },
       select: { url: true, altTextEn: true, altTextAr: true, restaurant: { select: { name: true } } },
       distinct: ["restaurantId"],
-      take: 6,
+      take: 14,
       orderBy: { restaurantId: "asc" },
     }),
     db.cuisine.findMany({

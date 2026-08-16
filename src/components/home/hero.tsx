@@ -1,16 +1,16 @@
-import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { HeroSearch } from "@/components/home/hero-search";
+import { ImageStreamHero } from "@/components/ui/image-stream-hero";
 
 /**
  * Homepage hero.
  *
  * The previous version was a white card floating over a blurred backdrop, with
  * the association described in prose and two buttons beneath it. It told you
- * JRA represents Jordan's restaurants. This one shows them: a mosaic of real
- * member photography, search as the primary action, and the cuisine strip
- * doing double duty as proof of range and as navigation.
+ * JRA represents Jordan's restaurants. This shows them: a corridor of real
+ * member photography running toward the viewer, search as the primary action,
+ * and the cuisine strip doing double duty as proof of range and as navigation.
  *
  * Dark ground on purpose — food photography reads better against it, and it
  * gives the page a distinct opening register before settling into the light
@@ -24,6 +24,22 @@ import { HeroSearch } from "@/components/home/hero-search";
 
 export type HeroCuisine = { slug: string; label: string; count: number };
 
+/**
+ * The corridor renders plain <img> rather than next/image, so nothing resizes
+ * these for us. Eighteen full-resolution restaurant photos would be several
+ * megabytes on first paint; the cards are ~18% of the container's width, so a
+ * 420px derivative is already more than enough. Cloudinary does the work in
+ * the URL. Non-Cloudinary sources (local dev uploads) pass through untouched.
+ */
+function thumb(url: string): string {
+  const marker = "/image/upload/";
+  const at = url.indexOf(marker);
+  if (at === -1) return url;
+  const head = url.slice(0, at + marker.length);
+  const tail = url.slice(at + marker.length);
+  return `${head}w_420,h_560,c_fill,g_auto,q_auto,f_auto/${tail}`;
+}
+
 export async function HomeHero({
   images,
   cuisines,
@@ -35,48 +51,31 @@ export async function HomeHero({
 }) {
   const t = await getTranslations("home");
 
-  // Six tiles: a 3x2 grid on desktop collapsing to 3x1 on small screens, with
-  // the first tile spanning two rows so the mosaic is not a flat checkerboard.
-  const tiles = images.slice(0, 6);
+  const stream = images.map((i) => ({ src: thumb(i.url), alt: i.alt }));
 
   return (
-    <section className="relative isolate overflow-hidden bg-[#070d14]">
-      {/* Mosaic ------------------------------------------------------------ */}
-      <div className="absolute inset-0" aria-hidden="true">
-        <div className="grid h-full w-full grid-cols-3 grid-rows-2 gap-px sm:grid-cols-4">
-          {tiles.map((img, i) => (
-            <div
-              key={`${img.url}-${i}`}
-              className={[
-                "relative overflow-hidden",
-                i === 0 ? "row-span-2" : "",
-                i > 3 ? "hidden sm:block" : "",
-              ].join(" ")}
-            >
-              <Image
-                src={img.url}
-                alt=""
-                fill
-                sizes="(min-width: 640px) 25vw, 34vw"
-                priority={i === 0}
-                className="object-cover"
-              />
-            </div>
-          ))}
-        </div>
+    <ImageStreamHero
+      images={stream}
+      // Seven per rail rather than the default nine: these are photographs of
+      // real venues, and a denser corridor turns them into texture.
+      cards={7}
+      speed={26}
+      axis={48}
+      className="bg-[#070d14]"
+    >
+      {/* Scrim. Two layers: a floor that blends the corridor into the page
+          below, and a directional wash keeping the text side dark wherever the
+          photography runs bright. White body copy measures 19.5:1 on the
+          ground, and the wash is what holds it there mid-animation. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#070d14] via-[#070d14]/80 to-[#070d14]/40"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#070d14] via-[#070d14]/75 to-transparent rtl:bg-gradient-to-l"
+      />
 
-        {/* Scrim. Two layers: a directional wash so the text side stays dark
-            wherever the photography is bright, and a floor that blends the
-            hero into the page below. Tuned so white body text clears 4.5:1
-            over the brightest tile. */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#070d14] via-[#070d14]/85 to-[#070d14]/45" />
-        {/* Directional wash. Tailwind has no logical-direction gradient, so the
-            RTL variant flips it — otherwise the dark side lands opposite the
-            text in Arabic. */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#070d14] via-[#070d14]/70 to-transparent rtl:bg-gradient-to-l" />
-      </div>
-
-      {/* Content ----------------------------------------------------------- */}
       <div className="relative mx-auto max-w-6xl px-4 pb-14 pt-24 sm:px-6 sm:pb-20 sm:pt-36 lg:pt-44">
         <div className="max-w-2xl">
           <p
@@ -103,10 +102,7 @@ export async function HomeHero({
             {t("heroSubtitle")}
           </p>
 
-          <div
-            className="animate-editorial-rise mt-8 max-w-xl"
-            style={{ animationDelay: "320ms" }}
-          >
+          <div className="animate-editorial-rise mt-8 max-w-xl" style={{ animationDelay: "320ms" }}>
             <HeroSearch />
             <p className="mt-3 text-sm text-white/55">
               {t("heroSearchHint", { count: restaurantCount })}
@@ -146,6 +142,6 @@ export async function HomeHero({
           </nav>
         ) : null}
       </div>
-    </section>
+    </ImageStreamHero>
   );
 }
