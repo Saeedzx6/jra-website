@@ -497,7 +497,8 @@
       "saving": "Saving…",
       "saved": "Saved",
       "saveFailed": "Could not save. Try again.",
-      "clearPin": "Clear location"
+      "clearPin": "Clear location",
+      "tilesFailed": "Map tiles failed to load. The pin still saves."
     }
   },
   "contactForm": {
