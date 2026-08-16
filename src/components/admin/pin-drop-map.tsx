@@ -116,8 +116,28 @@ export function PinDropMap({
     if (coordsRef.current) place(coordsRef.current.lng, coordsRef.current.lat);
     m.on("click", (e: MapMouseEvent) => place(e.lngLat.lng, e.lngLat.lat));
 
+    /**
+     * Tell the map its real size once the container has one.
+     *
+     * MapLibre measures the container at construction. If it is still 0x0 at
+     * that moment — which it is here, because the map is built in an effect
+     * that can run before the stylesheet giving the div its height has
+     * applied — the map computes an empty viewport, decides no tiles are
+     * needed to cover it, and never requests any. The style, the TileJSON and
+     * the sprites all load fine, so the map looks alive: controls, attribution
+     * and markers all render over the style's background layer. It just never
+     * draws a single tile.
+     *
+     * The observer fires as soon as the div gets its height and every time it
+     * changes afterwards, which also covers the sidebar collapsing and the
+     * window being resized.
+     */
+    const ro = new ResizeObserver(() => m.resize());
+    ro.observe(container.current);
+
     map.current = m;
     return () => {
+      ro.disconnect();
       m.remove();
       map.current = null;
       marker.current = null;
