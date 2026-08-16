@@ -50,6 +50,10 @@ export function PinDropMap({
     latitude != null && longitude != null ? { lat: latitude, lng: longitude } : null
   );
   const [state, setState] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  // A map that fails to load its tiles renders as an empty coloured box — the
+  // style's background layer paints, nothing else does. Surfacing the reason
+  // beats leaving someone staring at a blank square wondering if it is loading.
+  const [mapError, setMapError] = useState<string | null>(null);
 
   // Keep the latest coords available to the map's event handlers without
   // re-creating the map on every change.
@@ -67,6 +71,28 @@ export function PinDropMap({
       attributionControl: { compact: true },
     });
     m.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
+
+    // MapLibre reports tile, style, sprite and glyph failures through this one
+    // event. Without a handler it logs to the console and the map just sits
+    // there blank.
+    m.on("error", (event) => {
+      // MapLibre's ErrorEvent type does not expose `status`/`sourceId` on the
+      // public signature, though both are present at runtime for tile failures.
+      const e = event as unknown as {
+        error?: Error & { status?: number };
+        sourceId?: string;
+      };
+      const err = e?.error;
+      const parts = [
+        err?.status ? `HTTP ${err.status}` : null,
+        e?.sourceId ? `source "${e.sourceId}"` : null,
+        err?.message,
+      ].filter(Boolean);
+      const detail = parts.join(" · ") || "Unknown map error";
+      setMapError(detail);
+      // Keep the full object in the console for anyone debugging further.
+      console.error("[map]", detail, e);
+    });
 
     const place = (lng: number, lat: number) => {
       if (marker.current) {
@@ -129,14 +155,24 @@ export function PinDropMap({
         {governorateName ? ` · ${governorateName}` : ""}
       </p>
 
-      <div
-        ref={container}
-        className="mt-3 h-72 w-full overflow-hidden rounded-xl border border-rule"
-        // The map canvas is not keyboard-operable, so the numeric readout and
-        // the clear/save controls below are the accessible path.
-        role="application"
-        aria-label={t("mapLabel")}
-      />
+      <div className="relative mt-3">
+        <div
+          ref={container}
+          className="h-72 w-full overflow-hidden rounded-xl border border-rule"
+          // The map canvas is not keyboard-operable, so the numeric readout and
+          // the clear/save controls below are the accessible path.
+          role="application"
+          aria-label={t("mapLabel")}
+        />
+        {mapError ? (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 rounded-b-xl bg-danger-soft/95 px-3 py-2">
+            <p className="text-xs font-medium text-danger-text">{t("tilesFailed")}</p>
+            <p className="mt-0.5 break-words font-mono text-[11px] text-danger-text/80" dir="ltr">
+              {mapError}
+            </p>
+          </div>
+        ) : null}
+      </div>
 
       <div className="mt-3 flex flex-wrap items-center gap-3">
         {coords ? (
