@@ -4,6 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import * as maplibregl from "maplibre-gl";
 import type { Map as MapLibreMap, Marker, MapMouseEvent } from "maplibre-gl";
+// Imported here rather than in globals.css: a bare-module specifier in a CSS
+// @import is not resolved by the build, so it was dropped silently and the
+// bundle shipped with no .maplibregl-* rules at all. The canvas then had no
+// layout and the map rendered as an empty box. Next bundles CSS imported from
+// a client component, so this is the supported path.
+import "maplibre-gl/dist/maplibre-gl.css";
 import { MapPin, Crosshair, Trash2, Check } from "lucide-react";
 import { setRestaurantCoordinates } from "@/lib/actions/admin";
 
