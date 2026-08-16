@@ -6,6 +6,8 @@ function toCardData(r: {
   name: string;
   nameAr: string | null;
   shortDescription: string | null;
+  phone?: string | null;
+  openingHoursText?: string | null;
   images: { url: string; isPrimary: boolean }[];
   governorate: { nameEn: string; nameAr: string | null } | null;
   cuisines: { cuisine: { nameEn: string; nameAr: string | null } }[];
@@ -18,9 +20,16 @@ function toCardData(r: {
     nameAr: r.nameAr,
     shortDescription: r.shortDescription,
     imageUrl: primary?.url ?? null,
+    // Both languages travel to the card, which picks by locale. Resolving to
+    // English here meant every card on the Arabic site showed an English
+    // governorate and cuisine under an Arabic restaurant name.
     governorateName: r.governorate?.nameEn ?? null,
+    governorateNameAr: r.governorate?.nameAr ?? null,
     cuisineName: r.cuisines[0]?.cuisine.nameEn ?? null,
+    cuisineNameAr: r.cuisines[0]?.cuisine.nameAr ?? null,
     stars: r.classificationLevel?.stars ?? null,
+    hasPhone: Boolean(r.phone),
+    hasHours: Boolean(r.openingHoursText),
   };
 }
 

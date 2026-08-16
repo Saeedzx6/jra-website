@@ -150,7 +150,9 @@
     "unclassified": "Not yet classified",
     "unclassifiedHint": "This establishment hasn't completed a JRA classification assessment.",
     "openingHours": "Opening hours",
-    "priceRange": "Price range"
+    "priceRange": "Price range",
+    "hasPhone": "Phone listed",
+    "hasHours": "Hours listed"
   },
   "suppliers": {
     "description": "A directory of associate members — companies supplying food, equipment, technology, and services to JRA restaurants.",
