@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
-import { routing, type AppLocale } from "@/i18n/routing";
+
+import { routing, direction, type Locale } from "@/i18n/routing";
 import { fontVariables } from "@/lib/fonts";
-import { SiteHeader } from "@/components/layout/site-header";
-import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteHeader } from "@/components/chrome/SiteHeader";
+import { SiteFooter } from "@/components/chrome/SiteFooter";
 import { SITE_URL, alternatesFor } from "@/lib/seo";
 import { jsonLdScript, organizationLd } from "@/lib/json-ld";
 import "../globals.css";
@@ -34,6 +36,7 @@ export async function generateMetadata({
       locale: locale === "ar" ? "ar_JO" : "en_US",
       type: "website",
     },
+    icons: { icon: "/favicon.ico" },
   };
 }
 
@@ -54,39 +57,34 @@ export default async function LocaleLayout({
   children,
   params,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  if (!routing.locales.includes(locale as AppLocale)) {
+  if (!routing.locales.includes(locale as Locale)) {
     notFound();
   }
+
+  // Opts this subtree into static rendering.
   setRequestLocale(locale);
 
   const messages = await getMessages();
-  const tCommon = await getTranslations({ locale, namespace: "common" });
-  const dir = locale === "ar" ? "rtl" : "ltr";
+  const dir = direction[locale as Locale];
 
+  // The skip link, header and footer are the ported chrome. SiteHeader renders
+  // its own skip link (styled by .skip-link in the Direction B layer), so one
+  // is NOT emitted here — two "skip to content" targets is a worse experience
+  // for the screen-reader users the link exists for.
   return (
-    <html lang={locale} dir={dir} className={fontVariables} suppressHydrationWarning>
-      <body className="flex min-h-screen flex-col antialiased">
+    <html lang={locale} dir={dir} className={fontVariables} data-locale={locale} suppressHydrationWarning>
+      <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLdScript(organizationLd(locale)) }}
         />
         <NextIntlClientProvider messages={messages}>
-          {/* Keyboard users land here first and can jump the 8-item nav.
-              Visually hidden until focused (WCAG 2.4.1). */}
-          <a
-            href="#main"
-            className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-3 focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
-          >
-            {tCommon("skipToContent")}
-          </a>
           <SiteHeader />
-          <main id="main" className="flex-1">
-            {children}
-          </main>
+          <main id="main">{children}</main>
           <SiteFooter />
         </NextIntlClientProvider>
       </body>

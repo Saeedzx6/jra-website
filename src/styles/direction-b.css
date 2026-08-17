@@ -1,0 +1,585 @@
+/* ==========================================================================
+   Direction B compatibility layer
+   --------------------------------------------------------------------------
+   The design being ported in (design-system/MASTER.md, implemented as
+   web/styles/{tokens,base,components}.css) names its tokens --accent, --ink,
+   --navy, --r-pill, --dur-mid … while this app names them --color-accent,
+   --color-ink and so on. Its CSS Modules reference the former by the hundred.
+
+   Rather than rewrite every ported stylesheet, the Direction B names are
+   declared here ONCE as aliases. Two rules govern which side an alias takes:
+
+     - Tokens that must follow the theme (surfaces, body type, rules, accent)
+       alias the --color-* token, so dark mode keeps working.
+     - Tokens that are fixed brand artwork (the navy hero ground, the six tile
+       fills, the ramp steps) are literal values, because they carry their own
+       white copy and must not invert.
+
+   Do not add a colour here. Add it in globals.css and alias it.
+   ========================================================================== */
+
+:root {
+  /* --- the two brand colours, unmodified --- */
+  --jra-blue: #0053a0;
+  --jra-grey: #6c6d70;
+
+  /* --- blue ramp ------------------------------------------------------- */
+  --blue-950: #041f3a;
+  --blue-900: #062e55;
+  --blue-800: #003a73;
+  --blue-600: #0053a0;
+  --blue-500: #0a66bc;
+  --blue-300: #7fb3e3;
+  --blue-100: #d6e5f3;
+  --blue-50: #edf3f9;
+
+  /* --- neutral ramp, anchored on the logo grey ------------------------- */
+  --grey-900: #232427;
+  --grey-800: #333437;
+  --grey-700: #4a4b4e;
+  --grey-600: #6c6d70;
+  --grey-400: #a0a1a4;
+  --grey-300: #c8c9cb;
+  --grey-200: #dfe0e2;
+  --grey-100: #efeff0;
+  --grey-50: #f7f7f8;
+  --white: #ffffff;
+
+  /* --- status. Aliased so the two systems cannot drift apart. ---------- */
+  --status-alert: var(--color-warning);
+  --status-good: var(--color-success);
+
+  /* --- semantic layer: these FOLLOW the theme -------------------------- */
+  --cream: var(--color-paper);
+  --ink: var(--color-ink);
+  /* Direction B's --ink-soft is the brand grey #6C6D70, which this app calls
+     --color-ink-faint (see the AA note in globals.css). The names differ; the
+     value is the same one MASTER.md specifies. */
+  --ink-soft: var(--color-ink-faint);
+  --accent: var(--color-accent);
+  --accent-alt: var(--color-accent-strong);
+  --focus: var(--color-accent);
+  --line: var(--color-rule);
+  --surface: var(--color-surface);
+
+  /* --- fixed brand artwork: these do NOT follow the theme -------------- */
+  /* The hero ground and the reversed panels are photography surrounds that
+     carry white copy at all times. Inverting them in dark mode would put
+     white type on a light field. */
+  --navy: #041f3a;
+  --pale: #7fb3e3;
+
+  /* Six tile fills — aliased to the canonical definitions in globals.css. */
+  --c1: var(--color-tile-1);
+  --c2: var(--color-tile-2);
+  --c3: var(--color-tile-3);
+  --c4: var(--color-tile-4);
+  --c5: var(--color-tile-5);
+  --c6: var(--color-tile-6);
+
+  --maxw: 1280px;
+  --media-bg: var(--grey-200);
+
+  /* The ported header is fixed and overlays the hero, so anything that must
+     clear it (page heroes, scroll anchors) measures against this. Measured at
+     78px desktop / 73px below 640px; rounded up so the value is never short. */
+  --header-h: 5rem;
+
+  /* --- radius scale ----------------------------------------------------- */
+  --r-pill: 999px;
+  --r-lg: 20px;
+  --r-md: 16px;
+  --r-sm: 10px;
+
+  /* --- elevation -------------------------------------------------------- */
+  --shadow-raised: 0 20px 40px -32px rgb(0 0 0 / 0.65);
+  --shadow-pop: 0 30px 60px -30px rgb(0 0 0 / 0.6);
+  --shadow-stuck: 0 14px 34px -30px rgb(0 0 0 / 0.8);
+
+  /* --- motion ----------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-media: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --dur-fast: 0.18s;
+  --dur-mid: 0.3s;
+  --dur-slow: 0.45s;
+
+  /* --- typography ------------------------------------------------------- */
+  --display: var(--font-display-en), "Poppins", system-ui, sans-serif;
+  --sans: var(--font-body-en), "DM Sans", system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+
+  --display-style: italic;
+  --display-tracking: -0.02em;
+  --display-weight: 700;
+
+  --eyebrow-tracking: 0.22em;
+  --eyebrow-transform: uppercase;
+  --label-tracking: 0.14em;
+  --btn-tracking: 0.12em;
+  --nav-tracking: 0.1em;
+}
+
+/* Arabic corrections. Same three repairs as the utility-level rules in
+   globals.css, applied at the token level so every ported CSS Module that
+   reads --display-style / --*-tracking / --eyebrow-transform is corrected
+   without knowing about it. See globals.css for why each one exists. */
+[dir="rtl"] {
+  --display: var(--font-display-ar), "Cairo", system-ui, sans-serif;
+  --sans: var(--font-body-ar), "Cairo", system-ui, sans-serif;
+
+  --display-style: normal;
+  --display-tracking: 0;
+  --display-weight: 700;
+
+  --eyebrow-tracking: 0;
+  --eyebrow-transform: none;
+  --label-tracking: 0;
+  --btn-tracking: 0;
+  --nav-tracking: 0;
+}
+
+/* ==========================================================================
+   Layout primitives
+   --------------------------------------------------------------------------
+   Ported from web/styles/base.css. The element resets that file also carried
+   (box-sizing, margin zeroing, list-style, link colour) are deliberately NOT
+   copied — Tailwind's preflight already does them, and duplicating would mean
+   two places to change.
+
+   Every directional property is logical, so flipping <html dir> mirrors the
+   layout without a second stylesheet. Do not introduce left/right,
+   margin-left, text-align: left or padding-right in ported styles.
+   ========================================================================== */
+
+html {
+  /* The ported header is fixed, so in-page anchors would otherwise land with
+     their heading hidden underneath it. */
+  scroll-padding-block-start: var(--header-h);
+}
+
+.wrap {
+  inline-size: min(100% - 2.5rem, var(--maxw));
+  margin-inline: auto;
+}
+@media (min-width: 768px) {
+  .wrap {
+    inline-size: min(100% - 4rem, var(--maxw));
+  }
+}
+
+.stack > * + * {
+  margin-block-start: var(--gap, 1rem);
+}
+
+.section {
+  padding-block: var(--section-pad, clamp(3.5rem, 7vw, 7rem));
+}
+
+.cols-2,
+.cols-3 {
+  display: grid;
+  gap: var(--gap, 1.5rem);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 720px) {
+  .cols-2,
+  .cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1040px) {
+  .cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.flow-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap, 1rem);
+}
+
+.skip-link {
+  position: absolute;
+  inset-block-start: -100%;
+  inset-inline-start: 1rem;
+  z-index: 999;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  border-radius: 0 0 var(--r-sm) var(--r-sm);
+}
+.skip-link:focus {
+  inset-block-start: 0;
+}
+
+/* Media that must fill a fixed-ratio box without distorting. */
+.media {
+  position: relative;
+  overflow: hidden;
+  background: var(--media-bg);
+}
+.media > img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+/* Horizontal carousels scroll natively; arrows just nudge scroll position. */
+.rail {
+  display: flex;
+  gap: var(--gap, 1.5rem);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline-start: 1px;
+  padding-block-end: 1rem;
+  scrollbar-width: thin;
+}
+.rail > * {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+}
+
+/* Arrows and chevrons are the only things that must physically mirror. */
+[dir="rtl"] .mirror {
+  transform: scaleX(-1);
+}
+
+/* Touch targets stay at or above 44px. */
+.tap {
+  min-block-size: 44px;
+  min-inline-size: 44px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* --- shared type ---------------------------------------------------------- */
+
+.display {
+  font-family: var(--display);
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  line-height: 1.04;
+  letter-spacing: var(--display-tracking);
+}
+
+.eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: var(--eyebrow-tracking);
+  text-transform: var(--eyebrow-transform);
+}
+
+.lede {
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  color: var(--ink-soft);
+  max-inline-size: 62ch;
+}
+
+/* ==========================================================================
+   Components — ported from web/styles/components.css
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-block-size: 44px;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--r-pill);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: var(--btn-tracking);
+  text-transform: var(--eyebrow-transform);
+  background: var(--accent);
+  color: #fff;
+  border: 2px solid var(--accent);
+  cursor: pointer;
+  /* Labels are short and uppercase with wide tracking; letting them wrap
+     doubles the button's height and, in the header, silently inflated the
+     whole bar from 73px to 97px. */
+  white-space: nowrap;
+  transition:
+    transform var(--dur-fast) ease,
+    background var(--dur-mid) ease,
+    color var(--dur-mid) ease;
+}
+.btn:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  transform: translateY(-1px);
+}
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* In dark theme --color-accent is a LIGHT blue, so the white label the light
+   theme uses would fall to ~2.2:1 on it. The fill keeps its accent; the label
+   drops to the page ground instead. */
+:root[data-theme="dark"] .btn {
+  color: var(--color-paper);
+}
+
+.btn-outline {
+  background: none;
+  color: var(--ink);
+  border-color: currentColor;
+}
+.btn-outline:hover {
+  background: var(--ink);
+  color: var(--cream);
+  border-color: var(--ink);
+}
+
+.btn-light {
+  background: #fff;
+  border-color: #fff;
+  color: var(--grey-900);
+}
+.btn-light:hover {
+  background: transparent;
+  color: #fff;
+  border-color: #fff;
+}
+
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 44px;
+  block-size: 44px;
+  border-radius: var(--r-pill);
+  border: 2px solid currentColor;
+  cursor: pointer;
+  transition: background var(--dur-mid) ease;
+}
+.icon-btn:hover {
+  background: rgb(0 0 0 / 0.06);
+}
+.icon-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* --- section heads -------------------------------------------------------- */
+
+.section-head {
+  text-align: center;
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+  margin-block-end: clamp(2.25rem, 5vw, 3.5rem);
+}
+.section-head h2 {
+  font-size: clamp(2.1rem, 5.5vw, 3.75rem);
+}
+.section-head .eyebrow {
+  color: var(--accent);
+}
+.section-head .lede {
+  text-align: center;
+}
+
+/* --- hero ----------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-block-size: min(88vh, 46rem);
+  color: #fff;
+  isolation: isolate;
+  text-align: center;
+}
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+/* Covers both the <video> and the still <img> the reduced-motion path renders
+   in its place, so the two are visually interchangeable. */
+.hero-media :is(img, video) {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  background: var(--navy);
+}
+/* Two-layer scrim. A single linear gradient put its weakest stop exactly where
+   the headline and lede sit, compositing to ~3.3:1 over a bright photograph —
+   fine for the 44px headline, below AA for the 16px lede. The radial layer
+   adds a localised scrim behind the copy column (~0.74 effective alpha, AA at
+   any photo brightness) while the edges keep the lighter linear wash so the
+   photography still reads as full-bleed. */
+.hero-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 92% 72% at 50% 50%,
+      rgb(4 31 58 / 0.55),
+      transparent 72%
+    ),
+    linear-gradient(
+      to bottom,
+      rgb(4 31 58 / 0.66),
+      rgb(4 31 58 / 0.42) 45%,
+      rgb(0 83 160 / 0.62)
+    );
+}
+.hero .wrap {
+  padding-block: calc(var(--header-h) + clamp(2rem, 8vw, 4rem))
+    clamp(5rem, 12vw, 8rem);
+  display: grid;
+  gap: 1.5rem;
+  justify-items: center;
+}
+.hero .eyebrow {
+  color: rgb(255 255 255 / 0.85);
+}
+.hero h1 {
+  font-size: clamp(2.75rem, 9vw, 6rem);
+  text-shadow: 0 2px 30px rgb(0 0 0 / 0.35);
+}
+.hero .lede {
+  color: rgb(255 255 255 / 0.9);
+  text-align: center;
+}
+
+/* --- stats ---------------------------------------------------------------- */
+
+.stats {
+  background: var(--navy);
+  color: #fff;
+}
+.stats ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(2rem, 5vw, 3rem);
+  text-align: center;
+}
+@media (min-width: 900px) {
+  .stats ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.stats .num {
+  display: block;
+  font-family: var(--display);
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--pale);
+}
+.stats .num .suffix {
+  font-size: 0.5em;
+}
+.stats .label {
+  display: block;
+  margin-block-start: 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: var(--label-tracking);
+  text-transform: var(--eyebrow-transform);
+  color: rgb(255 255 255 / 0.7);
+}
+
+/* --- cards ---------------------------------------------------------------- */
+
+.card-title {
+  font-family: var(--display);
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+}
+
+.tag {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.28rem 0.6rem;
+  border-radius: var(--r-pill);
+  background: var(--cream);
+  color: var(--ink-soft);
+}
+[dir="rtl"] .tag {
+  letter-spacing: 0;
+}
+
+/* --- forms ---------------------------------------------------------------- */
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+}
+.field label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: var(--label-tracking);
+  text-transform: var(--eyebrow-transform);
+  color: var(--ink-soft);
+}
+.field input,
+.field select,
+.field textarea {
+  min-block-size: 44px;
+  padding: 0.85rem 1.15rem;
+  /* The source used --line (the decorative hairline, ~1.2:1). An interactive
+     control's boundary must clear 3:1 under WCAG 1.4.11, so it takes the
+     field border instead. */
+  border: 1px solid var(--color-field-border);
+  border-radius: var(--r-pill);
+  background: var(--color-surface);
+  color: var(--ink);
+}
+.field textarea {
+  border-radius: var(--r-md);
+  min-block-size: 8rem;
+  resize: vertical;
+}
+.field-error {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-danger-text);
+}
+.field :is(input, select, textarea)[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+.checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.checks label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-block-size: 44px;
+  padding: 0.55rem 1rem;
+  border-radius: var(--r-pill);
+  background: var(--color-surface);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+.checks input {
+  accent-color: var(--accent);
+  inline-size: 1rem;
+  block-size: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

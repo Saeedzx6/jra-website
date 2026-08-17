@@ -1,11 +1,14 @@
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { BookOpen } from "lucide-react";
-import { Link } from "@/i18n/navigation";
-import { db } from "@/lib/db";
-
-// Cached and revalidated every 3600s. Set per route since the site-wide
-// force-dynamic was removed from the locale layout (blueprint §4.2).
-export const revalidate = 3600;
+import {
+  getFormatter,
+  getLocale,
+  getTranslations,
+  setRequestLocale,
+} from "next-intl/server";
+import { PageHero } from "@/components/layout/PageHero";
+import { magazineIssues } from "@/lib/modules";
+import { pick } from "@/lib/content";
+import type { Locale } from "@/i18n/routing";
+import styles from "./page.module.css";
 
 export default async function MagazinePage({
   params,
@@ -14,36 +17,51 @@ export default async function MagazinePage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations("nav");
-  const tm = await getTranslations("magazine");
 
-  const issues = await db.magazineIssue.findMany({
-    where: { status: "PUBLISHED" },
-    orderBy: [{ year: "desc" }, { month: "desc" }],
-  });
+  const activeLocale = (await getLocale()) as Locale;
+  const tMod = await getTranslations("modules");
+  const format = await getFormatter();
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-3xl font-semibold text-ink">{t("magazine")}</h1>
-      <p className="mt-2 max-w-2xl text-ink-soft">{tm("description")}</p>
+    <>
+      <PageHero
+        title={tMod("magazine")}
+        crumbs={[{ label: "JRA", href: "/" }, { label: tMod("magazine") }]}
+      />
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-3">
-        {issues.map((issue) => (
-          <Link
-            key={issue.id}
-            href={`/magazine/${issue.id}`}
-            className="motion-card rounded-2xl border border-rule bg-surface p-6 text-center"
-          >
-            <BookOpen className="mx-auto h-8 w-8 text-accent" />
-            <p className="mt-3 font-display text-lg font-semibold text-ink">
-              {tm("issue", { number: issue.issueNumber })}
-            </p>
-            <p className="text-sm text-ink-faint">
-              {issue.month}/{issue.year}
-            </p>
-          </Link>
-        ))}
-      </div>
-    </div>
+      <section className="section">
+        <div className="wrap">
+          <ul className={styles.issues}>
+            {magazineIssues.map((issue) => (
+              <li key={issue.issue} className={styles.issue}>
+                <div className={styles.cover} aria-hidden="true">
+                  <span>{issue.issue}</span>
+                </div>
+
+                <div className={styles.body}>
+                  <p className={styles.meta}>
+                    {tMod("issue", { number: issue.issue })} ·{" "}
+                    {format.dateTime(new Date(issue.date), {
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </p>
+                  <h2>{pick(issue.title, activeLocale)}</h2>
+                  <p>{pick(issue.body, activeLocale)}</p>
+                  {/* Access level is stated in text, not implied by a colour
+                      or a lock glyph alone. */}
+                  <span
+                    className="tag"
+                    data-members={issue.membersOnly ? "true" : undefined}
+                  >
+                    {issue.membersOnly ? tMod("membersOnly") : tMod("public")}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </>
   );
 }

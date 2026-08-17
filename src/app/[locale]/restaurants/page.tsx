@@ -1,84 +1,64 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { RestaurantCard } from "@/components/restaurant-card";
-import { RevealGroup } from "@/components/reveal";
-import { DirectoryFilters } from "@/components/directory-filters";
-import { Pagination } from "@/components/pagination";
-import { searchRestaurants, getDirectoryFacets } from "@/lib/restaurants";
 
-// Search/pagination is entirely driven by the URL query string; force this
-// route to always render fresh server-side rather than risk the client
-// router cache serving a previous page's results until a hard refresh.
-export const dynamic = "force-dynamic";
+import { PageHero } from "@/components/layout/PageHero";
+import { DirectoryBrowser } from "@/components/directory/DirectoryBrowser";
+import { restaurants, vocab } from "@/lib/directory";
 
-type SearchParams = {
-  q?: string;
-  governorate?: string;
-  cuisine?: string;
-  stars?: string;
-  page?: string;
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "nav" });
+  return { title: t("restaurants") };
+}
 
 export default async function RestaurantsPage({
   params,
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<SearchParams>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const sp = await searchParams;
 
-  const [t, tCommon, tr, facets, results] = await Promise.all([
-    getTranslations("nav"),
-    getTranslations("common"),
-    getTranslations("restaurants"),
-    getDirectoryFacets(),
-    searchRestaurants({
-      q: sp.q,
-      governorate: sp.governorate,
-      cuisine: sp.cuisine,
-      stars: sp.stars ? Number(sp.stars) : undefined,
-      page: sp.page ? Number(sp.page) : 1,
-    }),
-  ]);
+  // Read on the server so the browser is handed an already-filtered list and
+  // the client component needs no Suspense boundary. See DirectoryBrowser.
+  const sp = await searchParams;
+  const one = (key: string) => {
+    const value = sp[key];
+    return Array.isArray(value) ? value[0] : (value ?? "");
+  };
+
+  const t = await getTranslations("nav");
+  const tHome = await getTranslations("home");
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-3xl font-semibold text-ink">{t("restaurants")}</h1>
-      <p className="mt-2 max-w-2xl text-ink-soft">{tr("description")}</p>
-
-      <DirectoryFilters
-        governorates={facets.governorates}
-        cuisines={facets.cuisines}
-        current={sp}
+    <>
+      <PageHero
+        eyebrow={tHome("directoryEyebrow")}
+        title={t("restaurants")}
+        lede={tHome("heroLede", { count: vocab.totals.restaurants })}
+        crumbs={[{ label: "JRA", href: "/" }, { label: t("restaurants") }]}
       />
 
-      <div className="mt-6 text-sm text-ink-faint">
-        {results.total} {results.total === 1 ? tCommon("result") : tCommon("results")}
-      </div>
-
-      {results.items.length === 0 ? (
-        <p className="mt-16 text-center text-ink-soft">{tCommon("noResults")}</p>
-      ) : (
-        <RevealGroup
-          resetKey={`${results.page}|${sp.q ?? ""}|${sp.governorate ?? ""}|${sp.cuisine ?? ""}`}
-          className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {results.items.map((r) => (
-            <div key={r.slug} className="reveal">
-              <RestaurantCard restaurant={r} />
-            </div>
-          ))}
-        </RevealGroup>
-      )}
-
-      <Pagination
-        basePath="/restaurants"
-        current={results.page}
-        total={results.totalPages}
-        params={{ q: sp.q, governorate: sp.governorate, cuisine: sp.cuisine, stars: sp.stars }}
-      />
-    </div>
+      <section className="section">
+        <div className="wrap">
+          <DirectoryBrowser
+            entries={restaurants}
+            kind="restaurants"
+            initialFilters={{
+              q: one("q"),
+              category: one("category"),
+              city: one("city"),
+              feature: one("feature"),
+            }}
+          />
+        </div>
+      </section>
+    </>
   );
 }

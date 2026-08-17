@@ -1,0 +1,77 @@
+/* Inner-page header. Deliberately quieter than the home hero: navy block,
+   no photography, so the page's own content leads. */
+
+/* The header is fixed and transparent, so it overlays this block — which is
+   exactly the intent, since this surface is navy and the header blends into it
+   the same way it blends into the home hero. The extra leading padding is what
+   keeps the breadcrumbs out from under it. */
+.hero {
+  background: var(--navy);
+  color: #fff;
+  padding-block: calc(var(--header-h) + clamp(1.5rem, 4vw, 2.5rem))
+    clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.inner {
+  display: grid;
+  gap: 1rem;
+  max-inline-size: 62ch;
+}
+
+.hero .eyebrow {
+  color: var(--pale);
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.hero p {
+  color: rgb(255 255 255 / 0.85);
+}
+
+/* --- breadcrumbs ---------------------------------------------------------- */
+
+.crumbs {
+  margin-block-end: 1.25rem;
+  font-size: 0.8125rem;
+}
+
+.crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgb(255 255 255 / 0.7);
+}
+
+.crumbs li {
+  display: flex;
+  align-items: center;
+}
+
+/* Breadcrumb links are short words, so they need an explicit hit area to
+   clear 44px on touch. */
+.crumbs a,
+.crumbs span {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+}
+
+.crumbs a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Logical: the separator follows the crumb in reading order, so it flips
+   with the document rather than being pinned to the visual right. */
+.crumbs li:not(:last-child)::after {
+  content: "/";
+  margin-inline-start: 0.5rem;
+  color: rgb(255 255 255 / 0.4);
+}
+
+.crumbs [aria-current="page"] {
+  color: #fff;
+}

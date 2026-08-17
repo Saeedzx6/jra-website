@@ -1,0 +1,40 @@
+.hours {
+  display: grid;
+  gap: 1rem;
+}
+
+.list {
+  display: grid;
+  gap: 0;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.6rem;
+  font-size: 0.9375rem;
+}
+.row + .row {
+  border-block-start: 1px solid var(--line);
+}
+
+.row dt {
+  color: var(--ink-soft);
+}
+
+.row dd {
+  font-weight: 700;
+  /* Times are digits: tabular figures stop the column jittering row to row. */
+  font-variant-numeric: tabular-nums;
+}
+
+.notice {
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--r-sm);
+  border-inline-start: 3px solid var(--status-alert);
+  background: var(--grey-50);
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}

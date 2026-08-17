@@ -1,6 +1,15 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { LoginForm } from "@/components/login-form";
+import { PageHero } from "@/components/layout/PageHero";
+import { LoginForm } from "@/components/forms/LoginForm";
 
+/**
+ * Member sign-in.
+ *
+ * The ported design shipped as a prototype: a disabled button and an on-page
+ * notice warning that nothing was behind it. It is now wired to the platform's
+ * credential provider (see components/forms/LoginForm), so the form is real
+ * and the notice has been removed.
+ */
 export default async function LoginPage({
   params,
 }: {
@@ -8,17 +17,22 @@ export default async function LoginPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const tl = await getTranslations("login");
+
+  const tMod = await getTranslations("modules");
 
   return (
-    <div className="mx-auto max-w-sm px-4 py-16 sm:px-6">
-      <h1 className="text-center font-display text-2xl font-semibold text-ink">
-        {tl("welcomeBack")}
-      </h1>
-      <p className="mt-2 text-center text-sm text-ink-soft">{tl("intro")}</p>
-      <div className="mt-8">
-        <LoginForm />
-      </div>
-    </div>
+    <>
+      <PageHero
+        title={tMod("loginTitle")}
+        lede={tMod("loginLede")}
+        crumbs={[{ label: "JRA", href: "/" }, { label: tMod("loginTitle") }]}
+      />
+
+      <section className="section">
+        <div className="wrap">
+          <LoginForm />
+        </div>
+      </section>
+    </>
   );
 }

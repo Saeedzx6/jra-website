@@ -1,11 +1,11 @@
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { ClipboardCheck } from "lucide-react";
+import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { MembershipForm } from "@/components/membership-form";
-
-// Cached and revalidated every 3600s. Set per route since the site-wide
-// force-dynamic was removed from the locale layout (blueprint §4.2).
-export const revalidate = 3600;
+import { PageHero } from "@/components/layout/PageHero";
+import { CardGrid } from "@/components/layout/Cards";
+import { membershipTypes, membershipBenefits } from "@/lib/modules";
+import { pick } from "@/lib/content";
+import type { Locale } from "@/i18n/routing";
+import styles from "./page.module.css";
 
 export default async function MembershipPage({
   params,
@@ -14,33 +14,46 @@ export default async function MembershipPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  const activeLocale = (await getLocale()) as Locale;
   const t = await getTranslations("nav");
-  const tf = await getTranslations("footer");
-  const tm = await getTranslations("membership");
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
-        {t("membership")}
-      </p>
-      <h1 className="mt-2 font-display text-3xl font-semibold text-ink">
-        {tf("tagline")}
-      </h1>
-      <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">{tm("intro")}</p>
-      <Link
-        href="/classification/restaurant"
-        className="mt-6 flex items-center gap-3 rounded-2xl border border-dashed border-accent bg-accent-soft p-5 transition-transform hover:-translate-y-0.5"
-      >
-        <ClipboardCheck className="h-6 w-6 shrink-0 text-accent" />
-        <span className="text-sm text-ink">
-          <strong className="text-ink">{tm("classificationPromptBold")}</strong>{" "}
-          {tm("classificationPromptText")}
-        </span>
-      </Link>
+    <>
+      <PageHero
+        eyebrow={t("membership")}
+        title={t("membership")}
+        lede={pick(membershipTypes[0].body, activeLocale)}
+        crumbs={[{ label: "JRA", href: "/" }, { label: t("membership") }]}
+      />
 
-      <div className="mt-6 rounded-2xl border border-rule bg-surface p-6 sm:p-8">
-        <MembershipForm />
-      </div>
-    </div>
+      <section className="section">
+        <div className="wrap">
+          <ul className={styles.types}>
+            {membershipTypes.map((type) => (
+              <li key={type.title.en} className={styles.type}>
+                <span className={styles.meta}>
+                  {type.meta && pick(type.meta, activeLocale)}
+                </span>
+                <h2 className="display">{pick(type.title, activeLocale)}</h2>
+                <p>{pick(type.body, activeLocale)}</p>
+                <Link href="/membership#apply" className="btn">
+                  {pick(type.cta, activeLocale)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="section" id="apply">
+        <div className="wrap">
+          <div className="section-head">
+            <h2 className="display">{pick(membershipTypes[0].title, activeLocale)}</h2>
+          </div>
+          <CardGrid items={membershipBenefits} columns={2} />
+        </div>
+      </section>
+    </>
   );
 }

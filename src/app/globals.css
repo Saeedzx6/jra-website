@@ -1,59 +1,102 @@
 @import "tailwindcss";
+/* Direction B token aliases, layout primitives and components. Imported after
+   Tailwind so its preflight lands first and these can override it. */
+@import "../styles/direction-b.css";
 
 /* ---------------------------------------------------------------------- */
-/* Design tokens — colors sampled directly from the real JRA logo          */
-/* (public/brand/jra-logo.png): primary blue #0050A0, wordmark gray #707070*/
+/* Design tokens — the JRA "Direction B" system.                           */
+/*                                                                         */
+/* Values are the audited ramp from design-system/MASTER.md, sampled from   */
+/* logo.png. The identity is strictly TWO colours and their tonal           */
+/* derivations:                                                             */
+/*     #0053A0  blue  — the ellipse mark                                    */
+/*     #6C6D70  grey  — all type, Arabic and Latin                          */
+/* No third hue is introduced anywhere except the status colours below.     */
+/* Read MASTER.md §1 before adding a colour.                                */
+/*                                                                          */
+/* Token NAMES are deliberately unchanged from the previous palette: the     */
+/* @theme inline block feeds them to Tailwind, so retuning the values        */
+/* re-skins every existing utility (public, admin and portal) at once.       */
 /* ---------------------------------------------------------------------- */
 
 :root {
-  --color-paper: #f7f7f8;
+  --color-paper: #f7f7f8; /* grey-50 */
   --color-surface: #ffffff;
-  --color-surface-2: #f2f3f5;
-  --color-ink: #1c1e22;
-  --color-ink-soft: #585d64;
-  /* Was #8b9098, which measured 3.00:1 on --color-paper — below the 4.5:1 AA
-     floor for the captions and metadata it is used for. Darkened to the
-     lightest value that clears 4.5:1 on surface, paper and surface-2. */
-  --color-ink-faint: #6b6f75;
-  --color-accent: #0050a0;
-  --color-accent-strong: #003d7a;
-  --color-accent-soft: #e8f1fb;
-  --color-olive: #1e8a5f;
-  --color-olive-soft: #dceee3;
-  --color-brass: #b8901f;
-  --color-brass-soft: #f3e8cc;
-  --color-rule: #e5e7eb;
+  --color-surface-2: #efeff0; /* grey-100 */
+  --color-ink: #232427; /* grey-900 — headings */
+  --color-ink-soft: #4a4b4e; /* grey-700 */
+  /* MASTER.md §1 measured the brand grey at exactly 4.50:1 on a tinted
+     surface — the AA floor with zero margin. It is therefore the FAINTEST
+     tier, never the mid tier, and --color-ink-soft steps up to grey-700 so
+     the hierarchy keeps a margin on every surface. */
+  --color-ink-faint: #6c6d70; /* grey-600 — brand grey */
+  --color-accent: #0053a0; /* brand blue */
+  --color-accent-strong: #003a73; /* blue-800 */
+  --color-accent-soft: #edf3f9; /* blue-50 */
+  --color-olive: #12645a;
+  --color-olive-soft: #dceae8;
+  --color-brass: #8a5a12;
+  --color-brass-soft: #f4ead7;
+  /* Decorative hairline between content blocks — not a UI component, so the
+     3:1 of WCAG 1.4.11 does not apply. Interactive controls use
+     --color-field-border below, which does clear 3:1. */
+  --color-rule: #dfe0e2; /* grey-200 */
+  --color-field-border: #85888e;
+
+  /* -- The six tile fills (MASTER.md §1) ---------------------------------
+     Four blues and two greys, ordered so no two adjacent tiles in a
+     3-column grid share a tone. Tile body copy is FULL WHITE, never
+     translucent — the fills were chosen so white clears AA, and dropping
+     the opacity is precisely what broke that.
+
+     Deliberately NOT redefined per theme: these are saturated brand fills
+     carrying their own white copy, so they read the same on either ground.
+     The brand grey #6C6D70 is absent on purpose — white on it reaches only
+     5.2:1 and fails once panel copy goes translucent. */
+  --color-tile-1: #0053a0; /* brand blue */
+  --color-tile-2: #4a4b4e; /* deep grey */
+  --color-tile-3: #062e55; /* navy blue */
+  --color-tile-4: #0a66bc; /* lifted blue */
+  --color-tile-5: #333437; /* darkest grey */
+  --color-tile-6: #003a73; /* deep blue */
 
   /* -- Readable text variants -------------------------------------------
-     The brand olive and brass are correct as *fills* — icons, stars,
-     borders, chip backgrounds — where 3:1 is the bar (WCAG 1.4.11). As
-     text they failed: brass measured 2.98:1 on white and 2.44:1 on its own
-     soft chip. These are the darkened equivalents that clear 4.5:1 on
-     surface, paper and their soft background. Use *-text for glyphs,
-     the base token for fills. The dark theme needs no equivalent — it
-     already measures 8:1+, so both map back to the base there. */
-  --color-olive-text: #1a7853;
-  --color-brass-text: #816516;
+     Olive and brass are the two status hues MASTER.md §1 permits, and they
+     are already dark enough to serve as text (6.55:1 and 5.52:1 on paper),
+     so the *-text variants equal their base. They are kept as separate
+     tokens because the markup references them and because a future retune
+     of the fill must not silently drag the glyph colour with it. */
+  --color-olive-text: #12645a;
+  --color-brass-text: #8a5a12;
 
   /* -- Semantic status ---------------------------------------------------
-     Distinct from the brand accents, which were previously doing double
-     duty. The schema carries eight status enums (DRAFT/PUBLISHED/ARCHIVED,
-     PENDING/APPROVED/REJECTED/MORE_INFO, MET/PARTIAL/NOT_MET, EXPIRED …)
-     and there was no danger token at all to render the negative half.
+     MASTER.md §1 permits exactly two non-brand hues, and only for status:
+       --status-good  #12645A  opportunities  -> olive / success
+       --status-alert #8A5A12  legal alerts   -> brass / warning
+     They are never used decoratively. If you are reaching for one to make a
+     panel look less blue, the answer is no.
+
+     Danger is a THIRD status hue, which MASTER.md does not name. It is kept
+     deliberately: the schema carries eight status enums whose negative half
+     (REJECTED, NOT_MET, EXPIRED, plus destructive admin actions) cannot be
+     told apart from "legal alert" if both render brass. Red is the only
+     value here that is not a derivation of the two brand colours, and it is
+     confined to the negative status role.
+
      Never use these alone to carry meaning — always pair with an icon or
      text label (WCAG 1.4.1). */
-  --color-success: #1e8a5f;
-  --color-success-soft: #dceee3;
-  --color-success-text: #1a7853;
-  --color-warning: #b8901f;
-  --color-warning-soft: #f3e8cc;
-  --color-warning-text: #816516;
-  --color-danger: #d92d20;
-  --color-danger-soft: #fee4e2;
-  --color-danger-text: #ca2a1e;
-  --color-info: #0050a0;
-  --color-info-soft: #e8f1fb;
-  --color-info-text: #0050a0;
+  --color-success: #12645a;
+  --color-success-soft: #dceae8;
+  --color-success-text: #12645a;
+  --color-warning: #8a5a12;
+  --color-warning-soft: #f4ead7;
+  --color-warning-text: #8a5a12;
+  --color-danger: #b42318;
+  --color-danger-soft: #fdeceb;
+  --color-danger-text: #b42318;
+  --color-info: #0053a0;
+  --color-info-soft: #edf3f9;
+  --color-info-text: #0053a0;
   --shadow-card: 0 1px 2px rgba(20, 20, 20, 0.05), 0 10px 28px rgba(20, 20, 20, 0.07);
 
   /* Editorial layer — floating white surfaces over an atmospheric backdrop.
@@ -69,42 +112,50 @@
   color-scheme: light;
 }
 
+/* The dark theme is built from the SAME two hues, not a separate palette:
+   the surfaces descend the blue ramp (950 -> 900 -> a lifted 800) and the
+   type ascends the grey ramp. That is what keeps it recognisably JRA rather
+   than a generic dark mode.
+
+   Note the inversion: in light theme --color-accent is a dark blue carrying
+   WHITE copy; here it is a LIGHT blue (blue-300) carrying DARK copy. Any
+   solid accent button in dark theme must set its label to --color-paper. */
 :root[data-theme="dark"] {
-  --color-paper: #0b1520;
-  --color-surface: #101e2b;
-  --color-surface-2: #16283a;
-  --color-ink: #e7eef5;
-  --color-ink-soft: #a9b7c3;
-  /* Was #6e7c89 — lightened to clear 4.5:1 on paper, surface and surface-2. */
-  --color-ink-faint: #828f9c;
-  --color-accent: #4a9be0;
-  --color-accent-strong: #6fb4ec;
-  --color-accent-soft: #123354;
-  --color-olive: #4cc08a;
-  --color-olive-soft: #123b2a;
-  --color-brass: #e0bb4e;
-  --color-brass-soft: #2e2610;
-  --color-rule: #223244;
+  --color-paper: #041f3a; /* blue-950 */
+  --color-surface: #062e55; /* blue-900 */
+  --color-surface-2: #0b3a66; /* lifted blue-800 */
+  --color-ink: #f7f7f8; /* grey-50 */
+  --color-ink-soft: #c8c9cb; /* grey-300 */
+  /* grey-400 #a0a1a4 measured 4.49:1 on surface-2 — one hundredth under the
+     floor. Lightened to the next step that clears it on all three surfaces. */
+  --color-ink-faint: #a8a9ac;
+  --color-accent: #7fb3e3; /* blue-300 */
+  --color-accent-strong: #d6e5f3; /* blue-100 */
+  --color-accent-soft: #0d3f70;
+  --color-olive: #5cc0b0;
+  --color-olive-soft: #0a3b36;
+  --color-brass: #e0b25e;
+  --color-brass-soft: #3a2c10;
+  --color-rule: #1b4670;
+  --color-field-border: #6f92b5;
 
-  /* Dark-theme brand hues already measure 8:1+ as text, so the readable
-     variants are the base tokens — no separate value needed. */
-  --color-olive-text: #4cc08a;
-  --color-brass-text: #e0bb4e;
+  /* Dark-theme status hues already measure 5:1+ as text on every surface, so
+     the readable variants are the base tokens — no separate value needed. */
+  --color-olive-text: #5cc0b0;
+  --color-brass-text: #e0b25e;
 
-  --color-success: #4cc08a;
-  --color-success-soft: #123b2a;
-  --color-success-text: #4cc08a;
-  --color-warning: #e0bb4e;
-  --color-warning-soft: #2e2610;
-  --color-warning-text: #e0bb4e;
-  --color-danger: #f97066;
-  --color-danger-soft: #3b1412;
-  --color-danger-text: #f97066;
-  --color-info: #4a9be0;
-  --color-info-soft: #123354;
-  /* Slightly lighter than --color-info: the base measured 4.34:1 on
-     info-soft, just under the AA floor. */
-  --color-info-text: #509fe1;
+  --color-success: #5cc0b0;
+  --color-success-soft: #0a3b36;
+  --color-success-text: #5cc0b0;
+  --color-warning: #e0b25e;
+  --color-warning-soft: #3a2c10;
+  --color-warning-text: #e0b25e;
+  --color-danger: #f89890;
+  --color-danger-soft: #4a1512;
+  --color-danger-text: #f89890;
+  --color-info: #7fb3e3;
+  --color-info-soft: #0d3f70;
+  --color-info-text: #7fb3e3;
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 32px rgba(0, 0, 0, 0.4);
   /* Dark mode can't lean on shadow for elevation — the ambient light is gone.
      Keep a soft cast for grounding and let borders carry the separation. */
@@ -119,37 +170,40 @@
   color-scheme: dark;
 }
 
+/* Explicit light selection — must mirror :root exactly, so that toggling
+   from dark back to light restores the same values the default would give. */
 :root[data-theme="light"] {
   --color-paper: #f7f7f8;
   --color-surface: #ffffff;
-  --color-surface-2: #f2f3f5;
-  --color-ink: #1c1e22;
-  --color-ink-soft: #585d64;
-  --color-ink-faint: #6b6f75;
-  --color-accent: #0050a0;
-  --color-accent-strong: #003d7a;
-  --color-accent-soft: #e8f1fb;
-  --color-olive: #1e8a5f;
-  --color-olive-soft: #dceee3;
-  --color-brass: #b8901f;
-  --color-brass-soft: #f3e8cc;
-  --color-rule: #e5e7eb;
+  --color-surface-2: #efeff0;
+  --color-ink: #232427;
+  --color-ink-soft: #4a4b4e;
+  --color-ink-faint: #6c6d70;
+  --color-accent: #0053a0;
+  --color-accent-strong: #003a73;
+  --color-accent-soft: #edf3f9;
+  --color-olive: #12645a;
+  --color-olive-soft: #dceae8;
+  --color-brass: #8a5a12;
+  --color-brass-soft: #f4ead7;
+  --color-rule: #dfe0e2;
+  --color-field-border: #85888e;
 
-  --color-olive-text: #1a7853;
-  --color-brass-text: #816516;
+  --color-olive-text: #12645a;
+  --color-brass-text: #8a5a12;
 
-  --color-success: #1e8a5f;
-  --color-success-soft: #dceee3;
-  --color-success-text: #1a7853;
-  --color-warning: #b8901f;
-  --color-warning-soft: #f3e8cc;
-  --color-warning-text: #816516;
-  --color-danger: #d92d20;
-  --color-danger-soft: #fee4e2;
-  --color-danger-text: #ca2a1e;
-  --color-info: #0050a0;
-  --color-info-soft: #e8f1fb;
-  --color-info-text: #0050a0;
+  --color-success: #12645a;
+  --color-success-soft: #dceae8;
+  --color-success-text: #12645a;
+  --color-warning: #8a5a12;
+  --color-warning-soft: #f4ead7;
+  --color-warning-text: #8a5a12;
+  --color-danger: #b42318;
+  --color-danger-soft: #fdeceb;
+  --color-danger-text: #b42318;
+  --color-info: #0053a0;
+  --color-info-soft: #edf3f9;
+  --color-info-text: #0053a0;
   --shadow-card: 0 1px 2px rgba(20, 20, 20, 0.05), 0 10px 28px rgba(20, 20, 20, 0.07);
   --shadow-float:
     0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.06),
@@ -181,6 +235,14 @@
   --color-brass-soft: var(--color-brass-soft);
   --color-brass-text: var(--color-brass-text);
   --color-rule: var(--color-rule);
+  --color-field-border: var(--color-field-border);
+
+  --color-tile-1: var(--color-tile-1);
+  --color-tile-2: var(--color-tile-2);
+  --color-tile-3: var(--color-tile-3);
+  --color-tile-4: var(--color-tile-4);
+  --color-tile-5: var(--color-tile-5);
+  --color-tile-6: var(--color-tile-6);
 
   --color-success: var(--color-success);
   --color-success-soft: var(--color-success-soft);
@@ -216,31 +278,89 @@ body {
   font-family: var(--font-body-ar), var(--font-body-en), system-ui, sans-serif;
 }
 
-.font-display {
-  font-family: var(--font-display-en), sans-serif;
-  letter-spacing: -0.01em;
+/* Aliases. Cairo serves Arabic display as well as Arabic body, and Direction B
+   has no separate editorial serif — the italic display is the editorial voice.
+   Aliased here rather than loaded twice in fonts.ts, which would ship the same
+   font file under a second name. */
+:root {
+  --font-display-ar: var(--font-body-ar);
+  --font-editorial-en: var(--font-display-en);
 }
 
-[dir="rtl"] .font-display {
-  font-family: var(--font-display-ar), sans-serif;
-  letter-spacing: 0;
-}
-
-/* Editorial serif for hero/section leads. Arabic has no matched serif here,
-   so RTL falls back to the Arabic display face — a deliberate asymmetry
-   rather than pairing Arabic with an unrelated Latin serif. */
+/* Direction B display voice: italic 700 Poppins at -0.02em. */
+.font-display,
 .font-editorial {
-  font-family: var(--font-editorial-en), Georgia, serif;
+  font-family: var(--font-display-en), sans-serif;
+  font-style: italic;
+  font-weight: 700;
   letter-spacing: -0.02em;
+  line-height: 1.04;
 }
 
+/* ---------------------------------------------------------------------- */
+/* Arabic corrections (MASTER.md §2)                                       */
+/*                                                                         */
+/* These are not stylistic preferences. Each one repairs a way the Latin    */
+/* styling actively damages Arabic text:                                   */
+/*                                                                         */
+/* 1. font-style: italic — Arabic has no italic tradition. A slanted Arabic */
+/*    word reads as a rendering fault, not as emphasis. The Arabic build    */
+/*    carries the same visual weight through Cairo 700 upright instead.    */
+/*                                                                         */
+/* 2. letter-spacing — the destructive one. Arabic script is cursive:       */
+/*    letters join. Positive tracking pulls those joins apart and renders   */
+/*    the word as disconnected glyphs. Tracking is therefore ZEROED, not    */
+/*    reduced.                                                             */
+/*                                                                         */
+/* 3. text-transform: uppercase — Arabic is unicameral, so the declaration  */
+/*    is a no-op on Arabic glyphs but still uppercases any Latin ("JRA",    */
+/*    brand names) mixed into the same run, which looks accidental.        */
+/* ---------------------------------------------------------------------- */
+[dir="rtl"] .font-display,
 [dir="rtl"] .font-editorial {
   font-family: var(--font-display-ar), sans-serif;
+  font-style: normal;
   letter-spacing: 0;
+}
+
+/* Applied to the utilities rather than to each of the ~60 call sites, so
+   markup added later cannot miss the correction. */
+[dir="rtl"] .tracking-tight,
+[dir="rtl"] .tracking-normal,
+[dir="rtl"] .tracking-wide,
+[dir="rtl"] .tracking-wider,
+[dir="rtl"] .tracking-widest {
+  letter-spacing: 0;
+}
+
+[dir="rtl"] .uppercase {
+  text-transform: none;
+}
+
+[dir="rtl"] .italic {
+  font-style: normal;
+}
+
+/* Arabic sits on a larger optical size than Latin at the same nominal px, but
+   its x-height is smaller and its ascenders/descenders are taller, so body
+   copy needs more leading to stay readable. */
+[dir="rtl"] body {
+  line-height: 1.8;
 }
 
 * {
   border-color: var(--color-rule);
+}
+
+/* The blanket rule above gives form controls the decorative hairline, which
+   measures ~1.2:1 — well under the 3:1 that WCAG 1.4.11 requires of an
+   interactive control's boundary. Controls therefore opt back up to the
+   field border. Done here rather than per-component so no input can be added
+   later that quietly misses it. */
+input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  border-color: var(--color-field-border);
 }
 
 ::selection {

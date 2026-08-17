@@ -4,7 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma migrate deploy && next build",
+    "build": "prisma generate && prisma migrate deploy && tsx scripts/generate-directory-data.ts && next build",
+    "data:directory": "dotenv -e .env -- tsx scripts/generate-directory-data.ts",
+    "smoke": "node scripts/smoke.mjs",
+    "seed:suppliers": "dotenv -e .env -- tsx prisma/seed/14-suppliers.ts",
+    "seed:legacy-images": "dotenv -e .env -- tsx prisma/seed/15-images-from-legacy-urls.ts",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",

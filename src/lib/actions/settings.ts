@@ -11,9 +11,10 @@ async function requireAdmin() {
   return session;
 }
 
-export async function getSiteSettings() {
-  return db.siteSetting.findUnique({ where: { id: "singleton" } });
-}
+// NOTE: getSiteSettings used to live here. It is a plain read, and every
+// export of a "use server" module becomes a Server Action — which postponed
+// the homepage's Suspense boundary indefinitely. It now lives in
+// lib/site-settings.ts; import it from there.
 
 export async function updateHeroImage(formData: FormData) {
   await requireAdmin();

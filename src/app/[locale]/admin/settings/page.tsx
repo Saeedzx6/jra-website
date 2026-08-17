@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import {
-  getSiteSettings,
   updateHeroImage,
   clearHeroImage,
   updateShowcaseImage,
   clearShowcaseImage,
 } from "@/lib/actions/settings";
+import { getSiteSettings } from "@/lib/site-settings";
 
 export default async function AdminSettingsPage() {
   const settings = await getSiteSettings();

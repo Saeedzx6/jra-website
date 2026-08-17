@@ -29,6 +29,11 @@ Create your env file:
 cp .env.example .env
 ```
 
+**Change `localhost` to `127.0.0.1` in both `DATABASE_URL` and `DIRECT_URL`.**
+Docker binds 5433 on IPv4 and IPv6; on Windows `localhost` resolves to `::1`
+first and Prisma intermittently fails to connect with "Can't reach database
+server" even though the container is healthy.
+
 Then generate your own auth secret and paste it into `.env` as `AUTH_SECRET`:
 
 ```bash
@@ -65,10 +70,37 @@ docker run --rm -v "/absolute/path/to/folder:/backup" postgres:18-alpine \
 `JRA-moreassets/` source folders that are not in the repo — they are hundreds of
 megabytes of reference material — so you need those from the team first.
 
+Point `JRA_LEGACY_DATA_DIR` in `.env` at the folder holding `resutaurants.xlsx`,
+`categories.xlsx`, `manufacturers.xlsx` and `restaurant_tags.xlsx`. Only
+`04-content.ts` and the photo seeds need the larger `JRA-moreassets` folder; the
+restaurant, supplier and classification seeds run from the four spreadsheets
+alone.
+
+> **The seed scripts do not read `.env`.** They run under `tsx`, which — unlike
+> the Prisma CLI — does not load it automatically, and they fail with
+> "Environment variable not found: DATABASE_URL". Wrap every one:
+> ```bash
+> npx dotenv -e .env -- tsx prisma/seed/01-lookups.ts
+> ```
+
+Two seeds exist that `seed:all` does not include, both added for the public
+front end (see [docs/FRONTEND-PORT.md](docs/FRONTEND-PORT.md) §4):
+
+```bash
+npm run seed:suppliers        # 56 supplier rows — the table ships empty otherwise
+npm run seed:legacy-images    # image URLs; without these every listing is imageless
+```
+
 Either way, create yourself a local admin login:
 
 ```bash
 npm run seed:admin      # admin@jra.jo / ChangeMe123!  — local only, never production
+```
+
+Finally, build the public directory snapshot the front end reads:
+
+```bash
+npm run data:directory
 ```
 
 ## Running it
@@ -81,6 +113,21 @@ npm run db:studio       # http://localhost:5555 — browse/edit the database
 The site is bilingual: `/en` and `/ar`. Check both when you change anything
 visual — Arabic renders right-to-left and layouts break there in ways that are
 invisible in English.
+
+## Testing
+
+```bash
+npm test                # vitest — 82 unit tests, no server or database needed
+npm run smoke           # 46 route checks; needs a server running
+```
+
+Keep the unit suite free of servers, databases and fixtures so it stays fast and
+runnable anywhere. `npm run smoke` takes `BASE_URL` if you are not on port 3001.
+
+It checks something a status code cannot: a page that returns 200 while still
+showing its `loading.tsx` fallback, with the real markup stranded in a hidden
+div. That has happened here — see [docs/FRONTEND-PORT.md](docs/FRONTEND-PORT.md)
+§6.4.
 
 ## Making changes
 
@@ -108,9 +155,16 @@ change can be seen running before anyone merges it.
 | Shared components | `src/components/` |
 | Server actions (form handling, admin ops) | `src/lib/actions/` |
 | Colors, fonts, spacing tokens | `src/app/globals.css` |
+| Direction B aliases, layout primitives, component classes | `src/styles/direction-b.css` |
 | All user-facing text, EN + AR | `messages/` |
+| Editorial prose (not UI chrome), EN + AR | `src/lib/content.ts`, `src/lib/modules.ts` |
+| Public directory snapshot — **generated, do not hand-edit** | `src/data/*.json` |
 | Database schema | `prisma/schema.prisma` |
 | File uploads (Cloudinary + local fallback) | `src/lib/storage.ts` |
+
+The public site was ported in from a separate front-end project. Read
+[docs/FRONTEND-PORT.md](docs/FRONTEND-PORT.md) before changing anything under
+`src/app/[locale]/` that is not `admin/` or `portal/`.
 
 ## Things worth knowing before you break them
 
@@ -141,6 +195,22 @@ move it aside first:
 ```bash
 mv .env.production.local .env.production.local.off   # remember to move it back
 ```
+
+**The public directory reads a generated snapshot, not the database.** Editing a
+restaurant in the admin panel will not change `/restaurants` until
+`npm run data:directory` runs — it is wired into `npm run build`, so deploys
+pick it up. This is deliberate: the directory filters client-side so search and
+chips respond without a round trip. Do not "fix" it by querying per request; see
+[docs/FRONTEND-PORT.md](docs/FRONTEND-PORT.md) §3.
+
+**Stop the dev server before `npm run build`.** `prisma generate` renames
+`query_engine-windows.dll.node`, which fails with `EPERM` while a dev server
+holds it open. The build then reports success having never run `next build`.
+
+**A stale `.next` can serve a broken page indefinitely.** If the database was
+unreachable when a statically-revalidated route was first rendered, the cached
+shell keeps serving its loading fallback with the real markup stranded in a
+hidden div — a 200 response, no error in the logs. `rm -rf .next` and restart.
 
 **Schema changes need a migration.** Edit `prisma/schema.prisma`, then:
 

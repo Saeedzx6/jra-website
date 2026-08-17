@@ -1,0 +1,224 @@
+/* Header on the SiyahaJobs pattern — a sister site in the same sector — at the
+   level of structure and behaviour, not typography. The mockups' thin utility
+   bar has been removed per HANDOFF: it carried one tagline and the language
+   toggle, and both belong in the header proper. */
+
+/* The header overlays the hero rather than sitting above it, so it must be
+   `fixed`, not `sticky` — sticky occupies layout space and would push the hero
+   down, leaving a cream band where the blend should be. Everything that has to
+   clear it measures against --header-h.
+
+   At rest: no background, white type, blending into the dark hero.
+   Once scrolled: cream, blurred and shadowed, with type back to ink. */
+.header {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: 50;
+  background: transparent;
+  color: #fff;
+  transition:
+    background-color var(--dur-mid) ease,
+    box-shadow var(--dur-mid) ease,
+    color var(--dur-mid) ease,
+    backdrop-filter var(--dur-mid) ease;
+}
+
+.stuck {
+  background: rgb(247 247 248 / 0.92);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-stuck);
+  color: var(--ink);
+}
+
+/* Over photography the brand-blue ring is too dark to find. While the header
+   is transparent the ring goes white; it reverts with the background. */
+.header :focus-visible {
+  outline-color: #fff;
+}
+.stuck :focus-visible {
+  outline-color: var(--focus);
+}
+
+/* Logo swap. Both lockups are stacked in the same grid cell so the swap is a
+   cross-fade with no layout shift and no second network request on scroll. */
+.wordmark {
+  display: inline-grid;
+  grid-template-areas: "logo";
+  align-items: center;
+}
+.wordmark img {
+  grid-area: logo;
+  transition: opacity var(--dur-mid) ease;
+}
+.logoOnDark {
+  opacity: 1;
+}
+.logoOnLight {
+  opacity: 0;
+}
+.stuck .logoOnDark {
+  opacity: 0;
+}
+.stuck .logoOnLight {
+  opacity: 1;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-block: 0.9rem;
+}
+
+.wordmark {
+  /* The lockup is 38px tall but the link must still clear 44px on touch. */
+  min-block-size: 44px;
+  --logo-h: 38px;
+}
+.wordmark img {
+  block-size: var(--logo-h);
+  inline-size: auto;
+}
+@media (max-width: 480px) {
+  .wordmark {
+    --logo-h: 30px;
+  }
+}
+
+.nav {
+  display: none;
+  margin-inline-start: auto;
+  gap: 1.5rem;
+}
+@media (min-width: 1120px) {
+  .nav {
+    display: flex;
+  }
+}
+.nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: var(--nav-tracking);
+  text-transform: var(--eyebrow-transform);
+  border-block-end: 2px solid transparent;
+  transition: color var(--dur-mid) ease, border-color var(--dur-mid) ease;
+}
+/* Hover and current-page marking use brand blue, which all but vanishes
+   against the dark hero. While transparent they resolve to white/pale
+   instead; --nav-accent flips with the background. */
+.header {
+  --nav-accent: #fff;
+  --nav-hover-bg: rgb(255 255 255 / 0.16);
+}
+.stuck {
+  --nav-accent: var(--accent);
+  --nav-hover-bg: rgb(0 0 0 / 0.06);
+}
+
+.nav a:hover {
+  color: var(--nav-accent);
+}
+/* Current location must be visually indicated, not just implied by the URL. */
+.nav a[aria-current="page"] {
+  color: var(--nav-accent);
+  border-block-end-color: var(--nav-accent);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-start: auto;
+}
+@media (min-width: 1120px) {
+  .actions {
+    margin-inline-start: 0;
+  }
+}
+
+.langToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 44px;
+  min-inline-size: 44px;
+  padding-inline: 0.75rem;
+  border-radius: var(--r-pill);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  transition: background var(--dur-mid) ease;
+}
+.langToggle:hover {
+  background: var(--nav-hover-bg);
+}
+
+.loginBtn {
+  display: none;
+}
+@media (min-width: 640px) {
+  .loginBtn {
+    display: inline-flex;
+  }
+}
+
+/* The menu button's border is `currentColor`, so it follows the header's
+   colour automatically; only the hover wash needs flipping. */
+.navToggle:hover {
+  background: var(--nav-hover-bg);
+}
+
+@media (min-width: 1120px) {
+  .navToggle {
+    display: none;
+  }
+}
+
+/* --- mobile nav ----------------------------------------------------------- */
+
+.mobileNav {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: var(--navy);
+  color: #fff;
+  padding: 1.5rem;
+  padding-block-start: max(1.5rem, env(safe-area-inset-top));
+  overflow-y: auto;
+  display: grid;
+  align-content: start;
+  gap: 0.25rem;
+}
+
+.mobileNavHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-block-end: 1.5rem;
+}
+
+.mobileNav a {
+  display: block;
+  font-family: var(--display);
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: 1.75rem;
+  padding-block: 0.55rem;
+  border-block-end: 1px solid rgb(255 255 255 / 0.16);
+}
+.mobileNav a:hover,
+.mobileNav a[aria-current="page"] {
+  color: var(--pale);
+}
+
+.mobileNavFoot {
+  margin-block-start: 2rem;
+  display: grid;
+  gap: 0.75rem;
+}

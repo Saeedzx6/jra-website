@@ -1,0 +1,72 @@
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 700px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.person {
+  display: grid;
+  gap: 0;
+  background: #fff;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.portrait {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: var(--blue-50);
+}
+.portrait img {
+  inline-size: 100%;
+  block-size: 100%;
+  /* `contain`, not `cover`: these are supplied head-and-shoulders portraits at
+     inconsistent crops, and cover would slice the tops off some heads. */
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.body {
+  padding: 1.1rem 1.25rem 1.4rem;
+  display: grid;
+  gap: 0.3rem;
+  text-align: center;
+}
+
+.name {
+  font-family: var(--display);
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: 1.0625rem;
+  line-height: 1.25;
+}
+
+.role {
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+/* The president leads the board grid at double width on wider screens. */
+@media (min-width: 700px) {
+  .lead {
+    grid-column: span 2;
+  }
+  .lead .portrait {
+    aspect-ratio: 2 / 1;
+  }
+  .lead .name {
+    font-size: 1.375rem;
+  }
+}

@@ -1,0 +1,58 @@
+.list {
+  display: grid;
+  gap: 1rem;
+}
+
+.report {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.year {
+  display: grid;
+  place-items: center;
+  inline-size: 4.5rem;
+  block-size: 4.5rem;
+  flex: 0 0 auto;
+  border-radius: var(--r-md);
+  background: linear-gradient(135deg, var(--accent), var(--blue-900));
+  color: #fff;
+  font-family: var(--display);
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  font-size: 1.25rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+.detail {
+  flex: 1 1 14rem;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.title {
+  font-family: var(--display);
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: 1.25rem;
+}
+
+/* File type and weight stated up front — a 14 MB download on mobile data
+   should never be a surprise. */
+.meta {
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.action {
+  flex: 0 0 auto;
+}

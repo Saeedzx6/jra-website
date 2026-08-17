@@ -1,0 +1,149 @@
+/* Profile page.
+   Two columns from 940px: the narrative on the left, the practical panel
+   (contact, location, hours) on the right where it can stay put while the
+   reader scrolls the gallery. */
+
+.layout {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3rem);
+}
+@media (min-width: 940px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 21rem;
+    align-items: start;
+  }
+}
+
+/* --- identity ------------------------------------------------------------- */
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-block-end: 1.75rem;
+}
+
+.logo {
+  inline-size: 88px;
+  block-size: 88px;
+  flex: 0 0 auto;
+  border-radius: var(--r-md);
+  object-fit: contain;
+  background: #fff;
+  padding: 0.6rem;
+  border: 1px solid var(--line);
+}
+
+.title {
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  line-height: 1.1;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-block-start: 0.5rem;
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+}
+
+.dot {
+  inline-size: 4px;
+  block-size: 4px;
+  border-radius: 50%;
+  background: var(--grey-300);
+}
+
+/* --- sections ------------------------------------------------------------- */
+
+.block + .block {
+  margin-block-start: clamp(2rem, 4vw, 3rem);
+}
+
+.blockTitle {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: var(--eyebrow-tracking);
+  text-transform: var(--eyebrow-transform);
+  color: var(--accent);
+  margin-block-end: 1rem;
+}
+
+.blurb {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  max-inline-size: 68ch;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+/* --- practical panel ------------------------------------------------------ */
+
+.panel {
+  display: grid;
+  gap: 1.5rem;
+  padding: 1.75rem;
+  background: #fff;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+}
+@media (min-width: 940px) {
+  .panel {
+    position: sticky;
+    inset-block-start: calc(var(--header-h) + 1rem);
+  }
+}
+
+.panelSection {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.panelTitle {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: var(--eyebrow-tracking);
+  text-transform: var(--eyebrow-transform);
+  color: var(--ink-soft);
+}
+
+.address {
+  font-style: normal;
+  line-height: 1.6;
+}
+
+.divider {
+  block-size: 1px;
+  background: var(--line);
+}
+
+.mapLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-block-size: 44px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.mapLink:hover {
+  text-decoration: underline;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-block-size: 44px;
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+}
+.backLink:hover {
+  color: var(--accent);
+}

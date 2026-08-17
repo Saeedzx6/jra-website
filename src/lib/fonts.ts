@@ -1,50 +1,62 @@
-import { Manrope, Fraunces, IBM_Plex_Sans, IBM_Plex_Sans_Arabic } from "next/font/google";
+import { Poppins, DM_Sans, Cairo } from "next/font/google";
 
-// Editorial display serif for the marketing surfaces (hero, section leads).
-// Fraunces rather than the reflexive Playfair pick: its softer, slightly
-// wonky letterforms read warm instead of austere, which suits a hospitality
-// body more than a fashion masthead. Latin only — Arabic keeps its own face.
-export const editorialEn = Fraunces({
+// Direction B's type voice (design-system/MASTER.md §2). The previous pairing
+// here was Manrope/Fraunces/IBM Plex; it was replaced wholesale rather than
+// blended, because a display voice is a single choice and half of one reads
+// as an accident.
+//
+// The token NAMES (--font-display-en, --font-body-en, …) are kept so the
+// @theme mapping in globals.css and the 98 `.font-display` call sites in the
+// markup keep working untouched.
+
+// Latin display. Direction B's signature is italic 700 Poppins, so the italic
+// axis is loaded deliberately rather than left to the browser to synthesise —
+// a faux-oblique Poppins loses the corrected letterforms that make the voice.
+export const displayEn = Poppins({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
-  variable: "--font-editorial-en",
-  display: "swap",
-});
-
-// English display — modern geometric sans, confident at weight, distinct
-// letterforms (single-storey 'a', open apertures) without leaning on the
-// over-used "safe" AI defaults.
-export const displayEn = Manrope({
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  style: ["normal", "italic"],
   variable: "--font-display-en",
   display: "swap",
 });
 
-// Arabic display — the same family used for Arabic body, at a heavier
-// weight, rather than forcing a mismatched second Arabic face.
-export const displayAr = IBM_Plex_Sans_Arabic({
-  subsets: ["arabic"],
-  weight: ["600", "700"],
-  variable: "--font-display-ar",
-  display: "swap",
-});
+// Direction B has no separate editorial serif — the italic display IS the
+// editorial voice. The token is kept (one call site, and the @theme mapping
+// references it) but points at the same family, so `.font-editorial` and
+// `.font-display` differ only in the styling applied in globals.css.
+export const editorialEn = displayEn;
 
-// Body copy — a genuine matched multi-script pair (designed together, not
-// a Latin font with an Arabic face bolted on), which matters for a site
-// that is Arabic-primary in real use.
-export const bodyEn = IBM_Plex_Sans({
+// Body copy.
+export const bodyEn = DM_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "700"],
   variable: "--font-body-en",
   display: "swap",
 });
 
-export const bodyAr = IBM_Plex_Sans_Arabic({
-  subsets: ["arabic"],
-  weight: ["400", "500", "600"],
+// Arabic, used for BOTH display and body in the ar locale. One face rather
+// than a mismatched pair: Cairo carries the display weight at 700 and reads
+// cleanly at body sizes, and Direction B's Latin display cannot be mapped
+// onto Arabic anyway (see the italic note in globals.css).
+export const arabic = Cairo({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "600", "700"],
   variable: "--font-body-ar",
   display: "swap",
 });
 
-export const fontVariables = `${displayEn.variable} ${editorialEn.variable} ${displayAr.variable} ${bodyEn.variable} ${bodyAr.variable}`;
+// The theme also references --font-display-ar and --font-editorial-en. Both
+// are aliased to the families above in globals.css rather than loaded twice:
+// a second loader call for the same family would ship a duplicate font file.
+export const displayAr = arabic;
+export const bodyAr = arabic;
+
+// Emitted on <html>. Each family is listed once — Next generates one class per
+// loader call, and `arabic`/`displayEn` are shared by two exports each.
+export const fontVariables = [
+  displayEn.variable,
+  bodyEn.variable,
+  arabic.variable,
+]
+  .join(" ")
+  .trim();

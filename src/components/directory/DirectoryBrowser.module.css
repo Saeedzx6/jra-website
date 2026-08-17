@@ -1,0 +1,254 @@
+.layout {
+  display: grid;
+  gap: 2rem;
+}
+@media (min-width: 1040px) {
+  .layout {
+    grid-template-columns: 17rem 1fr;
+    align-items: start;
+  }
+}
+
+/* --- filters -------------------------------------------------------------- */
+
+.filters {
+  background: #fff;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+}
+@media (min-width: 1040px) {
+  .filters {
+    position: sticky;
+    /* Clear the fixed header rather than sliding under it. */
+    inset-block-start: calc(var(--header-h) + 1rem);
+  }
+}
+
+/* Collapsed toggle: only a control below 1040px, where the panel stacks above
+   the results. From 1040px it is a sidebar, so the summary is hidden and the
+   body is always shown. */
+.filtersSummary {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-block-size: 44px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: var(--eyebrow-tracking);
+  text-transform: var(--eyebrow-transform);
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+}
+.filtersSummary::-webkit-details-marker {
+  display: none;
+}
+.filtersSummary::after {
+  content: "";
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
+  margin-inline-start: auto;
+  border-inline-end: 2px solid currentColor;
+  border-block-end: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--dur-mid) ease;
+}
+.filters[open] .filtersSummary::after {
+  transform: rotate(-135deg);
+}
+
+.badge {
+  display: inline-grid;
+  place-items: center;
+  min-inline-size: 1.4rem;
+  block-size: 1.4rem;
+  padding-inline: 0.35rem;
+  border-radius: var(--r-pill);
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.6875rem;
+  letter-spacing: 0;
+}
+
+.filtersBody {
+  display: grid;
+  gap: 1.25rem;
+  padding: 0 1.5rem 1.5rem;
+}
+
+@media (min-width: 1040px) {
+  .filtersSummary {
+    display: none;
+  }
+  .filtersBody {
+    padding-block-start: 1.5rem;
+  }
+}
+
+.filtersHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+/* The sidebar has its own heading; the collapsed panel already has the
+   summary, so showing both would repeat the word twice. */
+@media (max-width: 1039px) {
+  .filtersHead h2 {
+    display: none;
+  }
+  .filtersHead {
+    justify-content: flex-end;
+  }
+}
+
+/* --- active filter chips --------------------------------------------------- */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block-end: 1.5rem;
+}
+
+.chips button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-block-size: 44px;
+  padding-inline: 0.9rem;
+  border-radius: var(--r-pill);
+  background: var(--blue-50);
+  color: var(--ink);
+  font-size: 0.875rem;
+  border: 1px solid var(--blue-100);
+  transition: background var(--dur-mid) ease;
+}
+.chips button:hover {
+  background: var(--blue-100);
+}
+
+.chipLabel {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.filtersHead h2 {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: var(--eyebrow-tracking);
+  text-transform: var(--eyebrow-transform);
+  color: var(--ink-soft);
+}
+
+.clear {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: underline;
+  min-block-size: 44px;
+  padding-inline: 0.25rem;
+}
+.clear:disabled {
+  color: var(--grey-400);
+  text-decoration: none;
+  cursor: not-allowed;
+}
+
+/* --- results -------------------------------------------------------------- */
+
+.resultsHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block-end: 1.25rem;
+  margin-block-end: 1.75rem;
+  border-block-end: 1px solid var(--line);
+}
+
+/* The count is the page's headline figure, so it is typeset as one rather
+   than as another line of grey metadata. */
+.total {
+  font-family: var(--display);
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.count {
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+  margin-block-start: 0.25rem;
+}
+
+.sort {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.sort label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: var(--label-tracking);
+  text-transform: var(--eyebrow-transform);
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.sort select {
+  min-block-size: 44px;
+  padding-inline: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: #fff;
+  font-size: 0.875rem;
+}
+
+.grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1300px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* A blank result area is a dead end. This names the situation and offers the
+   way out, rather than rendering an empty grid. */
+.empty {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: start;
+  padding: 3rem 1.5rem;
+  background: #fff;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+}
+.empty h3 {
+  font-family: var(--display);
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  font-size: 1.5rem;
+}
+.empty p {
+  color: var(--ink-soft);
+}
+
+.more {
+  display: flex;
+  justify-content: center;
+  margin-block-start: 2.5rem;
+}
