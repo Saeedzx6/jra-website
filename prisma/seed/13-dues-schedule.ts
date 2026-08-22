@@ -1,41 +1,69 @@
 /**
- * Seeds a starting dues schedule.
+ * JRA's real fee schedule, effective 01/09/2025.
  *
- * The amounts here are placeholders — JRA sets its own rates, and these exist
- * so invoicing has something to resolve against in development. Replace them
- * with the association's published fees before running this anywhere real.
+ * Transcribed from `رسوم الإشتراك السنوية إعتباراً من تاريخ 1-9-2025` in the
+ * assets folder. These replace the placeholder figures this file previously
+ * carried, which were invented and never applied to production.
+ *
+ * Two fees per row: رسم الإنتساب, paid once on joining, and رسم الإشتراك
+ * السنوي, the recurring annual subscription. Tourist restaurants are priced on
+ * their star grade; coffee shops, fast food and bar/nightclub/disco each sit
+ * at a single flat rate regardless of grade.
+ *
+ * Three rules from the same document are NOT modelled here, because each is
+ * logic rather than a rate — see the notes at the end of this file:
+ *   - Article 16: joining fee is halved outside Amman
+ *   - Article 16: fees fall due in March; part of a year counts as a full year
+ *   - Article 29: 10% of the annual fee per month late, or part month
  *
  *   npm run seed:dues
  */
-import { PrismaClient, Prisma, type MembershipClass } from "@prisma/client";
+import { PrismaClient, Prisma, type EstablishmentType, type MembershipClass } from "@prisma/client";
 
 const db = new PrismaClient();
 
-const EFFECTIVE_FROM = new Date("2026-01-01T00:00:00Z");
+const EFFECTIVE_FROM = new Date("2025-09-01T00:00:00Z");
 
-type Row = { class: MembershipClass; stars: number | null; annualAmount: string };
+type Row = {
+  class: MembershipClass;
+  establishmentType: EstablishmentType | null;
+  stars: number | null;
+  joining: string;
+  annual: string;
+  note: string;
+};
 
 const ROWS: Row[] = [
-  // Class-wide default, used when a restaurant has no classification yet —
-  // which today is every one of them.
-  { class: "ACTIVE_RESTAURANT", stars: null, annualAmount: "250.000" },
-  // Graded rates: a five-star establishment does not pay what a cafe pays.
-  { class: "ACTIVE_RESTAURANT", stars: 1, annualAmount: "150.000" },
-  { class: "ACTIVE_RESTAURANT", stars: 2, annualAmount: "250.000" },
-  { class: "ACTIVE_RESTAURANT", stars: 3, annualAmount: "400.000" },
-  { class: "ACTIVE_RESTAURANT", stars: 4, annualAmount: "650.000" },
-  { class: "ACTIVE_RESTAURANT", stars: 5, annualAmount: "1000.000" },
-  { class: "ASSOCIATE_SUPPLIER", stars: null, annualAmount: "300.000" },
-  { class: "HONORARY", stars: null, annualAmount: "0.000" },
+  // مطعم سياحي — graded 1 to 5 stars, ascending.
+  { class: "ACTIVE_RESTAURANT", establishmentType: "RESTAURANT", stars: 1, joining: "281.250", annual: "93.750", note: "Tourist restaurant, 1 star" },
+  { class: "ACTIVE_RESTAURANT", establishmentType: "RESTAURANT", stars: 2, joining: "375.000", annual: "131.250", note: "Tourist restaurant, 2 stars" },
+  { class: "ACTIVE_RESTAURANT", establishmentType: "RESTAURANT", stars: 3, joining: "562.500", annual: "187.500", note: "Tourist restaurant, 3 stars" },
+  { class: "ACTIVE_RESTAURANT", establishmentType: "RESTAURANT", stars: 4, joining: "750.000", annual: "281.250", note: "Tourist restaurant, 4 stars" },
+  { class: "ACTIVE_RESTAURANT", establishmentType: "RESTAURANT", stars: 5, joining: "937.500", annual: "375.000", note: "Tourist restaurant, 5 stars" },
+
+  // Flat-rate categories — the published table gives no grade breakdown.
+  { class: "ACTIVE_RESTAURANT", establishmentType: "COFFEE_SHOP", stars: null, joining: "500.000", annual: "200.000", note: "كوفي شوب" },
+  { class: "ACTIVE_RESTAURANT", establishmentType: "FAST_FOOD", stars: null, joining: "500.000", annual: "200.000", note: "وجبات سريعة / خدمة سريعة" },
+  { class: "ACTIVE_RESTAURANT", establishmentType: "BAR", stars: null, joining: "500.000", annual: "200.000", note: "بار / ملهى / ديسكو" },
+  { class: "ACTIVE_RESTAURANT", establishmentType: "NIGHTCLUB", stars: null, joining: "500.000", annual: "200.000", note: "بار / ملهى / ديسكو" },
+  { class: "ACTIVE_RESTAURANT", establishmentType: "DISCO", stars: null, joining: "500.000", annual: "200.000", note: "بار / ملهى / ديسكو" },
+
+  // Not priced in this document. Left out rather than guessed:
+  //   TOURIST_PARK, ASSOCIATE_SUPPLIER, HONORARY
 ];
 
 async function main() {
   let created = 0;
   let skipped = 0;
 
-  for (const row of ROWS) {
+  for (const r of ROWS) {
     const existing = await db.duesSchedule.findFirst({
-      where: { class: row.class, stars: row.stars, effectiveFrom: EFFECTIVE_FROM },
+      where: {
+        class: r.class,
+        establishmentType: r.establishmentType,
+        stars: r.stars,
+        effectiveFrom: EFFECTIVE_FROM,
+      },
     });
     if (existing) {
       skipped++;
@@ -43,18 +71,25 @@ async function main() {
     }
     await db.duesSchedule.create({
       data: {
-        class: row.class,
-        stars: row.stars,
-        annualAmount: new Prisma.Decimal(row.annualAmount),
+        class: r.class,
+        establishmentType: r.establishmentType,
+        stars: r.stars,
+        joiningAmount: new Prisma.Decimal(r.joining),
+        annualAmount: new Prisma.Decimal(r.annual),
         currency: "JOD",
         effectiveFrom: EFFECTIVE_FROM,
       },
     });
+    console.log(`  ${r.note.padEnd(30)} joining ${r.joining.padStart(8)}  annual ${r.annual.padStart(8)} JOD`);
     created++;
   }
 
-  console.log(`dues schedule: ${created} created, ${skipped} already present`);
-  console.log("NOTE: amounts are placeholders — replace with JRA's published fees.");
+  console.log(`\n${created} created, ${skipped} already present`);
+  console.log("\nNot modelled (logic, not rates) — see Articles 16 and 29:");
+  console.log("  · joining fee halved for establishments registered outside Amman");
+  console.log("  · fees fall due in March; part of a year counts as a full year");
+  console.log("  · 10% of the annual fee per month late, or part of a month");
+  console.log("Not priced in the source document: TOURIST_PARK, suppliers, honorary members.");
 }
 
 main()
