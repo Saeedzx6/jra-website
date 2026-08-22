@@ -410,6 +410,21 @@
         "PARTIAL": "Partial",
         "NOT_MET": "Not met",
         "NOT_APPLICABLE": "N/A"
+      },
+      "review": {
+        "heading": "JRA decision",
+        "willAward": "Approving awards this listing",
+        "noGrade": "This assessment scored below the lowest band, so there is no grade to award.",
+        "approve": "Approve and award grade",
+        "confirmAward": "Yes, award {stars} stars",
+        "reject": "Refuse",
+        "confirmReject": "Refuse this assessment",
+        "reasonLabel": "Reason for refusal",
+        "reasonHint": "Sent to the applicant. Say what needs to change, not just that it was refused.",
+        "cancel": "Cancel",
+        "approvedWith": "Approved — {stars} stars awarded",
+        "rejected": "Refused",
+        "failed": "Could not save the decision."
       }
     },
     "changeRequests": {
