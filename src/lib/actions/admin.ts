@@ -171,52 +171,6 @@ export async function markInquiryHandled(id: string) {
   revalidatePath("/[locale]/admin/contact", "page");
 }
 
-/**
- * Sets or clears a restaurant's coordinates from the admin pin-drop.
- *
- * Recorded with geocodeSource "admin" so a future bulk geocoding run can tell
- * hand-placed pins from machine-guessed ones and leave the former alone —
- * a person who confirmed a location should not be overwritten by a text search.
- */
-export async function setRestaurantCoordinates(
-  id: string,
-  latitude: number | null,
-  longitude: number | null
-) {
-  const session = await requireAdmin();
-
-  if (latitude != null && longitude != null) {
-    // Guard against a malformed client payload writing nonsense to the map.
-    const valid =
-      Number.isFinite(latitude) &&
-      Number.isFinite(longitude) &&
-      latitude >= -90 &&
-      latitude <= 90 &&
-      longitude >= -180 &&
-      longitude <= 180;
-    if (!valid) throw new Error("Invalid coordinates");
-  }
-
-  const clearing = latitude == null || longitude == null;
-  await db.restaurant.update({
-    where: { id },
-    data: {
-      latitude: clearing ? null : latitude,
-      longitude: clearing ? null : longitude,
-      geocodeSource: clearing ? null : "admin",
-      geocodedAt: clearing ? null : new Date(),
-    },
-  });
-
-  await writeAudit(session.user.id, clearing ? "CLEAR_PIN" : "SET_PIN", "RESTAURANT", id, {
-    latitude,
-    longitude,
-  });
-
-  revalidatePath("/[locale]/admin/restaurants/[id]", "page");
-  revalidatePath("/[locale]/restaurants/[slug]", "page");
-}
-
 // --- Membership applications --------------------------------------------
 
 export async function approveMembershipApplication(id: string) {
