@@ -492,16 +492,29 @@ model Payment {
 /// Annual dues by membership class, optionally varying with the star grade —
 /// a five-star establishment is not charged what a café is.
 model DuesSchedule {
-  id            String          @id @default(cuid())
-  class         MembershipClass
-  // Null means "applies to any grade in this class".
-  stars         Int?
-  annualAmount  Decimal         @db.Decimal(10, 3)
-  currency      String          @default("JOD")
+  id    String          @id @default(cuid())
+  class MembershipClass
+
+  /// JRA prices by establishment type, not by membership class: a tourist
+  /// restaurant is charged on its star grade while coffee shops, fast food and
+  /// bar/nightclub/disco each sit at a single flat rate. Null means the row
+  /// applies to the whole class, which is how suppliers and honorary members
+  /// are covered.
+  establishmentType EstablishmentType?
+  /// Null means "any grade". Only tourist restaurants are graded for fees.
+  stars             Int?
+
+  /// One-off fee on joining (رسم الإنتساب). Halved for establishments
+  /// registered outside Amman under Article 16.
+  joiningAmount Decimal @db.Decimal(10, 3)
+  /// Recurring annual subscription (رسم الإشتراك السنوي).
+  annualAmount  Decimal @db.Decimal(10, 3)
+
+  currency      String    @default("JOD")
   effectiveFrom DateTime
   effectiveTo   DateTime?
 
-  @@unique([class, stars, effectiveFrom])
+  @@unique([class, establishmentType, stars, effectiveFrom])
   @@map("dues_schedules")
 }
 
