@@ -1,4 +1,10 @@
-import { Prisma, type InvoiceStatus, type MembershipClass, type PaymentMethod } from "@prisma/client";
+import {
+  Prisma,
+  type EstablishmentType,
+  type InvoiceStatus,
+  type MembershipClass,
+  type PaymentMethod,
+} from "@prisma/client";
 import { db } from "@/lib/db";
 
 /**
@@ -28,14 +34,18 @@ export function formatMoney(amount: Prisma.Decimal | number | string, currency =
 }
 
 /**
- * The dues rate in force for a class at a point in time.
+ * The fee row in force for an establishment at a point in time.
  *
- * A schedule row with a star grade beats the catch-all row for the same class,
- * so a five-star establishment is charged its own rate and everything else
- * falls back to the class default.
+ * JRA prices by establishment type, not by membership class: tourist
+ * restaurants pay on their star grade, while coffee shops, fast food and
+ * bar/nightclub/disco each sit at one flat rate. An exact grade match beats
+ * the type's flat row, which in turn beats a class-wide row — so a five-star
+ * restaurant is charged its own rate and anything ungraded falls back
+ * sensibly rather than resolving to nothing.
  */
 export async function resolveDues(
   cls: MembershipClass,
+  establishmentType: EstablishmentType | null,
   stars: number | null,
   at: Date = new Date()
 ) {
@@ -43,18 +53,22 @@ export async function resolveDues(
     where: {
       class: cls,
       effectiveFrom: { lte: at },
-      // Two independent disjunctions, so they go in AND rather than colliding
-      // on a single `OR` key: the row must be in force *and* apply to this grade.
-      AND: [
-        { OR: [{ effectiveTo: null }, { effectiveTo: { gte: at } }] },
-        stars == null ? { stars: null } : { OR: [{ stars }, { stars: null }] },
-      ],
+      AND: [{ OR: [{ effectiveTo: null }, { effectiveTo: { gte: at } }] }],
     },
     orderBy: [{ effectiveFrom: "desc" }],
   });
   if (rows.length === 0) return null;
-  // Prefer an exact star match over the class-wide default.
-  return rows.find((r) => r.stars === stars) ?? rows.find((r) => r.stars === null) ?? null;
+
+  const forType = rows.filter((r) => r.establishmentType === establishmentType);
+  return (
+    // Exact grade for this establishment type.
+    forType.find((r) => r.stars === stars) ??
+    // The type's flat rate, for anything ungraded.
+    forType.find((r) => r.stars === null) ??
+    // A class-wide row, used for suppliers and honorary members.
+    rows.find((r) => r.establishmentType === null && r.stars === null) ??
+    null
+  );
 }
 
 async function nextInvoiceNumber(year: number): Promise<string> {
@@ -101,17 +115,19 @@ export async function createInvoiceForMembership(
   if (existing) return { ok: false, reason: "already_invoiced" };
 
   const stars = membership.restaurant?.classificationLevel?.stars ?? null;
-  const dues = await resolveDues(membership.class, stars, at);
+  const establishmentType = membership.restaurant?.establishmentType ?? null;
+  const dues = await resolveDues(membership.class, establishmentType, stars, at);
   if (!dues) return { ok: false, reason: "no_dues_schedule" };
 
   const amount = toDecimal(dues.annualAmount);
   const dueAt = new Date(opts.issue === false ? membership.termStart : at);
   dueAt.setDate(dueAt.getDate() + PAYMENT_TERMS_DAYS);
 
+  const kind = (establishmentType ?? membership.class).replace(/_/g, " ").toLowerCase();
   const label =
     stars != null
-      ? `Annual membership dues (${membership.class.replace(/_/g, " ").toLowerCase()}, ${stars}-star)`
-      : `Annual membership dues (${membership.class.replace(/_/g, " ").toLowerCase()})`;
+      ? `Annual membership dues (${kind}, ${stars}-star)`
+      : `Annual membership dues (${kind})`;
 
   const invoice = await db.invoice.create({
     data: {

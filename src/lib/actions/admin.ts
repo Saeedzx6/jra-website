@@ -209,6 +209,10 @@ export async function approveMembershipApplication(id: string) {
         status: "PUBLISHED",
         source: "MEMBER_SUBMITTED",
         governorateId: application.governorateId,
+        // Carried from the self-assessment. Without it every applicant was
+        // provisioned as a RESTAURANT, and an ungraded restaurant matches no
+        // fee row, so no dues invoice could ever be raised for a coffee shop.
+        establishmentType: application.establishmentType ?? "RESTAURANT",
       },
     });
     await db.businessManager.upsert({
