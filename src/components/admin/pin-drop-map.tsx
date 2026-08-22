@@ -132,7 +132,23 @@ export function PinDropMap({
      * changes afterwards, which also covers the sidebar collapsing and the
      * window being resized.
      */
-    const ro = new ResizeObserver(() => m.resize());
+    let sized = false;
+    const ro = new ResizeObserver(() => {
+      m.resize();
+      // Restore the intended view the first time the container has a real
+      // size. Constructing at 0x0 leaves the transform clamped to the minimum
+      // zoom, and resize() only corrects the viewport — it does not put the
+      // zoom back. Without this the map comes up showing the whole world with
+      // the pin somewhere in the middle of it.
+      if (!sized && container.current && container.current.clientWidth > 0) {
+        sized = true;
+        const c = coordsRef.current;
+        m.jumpTo({
+          center: c ? [c.lng, c.lat] : DEFAULT_CENTER,
+          zoom: c ? 15 : 11,
+        });
+      }
+    });
     ro.observe(container.current);
 
     map.current = m;
