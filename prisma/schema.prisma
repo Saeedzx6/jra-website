@@ -349,6 +349,11 @@ model MembershipApplication {
   phone              String
   governorateId      String?
   classificationClaim String?
+  /// What the applicant is applying as. Drives the establishment type of the
+  /// listing created on approval, which is what the fee schedule prices on —
+  /// without it a coffee shop was provisioned as a RESTAURANT and no dues
+  /// rate resolved, because tourist restaurants are priced by star grade only.
+  establishmentType   EstablishmentType?
   documents          Json?
   status             ApplicationStatus @default(PENDING)
   reviewedById       String?

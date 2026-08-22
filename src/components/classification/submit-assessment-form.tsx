@@ -30,7 +30,11 @@ export function SubmitAssessmentForm({ payload }: { payload: AssessmentPayload }
 
   return (
     <form action={formAction} className="mt-4 space-y-2 rounded-xl border border-rule bg-surface p-4">
+      {/* Membership class — every hospitality venue joins as an active member;
+          only suppliers differ. The establishment type below is the separate
+          thing that decides which fee row applies. */}
       <input type="hidden" name="applicantType" value="ACTIVE_RESTAURANT" />
+      <input type="hidden" name="establishmentType" value={payload.establishmentType} />
       <input type="hidden" name="assessmentPayload" value={JSON.stringify(payload)} />
       <p className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
         {tc("submitResultsHeading")}
