@@ -3,6 +3,7 @@ import { Star } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { getStandardWithCriteria } from "@/lib/classification";
+import { AssessmentReview } from "@/components/admin/assessment-review";
 
 export default async function AdminAssessmentDetailPage({
   params,
@@ -44,6 +45,18 @@ export default async function AdminAssessmentDetailPage({
             ))}
           </span>
         ) : null}
+      </div>
+
+      {/* The decision. Everything below is the evidence it is made on. */}
+      <div className="mt-6">
+        <AssessmentReview
+          sessionId={session.id}
+          stars={session.resultingStars}
+          decided={
+            session.status === "APPROVED" || session.status === "REJECTED" ? session.status : null
+          }
+          reviewNote={session.reviewNote}
+        />
       </div>
 
       <div className="mt-8 space-y-6">
