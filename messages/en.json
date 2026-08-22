@@ -213,7 +213,10 @@
       "DISCO": "Disco",
       "NIGHTCLUB": "Nightclub",
       "TOURIST_PARK": "Tourist Park"
-    }
+    },
+    "chooseTypeHeading": "First, what kind of establishment are you?",
+    "chooseTypeBody": "Each type is judged against its own published standard, with its own criteria, points and star range. Pick yours to score against the right one.",
+    "startForType": "Assess as {type}"
   },
   "sustainability": {
     "heroTitle": "A greener sector, measured simply",
