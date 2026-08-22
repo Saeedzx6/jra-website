@@ -32,7 +32,8 @@
     "prod:admin": "dotenv -e .env.production.local -- tsx prisma/seed/11-prod-admin.ts",
     "prod:studio": "dotenv -e .env.production.local -- prisma studio",
     "seed:all": "npm run seed:lookups && npm run seed:restaurants && npm run seed:images && npm run seed:content && npm run seed:classification && npm run seed:admin",
-    "seed:amenity-ar": "tsx prisma/seed/16-amenity-arabic-names.ts"
+    "seed:amenity-ar": "tsx prisma/seed/16-amenity-arabic-names.ts",
+    "seed:standards": "tsx prisma/seed/17-remaining-standards.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.3",

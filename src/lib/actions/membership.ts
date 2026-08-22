@@ -90,8 +90,26 @@ export async function submitMembershipApplication(
       ? { files: fileUrls, ...(assessment ? { assessment } : {}) }
       : undefined;
 
+  // The establishment type comes from whichever standard the applicant
+  // assessed against. It decides what kind of listing approval creates, and
+  // therefore which fee row applies — a coffee shop provisioned as a
+  // RESTAURANT matches no rate at all, since restaurants are priced by grade.
+  const VALID_TYPES = [
+    "RESTAURANT",
+    "FAST_FOOD",
+    "COFFEE_SHOP",
+    "BAR",
+    "DISCO",
+    "NIGHTCLUB",
+    "TOURIST_PARK",
+  ] as const;
+  const rawType = String(formData.get("establishmentType") ?? "");
+  const establishmentType = (VALID_TYPES as readonly string[]).includes(rawType)
+    ? (rawType as (typeof VALID_TYPES)[number])
+    : null;
+
   await db.membershipApplication.create({
-    data: { ...parsed.data, documents: documents as never },
+    data: { ...parsed.data, establishmentType, documents: documents as never },
   });
   return { ok: true };
 }
