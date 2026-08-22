@@ -51,6 +51,7 @@ model User {
   authoredNews        NewsArticle[]
   marketplaceListings MarketplaceListing[]
   assessmentSessions  AssessmentSession[]
+  reviewedAssessments AssessmentSession[]     @relation("ReviewedAssessments")
 
   @@index([role])
 }
@@ -810,6 +811,10 @@ enum AssessmentStatus {
   IN_PROGRESS
   SUBMITTED
   SCORED
+  /// Reviewed by JRA and the grade awarded.
+  APPROVED
+  /// Reviewed and refused; the reason is on the session.
+  REJECTED
 }
 
 model AssessmentSession {
@@ -824,6 +829,13 @@ model AssessmentSession {
   startedById          String
   startedBy            User              @relation(fields: [startedById], references: [id])
   submittedAt          DateTime?
+  /// Set when JRA rules on the submission. reviewNote carries the reason,
+  /// which matters most on a rejection — an applicant told only "no" has
+  /// nothing to act on.
+  reviewedById         String?
+  reviewedBy           User?             @relation("ReviewedAssessments", fields: [reviewedById], references: [id])
+  reviewedAt           DateTime?
+  reviewNote           String?
   createdAt            DateTime          @default(now())
 
   answers AssessmentAnswer[]
