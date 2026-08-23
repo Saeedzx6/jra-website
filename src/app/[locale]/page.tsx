@@ -124,15 +124,24 @@ export default async function HomePage({
 
   return (
     <div>
+      {/* The navy-to-paper fade spans exactly this container: the hero and
+          the services grid. Anchoring it to a real element rather than
+          guessing viewport heights is what keeps it predictable — the fade
+          finishes at a known edge, so nothing further down can drift onto a
+          mid-tone where neither dark nor light text is readable. Everything
+          inside is styled for a dark ground; everything after is on paper. */}
+      <div className="bg-[linear-gradient(180deg,#0b1a2e_0%,#0b1a2e_62%,#16304d_82%,var(--color-paper)_100%)]">
       <HomeHero
         images={heroImages}
         cuisines={heroCuisines}
         restaurantCount={restaurantCount}
       />
 
-      {/* Sector services */}
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <h2 className="font-display text-2xl font-semibold text-ink">
+      {/* Sector services — inside the dark half of the fade, so the heading
+          is light and the cards keep their own solid surface rather than
+          going translucent, which would drag their text onto the navy. */}
+      <section className="mx-auto max-w-6xl px-4 pb-28 pt-16 sm:px-6 sm:pb-36">
+        <h2 className="font-display text-2xl font-semibold text-white">
           {t("servicesTitle")}
         </h2>
         <RevealGroup className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -155,6 +164,7 @@ export default async function HomePage({
           ))}
         </RevealGroup>
       </section>
+      </div>
 
       {/* Stats */}
       <section className="border-y border-rule bg-surface-2">
@@ -238,10 +248,10 @@ export default async function HomePage({
       )}
 
       {/* Newsletter */}
-      <section className="border-t border-rule bg-ink text-paper">
+      <section className="border-t border-rule bg-surface-2 text-ink">
         <div className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6">
           <h2 className="font-display text-2xl font-semibold">{t("newsletterTitle")}</h2>
-          <p className="mt-2 text-paper/70">{t("newsletterSubtitle")}</p>
+          <p className="mt-2 text-ink-soft">{t("newsletterSubtitle")}</p>
           <NewsletterForm />
         </div>
       </section>
