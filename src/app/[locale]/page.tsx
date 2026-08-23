@@ -129,14 +129,14 @@ export default async function HomePage({
        where the styling is under control. Everything out here stays light —
        #eef1f5 drifting to paper across the remaining sections — which is a
        change you feel while scrolling rather than one you can point at. */
-    <div className="bg-gradient-to-b from-[#eef1f5] to-paper">
+    <div className="bg-gradient-to-b from-[#d5dfec] to-white">
       {/* The navy-to-paper fade spans exactly this container: the hero and
           the services grid. Anchoring it to a real element rather than
           guessing viewport heights is what keeps it predictable — the fade
           finishes at a known edge, so nothing further down can drift onto a
           mid-tone where neither dark nor light text is readable. Everything
           inside is styled for a dark ground; everything after is on paper. */}
-      <div className="bg-[linear-gradient(180deg,#0b1a2e_0%,#0b1a2e_58%,#16304d_78%,#eef1f5_100%)]">
+      <div className="bg-[linear-gradient(180deg,#0b1a2e_0%,#0b1a2e_58%,#16304d_78%,#d5dfec_100%)]">
       <HomeHero
         images={heroImages}
         cuisines={heroCuisines}
