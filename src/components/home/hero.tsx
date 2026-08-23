@@ -61,22 +61,34 @@ export async function HomeHero({
       cards={7}
       speed={26}
       axis={48}
-      className="bg-[#070d14]"
+      className="bg-[#0b1a2e]"
     >
-      {/* Scrim. Two layers: a floor that blends the corridor into the page
-          below, and a directional wash keeping the text side dark wherever the
-          photography runs bright. White body copy measures 19.5:1 on the
-          ground, and the wash is what holds it there mid-animation. */}
+      {/* Scrim. A floor that settles the corridor into the ground, and a
+          directional wash keeping the text side dark wherever the photography
+          runs bright. The ground is a brand-derived navy rather than near
+          black — white body copy still measures 17.5:1 on it, but it reads as
+          a colour rather than an absence of one. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#070d14] via-[#070d14]/80 to-[#070d14]/40"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0b1a2e] via-[#0b1a2e]/80 to-[#0b1a2e]/40"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#070d14] via-[#070d14]/75 to-transparent rtl:bg-gradient-to-l"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0b1a2e] via-[#0b1a2e]/75 to-transparent rtl:bg-gradient-to-l"
+      />
+      {/* The hero used to end on a hard horizontal line where near-black met
+          the page's near-white — a jump of about 0.92 in relative luminance
+          with nothing in between, which is what made it hard on the eye. The
+          ground alone could not fix that; any dark against this paper lands in
+          the same place. So the edge dissolves instead. The band sits entirely
+          inside the bottom padding, below the cuisine strip, so no text is ever
+          asked to sit on the lightening half of it. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent via-[#0b1a2e]/60 to-paper sm:h-32"
       />
 
-      <div className="relative mx-auto max-w-6xl px-4 pb-14 pt-24 sm:px-6 sm:pb-20 sm:pt-36 lg:pt-44">
+      <div className="relative mx-auto max-w-6xl px-4 pb-28 pt-24 sm:px-6 sm:pb-36 sm:pt-36 lg:pt-44">
         <div className="max-w-2xl">
           <p
             className="animate-editorial-rise text-xs font-semibold uppercase tracking-[0.2em] text-brass"
