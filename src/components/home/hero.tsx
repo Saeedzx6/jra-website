@@ -76,19 +76,12 @@ export async function HomeHero({
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0b1a2e] via-[#0b1a2e]/75 to-transparent rtl:bg-gradient-to-l"
       />
-      {/* The hero used to end on a hard horizontal line where near-black met
-          the page's near-white — a jump of about 0.92 in relative luminance
-          with nothing in between, which is what made it hard on the eye. The
-          ground alone could not fix that; any dark against this paper lands in
-          the same place. So the edge dissolves instead. The band sits entirely
-          inside the bottom padding, below the cuisine strip, so no text is ever
-          asked to sit on the lightening half of it. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent via-[#0b1a2e]/60 to-paper sm:h-32"
-      />
+      {/* No bottom fade here any more. The page wraps the hero and the
+          services grid in one container that owns the whole navy-to-paper
+          transition, so a second fade at the hero's edge would have punched
+          a light band into the middle of it. */}
 
-      <div className="relative mx-auto max-w-6xl px-4 pb-28 pt-24 sm:px-6 sm:pb-36 sm:pt-36 lg:pt-44">
+      <div className="relative mx-auto max-w-6xl px-4 pb-16 pt-24 sm:px-6 sm:pb-20 sm:pt-36 lg:pt-44">
         <div className="max-w-2xl">
           <p
             className="animate-editorial-rise text-xs font-semibold uppercase tracking-[0.2em] text-brass"
