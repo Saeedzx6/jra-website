@@ -86,9 +86,14 @@
     "phone": "Phone",
     "email": "Email",
     "address": "Address",
-    "addressLine": "2nd Circle, Jabal Amman, Amman, Jordan",
+    "addressLine": "Jabal Amman, 2nd Circle, Salman Al-Madabi St, Building 12, Amman, Jordan",
     "sitemap": "Sitemap",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "colDirectory": "Directory",
+    "colMembers": "For members",
+    "colResources": "Resources",
+    "established": "Serving Jordan's hospitality sector since 2002",
+    "legalName": "Jordan Restaurant Association"
   },
   "about": {
     "intro": "The Jordan Restaurant Association (JRA) is a mandatory, not-for-profit membership association empowered by Law No. 47 of 2002, amended by Law No. 33 of 2018 and Bylaw No. 59 of 2025. JRA represents over 1,300 classified establishments — restaurants, entertainment cities, coffee shops, fast food, discos, bars, and cabarets rated 1 to 5 stars — and is a member of the Jordan Tourism Board and an affiliate of UN Tourism."
