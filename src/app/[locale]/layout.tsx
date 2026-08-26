@@ -6,6 +6,7 @@ import { routing, type AppLocale } from "@/i18n/routing";
 import { fontVariables } from "@/lib/fonts";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { RevealOnScroll } from "@/components/reveal-on-scroll";
 import { SITE_URL, alternatesFor } from "@/lib/seo";
 import { jsonLdScript, organizationLd } from "@/lib/json-ld";
 import "../globals.css";
@@ -88,6 +89,9 @@ export default async function LocaleLayout({
             {children}
           </main>
           <SiteFooter />
+          {/* One observer for the whole site, so any element carrying
+              `reveal` animates in without its page needing a wrapper. */}
+          <RevealOnScroll />
         </NextIntlClientProvider>
       </body>
     </html>

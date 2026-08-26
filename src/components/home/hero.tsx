@@ -61,20 +61,21 @@ export async function HomeHero({
       cards={7}
       speed={26}
       axis={48}
-      className="bg-[#0b1a2e]"
+      className="bg-[#173156]"
     >
       {/* Scrim. A floor that settles the corridor into the ground, and a
           directional wash keeping the text side dark wherever the photography
           runs bright. The ground is a brand-derived navy rather than near
-          black — white body copy still measures 17.5:1 on it, but it reads as
+          black, and lighter again after the first pass read heavy — white body copy
+          still measures 13.0:1 on it, and the faintest tier 5.5:1, but it reads as
           a colour rather than an absence of one. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0b1a2e] via-[#0b1a2e]/80 to-[#0b1a2e]/40"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#173156] via-[#173156]/80 to-[#173156]/40"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0b1a2e] via-[#0b1a2e]/75 to-transparent rtl:bg-gradient-to-l"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#173156] via-[#173156]/75 to-transparent rtl:bg-gradient-to-l"
       />
       {/* No bottom fade here any more. The page wraps the hero and the
           services grid in one container that owns the whole navy-to-paper

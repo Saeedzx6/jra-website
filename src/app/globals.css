@@ -265,10 +265,20 @@ body {
   transform: scale(1.045);
 }
 
+/* Scroll reveal.
+ *
+ * The hidden state is scoped to .js-reveal, which the observer adds to <html>
+ * as it mounts. Without that scope this rule sets opacity: 0 on every card the
+ * moment the stylesheet loads, and anything that stops the observer running —
+ * a JS error, a blocked chunk, an unsupported browser — leaves whole pages
+ * blank. Content should not need JavaScript to be visible; it only needs it to
+ * animate. */
 .reveal {
+  transition: opacity 520ms ease, transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.js-reveal .reveal {
   opacity: 0;
   transform: translateY(14px);
-  transition: opacity 520ms ease, transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .reveal.is-visible {
   opacity: 1;
