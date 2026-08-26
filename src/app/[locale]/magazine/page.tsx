@@ -32,7 +32,7 @@ export default async function MagazinePage({
           <Link
             key={issue.id}
             href={`/magazine/${issue.id}`}
-            className="motion-card rounded-2xl border border-rule bg-surface p-6 text-center"
+            className="reveal motion-card rounded-2xl border border-rule bg-surface p-6 text-center"
           >
             <BookOpen className="mx-auto h-8 w-8 text-accent" />
             <p className="mt-3 font-display text-lg font-semibold text-ink">
