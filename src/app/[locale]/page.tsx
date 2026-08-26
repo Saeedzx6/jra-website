@@ -136,7 +136,7 @@ export default async function HomePage({
           finishes at a known edge, so nothing further down can drift onto a
           mid-tone where neither dark nor light text is readable. Everything
           inside is styled for a dark ground; everything after is on paper. */}
-      <div className="bg-[linear-gradient(180deg,#0b1a2e_0%,#0b1a2e_58%,#16304d_78%,#d5dfec_100%)]">
+      <div className="bg-[linear-gradient(180deg,#173156_0%,#173156_58%,#16304d_78%,#d5dfec_100%)]">
       <HomeHero
         images={heroImages}
         cuisines={heroCuisines}
