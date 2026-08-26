@@ -47,7 +47,7 @@ export default async function LegalHubPage({
       {documents.length === 0 ? (
         <p className="mt-16 text-center text-ink-soft">{tCommon("noResults")}</p>
       ) : (
-        <div className="mt-8 divide-y divide-rule rounded-2xl border border-rule bg-surface">
+        <div className="reveal mt-8 divide-y divide-rule rounded-2xl border border-rule bg-surface">
           {documents.map((d) => (
             <Link key={d.id} href={`/legal/${d.slug}`} className="flex items-center gap-3 px-5 py-4 hover:bg-surface-2/40">
               <Scale className="h-4 w-4 shrink-0 text-accent" />
