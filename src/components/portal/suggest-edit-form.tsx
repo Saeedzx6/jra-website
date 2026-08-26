@@ -21,7 +21,7 @@ export function SuggestEditForm({
 
   if (sent) {
     return (
-      <div className="mt-3 flex items-center gap-2 text-sm text-olive-text">
+      <div className="mt-3 flex items-center gap-2 text-sm text-success-text">
         <Check className="h-4 w-4" /> {tp("sentForApproval")}
       </div>
     );

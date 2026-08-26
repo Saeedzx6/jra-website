@@ -61,7 +61,7 @@ export async function HomeHero({
       cards={7}
       speed={26}
       axis={48}
-      className="bg-[#0b1a2e]"
+      className="bg-[#041f3a]"
     >
       {/* Scrim. A floor that settles the corridor into the ground, and a
           directional wash keeping the text side dark wherever the photography
@@ -70,31 +70,38 @@ export async function HomeHero({
           a colour rather than an absence of one. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0b1a2e] via-[#0b1a2e]/80 to-[#0b1a2e]/40"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#041f3a] via-[#041f3a]/80 to-[#041f3a]/40"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0b1a2e] via-[#0b1a2e]/75 to-transparent rtl:bg-gradient-to-l"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#041f3a] via-[#041f3a]/75 to-transparent rtl:bg-gradient-to-l"
       />
       {/* No bottom fade here any more. The page wraps the hero and the
           services grid in one container that owns the whole navy-to-paper
           transition, so a second fade at the hero's edge would have punched
           a light band into the middle of it. */}
 
-      <div className="relative mx-auto max-w-6xl px-4 pb-16 pt-24 sm:px-6 sm:pb-20 sm:pt-36 lg:pt-44">
+      {/* Top padding is measured against the fixed header rather than guessed,
+          because the section above pulls this whole block up underneath it. */}
+      <div className="relative mx-auto max-w-6xl px-4 pb-16 pt-[calc(var(--header-h)+2rem)] sm:px-6 sm:pb-20 sm:pt-[calc(var(--header-h)+5rem)] lg:pt-[calc(var(--header-h)+7rem)]">
         <div className="max-w-2xl">
+          {/* Tracking and casing come from --eyebrow-*, not from utilities:
+              positive tracking renders cursive Arabic as disconnected glyphs,
+              and uppercase silently shouts any Latin inside an Arabic run.
+              The kicker used to be brass, which is now fenced to
+              classification and sustainability — this is decorative use. */}
           <p
-            className="animate-editorial-rise text-xs font-semibold uppercase tracking-[0.2em] text-brass"
+            className="animate-editorial-rise font-eyebrow text-xs font-semibold text-[color:var(--blue-300)]"
             style={{ animationDelay: "80ms" }}
           >
             {t("heroKicker")}
           </p>
 
-          {/* Arabic sets the scale here: it needs the looser line-height, and
-              tracking is left alone in RTL. The Latin side uses Fraunces —
-              already loaded for the system and, until now, barely used. */}
+          {/* Arabic sets the scale here: it needs the looser line-height.
+              Style and tracking come from the display tokens, which the
+              [dir="rtl"] block neutralises — so no rtl: overrides needed. */}
           <h1
-            className="animate-editorial-rise mt-5 font-editorial text-[clamp(2.4rem,6vw,4.5rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-white rtl:font-display rtl:leading-[1.3] rtl:tracking-normal"
+            className="animate-editorial-rise mt-5 font-display text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.08] text-white rtl:leading-[1.3]"
             style={{ animationDelay: "160ms" }}
           >
             {t("heroTitle")}
@@ -123,7 +130,7 @@ export async function HomeHero({
             className="animate-editorial-rise mt-12 border-t border-white/15 pt-6 sm:mt-16"
             style={{ animationDelay: "400ms" }}
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/45">
+            <p className="font-eyebrow text-xs font-semibold text-white/45">
               {t("browseByCuisine")}
             </p>
             {/* gap-x only: the vertical rhythm comes from each link's own
@@ -137,7 +144,7 @@ export async function HomeHero({
                     className="group inline-flex min-h-11 items-center gap-2 py-3 text-white/80 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                   >
                     <span className="text-sm font-medium">{c.label}</span>
-                    <span className="tabular text-xs text-white/45 transition-colors group-hover:text-brass">
+                    <span className="tabular text-xs text-white/45 transition-colors group-hover:text-white">
                       {c.count}
                     </span>
                   </Link>

@@ -3,16 +3,21 @@ export type NavItem = {
   href: string;
 };
 
+// Seven items, matching the design system's header. Two are umbrella labels
+// rather than routes of their own: "Business Center" is the marketplace and
+// "Media Center" is news — grouping them keeps the bar to one line at the
+// widths the tracked uppercase labels actually occupy.
+//
+// Home is deliberately not listed. The logo is the route home, and an eighth
+// item pushed the bar to two rows.
 export const primaryNav: NavItem[] = [
-  // Home is listed explicitly so the sliding indicator has something to rest
-  // on at "/" — without it the homepage shows no active state at all.
-  { labelKey: "nav.home", href: "/" },
+  { labelKey: "nav.about", href: "/about" },
+  { labelKey: "nav.membership", href: "/membership" },
   { labelKey: "nav.restaurants", href: "/restaurants" },
   { labelKey: "nav.suppliers", href: "/suppliers" },
-  { labelKey: "nav.classification", href: "/classification" },
-  { labelKey: "nav.about", href: "/about" },
-  { labelKey: "nav.news", href: "/news" },
-  { labelKey: "nav.contact", href: "/contact" },
+  { labelKey: "nav.businessCenter", href: "/marketplace" },
+  { labelKey: "nav.training", href: "/training" },
+  { labelKey: "nav.mediaCenter", href: "/news" },
 ];
 
 export const footerSitemap: NavItem[] = [

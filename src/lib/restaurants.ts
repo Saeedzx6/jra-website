@@ -11,6 +11,7 @@ function toCardData(r: {
   images: { url: string; isPrimary: boolean }[];
   governorate: { nameEn: string; nameAr: string | null } | null;
   cuisines: { cuisine: { nameEn: string; nameAr: string | null } }[];
+  amenityTags?: { amenityTag: { nameEn: string; nameAr: string | null } }[];
   classificationLevel: { stars: number } | null;
 }): RestaurantCardData {
   const primary = r.images.find((i) => i.isPrimary) ?? r.images[0];
@@ -27,6 +28,11 @@ function toCardData(r: {
     governorateNameAr: r.governorate?.nameAr ?? null,
     cuisineName: r.cuisines[0]?.cuisine.nameEn ?? null,
     cuisineNameAr: r.cuisines[0]?.cuisine.nameAr ?? null,
+    // Both languages again, for the same reason as the governorate above.
+    tags: (r.amenityTags ?? []).map((t) => ({
+      en: t.amenityTag.nameEn,
+      ar: t.amenityTag.nameAr,
+    })),
     stars: r.classificationLevel?.stars ?? null,
     hasPhone: Boolean(r.phone),
     hasHours: Boolean(r.openingHoursText),
@@ -37,6 +43,9 @@ const cardInclude = {
   images: { orderBy: { sortOrder: "asc" as const } },
   governorate: true,
   cuisines: { include: { cuisine: true }, take: 1 },
+  // Three is what the card shows; fetching more would be paid for and thrown
+  // away on every row of every directory page.
+  amenityTags: { include: { amenityTag: true }, take: 3 },
   classificationLevel: true,
 };
 
@@ -54,6 +63,8 @@ export type RestaurantFilters = {
   q?: string;
   governorate?: string;
   cuisine?: string;
+  /** Amenity tag slug — the home page console's "Feature" field. */
+  feature?: string;
   stars?: number;
   page?: number;
 };
@@ -73,6 +84,9 @@ export async function searchRestaurants(filters: RestaurantFilters) {
       : {}),
     ...(filters.governorate ? { governorate: { slug: filters.governorate } } : {}),
     ...(filters.cuisine ? { cuisines: { some: { cuisine: { slug: filters.cuisine } } } } : {}),
+    ...(filters.feature
+      ? { amenityTags: { some: { amenityTag: { slug: filters.feature } } } }
+      : {}),
     ...(filters.stars ? { classificationLevel: { stars: filters.stars } } : {}),
   };
 

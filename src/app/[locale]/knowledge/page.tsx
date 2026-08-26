@@ -39,7 +39,7 @@ export default async function KnowledgeCenterPage({
             >
               <FileText className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
               <div>
-                <span className="text-xs font-semibold uppercase tracking-wide text-brass-text">
+                <span className="text-xs font-semibold uppercase tracking-wide text-warning-text">
                   {tType(r.type)}
                 </span>
                 <p className="text-sm font-medium text-ink">{tr?.title ?? r.slug}</p>

@@ -52,7 +52,7 @@ export default async function LegalHubPage({
             <Link key={d.id} href={`/legal/${d.slug}`} className="flex items-center gap-3 px-5 py-4 hover:bg-surface-2/40">
               <Scale className="h-4 w-4 shrink-0 text-accent" />
               <div className="flex-1">
-                <span className="text-xs font-semibold uppercase tracking-wide text-brass-text">
+                <span className="text-xs font-semibold uppercase tracking-wide text-warning-text">
                   {tType(d.type)} {d.year ? `· ${d.year}` : ""}
                 </span>
                 <p className="text-sm font-medium text-ink">

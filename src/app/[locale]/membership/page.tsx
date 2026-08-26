@@ -20,7 +20,7 @@ export default async function MembershipPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
+      <p className="text-xs font-eyebrow font-semibold text-accent">
         {t("membership")}
       </p>
       <h1 className="mt-2 font-display text-3xl font-semibold text-ink">

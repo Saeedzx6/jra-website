@@ -25,7 +25,7 @@ export default function RootNotFound() {
           alignItems: "center",
           justifyContent: "center",
           background: "var(--color-paper, #f7f7f8)",
-          color: "var(--color-ink, #1c1e22)",
+          color: "var(--color-ink, #232427)",
           fontFamily: "system-ui, -apple-system, Segoe UI, sans-serif",
           textAlign: "center",
           padding: "2rem",
@@ -37,7 +37,7 @@ export default function RootNotFound() {
               fontSize: "0.75rem",
               letterSpacing: "0.12em",
               textTransform: "uppercase",
-              color: "var(--color-accent, #0050a0)",
+              color: "var(--color-accent, #0053a0)",
               margin: 0,
             }}
           >
@@ -47,14 +47,14 @@ export default function RootNotFound() {
           <h1 style={{ fontSize: "1.75rem", lineHeight: 1.2, margin: "1rem 0 0" }}>
             We can&rsquo;t find that page
           </h1>
-          <p style={{ margin: "0.75rem 0 0", color: "var(--color-ink-soft, #585d64)" }}>
+          <p style={{ margin: "0.75rem 0 0", color: "var(--color-ink-soft, #4a4b4e)" }}>
             The address may be mistyped or out of date.
           </p>
 
           <p
             dir="rtl"
             lang="ar"
-            style={{ margin: "1.25rem 0 0", color: "var(--color-ink-soft, #585d64)" }}
+            style={{ margin: "1.25rem 0 0", color: "var(--color-ink-soft, #4a4b4e)" }}
           >
             لا يمكننا العثور على هذه الصفحة. قد يكون العنوان غير صحيح أو لم يعد متاحًا.
           </p>
@@ -73,7 +73,7 @@ export default function RootNotFound() {
               href="/en"
               style={{
                 borderRadius: "999px",
-                background: "var(--color-accent, #0050a0)",
+                background: "var(--color-accent, #0053a0)",
                 color: "#fff",
                 padding: "0.7rem 1.5rem",
                 fontSize: "0.875rem",
@@ -87,8 +87,8 @@ export default function RootNotFound() {
               href="/ar"
               style={{
                 borderRadius: "999px",
-                border: "1px solid var(--color-rule, #e5e7eb)",
-                color: "var(--color-ink, #1c1e22)",
+                border: "1px solid var(--color-rule, #dfe0e2)",
+                color: "var(--color-ink, #232427)",
                 padding: "0.7rem 1.5rem",
                 fontSize: "0.875rem",
                 fontWeight: 600,

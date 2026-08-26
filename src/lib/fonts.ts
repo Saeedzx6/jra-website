@@ -1,50 +1,54 @@
-import { Manrope, Fraunces, IBM_Plex_Sans, IBM_Plex_Sans_Arabic } from "next/font/google";
+import { Poppins, DM_Sans, Cairo } from "next/font/google";
 
-// Editorial display serif for the marketing surfaces (hero, section leads).
-// Fraunces rather than the reflexive Playfair pick: its softer, slightly
-// wonky letterforms read warm instead of austere, which suits a hospitality
-// body more than a fashion masthead. Latin only — Arabic keeps its own face.
-export const editorialEn = Fraunces({
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-editorial-en",
-  display: "swap",
-});
+// ---------------------------------------------------------------------------
+// Typefaces per design-system/MASTER.md §2.
+//
+// The variable names below are the ones the rest of the app already consumes
+// (--font-display-en, --font-body-en, …), so this file repoints the faces
+// without any component needing to know. The previous pairing was
+// Fraunces + Manrope + IBM Plex Sans Arabic.
+// ---------------------------------------------------------------------------
 
-// English display — modern geometric sans, confident at weight, distinct
-// letterforms (single-storey 'a', open apertures) without leaning on the
-// over-used "safe" AI defaults.
-export const displayEn = Manrope({
+// Latin display. Italic 700 Poppins is the signature of the chosen direction
+// and the most distinctive thing about it — the italic is applied through
+// --display-style in globals.css, never hardcoded, so the Arabic build can
+// neutralise it.
+export const displayEn = Poppins({
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  weight: ["600", "700"],
+  style: ["normal", "italic"],
   variable: "--font-display-en",
   display: "swap",
 });
 
-// Arabic display — the same family used for Arabic body, at a heavier
-// weight, rather than forcing a mismatched second Arabic face.
-export const displayAr = IBM_Plex_Sans_Arabic({
-  subsets: ["arabic"],
-  weight: ["600", "700"],
-  variable: "--font-display-ar",
-  display: "swap",
-});
-
-// Body copy — a genuine matched multi-script pair (designed together, not
-// a Latin font with an Arabic face bolted on), which matters for a site
-// that is Arabic-primary in real use.
-export const bodyEn = IBM_Plex_Sans({
+// Latin body.
+export const bodyEn = DM_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "700"],
   variable: "--font-body-en",
   display: "swap",
 });
 
-export const bodyAr = IBM_Plex_Sans_Arabic({
+// Arabic, display and body both. Cairo carries the display weight upright at
+// 700 rather than borrowing the Latin italic, which Arabic has no tradition
+// for and which reads as a rendering fault.
+export const displayAr = Cairo({
   subsets: ["arabic"],
-  weight: ["400", "500", "600"],
+  weight: ["700"],
+  variable: "--font-display-ar",
+  display: "swap",
+});
+
+export const bodyAr = Cairo({
+  subsets: ["arabic"],
+  weight: ["400", "500", "700"],
   variable: "--font-body-ar",
   display: "swap",
 });
 
-export const fontVariables = `${displayEn.variable} ${editorialEn.variable} ${displayAr.variable} ${bodyEn.variable} ${bodyAr.variable}`;
+// NOTE: there is no editorial serif any more. MASTER.md defines two Latin
+// roles, display and body, and a third voice was the kind of drift the spec
+// exists to prevent. `.font-editorial` in globals.css now resolves to the
+// display face, so the one call site that used it keeps working.
+
+export const fontVariables = `${displayEn.variable} ${displayAr.variable} ${bodyEn.variable} ${bodyAr.variable}`;

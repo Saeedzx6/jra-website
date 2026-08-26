@@ -42,7 +42,7 @@ export function MembershipApplicationRow({
 
   if (credentials) {
     return (
-      <div className="rounded-2xl border border-olive bg-olive-soft p-5 text-olive-text">
+      <div className="rounded-2xl border border-success bg-success-soft p-5 text-success-text">
         <p className="font-medium">{tm("approvedAccountCreated", { name: businessName })}</p>
         <p className="mt-1 text-sm">
           {tm("loginLabel")} <strong>{credentials.email}</strong> · {tm("tempPasswordLabel")}{" "}
@@ -72,7 +72,7 @@ export function MembershipApplicationRow({
           <p className="text-sm text-ink-soft">
             {contactName} · {email}
           </p>
-          <span className="mt-1 inline-block rounded-full bg-brass-soft px-2 py-0.5 text-xs font-medium text-brass-text">
+          <span className="mt-1 inline-block rounded-full bg-accent-soft px-2 py-0.5 text-xs font-medium text-accent">
             {applicantType === "ACTIVE_RESTAURANT" ? tp("restaurant") : tp("supplier")}
           </span>
         </div>

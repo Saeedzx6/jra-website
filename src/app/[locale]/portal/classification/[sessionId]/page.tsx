@@ -46,7 +46,7 @@ export default async function AssessmentSessionPage({
 
   return (
     <div>
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
+      <p className="text-xs font-eyebrow font-semibold text-accent">
         {assessment.restaurant.name}
       </p>
       <h1 className="mt-1 font-display text-2xl font-semibold text-ink">

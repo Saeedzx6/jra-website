@@ -19,7 +19,7 @@ export function ListingForm() {
 
   if (state.ok) {
     return (
-      <div className="flex items-center gap-2 rounded-xl bg-olive-soft p-4 text-olive-text">
+      <div className="flex items-center gap-2 rounded-xl bg-success-soft p-4 text-success-text">
         <Check className="h-5 w-5" />
         <span>{tm("listingSubmitted")}</span>
       </div>

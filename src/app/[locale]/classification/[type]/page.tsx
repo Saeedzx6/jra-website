@@ -47,7 +47,7 @@ export default async function PublicAssessmentPage({
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
+      <p className="text-xs font-eyebrow font-semibold text-accent">
         {tc("selfAssessmentKicker")}
       </p>
       <h1 className="mt-1 font-display text-2xl font-semibold text-ink">{standard.titleEn}</h1>

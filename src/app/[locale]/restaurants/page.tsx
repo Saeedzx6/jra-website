@@ -14,6 +14,7 @@ type SearchParams = {
   q?: string;
   governorate?: string;
   cuisine?: string;
+  feature?: string;
   stars?: string;
   page?: string;
 };
@@ -38,6 +39,7 @@ export default async function RestaurantsPage({
       q: sp.q,
       governorate: sp.governorate,
       cuisine: sp.cuisine,
+      feature: sp.feature,
       stars: sp.stars ? Number(sp.stars) : undefined,
       page: sp.page ? Number(sp.page) : 1,
     }),

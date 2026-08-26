@@ -56,7 +56,7 @@ export default async function AdminNewsPage() {
             </span>
             <span
               className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                a.status === "PUBLISHED" ? "bg-olive-soft text-olive-text" : "bg-brass-soft text-brass-text"
+                a.status === "PUBLISHED" ? "bg-success-soft text-success-text" : "bg-warning-soft text-warning-text"
               }`}
             >
               {tStatus(a.status)}
