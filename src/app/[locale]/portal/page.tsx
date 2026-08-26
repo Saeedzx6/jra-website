@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/rbac";
 import { logoutAction } from "@/lib/actions/auth";
-import { ClipboardCheck, Store, LogOut } from "lucide-react";
+import { ClipboardCheck, Star, Store, LogOut } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { SuggestEditForm } from "@/components/portal/suggest-edit-form";
 
@@ -13,7 +13,10 @@ export default async function PortalDashboard() {
   const tp = await getTranslations("portal");
   const managed = await db.businessManager.findMany({
     where: { userId: session.user.id },
-    include: { restaurant: true, supplier: true },
+    include: {
+      restaurant: { include: { assessments: { orderBy: { cycle: "desc" }, take: 1 } } },
+      supplier: true,
+    },
   });
 
   return (
@@ -47,13 +50,35 @@ export default async function PortalDashboard() {
                 <h2 className="mt-2 font-display text-lg font-semibold text-ink">{biz.name}</h2>
                 {m.restaurant ? (
                   <>
-                    <Link
-                      href="/portal/classification"
-                      className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent"
-                    >
-                      <ClipboardCheck className="h-4 w-4" />
-                      {tp("startClassification")}
-                    </Link>
+                    {/* Rating the establishment is a setup task, so it reads as
+                        one until it is done rather than as a link that looks
+                        the same whether or not it has ever been used. */}
+                    {(() => {
+                      const latest = m.restaurant.assessments[0];
+                      const stars = latest?.resultingStars;
+                      const done = latest?.status === "APPROVED" && stars;
+                      return (
+                        <Link
+                          href="/portal/classification"
+                          className={`mt-4 flex items-center gap-2 rounded-xl border px-3 py-2.5 text-sm font-medium transition-colors ${
+                            done
+                              ? "border-rule text-ink-soft hover:border-accent"
+                              : "border-accent/40 bg-accent-soft/40 text-accent hover:border-accent"
+                          }`}
+                        >
+                          {done ? (
+                            <Star className="h-4 w-4 shrink-0 fill-brass text-brass" />
+                          ) : (
+                            <ClipboardCheck className="h-4 w-4 shrink-0" />
+                          )}
+                          {done
+                            ? tp("ratedStars", { stars })
+                            : latest
+                              ? tp(`ratingStatus.${latest.status.toLowerCase()}`)
+                              : tp("startClassification")}
+                        </Link>
+                      );
+                    })()}
                     <div className="mt-4 border-t border-rule pt-4">
                       <p className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
                         {tp("suggestProfileUpdate")}
