@@ -215,12 +215,11 @@
     "resultPrefix": "Based on your answers, this establishment projects to",
     "resultSuffix": "({score} of {total} points). This is a self-assessment — JRA's classification team will confirm the official rating during inspection.",
     "savePdf": "Save report as PDF",
-    "answeredCount": "{answered} / {total} answered",
     "submitAssessment": "Submit assessment",
     "seeMyResult": "See my result",
     "projectsTo": "Projects to",
     "applyToJoin": "Ready? Apply to join JRA",
-    "rateNote": "Rate each item 0–10, or mark it as something you don't have. Nothing is saved unless you choose to submit your result to JRA.",
+    "rateNote": "Tick each requirement your establishment meets. Nothing is saved unless you choose to submit your result to JRA.",
     "sentToJra": "Sent to JRA — your results and contact details are with our membership team.",
     "submitResultsHeading": "Submit these results to JRA for review",
     "restaurantNamePlaceholder": "Restaurant name",
@@ -229,13 +228,14 @@
     "phonePlaceholder": "Phone",
     "submitForReview": "Submit for review",
     "pts": "pts",
-    "rateLabel": "Rate",
-    "dontHaveThis": "We don't have this",
     "projectedRating": "Projected rating",
     "statusLabels": {
       "in_progress": "In progress",
       "submitted": "Submitted",
-      "scored": "Scored"
+      "scored": "Submitted",
+      "requested": "Re-rating requested",
+      "approved": "Approved",
+      "rejected": "Refused"
     },
     "typeLabels": {
       "RESTAURANT": "Restaurant",
@@ -248,7 +248,36 @@
     },
     "chooseTypeHeading": "First, what kind of establishment are you?",
     "chooseTypeBody": "Each type is judged against its own published standard, with its own criteria, points and star range. Pick yours to score against the right one.",
-    "startForType": "Assess as {type}"
+    "startForType": "Assess as {type}",
+    "ofMarks": "of {total} marks",
+    "notClassified": "Not classified",
+    "toNextStar": "<b>{needed}</b> more mark(s) to reach {stars} star(s).",
+    "atTopGrade": "Highest grade reached.",
+    "sectionComplete": "Complete",
+    "sectionScore": "{score} of {max} marks",
+    "details": "Details",
+    "done": "Done",
+    "close": "Close",
+    "mandatory": "Required",
+    "certified": "Meets the standard",
+    "notCertified": "Not yet met",
+    "allMandatoryMet": "Every required item is met.",
+    "missingMandatory": "{count} required item(s) outstanding.",
+    "readOnlyNotice": "This assessment is with JRA and can no longer be changed.",
+    "saveFailed": "That answer could not be saved. Check your connection and try again.",
+    "startRating": "Rate your establishment",
+    "awaitingReview": "With JRA for review",
+    "awaitingOpen": "Waiting for JRA to open",
+    "reRatingPending": "JRA has not opened this re-rating yet. You can look through the criteria, but answers cannot be saved until it is opened.",
+    "requestReRating": "Request a re-rating",
+    "reRatingReason": "Why are you asking for a re-rating?",
+    "reRatingRequested": "Request sent. JRA will be in touch once it has been reviewed.",
+    "reRatingFailed": "Could not send the request.",
+    "sendRequest": "Send request",
+    "cancel": "Cancel",
+    "cycleLabel": "Rating {cycle}",
+    "itemsTicked": "{done} / {total} {total, plural, one {item} other {items}}",
+    "certificationAcross": "{items} required items — tourism-approved certification, not a star grade"
   },
   "sustainability": {
     "heroTitle": "A greener sector, measured simply",
@@ -338,7 +367,16 @@
     "startClassification": "Start a classification self-assessment",
     "suggestProfileUpdate": "Suggest a profile update",
     "sentForApproval": "Sent for admin approval.",
-    "suggestThisUpdate": "Suggest this update"
+    "suggestThisUpdate": "Suggest this update",
+    "ratedStars": "Rated {stars} stars",
+    "ratingStatus": {
+      "requested": "Re-rating requested",
+      "in_progress": "Finish rating your establishment",
+      "submitted": "Rating with JRA for review",
+      "scored": "Rating with JRA for review",
+      "approved": "Rating approved",
+      "rejected": "Rating refused — start again"
+    }
   },
   "admin": {
     "nav": {
@@ -459,6 +497,25 @@
         "cancel": "Cancel",
         "approvedWith": "Approved — {stars} stars awarded",
         "rejected": "Refused",
+        "failed": "Could not save the decision.",
+        "willCertify": "Approving certifies this establishment as tourism approved.",
+        "confirmCertify": "Yes, certify",
+        "certified": "Approved — certified as tourism approved"
+      },
+      "mandatory": "Required",
+      "cycleLabel": "Rating {cycle}",
+      "previouslyAwarded": "previously {stars} stars",
+      "reRatingQueue": "Re-rating requests ({count})",
+      "submissionQueue": "Submitted for review ({count})",
+      "reRating": {
+        "heading": "Re-rating request",
+        "reasonGiven": "Reason given:",
+        "noReasonGiven": "No reason was given.",
+        "open": "Open the re-rating",
+        "decline": "Refuse",
+        "confirmDecline": "Refuse this request",
+        "reasonLabel": "Reason for refusing",
+        "cancel": "Cancel",
         "failed": "Could not save the decision."
       }
     },

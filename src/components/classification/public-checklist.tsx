@@ -2,134 +2,120 @@
 
 import { useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Sparkles } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import { ClassificationSeal } from "./seal";
-import { CriterionInput } from "./criterion-input";
+import { ScoreMeter } from "./score-meter";
+import { SectionTiles } from "./section-tiles";
+import { SectionSheet } from "./section-sheet";
 import { SubmitAssessmentForm } from "./submit-assessment-form";
+import { localized, sectionMax, sectionScore, type GradingMode, type Section } from "./types";
 import {
-  criterionAchievedPoints,
+  certificationResult,
   starsForScore,
   type CriterionValue,
   type StarBand,
 } from "@/lib/classification-scoring";
 
-type Criterion = { id: string; textEn: string; textAr: string | null; maxPoints: number };
-type Section = { id: string; nameEn: string; nameAr: string | null; criteria: Criterion[] };
-
+/**
+ * The anonymous version: nothing is saved, and the score is the point.
+ *
+ * There is no "reveal my result" gate any more. Under binary marking an
+ * untouched row is a real answer — it means the establishment does not meet
+ * that requirement — so the running total is honest from the first tap, and
+ * hiding it until every row is visited only made the tool feel like a form.
+ */
 export function PublicClassificationChecklist({
   establishmentType,
   sections,
   starBands,
   totalPoints,
+  gradingMode,
 }: {
   establishmentType: string;
   sections: Section[];
   starBands: StarBand[];
   totalPoints: number;
+  gradingMode: GradingMode;
 }) {
   const locale = useLocale();
   const tc = useTranslations("classification");
   const tCommon = useTranslations("common");
   const [answers, setAnswers] = useState<Record<string, CriterionValue>>({});
-  const [revealed, setRevealed] = useState(false);
+  const [openSection, setOpenSection] = useState<Section | null>(null);
 
   const allCriteria = useMemo(() => sections.flatMap((s) => s.criteria), [sections]);
-  const answeredCount = Object.keys(answers).length;
-
   const score = useMemo(
-    () =>
-      allCriteria.reduce((sum, c) => sum + criterionAchievedPoints(c.maxPoints, answers[c.id]), 0),
-    [answers, allCriteria]
-  );
-
-  const percent = totalPoints > 0 ? Math.min(100, (score / totalPoints) * 100) : 0;
-  const maxStars = starBands.length > 0 ? Math.max(...starBands.map((b) => b.stars)) : 5;
-  const projectedStars = starsForScore(score, starBands);
-
-  const sectionBreakdown = useMemo(
-    () =>
-      sections.map((s) => ({
-        name: s.nameEn,
-        score: s.criteria.reduce((sum, c) => sum + criterionAchievedPoints(c.maxPoints, answers[c.id]), 0),
-        max: s.criteria.reduce((sum, c) => sum + c.maxPoints, 0),
-      })),
+    () => sections.reduce((sum, s) => sum + sectionScore(s, answers), 0),
     [sections, answers]
   );
 
-  return (
-    <div className="grid gap-10 lg:grid-cols-[280px_1fr]">
-      <div className="h-fit rounded-2xl border border-rule bg-surface p-6 lg:sticky lg:top-24">
-        <ClassificationSeal
-          percent={percent}
-          score={score}
-          totalPoints={totalPoints}
-          stars={projectedStars}
-          maxStars={maxStars}
-        />
-        <div className="mt-6 text-center text-sm text-ink-soft">
-          {tc("answeredCount", { answered: answeredCount, total: allCriteria.length })}
-        </div>
-        {!revealed && answeredCount === allCriteria.length && (
-          <button suppressHydrationWarning
-            onClick={() => setRevealed(true)}
-            className="mt-4 w-full rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
-          >
-            {tc("seeMyResult")}
-          </button>
-        )}
-        {revealed && (
-          <>
-            <div className="mt-4 rounded-xl bg-olive-soft p-4 text-center">
-              <Sparkles className="mx-auto h-5 w-5 text-olive-text" />
-              <p className="mt-1 text-sm font-medium text-olive-text">
-                {tc("projectsTo")} {projectedStars}{" "}
-                {projectedStars === 1 ? tCommon("star") : tCommon("stars")}
-              </p>
-              <Link
-                href="/membership"
-                className="mt-3 block rounded-full bg-accent px-4 py-2 text-xs font-semibold text-white"
-              >
-                {tc("applyToJoin")}
-              </Link>
-            </div>
-            <SubmitAssessmentForm
-              payload={{
-                establishmentType,
-                score,
-                totalPoints,
-                stars: projectedStars,
-                sections: sectionBreakdown,
-              }}
-            />
-          </>
-        )}
-        <p className="mt-4 text-center text-xs text-ink-faint">{tc("rateNote")}</p>
-      </div>
+  const projectedStars = starsForScore(score, starBands);
+  const mandatory = useMemo(() => allCriteria.filter((c) => c.mandatory), [allCriteria]);
+  const certification = certificationResult(allCriteria, answers);
+  const touched = Object.values(answers).some((v) => v.met);
 
-      <div className="space-y-8">
-        {sections.map((section) => (
-          <section key={section.id} className="rounded-2xl border border-rule bg-surface p-6">
-            <h2 className="font-display text-lg font-semibold text-ink">
-              {locale === "ar" && section.nameAr ? section.nameAr : section.nameEn}
-            </h2>
-            <div className="mt-4 divide-y divide-rule">
-              {section.criteria.map((criterion) => (
-                <CriterionInput
-                  key={criterion.id}
-                  label={locale === "ar" && criterion.textAr ? criterion.textAr : criterion.textEn}
-                  points={criterion.maxPoints}
-                  value={answers[criterion.id]}
-                  onChange={(value) => {
-                    setAnswers((prev) => ({ ...prev, [criterion.id]: value }));
-                    setRevealed(false);
-                  }}
-                />
-              ))}
-            </div>
-          </section>
-        ))}
-      </div>
+  // The sheet holds a snapshot of the section it was opened with, so it has to
+  // be re-read from the live list for its tick marks to update as they change.
+  const liveOpenSection = openSection
+    ? (sections.find((s) => s.id === openSection.id) ?? null)
+    : null;
+
+  return (
+    <div className="space-y-6">
+      <ScoreMeter
+        score={score}
+        totalPoints={totalPoints}
+        bands={starBands}
+        gradingMode={gradingMode}
+        mandatoryMet={mandatory.length - certification.missingMandatory.length}
+        mandatoryTotal={mandatory.length}
+      />
+
+      <SectionTiles sections={sections} answers={answers} onOpen={setOpenSection} />
+
+      <SectionSheet
+        section={liveOpenSection}
+        answers={answers}
+        onToggle={(criterionId, met) =>
+          setAnswers((prev) => ({ ...prev, [criterionId]: { met } }))
+        }
+        onClose={() => setOpenSection(null)}
+      />
+
+      {touched ? (
+        <div className="rounded-2xl border border-rule bg-surface p-5">
+          <p className="text-sm text-ink-soft">
+            {gradingMode === "CERTIFICATION"
+              ? certification.qualified
+                ? tc("allMandatoryMet")
+                : tc("missingMandatory", { count: certification.missingMandatory.length })
+              : `${tc("projectsTo")} ${projectedStars} ${
+                  projectedStars === 1 ? tCommon("star") : tCommon("stars")
+                }`}
+          </p>
+          <Link
+            href="/membership"
+            className="mt-3 inline-block rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+          >
+            {tc("applyToJoin")}
+          </Link>
+          <SubmitAssessmentForm
+            payload={{
+              establishmentType,
+              score,
+              totalPoints,
+              stars: projectedStars,
+              sections: sections.map((s) => ({
+                name: localized(locale, s.nameAr, s.nameEn),
+                score: sectionScore(s, answers),
+                max: sectionMax(s),
+              })),
+            }}
+          />
+          <p className="mt-4 text-xs text-ink-faint">{tc("rateNote")}</p>
+        </div>
+      ) : (
+        <p className="text-sm text-ink-faint">{tc("rateNote")}</p>
+      )}
     </div>
   );
 }

@@ -34,7 +34,9 @@
     "seed:all": "npm run seed:lookups && npm run seed:restaurants && npm run seed:images && npm run seed:content && npm run seed:classification && npm run seed:admin",
     "seed:amenity-ar": "tsx prisma/seed/16-amenity-arabic-names.ts",
     "seed:standards": "tsx prisma/seed/17-remaining-standards.ts",
-    "seed:levels": "tsx prisma/seed/18-classification-levels.ts"
+    "seed:levels": "tsx prisma/seed/18-classification-levels.ts",
+    "seed:standards-full": "tsx prisma/seed/19-standards-full.ts",
+    "verify:standards": "node scripts/verify-standard-json.mjs"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.3",

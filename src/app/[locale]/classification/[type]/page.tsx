@@ -50,7 +50,9 @@ export default async function PublicAssessmentPage({
       <p className="text-xs font-eyebrow font-semibold text-accent">
         {tc("selfAssessmentKicker")}
       </p>
-      <h1 className="mt-1 font-display text-2xl font-semibold text-ink">{standard.titleEn}</h1>
+      <h1 className="mt-1 font-display text-2xl font-semibold text-ink">
+        {locale === "ar" && standard.titleAr ? standard.titleAr : standard.titleEn}
+      </h1>
       <p className="mt-2 max-w-2xl text-sm text-ink-soft">{tc("publicIntro")}</p>
 
       <div className="mt-8">
@@ -59,6 +61,7 @@ export default async function PublicAssessmentPage({
           sections={standard.sections}
           starBands={standard.starBands}
           totalPoints={standard.totalPossiblePoints}
+          gradingMode={standard.gradingMode}
         />
       </div>
     </div>

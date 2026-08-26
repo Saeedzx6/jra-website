@@ -17,11 +17,14 @@ import { approveAssessment, rejectAssessment } from "@/lib/actions/classificatio
 export function AssessmentReview({
   sessionId,
   stars,
+  gradingMode,
   decided,
   reviewNote,
 }: {
   sessionId: string;
   stars: number | null;
+  /** Fast food is certified rather than graded, so there are no stars to award. */
+  gradingMode: "STARS" | "CERTIFICATION";
   decided: "APPROVED" | "REJECTED" | null;
   reviewNote: string | null;
 }) {
@@ -45,20 +48,27 @@ export function AssessmentReview({
           }`}
         >
           {approved ? <Check className="h-4 w-4 shrink-0" /> : <X className="h-4 w-4 shrink-0" />}
-          {approved ? t("approvedWith", { stars: stars ?? 0 }) : t("rejected")}
+          {approved
+            ? gradingMode === "CERTIFICATION"
+              ? t("certified")
+              : t("approvedWith", { stars: stars ?? 0 })
+            : t("rejected")}
         </p>
         {reviewNote ? <p className="mt-2 text-sm text-ink-soft">{reviewNote}</p> : null}
       </div>
     );
   }
 
-  const canAward = stars != null && stars > 0;
+  const isCertification = gradingMode === "CERTIFICATION";
+  const canAward = isCertification || (stars != null && stars > 0);
 
   return (
     <div className="rounded-2xl border border-rule bg-surface p-5">
       <h2 className="font-display text-base font-semibold text-ink">{t("heading")}</h2>
 
-      {canAward ? (
+      {isCertification ? (
+        <p className="mt-1 text-sm text-ink-soft">{t("willCertify")}</p>
+      ) : stars != null && stars > 0 ? (
         <p className="mt-1 flex items-center gap-1.5 text-sm text-ink-soft">
           {t("willAward")}
           <span className="inline-flex items-center gap-0.5 text-brass-text">
@@ -110,7 +120,7 @@ export function AssessmentReview({
               className="inline-flex items-center gap-1.5 rounded-full bg-success px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               <Check className="h-4 w-4 shrink-0" aria-hidden="true" />
-              {t("confirmAward", { stars: stars ?? 0 })}
+              {isCertification ? t("confirmCertify") : t("confirmAward", { stars: stars ?? 0 })}
             </button>
             <button
               type="button"
