@@ -370,14 +370,13 @@
     },
     "settings": {
       "title": "Site Settings",
-      "heroImageTitle": "Homepage hero image",
-      "heroImageDesc": "Shown as the faded background behind the homepage hero text. Falls back to the JRA mark if nothing is uploaded.",
       "upload": "Upload",
-      "resetToDefault": "Reset to default",
-      "showcaseTitle": "Homepage showcase photos",
-      "showcaseDesc": "The two photographs that overlap the homepage hero card. Use images that represent the association itself. Falls back to the bundled JRA photos if cleared.",
-      "showcaseOne": "Large photo (left)",
-      "showcaseTwo": "Small photo (right)"
+      "heroSourceTitle": "Homepage hero photography",
+      "heroSourceDesc": "The homepage opens on a moving corridor of member photography. It uses the primary photo from each published restaurant, so the hero reflects the directory itself rather than a separate set of images.",
+      "heroSourceCurrent": "The {count} photos on the hero right now",
+      "heroSourceEmpty": "No published restaurant has a primary photo yet, so the hero has nothing to show. Add photos to a listing and set one as primary.",
+      "heroSourceHowTo": "To change what appears, open a restaurant and set a different photo as its primary. There is nothing to upload here.",
+      "heroSourceManage": "Manage restaurants"
     },
     "common": {
       "edit": "Edit",

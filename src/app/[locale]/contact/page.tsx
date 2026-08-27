@@ -24,7 +24,7 @@ export default async function ContactPage({
           <ContactForm />
         </div>
         <div className="space-y-4 lg:col-span-2">
-          <div className="flex items-start gap-3 rounded-xl border border-rule bg-surface p-4">
+          <div className="reveal flex items-start gap-3 rounded-xl border border-rule bg-surface p-4">
             <Phone className="mt-0.5 h-5 w-5 text-accent" />
             <div>
               <div className="text-xs uppercase tracking-wide text-ink-faint">
@@ -35,7 +35,7 @@ export default async function ContactPage({
               </div>
             </div>
           </div>
-          <div className="flex items-start gap-3 rounded-xl border border-rule bg-surface p-4">
+          <div className="reveal flex items-start gap-3 rounded-xl border border-rule bg-surface p-4">
             <Mail className="mt-0.5 h-5 w-5 text-accent" />
             <div>
               <div className="text-xs uppercase tracking-wide text-ink-faint">
@@ -44,7 +44,7 @@ export default async function ContactPage({
               <div className="text-sm font-medium text-ink">info@jra.jo</div>
             </div>
           </div>
-          <div className="flex items-start gap-3 rounded-xl border border-rule bg-surface p-4">
+          <div className="reveal flex items-start gap-3 rounded-xl border border-rule bg-surface p-4">
             <MapPin className="mt-0.5 h-5 w-5 text-accent" />
             <div>
               <div className="text-xs uppercase tracking-wide text-ink-faint">

@@ -69,7 +69,7 @@ export default async function MarketplacePage({
             <Link
               key={l.id}
               href={`/marketplace/${l.id}`}
-              className="motion-card block rounded-2xl border border-rule bg-surface p-5"
+              className="reveal motion-card block rounded-2xl border border-rule bg-surface p-5"
             >
               <span className="inline-flex items-center gap-1.5 rounded-full bg-warning-soft px-2.5 py-0.5 text-xs font-medium text-warning-text">
                 <Tag className="h-3 w-3" />
@@ -88,7 +88,7 @@ export default async function MarketplacePage({
         </div>
       )}
 
-      <div className="mt-12 rounded-2xl border border-dashed border-rule bg-surface p-6 text-center">
+      <div className="reveal mt-12 rounded-2xl border border-dashed border-rule bg-surface p-6 text-center">
         <p className="text-sm text-ink-soft">{tm("membersNote")}</p>
         <Link href="/portal/marketplace" className="mt-2 inline-block text-sm font-medium text-accent">
           {tm("goToPortal")} →
