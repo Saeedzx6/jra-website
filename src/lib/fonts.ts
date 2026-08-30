@@ -1,46 +1,54 @@
-import { Manrope, Fraunces, IBM_Plex_Sans, IBM_Plex_Sans_Arabic } from "next/font/google";
+import { Playfair_Display, Plus_Jakarta_Sans, Cairo, Noto_Sans_Arabic } from "next/font/google";
 
-// Editorial display serif for the marketing surfaces (hero, section leads).
-// Fraunces rather than the reflexive Playfair pick: its softer, slightly
-// wonky letterforms read warm instead of austere, which suits a hospitality
-// body more than a fashion masthead. Latin only — Arabic keeps its own face.
-export const editorialEn = Fraunces({
+/**
+ * Editorial Display (English) — High-contrast serif for luxury, heritage, and key section leads.
+ * Playfair Display gives a polished, high-end culinary & hospitality editorial feel.
+ */
+export const editorialEn = Playfair_Display({
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["500", "600", "700", "800"],
   variable: "--font-editorial-en",
   display: "swap",
 });
 
-// English display — modern geometric sans, confident at weight, distinct
-// letterforms (single-storey 'a', open apertures) without leaning on the
-// over-used "safe" AI defaults.
-export const displayEn = Manrope({
+/**
+ * Modern Display Sans (English) — Crisp geometric sans with modern aperture.
+ * Plus Jakarta Sans offers exceptional legibility for UI headings, tags, and dashboard elements.
+ */
+export const displayEn = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["600", "700", "800"],
   variable: "--font-display-en",
   display: "swap",
 });
 
-// Arabic display — the same family used for Arabic body, at a heavier
-// weight, rather than forcing a mismatched second Arabic face.
-export const displayAr = IBM_Plex_Sans_Arabic({
+/**
+ * Arabic Display — Modern Kufic/Geometric typography tailored for high-impact headlines.
+ * Cairo brings modern elegance to Arabic headings without feeling dated or heavy.
+ */
+export const displayAr = Cairo({
   subsets: ["arabic"],
-  weight: ["600", "700"],
+  weight: ["600", "700", "800"],
   variable: "--font-display-ar",
   display: "swap",
 });
 
-// Body copy — a genuine matched multi-script pair (designed together, not
-// a Latin font with an Arabic face bolted on), which matters for a site
-// that is Arabic-primary in real use.
-export const bodyEn = IBM_Plex_Sans({
+/**
+ * English Body Text — Neutral, clean, highly readable workhorse font.
+ * Reuses Plus Jakarta Sans for visual unity across English UI body copy.
+ */
+export const bodyEn = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-body-en",
   display: "swap",
 });
 
-export const bodyAr = IBM_Plex_Sans_Arabic({
+/**
+ * Arabic Body Text — Highly legible Naskh-inspired modern typeface.
+ * Noto Sans Arabic ensures comfortable long-form reading for Arabic content across all device sizes.
+ */
+export const bodyAr = Noto_Sans_Arabic({
   subsets: ["arabic"],
   weight: ["400", "500", "600"],
   variable: "--font-body-ar",
