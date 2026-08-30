@@ -13,18 +13,14 @@ export function LocaleSwitcher() {
     <div className="flex items-center gap-1 text-sm">
       {routing.locales.map((loc) => (
         <button
-          key={loc}
-          onClick={() => router.replace(pathname, { locale: loc })}
-          aria-current={loc === locale}
-          suppressHydrationWarning
-          className={`rounded-full px-2.5 py-1 uppercase tracking-wide transition-colors ${
-            loc === locale
-              ? "bg-accent text-white"
-              : "text-ink-soft hover:bg-surface-2"
-          }`}
-        >
-          {loc}
-        </button>
+  key={loc}
+  onClick={() => router.replace(pathname, { locale: loc })}
+  className={`locale-switcher-btn rounded-full px-2.5 py-1 uppercase tracking-wide transition-colors ${
+    loc === locale ? "bg-accent text-white" : "text-ink-soft hover:bg-surface-2"
+  }`}
+>
+  {loc}
+</button>
       ))}
     </div>
   );
