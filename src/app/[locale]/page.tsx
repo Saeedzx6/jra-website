@@ -10,7 +10,6 @@ import {
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { RestaurantCard } from "@/components/restaurant-card";
-import { RevealGroup } from "@/components/reveal";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { CountUp } from "@/components/count-up";
 import { HomeHero } from "@/components/home/hero";
@@ -150,12 +149,12 @@ export default async function HomePage({
         <h2 className="font-display text-2xl font-semibold text-white">
           {t("servicesTitle")}
         </h2>
-        <RevealGroup className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((s) => (
             <Link
               key={s.href}
               href={s.href}
-              className="motion-card reveal group rounded-2xl border border-rule bg-surface p-6"
+              className="motion-card group rounded-2xl border border-rule bg-surface p-6"
             >
               <s.icon className="h-6 w-6 text-accent" strokeWidth={1.75} />
               <h3 className="mt-4 font-display text-lg font-semibold text-ink">
@@ -168,7 +167,7 @@ export default async function HomePage({
               </span>
             </Link>
           ))}
-        </RevealGroup>
+        </div>
       </section>
       </div>
 
@@ -211,13 +210,13 @@ export default async function HomePage({
               {tCommon("viewAll")} →
             </Link>
           </div>
-          <RevealGroup className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((r) => (
-              <div key={r.slug} className="reveal">
+              <div key={r.slug}>
                 <RestaurantCard restaurant={r} />
               </div>
             ))}
-          </RevealGroup>
+          </div>
         </section>
       )}
 

@@ -29,7 +29,7 @@ export default async function SuppliersPage({
       <p className="mt-2 max-w-2xl text-ink-soft">{ts("description")}</p>
 
       {suppliers.length === 0 ? (
-        <div className="reveal mt-12 rounded-2xl border border-dashed border-rule bg-surface p-12 text-center">
+        <div className="mt-12 rounded-2xl border border-dashed border-rule bg-surface p-12 text-center">
           <Boxes className="mx-auto h-10 w-10 text-brass-text" strokeWidth={1.5} />
           <h2 className="mt-4 font-display text-xl font-semibold text-ink">
             {ts("emptyTitle")}
@@ -45,7 +45,7 @@ export default async function SuppliersPage({
       ) : (
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {suppliers.map((s) => (
-            <div key={s.id} className="reveal motion-card rounded-2xl border border-rule bg-surface p-5">
+            <div key={s.id} className="motion-card rounded-2xl border border-rule bg-surface p-5">
               <h3 className="font-display text-base font-semibold text-ink">
                 {locale === "ar" && s.nameAr ? s.nameAr : s.name}
               </h3>
