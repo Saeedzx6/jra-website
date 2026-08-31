@@ -35,7 +35,7 @@ export default async function KnowledgeCenterPage({
             <a
               key={r.id}
               href={r.fileUrl ?? "#"}
-              className="reveal motion-card flex items-start gap-3 rounded-xl border border-rule bg-surface p-4"
+              className="motion-card flex items-start gap-3 rounded-xl border border-rule bg-surface p-4"
             >
               <FileText className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
               <div>
