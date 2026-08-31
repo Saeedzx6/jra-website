@@ -1,6 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { RestaurantCard } from "@/components/restaurant-card";
-import { RevealGroup } from "@/components/reveal";
 import { DirectoryFilters } from "@/components/directory-filters";
 import { Pagination } from "@/components/pagination";
 import { searchRestaurants, getDirectoryFacets } from "@/lib/restaurants";
@@ -61,16 +60,15 @@ export default async function RestaurantsPage({
       {results.items.length === 0 ? (
         <p className="mt-16 text-center text-ink-soft">{tCommon("noResults")}</p>
       ) : (
-        <RevealGroup
-          resetKey={`${results.page}|${sp.q ?? ""}|${sp.governorate ?? ""}|${sp.cuisine ?? ""}`}
+        <div
           className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
         >
           {results.items.map((r) => (
-            <div key={r.slug} className="reveal">
+            <div key={r.slug}>
               <RestaurantCard restaurant={r} />
             </div>
           ))}
-        </RevealGroup>
+        </div>
       )}
 
       <Pagination
