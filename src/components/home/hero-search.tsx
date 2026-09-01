@@ -33,6 +33,11 @@ export function HeroSearch() {
         {t("heroSearchLabel")}
       </label>
       <input
+        // Form-filling extensions stamp attributes like fdprocessedid onto
+        // inputs and buttons before React hydrates, which reports as a
+        // mismatch the app cannot fix. The header's own search already
+        // carries this for the same reason.
+        suppressHydrationWarning
         id="hero-search"
         type="search"
         value={value}
@@ -42,6 +47,7 @@ export function HeroSearch() {
         className="min-w-0 flex-1 bg-transparent py-3 text-base text-white placeholder:text-white/55 focus:outline-none"
       />
       <button
+        suppressHydrationWarning
         type="submit"
         aria-label={t("heroSearchLabel")}
         className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-ink transition-transform hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"

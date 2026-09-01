@@ -58,7 +58,7 @@ export default async function AboutPage({
           <h2 className="font-display text-xl font-semibold text-ink">{t("aboutTeam")}</h2>
           <div className="mt-6 grid gap-6 sm:grid-cols-3 lg:grid-cols-4">
             {staff.map((p) => (
-              <div key={p.id} className="reveal motion-card rounded-2xl border border-rule bg-surface p-4 text-center">
+              <div key={p.id} className="motion-card rounded-2xl border border-rule bg-surface p-4 text-center">
                 <div className="relative mx-auto h-20 w-20 overflow-hidden rounded-full bg-surface-2">
                   {p.photoUrl ? (
                     <Image src={p.photoUrl} alt={p.name} fill className="object-cover" />
@@ -85,7 +85,7 @@ export default async function AboutPage({
               <a
                 key={r.id}
                 href={r.fileUrl ?? "#"}
-                className="reveal motion-card flex items-center gap-3 rounded-xl border border-rule bg-surface p-4"
+                className="motion-card flex items-center gap-3 rounded-xl border border-rule bg-surface p-4"
               >
                 <FileText className="h-5 w-5 shrink-0 text-accent" />
                 <span className="text-sm font-medium text-ink">
