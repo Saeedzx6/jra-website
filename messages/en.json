@@ -12,7 +12,7 @@
     "sustainability": "Sustainability",
     "legal": "Legal & Regulatory",
     "marketplace": "Marketplace",
-    "training": "Training & Academy",
+    "training": "Training",
     "jobs": "Jobs",
     "projects": "Projects",
     "opportunities": "Opportunities",
@@ -20,11 +20,17 @@
     "news": "News & Events",
     "magazine": "Magazine",
     "newsletter": "Newsletter",
-    "membership": "Join JRA",
+    "membership": "Membership",
     "contact": "Contact Us",
-    "login": "Log In",
+    "login": "Member login",
     "portal": "My Account",
-    "logout": "Log Out"
+    "logout": "Log Out",
+    "businessCenter": "Business Center",
+    "mediaCenter": "Media Center",
+    "language": "العربية",
+    "languageLabel": "Switch to Arabic",
+    "menu": "Menu",
+    "close": "Close"
   },
   "common": {
     "learnMore": "Learn more",
@@ -48,11 +54,13 @@
     "skipToContent": "Skip to main content",
     "visitWebsite": "Visit website",
     "callRestaurant": "Call",
-    "messageOnWhatsapp": "Message on WhatsApp"
+    "messageOnWhatsapp": "Message on WhatsApp",
+    "previous": "Previous",
+    "next": "Next"
   },
   "home": {
     "heroKicker": "Jordan Restaurant Association",
-    "heroTitle": "The home of Jordan's tourism restaurant sector",
+    "heroTitle": "Find a restaurant in Jordan.",
     "heroSubtitle": "A mandatory, member-run association representing over 1,300 restaurants, coffee shops, and entertainment venues across Jordan since 2002.",
     "heroCtaDirectory": "Explore the directory",
     "heroCtaJoin": "Join JRA",
@@ -65,12 +73,12 @@
     "serviceMembershipDesc": "Join the association and access member-only services.",
     "serviceSustainability": "Sustainability",
     "serviceSustainabilityDesc": "Energy, water, and food-waste tools for a greener sector.",
-    "statsTitle": "JRA in numbers",
-    "statMembers": "Classified members",
-    "statGovernorates": "Governorates represented",
+    "statsTitle": "What the association represents",
+    "statMembers": "Member restaurants",
+    "statGovernorates": "Governorates covered",
     "statFounded": "Founded",
-    "newsTitle": "Latest news",
-    "newsletterTitle": "Stay informed",
+    "newsTitle": "Latest from the association",
+    "newsletterTitle": "Updates from the association",
     "newsletterSubtitle": "Subscribe for sector news, legislation updates, and opportunities.",
     "newsletterPlaceholder": "you@example.com",
     "newsletterCta": "Subscribe",
@@ -79,7 +87,21 @@
     "heroSearchLabel": "Search restaurants",
     "heroSearchPlaceholder": "Search by name, cuisine or area…",
     "heroSearchHint": "{count} classified restaurants, coffee shops and venues across Jordan.",
-    "browseByCuisine": "Browse by cuisine"
+    "browseByCuisine": "Browse by cuisine",
+    "heroLede": "The official body of Jordan's restaurant sector since 1976. Every member restaurant and café, in one directory.",
+    "directoryEyebrow": "Directory",
+    "directoryTitle": "Member restaurants",
+    "viewAllRestaurants": "View all restaurants",
+    "statsEyebrow": "The sector",
+    "newsEyebrow": "News",
+    "allNews": "All news and events",
+    "newsletterEyebrow": "Newsletter",
+    "statEmployed": "People employed",
+    "statSectorValue": "Annual sector value",
+    "whyJoinEyebrow": "Why join",
+    "whyJoinTitle": "One network. One voice.",
+    "whyJoinBody": "Joining the association is one of the smartest investments you can make in your restaurant. Advocacy with government, expert guidance, exclusive supplier rates and a network that helps you stay compliant and grow.",
+    "whyJoinCta": "Why join JRA"
   },
   "footer": {
     "tagline": "One network. One voice. Endless opportunities.",
@@ -88,12 +110,17 @@
     "address": "Address",
     "addressLine": "Jabal Amman, 2nd Circle, Salman Al-Madabi St, Building 12, Amman, Jordan",
     "sitemap": "Sitemap",
-    "rights": "All rights reserved.",
+    "rights": "© {year} Jordan Restaurant Association. All rights reserved.",
     "colDirectory": "Directory",
     "colMembers": "For members",
     "colResources": "Resources",
-    "established": "Serving Jordan's hospitality sector since 2002",
-    "legalName": "Jordan Restaurant Association"
+    "established": "Established 1976",
+    "legalName": "Jordan Restaurant Association",
+    "about": "About JRA",
+    "directories": "Directories",
+    "members": "Members",
+    "resources": "Resources",
+    "media": "Media"
   },
   "about": {
     "intro": "The Jordan Restaurant Association (JRA) is a mandatory, not-for-profit membership association empowered by Law No. 47 of 2002, amended by Law No. 33 of 2018 and Bylaw No. 59 of 2025. JRA represents over 1,300 classified establishments — restaurants, entertainment cities, coffee shops, fast food, discos, bars, and cabarets rated 1 to 5 stars — and is a member of the Jordan Tourism Board and an affiliate of UN Tourism."
@@ -519,7 +546,18 @@
     "messagePlaceholder": "Message"
   },
   "newsletterForm": {
-    "subscribed": "Thank you — you're subscribed."
+    "subscribed": "Thank you — you're subscribed.",
+    "email": "Email address",
+    "emailPlaceholder": "you@restaurant.jo",
+    "interests": "Interests",
+    "interest_legislation": "Legislation",
+    "interest_training": "Training",
+    "interest_opportunities": "Opportunities",
+    "interest_sustainability": "Sustainability",
+    "subscribe": "Subscribe",
+    "required": "Enter your email address.",
+    "invalidEmail": "That does not look like an email address.",
+    "rateLimited": "Too many attempts. Try again later."
   },
   "membershipForm": {
     "received": "Application received — our membership team will review it and follow up by email.",
@@ -578,5 +616,27 @@
     "outstanding": "Outstanding",
     "overdue": "Overdue",
     "empty": "No invoices raised yet."
+  },
+  "search": {
+    "keyword": "Name or keyword",
+    "keywordPlaceholder": "Search restaurants, cuisines, suppliers",
+    "cuisine": "Cuisine",
+    "governorate": "Governorate",
+    "feature": "Feature",
+    "any": "Any",
+    "submit": "Search directory",
+    "noResults": "No matches found",
+    "noResultsHint": "Try a broader term, or browse the full directory.",
+    "indexing": "Indexing {restaurants} establishments · {cuisines} cuisines · {governorates} governorates · {features} features",
+    "restaurant": "Restaurant"
+  },
+  "brand": {
+    "name": "Jordan Restaurant Association",
+    "short": "JRA",
+    "tagline": "The official body of Jordan's tourist restaurants"
+  },
+  "newsCategory": {
+    "news": "News",
+    "pressRelease": "Press release"
   }
 }

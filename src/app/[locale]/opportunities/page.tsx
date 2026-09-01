@@ -44,7 +44,7 @@ export default async function OpportunitiesPage({
                   {tr?.summary ? <p className="mt-1 text-sm text-ink-soft">{tr.summary}</p> : null}
                 </div>
                 {o.deadlineAt ? (
-                  <span className={`flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${expired ? "bg-surface-2 text-ink-faint" : "bg-brass-soft text-brass-text"}`}>
+                  <span className={`flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${expired ? "bg-surface-2 text-ink-faint" : "bg-warning-soft text-warning-text"}`}>
                     <CalendarClock className="h-3.5 w-3.5" />
                     {new Date(o.deadlineAt).toLocaleDateString(locale)}
                   </span>

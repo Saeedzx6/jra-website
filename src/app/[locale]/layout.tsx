@@ -84,7 +84,11 @@ export default async function LocaleLayout({
             {tCommon("skipToContent")}
           </a>
           <SiteHeader />
-          <main id="main" className="flex-1">
+          {/* The header is fixed (MASTER.md §4a), so it occupies no layout
+              space and content has to clear it explicitly. Routes that open
+              with a dark section pull their first block back up under it —
+              see the home page. */}
+          <main id="main" className="flex-1 pt-[var(--header-h)]">
             {children}
           </main>
           <SiteFooter />

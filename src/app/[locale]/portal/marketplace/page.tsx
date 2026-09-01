@@ -31,9 +31,9 @@ export default async function PortalMarketplacePage() {
             <span
               className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
                 l.status === "PUBLISHED"
-                  ? "bg-olive-soft text-olive-text"
+                  ? "bg-success-soft text-success-text"
                   : l.status === "PENDING"
-                    ? "bg-brass-soft text-brass-text"
+                    ? "bg-warning-soft text-warning-text"
                     : "bg-surface-2 text-ink-faint"
               }`}
             >

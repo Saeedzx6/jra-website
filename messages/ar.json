@@ -12,7 +12,7 @@
     "sustainability": "الاستدامة",
     "legal": "التشريعات",
     "marketplace": "السوق الإلكتروني",
-    "training": "التدريب والأكاديمية",
+    "training": "التدريب",
     "jobs": "الوظائف",
     "projects": "المشاريع",
     "opportunities": "الفرص",
@@ -20,11 +20,17 @@
     "news": "الأخبار والفعاليات",
     "magazine": "المجلة",
     "newsletter": "النشرة الإخبارية",
-    "membership": "انضم إلى الجمعية",
+    "membership": "العضوية",
     "contact": "اتصل بنا",
-    "login": "تسجيل الدخول",
+    "login": "دخول الأعضاء",
     "portal": "حسابي",
-    "logout": "تسجيل الخروج"
+    "logout": "تسجيل الخروج",
+    "businessCenter": "مركز الأعمال",
+    "mediaCenter": "المركز الإعلامي",
+    "language": "English",
+    "languageLabel": "التبديل إلى الإنجليزية",
+    "menu": "القائمة",
+    "close": "إغلاق"
   },
   "common": {
     "learnMore": "المزيد",
@@ -48,11 +54,13 @@
     "skipToContent": "تخطَّ إلى المحتوى الرئيسي",
     "visitWebsite": "زيارة الموقع",
     "callRestaurant": "اتصال",
-    "messageOnWhatsapp": "مراسلة عبر واتساب"
+    "messageOnWhatsapp": "مراسلة عبر واتساب",
+    "previous": "السابق",
+    "next": "التالي"
   },
   "home": {
     "heroKicker": "جمعية المطاعم السياحية الأردنية",
-    "heroTitle": "بيت قطاع المطاعم السياحية في الأردن",
+    "heroTitle": "ابحث عن مطعم في الأردن.",
     "heroSubtitle": "جمعية إلزامية يديرها أعضاؤها، تمثل أكثر من 1300 مطعم ومقهى ومنشأة ترفيهية في جميع أنحاء الأردن منذ عام 2002.",
     "heroCtaDirectory": "تصفح الدليل",
     "heroCtaJoin": "انضم إلى الجمعية",
@@ -65,12 +73,12 @@
     "serviceMembershipDesc": "انضم إلى الجمعية واستفد من خدمات الأعضاء.",
     "serviceSustainability": "الاستدامة",
     "serviceSustainabilityDesc": "أدوات الطاقة والمياه والهدر الغذائي لقطاع أكثر استدامة.",
-    "statsTitle": "الجمعية بالأرقام",
-    "statMembers": "الأعضاء المصنّفون",
-    "statGovernorates": "المحافظات الممثَّلة",
+    "statsTitle": "ما تمثّله الجمعية",
+    "statMembers": "مطعماً عضواً",
+    "statGovernorates": "محافظة مغطاة",
     "statFounded": "التأسيس",
-    "newsTitle": "آخر الأخبار",
-    "newsletterTitle": "ابقَ على اطلاع",
+    "newsTitle": "أحدث أخبار الجمعية",
+    "newsletterTitle": "مستجدات الجمعية",
     "newsletterSubtitle": "اشترك لتصلك أخبار القطاع والتشريعات والفرص.",
     "newsletterPlaceholder": "بريدك الإلكتروني",
     "newsletterCta": "اشترك",
@@ -79,7 +87,21 @@
     "heroSearchLabel": "ابحث في المطاعم",
     "heroSearchPlaceholder": "ابحث بالاسم أو المطبخ أو المنطقة…",
     "heroSearchHint": "{count} مطعم ومقهى ومنشأة مصنّفة في مختلف أنحاء الأردن.",
-    "browseByCuisine": "تصفّح حسب المطبخ"
+    "browseByCuisine": "تصفّح حسب المطبخ",
+    "heroLede": "الجهة الرسمية لقطاع المطاعم في الأردن منذ عام 1976. كل مطعم ومقهى عضو، في دليل واحد.",
+    "directoryEyebrow": "الدليل",
+    "directoryTitle": "المطاعم الأعضاء",
+    "viewAllRestaurants": "عرض جميع المطاعم",
+    "statsEyebrow": "القطاع",
+    "newsEyebrow": "الأخبار",
+    "allNews": "جميع الأخبار والفعاليات",
+    "newsletterEyebrow": "النشرة البريدية",
+    "statEmployed": "فرصة عمل",
+    "statSectorValue": "القيمة السنوية للقطاع",
+    "whyJoinEyebrow": "لماذا تنضم",
+    "whyJoinTitle": "شبكة واحدة. صوت واحد.",
+    "whyJoinBody": "الانضمام إلى الجمعية من أذكى الاستثمارات في مطعمك: مناصرة لدى الجهات الحكومية، وإرشاد متخصص، وأسعار حصرية من الموردين، وشبكة تساعدك على الالتزام والنمو.",
+    "whyJoinCta": "لماذا الجمعية"
   },
   "footer": {
     "tagline": "شبكة واحدة، صوت واحد، فرص لا محدودة.",
@@ -88,12 +110,17 @@
     "address": "العنوان",
     "addressLine": "جبل عمان، الدوار الثاني، شارع سلمان المادبي، عمارة رقم 12، عمّان، الأردن",
     "sitemap": "خريطة الموقع",
-    "rights": "جميع الحقوق محفوظة.",
+    "rights": "© {year} جمعية المطاعم السياحية الأردنية. جميع الحقوق محفوظة.",
     "colDirectory": "الدليل",
     "colMembers": "للأعضاء",
     "colResources": "مصادر",
-    "established": "في خدمة قطاع الضيافة الأردني منذ 2002",
-    "legalName": "جمعية المطاعم السياحية الأردنية"
+    "established": "تأسست عام 1976",
+    "legalName": "جمعية المطاعم السياحية الأردنية",
+    "about": "عن الجمعية",
+    "directories": "الأدلة",
+    "members": "الأعضاء",
+    "resources": "المصادر",
+    "media": "الإعلام"
   },
   "about": {
     "intro": "جمعية المطاعم السياحية الأردنية (JRA) هي جمعية عضوية إلزامية غير ربحية أُنشئت بموجب القانون رقم 47 لسنة 2002، المعدَّل بالقانون رقم 33 لسنة 2018 والنظام رقم 59 لسنة 2025. تمثل الجمعية أكثر من 1300 منشأة مصنَّفة — مطاعم، ومدن ترفيهية، ومقاهٍ، ومطاعم وجبات سريعة، وديسكو، وبارات، وكباريهات مصنَّفة من نجمة إلى 5 نجوم — وهي عضو في هيئة تنشيط السياحة الأردنية وعضو منتسب في منظمة السياحة العالمية التابعة للأمم المتحدة."
@@ -519,7 +546,18 @@
     "messagePlaceholder": "الرسالة"
   },
   "newsletterForm": {
-    "subscribed": "شكراً لك — تم اشتراكك."
+    "subscribed": "شكراً لك — تم اشتراكك.",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "you@restaurant.jo",
+    "interests": "الاهتمامات",
+    "interest_legislation": "التشريعات",
+    "interest_training": "التدريب",
+    "interest_opportunities": "الفرص",
+    "interest_sustainability": "الاستدامة",
+    "subscribe": "اشترك",
+    "required": "أدخل بريدك الإلكتروني.",
+    "invalidEmail": "هذا لا يبدو بريداً إلكترونياً صحيحاً.",
+    "rateLimited": "محاولات كثيرة. حاول لاحقاً."
   },
   "membershipForm": {
     "received": "تم استلام الطلب — سيراجعه فريق العضوية ويتواصل معك عبر البريد الإلكتروني.",
@@ -578,5 +616,27 @@
     "outstanding": "المستحق",
     "overdue": "متأخر السداد",
     "empty": "لم تُصدر أي فواتير بعد."
+  },
+  "search": {
+    "keyword": "الاسم أو كلمة مفتاحية",
+    "keywordPlaceholder": "ابحث عن مطاعم أو مطابخ أو موردين",
+    "cuisine": "نوع المطبخ",
+    "governorate": "المحافظة",
+    "feature": "الميزة",
+    "any": "الكل",
+    "submit": "ابحث في الدليل",
+    "noResults": "لا توجد نتائج مطابقة",
+    "noResultsHint": "جرّب كلمة أعم، أو تصفّح الدليل كاملاً.",
+    "indexing": "يفهرس {restaurants} منشأة · {cuisines} نوع مطبخ · {governorates} محافظة · {features} ميزة",
+    "restaurant": "مطعم"
+  },
+  "brand": {
+    "name": "جمعية المطاعم السياحية الأردنية",
+    "short": "الجمعية",
+    "tagline": "الجهة الرسمية الممثلة للمطاعم السياحية في الأردن"
+  },
+  "newsCategory": {
+    "news": "أخبار",
+    "pressRelease": "بيان صحفي"
   }
 }

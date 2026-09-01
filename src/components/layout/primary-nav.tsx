@@ -75,10 +75,13 @@ export function PrimaryNav() {
                 onMouseEnter={() => setHovered(i)}
                 onFocus={() => setHovered(i)}
                 onBlur={() => setHovered(null)}
-                className={`block cursor-pointer rounded-md px-3.5 pb-3 pt-2 text-sm transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+                // Colours come from --nav-*, which the header flips when it is
+                // sitting transparent over the hero. Brand blue is close to
+                // invisible against photography, so it resolves to white there.
+                className={`block cursor-pointer rounded-md px-3.5 pb-3 pt-2 text-sm tracking-[var(--nav-tracking)] transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--nav-focus)] ${
                   active
-                    ? "font-semibold text-accent"
-                    : "font-medium text-ink-soft hover:text-ink"
+                    ? "font-semibold text-[color:var(--nav-accent)]"
+                    : "font-medium text-[color:var(--nav-fg-soft)] hover:text-[color:var(--nav-fg)]"
                 }`}
               >
                 {t(item.labelKey)}

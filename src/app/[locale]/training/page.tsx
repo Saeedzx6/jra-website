@@ -40,7 +40,7 @@ export default async function TrainingPage({
             const tr = c.translations[0];
             return (
               <div key={c.id} className="rounded-2xl border border-rule bg-surface p-6">
-                <div className="flex items-center gap-2 text-brass-text">
+                <div className="flex items-center gap-2 text-accent">
                   <GraduationCap className="h-4 w-4" />
                   <span className="text-xs font-semibold uppercase tracking-wide">{c.track}</span>
                 </div>

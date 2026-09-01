@@ -27,7 +27,7 @@ export default async function SustainabilityPage({
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
+      <p className="text-xs font-eyebrow font-semibold text-accent">
         {t("serviceSustainability")}
       </p>
       <h1 className="mt-2 font-display text-3xl font-semibold text-ink">

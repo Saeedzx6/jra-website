@@ -48,7 +48,7 @@ export default async function MagazineIssuePage({
           return (
             <article key={a.id} className="rounded-2xl border border-rule bg-surface p-6">
               {a.category ? (
-                <span className="text-xs font-semibold uppercase tracking-wide text-brass-text">
+                <span className="text-xs font-semibold uppercase tracking-wide text-warning-text">
                   {a.category}
                 </span>
               ) : null}
