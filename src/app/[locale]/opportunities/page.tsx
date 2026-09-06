@@ -1,10 +1,13 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CalendarClock } from "lucide-react";
 import { db } from "@/lib/db";
+import { pageMetadata } from "@/lib/page-metadata";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
 export const revalidate = 3600;
+
+export const generateMetadata = pageMetadata("/opportunities", "opportunities");
 
 export default async function OpportunitiesPage({
   params,

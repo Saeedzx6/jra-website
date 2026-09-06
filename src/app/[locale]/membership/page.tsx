@@ -2,10 +2,13 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ClipboardCheck } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { MembershipForm } from "@/components/membership-form";
+import { pageMetadata } from "@/lib/page-metadata";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
 export const revalidate = 3600;
+
+export const generateMetadata = pageMetadata("/membership", "membership");
 
 export default async function MembershipPage({
   params,

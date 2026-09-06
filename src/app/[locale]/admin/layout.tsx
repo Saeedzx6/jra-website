@@ -1,6 +1,9 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { getSession } from "@/lib/rbac";
+import { getMessages } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import {
   LayoutDashboard,
@@ -20,6 +23,16 @@ import {
   Image as ImageIcon,
 } from "lucide-react";
 
+/**
+ * Signed-in areas must never be indexed. robots.txt already disallows these
+ * paths, but robots.txt is a crawl instruction, not an index instruction — a
+ * URL linked from elsewhere can still be listed without being fetched. The
+ * meta tag is what actually keeps it out.
+ */
+export const metadata: Metadata = {
+  robots: { index: false, follow: false, nocache: true },
+};
+
 const ADMIN_NAV = [
   { href: "/admin", labelKey: "dashboard", icon: LayoutDashboard },
   { href: "/admin/settings", labelKey: "siteSettings", icon: ImageIcon },
@@ -38,12 +51,25 @@ const ADMIN_NAV = [
   { href: "/admin/newsletter", labelKey: "newsletterSubscribers", icon: Send },
 ] as const;
 
-export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   const session = await getSession();
   if (!session?.user || !["ADMIN", "EDITOR"].includes(session.user.role)) {
     redirect("/login");
   }
   const tn = await getTranslations("admin.nav");
+
+  // The `admin` namespace is withheld from the public client bundle, so the
+  // back-office re-provides the full message set here. `locale` is passed
+  // explicitly: the client provider throws without one, and letting the
+  // server wrapper infer it means an extra read of the request headers.
+  const messages = await getMessages();
 
   return (
     <div className="mx-auto grid max-w-6xl gap-6 px-4 py-6 sm:px-6 sm:py-10 lg:grid-cols-[220px_1fr] lg:gap-8">
@@ -59,7 +85,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           </Link>
         ))}
       </nav>
-      <div className="min-w-0">{children}</div>
+      <div className="min-w-0">
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          {children}
+        </NextIntlClientProvider>
+      </div>
     </div>
   );
 }

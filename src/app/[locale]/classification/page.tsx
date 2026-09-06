@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FileText, ClipboardCheck } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { getAllStandards } from "@/lib/classification";
+import { pageMetadata } from "@/lib/page-metadata";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -16,6 +17,8 @@ const TYPE_SLUGS: Record<string, string> = {
   NIGHTCLUB: "nightclub",
   TOURIST_PARK: "tourist-park",
 };
+
+export const generateMetadata = pageMetadata("/classification", "classification");
 
 export default async function ClassificationHubPage({
   params,
