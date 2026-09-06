@@ -6,7 +6,8 @@ import { MapPin, Phone, Mail, Globe, Star, Clock, Leaf, ArrowRight, Building2 } 
 import { Link } from "@/i18n/navigation";
 import { getRestaurantBySlug } from "@/lib/restaurants";
 import { buildMetadata, toDescription } from "@/lib/seo";
-import { jsonLdScript, restaurantLd, breadcrumbLd } from "@/lib/json-ld";
+import { jsonLdScript, restaurantLd } from "@/lib/json-ld";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 // Restaurant profiles are the site's primary search-traffic surface. Cached and
 // revalidated hourly rather than rendered fresh per visit; admin edits can push
@@ -25,16 +26,23 @@ export async function generateMetadata({
     return { title: "Not found", robots: { index: false, follow: false } };
   }
 
-  const name = locale === "ar" && restaurant.nameAr ? restaurant.nameAr : restaurant.name;
-  const place = restaurant.governorate?.nameEn;
-  const cuisine = restaurant.cuisines[0]?.cuisine.nameEn;
+  const ar = locale === "ar";
+  const name = ar && restaurant.nameAr ? restaurant.nameAr : restaurant.name;
+  // Both fall back to English when no Arabic name is recorded — an Arabic
+  // title reading "أبو جبارة — Amman" is what happens when they do not.
+  const place = (ar && restaurant.governorate?.nameAr) || restaurant.governorate?.nameEn;
+  const cuisine =
+    (ar && restaurant.cuisines[0]?.cuisine.nameAr) || restaurant.cuisines[0]?.cuisine.nameEn;
 
   // Falls back through description → cuisine/place summary, so every one of the
   // 701 pages gets a distinct description rather than sharing the site default.
   const description =
     toDescription(restaurant.fullDescriptionHtml) ??
     restaurant.shortDescription ??
-    [cuisine, place && `in ${place}`, "— classified by the Jordan Restaurant Association."]
+    (ar
+      ? [cuisine, place && `في ${place}`, "— مصنّف من نقابة أصحاب المطاعم الأردنية."]
+      : [cuisine, place && `in ${place}`, "— classified by the Jordan Restaurant Association."]
+    )
       .filter(Boolean)
       .join(" ");
 
@@ -62,6 +70,21 @@ export default async function RestaurantDetailPage({
   const tn = await getTranslations("nav");
   const displayName = locale === "ar" && restaurant.nameAr ? restaurant.nameAr : restaurant.name;
   const cover = restaurant.images[0];
+
+  /**
+   * Per-image alt text. Every photo on this page previously carried the
+   * restaurant's name and nothing else, so a screen reader read the same
+   * string once per image and image search saw a set of identical captions.
+   * RestaurantImage stores alt text in both languages; this reads it, and
+   * falls back to a numbered description only when none was recorded.
+   */
+  const imageAlt = (img: { altTextEn: string | null; altTextAr: string | null }, index: number) => {
+    const stored = locale === "ar" ? img.altTextAr : img.altTextEn;
+    if (stored) return stored;
+    return index === 0
+      ? displayName
+      : tr("photoAlt", { number: index + 1, name: displayName });
+  };
 
   // The sidebar CTA used to be href="#" on every restaurant page. Route it to
   // whichever channel the member actually publishes, in preference order, and
@@ -143,21 +166,16 @@ export default async function RestaurantDetailPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(restaurantLd(restaurant, locale)) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: jsonLdScript(
-            breadcrumbLd(locale, [
-              { name: tn("home"), path: "/" },
-              { name: tn("restaurants"), path: "/restaurants" },
-              { name: displayName, path: `/restaurants/${slug}` },
-            ])
-          ),
-        }}
-      />
       <div className="relative h-64 w-full overflow-hidden bg-surface-2 sm:h-80">
         {cover ? (
-          <Image src={cover.url} alt={displayName} fill priority className="object-cover" />
+          <Image
+            src={cover.url}
+            alt={imageAlt(cover, 0)}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
         ) : (
           <div className="flex h-full items-center justify-center">
             <span className="font-display text-6xl text-ink/20">
@@ -182,7 +200,18 @@ export default async function RestaurantDetailPage({
         </div>
       </div>
 
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-3">
+      <div className="mx-auto max-w-6xl px-4 pt-6 sm:px-6">
+        <Breadcrumbs
+          locale={locale}
+          trail={[
+            { name: tn("home"), path: "/" },
+            { name: tn("restaurants"), path: "/restaurants" },
+            { name: displayName, path: `/restaurants/${slug}` },
+          ]}
+        />
+      </div>
+
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 pb-10 pt-2 sm:px-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
           {restaurant.fullDescriptionHtml ? (
             <div
@@ -229,9 +258,15 @@ export default async function RestaurantDetailPage({
 
           {restaurant.images.length > 1 && (
             <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
-              {restaurant.images.slice(1).map((img) => (
+              {restaurant.images.slice(1).map((img, i) => (
                 <div key={img.id} className="relative aspect-square overflow-hidden rounded-xl">
-                  <Image src={img.url} alt={displayName} fill className="object-cover" />
+                  <Image
+                    src={img.url}
+                    alt={imageAlt(img, i + 1)}
+                    fill
+                    sizes="(min-width: 640px) 240px, 45vw"
+                    className="object-cover"
+                  />
                 </div>
               ))}
             </div>

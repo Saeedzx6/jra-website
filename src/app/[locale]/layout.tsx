@@ -8,7 +8,8 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { RevealOnScroll } from "@/components/reveal-on-scroll";
 import { SITE_URL, alternatesFor } from "@/lib/seo";
-import { jsonLdScript, organizationLd } from "@/lib/json-ld";
+import { jsonLdScript, organizationLd, webSiteLd } from "@/lib/json-ld";
+import { publicClientMessages } from "@/i18n/client-messages";
 import "../globals.css";
 
 export async function generateMetadata({
@@ -34,6 +35,23 @@ export async function generateMetadata({
       siteName: t("siteTitle"),
       locale: locale === "ar" ? "ar_JO" : "en_US",
       type: "website",
+      images: [
+        {
+          url: `${SITE_URL}/brand/og-default.png`,
+          width: 1200,
+          height: 630,
+          alt: t("siteTitle"),
+        },
+      ],
+    },
+    // Without this every link shared on X rendered as a bare text row. Pages
+    // that call buildMetadata set their own; this covers the homepage and is
+    // the fallback for anything that does not.
+    twitter: {
+      card: "summary_large_image",
+      title: t("siteTitle"),
+      description: t("siteDescription"),
+      images: [`${SITE_URL}/brand/og-default.png`],
     },
   };
 }
@@ -75,7 +93,11 @@ export default async function LocaleLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLdScript(organizationLd(locale)) }}
         />
-        <NextIntlClientProvider messages={messages}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdScript(webSiteLd(locale)) }}
+        />
+        <NextIntlClientProvider messages={publicClientMessages(messages)}>
           {/* Keyboard users land here first and can jump the 8-item nav.
               Visually hidden until focused (WCAG 2.4.1). */}
           <a
