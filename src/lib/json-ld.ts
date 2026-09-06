@@ -128,17 +128,68 @@ export function newsArticleLd(a: ArticleLdInput, locale: string) {
   };
 }
 
-/** Site-wide identity. Rendered once, in the locale layout. */
+/**
+ * Site-wide identity. Rendered once, in the locale layout.
+ *
+ * Typed as both Organization and LocalBusiness: JRA is a trade association,
+ * but it is also a place people visit at a street address in Jabal Amman, and
+ * the LocalBusiness type is what puts an address, phone and map pin into a
+ * knowledge panel. The address, phone and email match the footer and the
+ * contact page exactly — a mismatch between structured data and the visible
+ * page is treated as a quality signal against the site.
+ */
 export function organizationLd(locale: string) {
   return {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": ["Organization", "LocalBusiness"],
+    "@id": `${SITE_URL}/#organization`,
     name: "Jordan Restaurant Association",
     alternateName: "نقابة أصحاب المطاعم الأردنية",
     url: localeUrl(locale, "/"),
     logo: `${SITE_URL}/brand/jra-logo.png`,
+    image: `${SITE_URL}/brand/og-default.png`,
     foundingDate: "2002",
-    address: { "@type": "PostalAddress", addressCountry: "JO", addressLocality: "Amman" },
+    telephone: "+962-6-462-1558",
+    email: "info@jra.jo",
+    sameAs: ["https://www.facebook.com/JoRestaurants"],
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "JO",
+      addressLocality: "Amman",
+      streetAddress:
+        locale === "ar"
+          ? "جبل عمان، الدوار الثاني، شارع سلمان المادبي، عمارة رقم 12"
+          : "Jabal Amman, 2nd Circle, Salman Al-Madabi St, Building 12",
+    },
+    // No `geo` and no `openingHours`: JRA has not supplied coordinates or
+    // office hours, and inventing either would be worse than omitting them.
+  };
+}
+
+/**
+ * The site itself, with the directory search wired up as a SearchAction.
+ *
+ * This is what makes a sitelinks search box possible in Google results — a
+ * visitor searching for JRA gets a search field that queries the directory
+ * directly. It only works because /restaurants already accepts `?q=`.
+ */
+export function webSiteLd(locale: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
+    url: localeUrl(locale, "/"),
+    name: "Jordan Restaurant Association",
+    inLanguage: locale === "ar" ? "ar-JO" : "en-JO",
+    publisher: { "@id": `${SITE_URL}/#organization` },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${localeUrl(locale, "/restaurants")}?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
   };
 }
 

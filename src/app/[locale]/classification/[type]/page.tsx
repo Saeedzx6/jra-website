@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getStandardWithCriteria } from "@/lib/classification";
 import { PublicClassificationChecklist } from "@/components/classification/public-checklist";
+import { buildMetadata } from "@/lib/seo";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -31,6 +34,41 @@ export function generateStaticParams() {
   return VALID_TYPES.map((type) => ({ type }));
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; type: string }>;
+}): Promise<Metadata> {
+  const { locale, type } = await params;
+  const t = await getTranslations({ locale, namespace: "meta" });
+  const establishmentType = TYPE_MAP[type];
+
+  // An unknown type 404s in the page body; the metadata still has to resolve,
+  // and it must not invite indexing of a URL that will not render.
+  if (!establishmentType) {
+    return buildMetadata({
+      locale,
+      path: `/classification/${type}`,
+      title: t("classificationTitle"),
+      description: t("classificationDescription"),
+      noIndex: true,
+    });
+  }
+
+  // `getStandardWithCriteria` is React-cached, so this shares the page's query.
+  const standard = await getStandardWithCriteria(establishmentType);
+  const title =
+    standard && locale === "ar" && standard.titleAr ? standard.titleAr : standard?.titleEn;
+
+  return buildMetadata({
+    locale,
+    path: `/classification/${type}`,
+    title: title ?? t("classificationTitle"),
+    description: t("classificationDescription"),
+    noIndex: !standard,
+  });
+}
+
 export default async function PublicAssessmentPage({
   params,
 }: {
@@ -39,18 +77,29 @@ export default async function PublicAssessmentPage({
   const { locale, type } = await params;
   setRequestLocale(locale);
   const tc = await getTranslations("classification");
+  const tn = await getTranslations("nav");
   const establishmentType = TYPE_MAP[type];
   if (!establishmentType) notFound();
 
   const standard = await getStandardWithCriteria(establishmentType);
   if (!standard || standard.sections.length === 0) notFound();
 
+  const standardTitle = locale === "ar" && standard.titleAr ? standard.titleAr : standard.titleEn;
+
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+      <Breadcrumbs
+        locale={locale}
+        trail={[
+          { name: tn("home"), path: "/" },
+          { name: tn("classification"), path: "/classification" },
+          { name: standardTitle, path: `/classification/${type}` },
+        ]}
+      />
       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
         {tc("selfAssessmentKicker")}
       </p>
-      <h1 className="mt-1 font-display text-2xl font-semibold text-ink">{standard.titleEn}</h1>
+      <h1 className="mt-1 font-display text-2xl font-semibold text-ink">{standardTitle}</h1>
       <p className="mt-2 max-w-2xl text-sm text-ink-soft">{tc("publicIntro")}</p>
 
       <div className="mt-8">

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { db } from "@/lib/db";
 import { buildMetadata, toDescription } from "@/lib/seo";
 import { jsonLdScript, newsArticleLd } from "@/lib/json-ld";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 export const revalidate = 3600;
 
@@ -55,6 +56,7 @@ export default async function NewsDetailPage({
   if (!article || article.status !== "PUBLISHED") notFound();
   const tr = article.translations[0];
   if (!tr) notFound();
+  const tn = await getTranslations("nav");
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
@@ -75,6 +77,14 @@ export default async function NewsDetailPage({
             )
           ),
         }}
+      />
+      <Breadcrumbs
+        locale={locale}
+        trail={[
+          { name: tn("home"), path: "/" },
+          { name: tn("news"), path: "/news" },
+          { name: tr.title, path: `/news/${slug}` },
+        ]}
       />
       {article.publishedAt ? (
         <time className="text-xs font-medium uppercase tracking-wide text-ink-faint">

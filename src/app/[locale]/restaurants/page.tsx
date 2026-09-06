@@ -3,6 +3,7 @@ import { RestaurantCard } from "@/components/restaurant-card";
 import { DirectoryFilters } from "@/components/directory-filters";
 import { Pagination } from "@/components/pagination";
 import { searchRestaurants, getDirectoryFacets } from "@/lib/restaurants";
+import { pageMetadata } from "@/lib/page-metadata";
 
 // Search/pagination is entirely driven by the URL query string; force this
 // route to always render fresh server-side rather than risk the client
@@ -16,6 +17,8 @@ type SearchParams = {
   stars?: string;
   page?: string;
 };
+
+export const generateMetadata = pageMetadata("/restaurants", "directory");
 
 export default async function RestaurantsPage({
   params,
