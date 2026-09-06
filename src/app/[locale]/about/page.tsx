@@ -2,10 +2,13 @@ import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FileText } from "lucide-react";
 import { db } from "@/lib/db";
+import { pageMetadata } from "@/lib/page-metadata";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
 export const revalidate = 3600;
+
+export const generateMetadata = pageMetadata("/about", "about");
 
 export default async function AboutPage({
   params,

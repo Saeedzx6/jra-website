@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Tag } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
+import { pageMetadata } from "@/lib/page-metadata";
 
 // Cached and revalidated every 600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -13,6 +14,8 @@ const CATEGORY_KEYS = [
   "EQUIPMENT_RENT",
   "INVESTMENT_OPPORTUNITY",
 ] as const;
+
+export const generateMetadata = pageMetadata("/marketplace", "marketplace");
 
 export default async function MarketplacePage({
   params,
