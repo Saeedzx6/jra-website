@@ -1,58 +1,73 @@
-import { Playfair_Display, Plus_Jakarta_Sans, Cairo, Noto_Sans_Arabic } from "next/font/google";
+import {
+  Instrument_Serif,
+  IBM_Plex_Mono,
+  IBM_Plex_Sans_Arabic,
+  Amiri,
+} from "next/font/google";
 
 /**
- * Editorial Display (English) — High-contrast serif for luxury, heritage, and key section leads.
- * Playfair Display gives a polished, high-end culinary & hospitality editorial feel.
+ * Typography follows the Monad reference: an editorial serif for every
+ * heading, a monospace UI face for everything else.
+ *
+ * The Arabic problem, and how it is solved
+ * ---------------------------------------
+ * There is no usable Arabic monospace. Rather than drop the mono voice for
+ * `/ar` — which would leave the two locales looking like different sites —
+ * each role has a locale-appropriate face and the swap happens in CSS on
+ * `[dir="rtl"]`. Latin gets the mono; Arabic gets a Naskh sans tuned for the
+ * same density. The *role* is preserved even though the classification of the
+ * typeface is not.
+ *
+ * Weight
+ * ------
+ * Instrument Serif ships one weight, 400. That is deliberate: Monad's rule is
+ * that headings are never 600 or 700, and letting the font enforce it means a
+ * stray `font-semibold` in a component cannot quietly break the system. The
+ * stroke contrast and negative tracking carry the hierarchy instead.
+ *
+ * Amiri is the Arabic display counterpart — a Naskh with comparable contrast,
+ * so Arabic headings read as the same design rather than a fallback.
  */
-export const editorialEn = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-editorial-en",
-  display: "swap",
-});
 
-/**
- * Modern Display Sans (English) — Crisp geometric sans with modern aperture.
- * Plus Jakarta Sans offers exceptional legibility for UI headings, tags, and dashboard elements.
- */
-export const displayEn = Plus_Jakarta_Sans({
+/** Headings, Latin. One weight by design — see above. */
+export const displayEn = Instrument_Serif({
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  weight: ["400"],
+  style: ["normal", "italic"],
   variable: "--font-display-en",
   display: "swap",
 });
 
-/**
- * Arabic Display — Modern Kufic/Geometric typography tailored for high-impact headlines.
- * Cairo brings modern elegance to Arabic headings without feeling dated or heavy.
- */
-export const displayAr = Cairo({
-  subsets: ["arabic"],
-  weight: ["600", "700", "800"],
+/** Headings, Arabic. */
+export const displayAr = Amiri({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "700"],
   variable: "--font-display-ar",
   display: "swap",
 });
 
-/**
- * English Body Text — Neutral, clean, highly readable workhorse font.
- * Reuses Plus Jakarta Sans for visual unity across English UI body copy.
- */
-export const bodyEn = Plus_Jakarta_Sans({
+/** Body, nav, buttons, badges, tags, form labels — Latin. */
+export const bodyEn = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-body-en",
   display: "swap",
 });
 
-/**
- * Arabic Body Text — Highly legible Naskh-inspired modern typeface.
- * Noto Sans Arabic ensures comfortable long-form reading for Arabic content across all device sizes.
- */
-export const bodyAr = Noto_Sans_Arabic({
-  subsets: ["arabic"],
+/** The same role in Arabic. No Arabic monospace exists that is fit for body copy. */
+export const bodyAr = IBM_Plex_Sans_Arabic({
+  subsets: ["arabic", "latin"],
   weight: ["400", "500", "600"],
   variable: "--font-body-ar",
   display: "swap",
 });
 
-export const fontVariables = `${displayEn.variable} ${editorialEn.variable} ${displayAr.variable} ${bodyEn.variable} ${bodyAr.variable}`;
+/**
+ * `.font-editorial` predates this system and is still referenced by the hero.
+ * It now resolves to the same serif as every other heading — the distinction it
+ * used to draw (Fraunces/Playfair for leads, a sans for section headings) is
+ * exactly what Monad collapses.
+ */
+export const editorialEn = displayEn;
+
+export const fontVariables = `${displayEn.variable} ${displayAr.variable} ${bodyEn.variable} ${bodyAr.variable}`;

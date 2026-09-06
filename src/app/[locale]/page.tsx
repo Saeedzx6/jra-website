@@ -123,19 +123,20 @@ export default async function HomePage({
 
   return (
     /* The descent runs the whole page. It is deliberately two gradients, not
-       one: the murky middle of a navy-to-white ramp is where text becomes
+       one: the murky middle of a navy-to-parchment ramp is where text becomes
        unreadable, so that part is compressed into the inner container below,
        where the styling is under control. Everything out here stays light —
-       #eef1f5 drifting to paper across the remaining sections — which is a
-       change you feel while scrolling rather than one you can point at. */
-    <div className="bg-gradient-to-b from-[#d5dfec] to-white">
+       raised surface drifting to parchment across the remaining sections —
+       which is a change you feel while scrolling rather than one you can
+       point at. */
+    <div className="bg-gradient-to-b from-surface-2 to-paper">
       {/* The navy-to-paper fade spans exactly this container: the hero and
           the services grid. Anchoring it to a real element rather than
           guessing viewport heights is what keeps it predictable — the fade
           finishes at a known edge, so nothing further down can drift onto a
           mid-tone where neither dark nor light text is readable. Everything
           inside is styled for a dark ground; everything after is on paper. */}
-      <div className="bg-[linear-gradient(180deg,#173156_0%,#173156_58%,#16304d_78%,#d5dfec_100%)]">
+      <div className="bg-[linear-gradient(180deg,var(--color-canvas-deep)_0%,var(--color-canvas-deep)_58%,var(--color-canvas-deep-2)_78%,var(--color-surface-2)_100%)]">
       <HomeHero
         images={heroImages}
         cuisines={heroCuisines}

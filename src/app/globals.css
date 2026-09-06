@@ -6,23 +6,30 @@
 /* ---------------------------------------------------------------------- */
 
 :root {
-  --color-paper: #f7f7f8;
-  --color-surface: #ffffff;
-  --color-surface-2: #f2f3f5;
-  --color-ink: #1c1e22;
-  --color-ink-soft: #585d64;
+  --color-paper: #f6f3f1;
+  --color-surface: #f6f3f1;
+  --color-surface-2: #efebe8;
+  --color-ink: #242424;
+  --color-ink-soft: #4e4d4d;
   /* Was #8b9098, which measured 3.00:1 on --color-paper — below the 4.5:1 AA
      floor for the captions and metadata it is used for. Darkened to the
      lightest value that clears 4.5:1 on surface, paper and surface-2. */
-  --color-ink-faint: #6b6f75;
+  --color-ink-faint: #6c6a69;
   --color-accent: #0050a0;
   --color-accent-strong: #003d7a;
   --color-accent-soft: #e8f1fb;
-  --color-olive: #1e8a5f;
+  --color-olive: #2f6b4f;
   --color-olive-soft: #dceee3;
-  --color-brass: #b8901f;
-  --color-brass-soft: #f3e8cc;
-  --color-rule: #e5e7eb;
+  --color-brass: #c8a24a;
+  --color-brass-soft: #f0e6d2;
+  --color-rule: #cecac8;
+
+  /* Hero ground. The homepage opens dark before descending into parchment;
+     these were raw hex literals in hero.tsx and page.tsx, which is the one
+     thing the design system is meant to prevent. Not part of the Monad
+     palette — a deliberate deep register the rest of the site never uses. */
+  --color-canvas-deep: #173156;
+  --color-canvas-deep-2: #16304d;
 
   /* -- Readable text variants -------------------------------------------
      The brand olive and brass are correct as *fills* — icons, stars,
@@ -32,8 +39,8 @@
      surface, paper and their soft background. Use *-text for glyphs,
      the base token for fills. The dark theme needs no equivalent — it
      already measures 8:1+, so both map back to the base there. */
-  --color-olive-text: #1a7853;
-  --color-brass-text: #816516;
+  --color-olive-text: #2f6b4f;
+  --color-brass-text: #7e662f;
 
   /* -- Semantic status ---------------------------------------------------
      Distinct from the brand accents, which were previously doing double
@@ -42,28 +49,24 @@
      and there was no danger token at all to render the negative half.
      Never use these alone to carry meaning — always pair with an icon or
      text label (WCAG 1.4.1). */
-  --color-success: #1e8a5f;
+  --color-success: #2f6b4f;
   --color-success-soft: #dceee3;
-  --color-success-text: #1a7853;
-  --color-warning: #b8901f;
-  --color-warning-soft: #f3e8cc;
-  --color-warning-text: #816516;
-  --color-danger: #d92d20;
+  --color-success-text: #2f6b4f;
+  --color-warning: #b77a16;
+  --color-warning-soft: #f2e5cd;
+  --color-warning-text: #916011;
+  --color-danger: #a32035;
   --color-danger-soft: #fee4e2;
-  --color-danger-text: #ca2a1e;
+  --color-danger-text: #a32035;
   --color-info: #0050a0;
   --color-info-soft: #e8f1fb;
   --color-info-text: #0050a0;
-  --shadow-card: 0 1px 2px rgba(20, 20, 20, 0.05), 0 10px 28px rgba(20, 20, 20, 0.07);
+  --shadow-card: none;
 
   /* Editorial layer — floating white surfaces over an atmospheric backdrop.
      Stacked shadows read as real depth; one large blur reads flat. */
-  --shadow-float:
-    0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.06),
-    0 32px 64px -12px rgba(16, 24, 40, 0.1);
-  --shadow-float-lg:
-    0 2px 4px rgba(16, 24, 40, 0.05), 0 16px 40px rgba(16, 24, 40, 0.08),
-    0 48px 96px -16px rgba(16, 24, 40, 0.14);
+  --shadow-float: none;
+  --shadow-float-lg: none;
   --radius-editorial: 2rem;
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
   color-scheme: light;
@@ -105,58 +108,50 @@
   /* Slightly lighter than --color-info: the base measured 4.34:1 on
      info-soft, just under the AA floor. */
   --color-info-text: #509fe1;
-  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 32px rgba(0, 0, 0, 0.4);
+  --shadow-card: none;
   /* Dark mode can't lean on shadow for elevation — the ambient light is gone.
      Keep a soft cast for grounding and let borders carry the separation. */
-  --shadow-float:
-    0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.45),
-    0 32px 64px -12px rgba(0, 0, 0, 0.55);
-  --shadow-float-lg:
-    0 2px 4px rgba(0, 0, 0, 0.45), 0 16px 40px rgba(0, 0, 0, 0.5),
-    0 48px 96px -16px rgba(0, 0, 0, 0.6);
+  --shadow-float: none;
+  --shadow-float-lg: none;
   --radius-editorial: 2rem;
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
   color-scheme: dark;
 }
 
 :root[data-theme="light"] {
-  --color-paper: #f7f7f8;
-  --color-surface: #ffffff;
-  --color-surface-2: #f2f3f5;
-  --color-ink: #1c1e22;
-  --color-ink-soft: #585d64;
-  --color-ink-faint: #6b6f75;
+  --color-paper: #f6f3f1;
+  --color-surface: #f6f3f1;
+  --color-surface-2: #efebe8;
+  --color-ink: #242424;
+  --color-ink-soft: #4e4d4d;
+  --color-ink-faint: #6c6a69;
   --color-accent: #0050a0;
   --color-accent-strong: #003d7a;
   --color-accent-soft: #e8f1fb;
-  --color-olive: #1e8a5f;
+  --color-olive: #2f6b4f;
   --color-olive-soft: #dceee3;
-  --color-brass: #b8901f;
-  --color-brass-soft: #f3e8cc;
-  --color-rule: #e5e7eb;
+  --color-brass: #c8a24a;
+  --color-brass-soft: #f0e6d2;
+  --color-rule: #cecac8;
 
-  --color-olive-text: #1a7853;
-  --color-brass-text: #816516;
+  --color-olive-text: #2f6b4f;
+  --color-brass-text: #7e662f;
 
-  --color-success: #1e8a5f;
+  --color-success: #2f6b4f;
   --color-success-soft: #dceee3;
-  --color-success-text: #1a7853;
-  --color-warning: #b8901f;
-  --color-warning-soft: #f3e8cc;
-  --color-warning-text: #816516;
-  --color-danger: #d92d20;
+  --color-success-text: #2f6b4f;
+  --color-warning: #b77a16;
+  --color-warning-soft: #f2e5cd;
+  --color-warning-text: #916011;
+  --color-danger: #a32035;
   --color-danger-soft: #fee4e2;
-  --color-danger-text: #ca2a1e;
+  --color-danger-text: #a32035;
   --color-info: #0050a0;
   --color-info-soft: #e8f1fb;
   --color-info-text: #0050a0;
-  --shadow-card: 0 1px 2px rgba(20, 20, 20, 0.05), 0 10px 28px rgba(20, 20, 20, 0.07);
-  --shadow-float:
-    0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.06),
-    0 32px 64px -12px rgba(16, 24, 40, 0.1);
-  --shadow-float-lg:
-    0 2px 4px rgba(16, 24, 40, 0.05), 0 16px 40px rgba(16, 24, 40, 0.08),
-    0 48px 96px -16px rgba(16, 24, 40, 0.14);
+  --shadow-card: none;
+  --shadow-float: none;
+  --shadow-float-lg: none;
   --radius-editorial: 2rem;
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
   color-scheme: light;
@@ -181,6 +176,8 @@
   --color-brass-soft: var(--color-brass-soft);
   --color-brass-text: var(--color-brass-text);
   --color-rule: var(--color-rule);
+  --color-canvas-deep: var(--color-canvas-deep);
+  --color-canvas-deep-2: var(--color-canvas-deep-2);
 
   --color-success: var(--color-success);
   --color-success-soft: var(--color-success-soft);
@@ -196,10 +193,83 @@
   --color-info-text: var(--color-info-text);
 
   --font-display-en: var(--font-display-en);
-  --font-editorial-en: var(--font-editorial-en);
   --font-display-ar: var(--font-display-ar);
   --font-body-en: var(--font-body-en);
   --font-body-ar: var(--font-body-ar);
+}
+
+
+/* ---------------------------------------------------------------------- */
+/* Monad scale — type, radius, spacing, layout                             */
+/*                                                                         */
+/* These override Tailwind's defaults rather than adding a parallel set of  */
+/* utilities, so the ~450 existing `text-*` and `rounded-*` classes across  */
+/* the app adopt the system without every component being rewritten.       */
+/*                                                                         */
+/* The pixel sizes were already close to Tailwind's defaults; what actually */
+/* changes the feel is the line-height (1.2 on headings, 1.35 on body) and  */
+/* the negative tracking that lets the serif hold hierarchy at weight 400.  */
+/* ---------------------------------------------------------------------- */
+@theme {
+  /* Minor third from 16px. */
+  --text-xs: 12px;
+  --text-xs--line-height: 1.2;
+  --text-xs--letter-spacing: -0.4px;
+  --text-sm: 14px;
+  --text-sm--line-height: 1.35;
+  --text-sm--letter-spacing: -0.28px;
+  --text-base: 16px;
+  --text-base--line-height: 1.35;
+  --text-base--letter-spacing: -0.4px;
+  --text-lg: 18px;
+  --text-lg--line-height: 1.2;
+  --text-lg--letter-spacing: -0.4px;
+  --text-xl: 20px;
+  --text-xl--line-height: 1.35;
+  --text-xl--letter-spacing: -0.4px;
+  --text-2xl: 24px;
+  --text-2xl--line-height: 1.2;
+  --text-2xl--letter-spacing: -0.48px;
+  --text-3xl: 32px;
+  --text-3xl--line-height: 1.2;
+  --text-3xl--letter-spacing: -0.64px;
+  --text-4xl: 40px;
+  --text-4xl--line-height: 1.2;
+  --text-4xl--letter-spacing: -0.8px;
+  --text-5xl: 48px;
+  --text-5xl--line-height: 1.2;
+  --text-5xl--letter-spacing: -0.96px;
+  --text-6xl: 64px;
+  --text-6xl--line-height: 1.2;
+  --text-6xl--letter-spacing: -1.28px;
+  --text-7xl: 80px;
+  --text-7xl--line-height: 1.2;
+  --text-7xl--letter-spacing: -1.6px;
+
+  /* Editorial card radius. `rounded-2xl` is the card class used in 65 places,
+     so remapping it is what turns the whole surface language editorial. */
+  --radius-2xl: 40px;
+  /* Data and dashboard panels stay at 12px — the Mercury-derived radius for
+     dense screens, where 40px would waste the corners. */
+  --radius-xl: 12px;
+  /* Inputs, buttons and nav items are pills. */
+  --radius-lg: 100px;
+
+  /* Named aliases, so new work can say what it means. */
+  --radius-card: 40px;
+  --radius-panel: 12px;
+  --radius-button: 100px;
+  --radius-pill: 9999px;
+
+  --spacing-section: 64px;
+  --spacing-card: 40px;
+}
+
+/* A pill is wrong for anything that wraps to several lines: the radius eats
+   into the text box. Multi-line controls take the panel radius instead. */
+textarea.rounded-lg,
+textarea.rounded-2xl {
+  border-radius: var(--radius-panel);
 }
 
 html,
@@ -216,26 +286,24 @@ body {
   font-family: var(--font-body-ar), var(--font-body-en), system-ui, sans-serif;
 }
 
-.font-display {
-  font-family: var(--font-display-en), sans-serif;
-  letter-spacing: -0.01em;
-}
-
-[dir="rtl"] .font-display {
-  font-family: var(--font-display-ar), sans-serif;
-  letter-spacing: 0;
-}
-
-/* Editorial serif for hero/section leads. Arabic has no matched serif here,
-   so RTL falls back to the Arabic display face — a deliberate asymmetry
-   rather than pairing Arabic with an unrelated Latin serif. */
+/* Headings are the editorial serif at weight 400 — never 600 or 700. The
+   weight is pinned here rather than policed component by component: dozens of
+   headings still carry `font-semibold` from the previous system, and the
+   serif has no bold to resolve it to, so browsers would synthesise one.
+   These rules are unlayered, so they win over Tailwind's layered utilities
+   without needing !important. */
+.font-display,
 .font-editorial {
-  font-family: var(--font-editorial-en), Georgia, serif;
+  font-family: var(--font-display-en), Georgia, "Times New Roman", serif;
+  font-weight: 400;
   letter-spacing: -0.02em;
 }
 
+[dir="rtl"] .font-display,
 [dir="rtl"] .font-editorial {
-  font-family: var(--font-display-ar), sans-serif;
+  font-family: var(--font-display-ar), serif;
+  font-weight: 400;
+  /* Arabic is not tracked negatively — the script's joins do the work. */
   letter-spacing: 0;
 }
 
@@ -251,12 +319,19 @@ body {
 /* Motion primitives — "service, not spectacle" (see plan §5)              */
 /* ---------------------------------------------------------------------- */
 
+/* Hover used to raise a drop shadow. Monad has no shadows at all — elevation
+   is a 1px rule and a step in surface value — so the same affordance is now
+   carried by the border darkening and the surface lifting one step. */
 .motion-card {
-  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 320ms ease;
+  transition:
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 320ms ease,
+    background-color 320ms ease;
 }
 .motion-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
+  border-color: var(--color-ink-faint);
+  background-color: var(--color-surface-2);
 }
 .motion-card-image {
   transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -358,11 +433,11 @@ body {
 .lift {
   transition:
     transform 300ms var(--ease-editorial),
-    box-shadow 300ms var(--ease-editorial);
+    border-color 300ms var(--ease-editorial);
 }
 .lift:hover {
   transform: scale(1.03);
-  box-shadow: var(--shadow-float);
+  border-color: var(--color-ink-faint);
 }
 
 .zoom-frame {
@@ -460,7 +535,7 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 999px;
   background: var(--color-accent);
   border: 3px solid var(--color-surface);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  outline: 1px solid var(--color-rule);
   transition: transform 150ms ease;
 }
 input[type="range"]::-webkit-slider-thumb:hover {
@@ -472,7 +547,7 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 999px;
   background: var(--color-accent);
   border: 3px solid var(--color-surface);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  outline: 1px solid var(--color-rule);
   transition: transform 150ms ease;
 }
 input[type="range"]::-moz-range-thumb:hover {
@@ -520,8 +595,9 @@ input[type="range"]:focus-visible {
   
 }
 .locale-switcher-btn:hover {
-   transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-    cursor: pointer;
-  
+  transform: translateY(-3px);
+  /* Was a drop shadow. The system has none — the lift is carried by the
+     border darkening, the same way .motion-card and .lift now do it. */
+  border-color: var(--color-ink-faint);
+  cursor: pointer;
 }
