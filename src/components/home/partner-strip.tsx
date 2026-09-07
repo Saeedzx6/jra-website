@@ -39,7 +39,7 @@ export async function PartnerStrip() {
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-      <h2 className="font-display text-4xl text-ink">{t("title")}</h2>
+      <h2 className="font-display font-semibold text-4xl text-ink">{t("title")}</h2>
       <p className="mt-3 max-w-2xl leading-relaxed text-ink-soft">{t("intro")}</p>
 
       <div className="stagger mt-10 grid gap-6 md:grid-cols-3">
@@ -55,7 +55,7 @@ export async function PartnerStrip() {
               className="motion-card group flex flex-col rounded-2xl border border-rule bg-surface p-6 sm:p-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               <Icon className="h-6 w-6 text-accent" strokeWidth={1.75} aria-hidden="true" />
-              <h3 className="mt-5 font-display text-2xl text-ink">{t(`${key}.title`)}</h3>
+              <h3 className="mt-5 font-display font-semibold text-2xl text-ink">{t(`${key}.title`)}</h3>
               <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-soft">
                 {t(`${key}.body`)}
               </p>

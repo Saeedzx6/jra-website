@@ -2,12 +2,16 @@ import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { upsertNewsArticle } from "@/lib/actions/admin";
 import { CoverImageField } from "@/components/admin/cover-image-field";
+import { NewsGalleryManager } from "@/components/admin/news-gallery";
 
 export default async function AdminNewsPage() {
   const articles = await db.newsArticle.findMany({
     orderBy: { createdAt: "desc" },
     take: 30,
-    include: { translations: { where: { locale: "en" } } },
+    include: {
+      translations: { where: { locale: "en" } },
+      gallery: { orderBy: { id: "asc" } },
+    },
   });
 
   const tn = await getTranslations("admin.nav");
@@ -65,13 +69,23 @@ export default async function AdminNewsPage() {
                 {tStatus(a.status)}
               </span>
             </div>
-            <div className="mt-3">
+            <div className="mt-3 space-y-3">
               <CoverImageField
                 target="news"
                 id={a.id}
                 currentUrl={a.coverImageUrl}
                 label={tmedia("coverImage")}
                 hint={tmedia("coverHintWide")}
+              />
+              <NewsGalleryManager
+                articleId={a.id}
+                items={a.gallery}
+                labels={{
+                  heading: tmedia("galleryHeading"),
+                  add: tmedia("galleryAdd"),
+                  caption: tmedia("galleryCaption"),
+                  empty: tmedia("galleryEmpty"),
+                }}
               />
             </div>
           </div>

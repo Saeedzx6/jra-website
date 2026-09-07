@@ -28,7 +28,7 @@ export default async function OpportunitiesPage({
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-5xl text-ink">{t("opportunities")}</h1>
+      <h1 className="font-display font-semibold text-5xl text-ink">{t("opportunities")}</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">{to("description")}</p>
 
       {opportunities.length === 0 ? (
@@ -41,7 +41,7 @@ export default async function OpportunitiesPage({
             return (
               <div key={o.id} className="flex items-start justify-between rounded-2xl border border-rule bg-surface p-6 sm:p-10">
                 <div>
-                  <h3 className="font-display text-2xl text-ink">
+                  <h3 className="font-display font-semibold text-2xl text-ink">
                     {tr?.title ?? o.slug}
                   </h3>
                   {tr?.summary ? <p className="mt-1 text-sm text-ink-soft">{tr.summary}</p> : null}

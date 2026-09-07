@@ -24,7 +24,8 @@
     "contact": "Contact Us",
     "login": "Log In",
     "portal": "My Account",
-    "logout": "Log Out"
+    "logout": "Log Out",
+    "gallery": "Gallery"
   },
   "common": {
     "learnMore": "Learn more",
@@ -190,7 +191,12 @@
     "description": "A directory of associate members — companies supplying food, equipment, technology, and services to JRA restaurants.",
     "emptyTitle": "This directory is just getting started",
     "emptyBody": "We're building the supplier directory from scratch. If your company supplies food, beverages, equipment, or services to the hospitality sector, be one of the first to join.",
-    "applyAsSupplier": "Apply as a supplier"
+    "applyAsSupplier": "Apply as a supplier",
+    "gallery": "Gallery",
+    "categories": "Categories",
+    "contact": "Contact",
+    "noContactYet": "No contact details recorded yet.",
+    "photoAlt": "Photo {number} of {name}"
   },
   "classification": {
     "heroTitle": "Know exactly where your establishment stands",
@@ -356,7 +362,8 @@
       "trainingCourses": "Training & Courses",
       "magazineArticles": "Magazine Articles",
       "knowledgeHub": "Knowledge / Projects / Opportunities",
-      "newsletterSubscribers": "Newsletter Subscribers"
+      "newsletterSubscribers": "Newsletter Subscribers",
+      "suppliers": "Suppliers"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -541,7 +548,27 @@
       "coverHintWide": "Shown on cards and at the top of the article. Landscape works best — around 1200x675.",
       "coverHintPortrait": "Shown on the cover grid. Portrait works best — around 800x1100.",
       "photo": "Photo",
-      "photoHint": "Shown on the About page. A square headshot works best."
+      "photoHint": "Shown on the About page. A square headshot works best.",
+      "galleryHeading": "More photos",
+      "galleryAdd": "Add photo",
+      "galleryCaption": "Caption (also used as alt text)",
+      "galleryEmpty": "No extra photos yet."
+    },
+    "suppliers": {
+      "intro": "Associate members shown in the public supplier directory. New entries start as drafts.",
+      "newSupplier": "Add a supplier",
+      "namePlaceholder": "Company name",
+      "nameArPlaceholder": "اسم الشركة (Arabic)",
+      "descriptionPlaceholder": "Short description shown on the directory card",
+      "addressPlaceholder": "Address",
+      "noGovernorate": "No governorate",
+      "phonePlaceholder": "Phone",
+      "emailPlaceholder": "Email",
+      "websitePlaceholder": "Website (https://…)",
+      "draft": "Draft",
+      "published": "Published",
+      "photos": "Photos",
+      "empty": "No suppliers yet. Add the first one above."
     }
   },
   "contactForm": {

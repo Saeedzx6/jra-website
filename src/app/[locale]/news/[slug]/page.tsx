@@ -14,6 +14,7 @@ function articleFor(slug: string, locale: string) {
     where: { slug },
     include: {
       translations: { where: { locale: locale === "ar" ? "ar" : "en" } },
+      gallery: { orderBy: { id: "asc" } },
       author: { select: { fullName: true } },
     },
   });
@@ -91,7 +92,7 @@ export default async function NewsDetailPage({
           {new Date(article.publishedAt).toLocaleDateString(locale)}
         </time>
       ) : null}
-      <h1 className="mt-2 font-display text-5xl leading-tight text-ink">
+      <h1 className="mt-2 font-display font-semibold text-5xl leading-tight text-ink">
         {tr.title}
       </h1>
       {article.coverImageUrl ? (
@@ -103,6 +104,37 @@ export default async function NewsDetailPage({
         className="prose mt-8 max-w-none leading-relaxed text-ink-soft [&_a]:text-accent"
         dangerouslySetInnerHTML={{ __html: tr.bodyHtml }}
       />
+
+      {/* Extra photos, below the article body. Each carries its own caption,
+          written by the editor, which doubles as the alt text — an author
+          describing "signing the MoU" writes a better description than any
+          fallback could, and asking for the same sentence twice guarantees
+          one of the two goes stale. */}
+      {article.gallery.length > 0 ? (
+        <section className="mt-12">
+          <h2 className="font-display text-2xl font-semibold text-ink">{tn("gallery")}</h2>
+          <div className="stagger mt-4 grid gap-4 sm:grid-cols-2">
+            {article.gallery.map((item) => (
+              <figure key={item.id}>
+                <div className="zoom-frame relative aspect-[4/3] overflow-hidden rounded-2xl border border-rule bg-surface-2">
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.caption ?? ""}
+                    fill
+                    sizes="(min-width: 640px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                {item.caption ? (
+                  <figcaption className="mt-2 text-sm leading-relaxed text-ink-faint">
+                    {item.caption}
+                  </figcaption>
+                ) : null}
+              </figure>
+            ))}
+          </div>
+        </section>
+      ) : null}
     </article>
   );
 }

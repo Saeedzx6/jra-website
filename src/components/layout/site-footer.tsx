@@ -16,14 +16,16 @@ import { Link } from "@/i18n/navigation";
 /** Entries with a null url are omitted automatically. */
 const SOCIAL_LINKS = [
   { label: "Facebook", url: "https://www.facebook.com/JoRestaurants", Icon: Facebook },
-  // The old site linked four networks. Only Facebook's address is recorded
-  // anywhere in this project, and a guessed handle sends members to a
-  // stranger's account, so the other three stay null until JRA supplies them.
-  // The filter below drops any entry without a url, so adding one is a
-  // one-line change with no other edits.
-  { label: "Instagram", url: null, Icon: Instagram },
-  { label: "LinkedIn", url: null, Icon: Linkedin },
-  { label: "YouTube", url: null, Icon: Youtube },
+  { label: "Instagram", url: "https://www.instagram.com/jorestaurantassociation/", Icon: Instagram },
+  // Stored as the company root rather than the /posts/?feedView=all URL it was
+  // supplied as — that suffix is LinkedIn's own view state, not part of the
+  // page's address, and it does not survive their redirects.
+  {
+    label: "LinkedIn",
+    url: "https://www.linkedin.com/company/jordan-restaurant-association-jra/",
+    Icon: Linkedin,
+  },
+  { label: "YouTube", url: "https://www.youtube.com/user/JoRestaurants", Icon: Youtube },
 ] as const;
 
 const COLUMNS = [

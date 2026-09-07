@@ -26,7 +26,7 @@ export default async function MembershipPage({
       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
         {t("membership")}
       </p>
-      <h1 className="mt-2 font-display text-5xl text-ink">
+      <h1 className="mt-2 font-display font-semibold text-5xl text-ink">
         {tf("tagline")}
       </h1>
       <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">{tm("intro")}</p>

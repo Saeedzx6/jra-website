@@ -17,7 +17,7 @@ export default function LocaleNotFound() {
       <div className="pill-press flex h-14 w-14 items-center justify-center rounded-full bg-accent-soft">
         <SearchX className="h-6 w-6 text-accent" aria-hidden="true" />
       </div>
-      <h1 className="mt-6 font-display text-5xl text-ink">
+      <h1 className="mt-6 font-display font-semibold text-5xl text-ink">
         {t("notFoundTitle")}
       </h1>
       <p className="mt-3 leading-relaxed text-ink-soft">{t("notFoundBody")}</p>

@@ -38,7 +38,7 @@ export default async function ClassificationHubPage({
       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
         {t("classification")}
       </p>
-      <h1 className="mt-2 font-display text-5xl text-ink">
+      <h1 className="mt-2 font-display font-semibold text-5xl text-ink">
         {tc("heroTitle")}
       </h1>
       <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">{tc("heroBody")}</p>
@@ -50,7 +50,7 @@ export default async function ClassificationHubPage({
           choice is now the page's first action rather than a library below the
           fold. */}
       <section aria-labelledby="choose-type" className="mt-10">
-        <h2 id="choose-type" className="font-display text-xl text-ink">
+        <h2 id="choose-type" className="font-display font-semibold text-xl text-ink">
           {tc("chooseTypeHeading")}
         </h2>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-soft">
@@ -73,7 +73,7 @@ export default async function ClassificationHubPage({
                     href={href}
                     className="motion-card group flex h-full flex-col rounded-2xl border border-rule bg-surface p-6 sm:p-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   >
-                    <h3 className="font-display text-2xl text-ink transition-colors group-hover:text-accent">
+                    <h3 className="font-display font-semibold text-2xl text-ink transition-colors group-hover:text-accent">
                       {tType(s.establishmentType)}
                     </h3>
                     <p className="mt-1 text-sm text-ink-soft" dir="rtl">
@@ -89,7 +89,7 @@ export default async function ClassificationHubPage({
                   </Link>
                 ) : (
                   <div className="flex h-full flex-col rounded-2xl border border-dashed border-rule bg-surface p-6 sm:p-10">
-                    <h3 className="font-display text-2xl text-ink-soft">
+                    <h3 className="font-display font-semibold text-2xl text-ink-soft">
                       {tType(s.establishmentType)}
                     </h3>
                     <p className="mt-1 text-sm text-ink-faint" dir="rtl">
