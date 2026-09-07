@@ -185,7 +185,7 @@ export default async function RestaurantDetailPage({
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 mx-auto max-w-6xl px-4 pb-6 sm:px-6">
-          <h1 className="font-display text-5xl text-white sm:text-4xl">
+          <h1 className="font-display font-semibold text-5xl text-white sm:text-4xl">
             {displayName}
           </h1>
           {/* Stars sit over the dark hero gradient, so the brand brass is the
@@ -224,7 +224,7 @@ export default async function RestaurantDetailPage({
 
           {restaurant.cuisines.length > 0 && (
             <div className="mt-8">
-              <h2 className="font-display text-2xl text-ink">{tr("cuisine")}</h2>
+              <h2 className="font-display font-semibold text-2xl text-ink">{tr("cuisine")}</h2>
               <div className="mt-3 flex flex-wrap gap-2">
                 {restaurant.cuisines.map((c) => (
                   <span
@@ -240,7 +240,7 @@ export default async function RestaurantDetailPage({
 
           {restaurant.amenityTags.length > 0 && (
             <div className="mt-6">
-              <h2 className="font-display text-2xl text-ink">{tr("features")}</h2>
+              <h2 className="font-display font-semibold text-2xl text-ink">{tr("features")}</h2>
               <div className="mt-3 flex flex-wrap gap-2">
                 {restaurant.amenityTags.map((a) => (
                   <span

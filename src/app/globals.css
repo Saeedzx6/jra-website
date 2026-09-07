@@ -193,6 +193,7 @@
   --color-info-text: var(--color-info-text);
 
   --font-display-en: var(--font-display-en);
+  --font-editorial-en: var(--font-editorial-en);
   --font-display-ar: var(--font-display-ar);
   --font-body-en: var(--font-body-en);
   --font-body-ar: var(--font-body-ar);
@@ -331,24 +332,35 @@ body {
   font-family: var(--font-body-ar), var(--font-body-en), system-ui, sans-serif;
 }
 
-/* Headings are the editorial serif at weight 400 — never 600 or 700. The
-   weight is pinned here rather than policed component by component: dozens of
-   headings still carry `font-semibold` from the previous system, and the
-   serif has no bold to resolve it to, so browsers would synthesise one.
-   These rules are unlayered, so they win over Tailwind's layered utilities
-   without needing !important. */
-.font-display,
+/* Typefaces. Monad pairs an editorial serif with a monospace UI face; that
+   pairing was tried and rejected, so these are the project's own faces —
+   Plus Jakarta Sans for headings and UI, Playfair Display for editorial
+   leads, Cairo and Noto Sans Arabic for RTL.
+   Everything else Monad contributes — the parchment palette, hairline
+   borders, 40px card radius, the type *scale*, the spacing rhythm and the
+   motion system — is unaffected: none of it depends on which family is
+   loaded. The weight is no longer pinned to 400, because these families
+   have real bolds to resolve to. */
+.font-display {
+  font-family: var(--font-display-en), sans-serif;
+  letter-spacing: -0.01em;
+}
+
+[dir="rtl"] .font-display {
+  font-family: var(--font-display-ar), sans-serif;
+  letter-spacing: 0;
+}
+
+/* Editorial serif for hero and section leads. Arabic has no matched serif
+   here, so RTL falls back to the Arabic display face — a deliberate asymmetry
+   rather than pairing Arabic with an unrelated Latin serif. */
 .font-editorial {
-  font-family: var(--font-display-en), Georgia, "Times New Roman", serif;
-  font-weight: 400;
+  font-family: var(--font-editorial-en), Georgia, serif;
   letter-spacing: -0.02em;
 }
 
-[dir="rtl"] .font-display,
 [dir="rtl"] .font-editorial {
-  font-family: var(--font-display-ar), serif;
-  font-weight: 400;
-  /* Arabic is not tracked negatively — the script's joins do the work. */
+  font-family: var(--font-display-ar), sans-serif;
   letter-spacing: 0;
 }
 

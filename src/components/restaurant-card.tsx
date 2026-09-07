@@ -77,7 +77,7 @@ export function RestaurantCard({ restaurant }: { restaurant: RestaurantCardData 
       </div>
 
       <div className="p-6 sm:p-10">
-        <h3 className="truncate font-display text-2xl text-ink transition-colors group-hover:text-accent">
+        <h3 className="truncate font-display font-semibold text-2xl text-ink transition-colors group-hover:text-accent">
           {displayName}
         </h3>
 

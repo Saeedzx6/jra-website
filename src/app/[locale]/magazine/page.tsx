@@ -28,7 +28,7 @@ export default async function MagazinePage({
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-5xl text-ink">{t("magazine")}</h1>
+      <h1 className="font-display font-semibold text-5xl text-ink">{t("magazine")}</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">{tm("description")}</p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-3">

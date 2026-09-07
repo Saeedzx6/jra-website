@@ -110,7 +110,7 @@ export function PublicClassificationChecklist({
       <div className="space-y-8">
         {sections.map((section) => (
           <section key={section.id} className="rounded-2xl border border-rule bg-surface p-6 sm:p-10">
-            <h2 className="font-display text-2xl text-ink">
+            <h2 className="font-display font-semibold text-2xl text-ink">
               {locale === "ar" && section.nameAr ? section.nameAr : section.nameEn}
             </h2>
             <div className="mt-4 divide-y divide-rule">

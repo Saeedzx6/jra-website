@@ -33,7 +33,7 @@ export default async function SustainabilityPage({
       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
         {t("serviceSustainability")}
       </p>
-      <h1 className="mt-2 font-display text-5xl text-ink">
+      <h1 className="mt-2 font-display font-semibold text-5xl text-ink">
         {ts("heroTitle")}
       </h1>
       <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">{ts("heroBody")}</p>
@@ -57,7 +57,7 @@ export default async function SustainabilityPage({
         {pillars.map((p) => (
           <div key={p.title} className="motion-card rounded-2xl border border-rule bg-surface p-6 sm:p-10">
             <p.icon className="h-6 w-6 text-olive-text" />
-            <h3 className="mt-3 font-display text-2xl text-ink">{p.title}</h3>
+            <h3 className="mt-3 font-display font-semibold text-2xl text-ink">{p.title}</h3>
             <p className="mt-1 text-sm text-ink-soft">{p.desc}</p>
           </div>
         ))}

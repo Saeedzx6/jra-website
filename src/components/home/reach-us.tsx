@@ -29,7 +29,7 @@ export async function ReachUs() {
     <section className="border-t border-rule">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1fr_1.15fr] lg:items-center">
         <div>
-          <h2 className="font-display text-4xl text-ink">{t("title")}</h2>
+          <h2 className="font-display font-semibold text-4xl text-ink">{t("title")}</h2>
           <p className="mt-3 max-w-md leading-relaxed text-ink-soft">{t("intro")}</p>
 
           <ul className="mt-8 space-y-4 text-sm">

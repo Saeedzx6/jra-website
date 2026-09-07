@@ -131,3 +131,62 @@ export async function clearCoverImage(
   revalidate(target);
   return {};
 }
+
+/* -------------------------------------------------------------------------
+ * News galleries
+ *
+ * `MediaGalleryItem` already existed in the schema, related to both NewsArticle
+ * and Event, and was never referenced by a single line of application code —
+ * an empty table nobody could write to. Wiring it up gives news articles the
+ * extra photos they need without a migration.
+ * ---------------------------------------------------------------------- */
+
+export async function uploadNewsGalleryImage(
+  newsArticleId: string,
+  formData: FormData
+): Promise<{ error?: string }> {
+  const session = await requireAdmin();
+
+  const file = formData.get("file");
+  if (!(file instanceof File) || file.size === 0) return { error: "Choose an image first." };
+  if (!ALLOWED.includes(file.type)) {
+    return { error: "That file is not an image. Use JPEG, PNG, WebP, AVIF or GIF." };
+  }
+  if (file.size > MAX_BYTES) return { error: "That image is larger than 8 MB." };
+
+  const article = await db.newsArticle.findUnique({ where: { id: newsArticleId } });
+  if (!article) return { error: "Article not found." };
+
+  const stored = await putFile(file, { folder: `news/${article.slug}`, basename: "gallery" });
+  const caption = formData.get("caption");
+
+  await db.mediaGalleryItem.create({
+    data: {
+      newsArticleId,
+      imageUrl: stored.url,
+      caption: typeof caption === "string" && caption.trim() ? caption.trim() : null,
+    },
+  });
+
+  await writeAudit(session.user.id, "UPLOAD_IMAGE", "NEWS_GALLERY", newsArticleId, {
+    url: stored.url,
+  });
+  revalidate("news");
+  return {};
+}
+
+export async function deleteNewsGalleryImage(itemId: string) {
+  const session = await requireAdmin();
+  const item = await db.mediaGalleryItem.findUnique({ where: { id: itemId } });
+  if (!item) return;
+
+  await db.mediaGalleryItem.delete({ where: { id: itemId } });
+  await writeAudit(
+    session.user.id,
+    "DELETE_IMAGE",
+    "NEWS_GALLERY",
+    item.newsArticleId ?? itemId,
+    { itemId }
+  );
+  revalidate("news");
+}

@@ -29,13 +29,13 @@ export default async function SuppliersPage({
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-5xl text-ink">{t("suppliers")}</h1>
+      <h1 className="font-display font-semibold text-5xl text-ink">{t("suppliers")}</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">{ts("description")}</p>
 
       {suppliers.length === 0 ? (
         <div className="mt-12 rounded-2xl border border-dashed border-rule bg-surface p-12 text-center">
           <Boxes className="mx-auto h-10 w-10 text-brass-text" strokeWidth={1.5} />
-          <h2 className="mt-4 font-display text-xl text-ink">
+          <h2 className="mt-4 font-display font-semibold text-xl text-ink">
             {ts("emptyTitle")}
           </h2>
           <p className="mx-auto mt-2 max-w-md text-ink-soft">{ts("emptyBody")}</p>
@@ -49,9 +49,10 @@ export default async function SuppliersPage({
       ) : (
         <div className="stagger mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {suppliers.map((s) => (
-            <div
+            <Link
               key={s.id}
-              className="motion-card group overflow-hidden rounded-2xl border border-rule bg-surface"
+              href={`/suppliers/${s.slug}`}
+              className="motion-card group block overflow-hidden rounded-2xl border border-rule bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               <CoverThumb
                 url={s.images[0]?.url}
@@ -62,12 +63,12 @@ export default async function SuppliersPage({
                 aspect="aspect-[4/3]"
               />
               <div className="p-6 sm:p-10">
-                <h3 className="font-display text-2xl text-ink">
+                <h3 className="font-display font-semibold text-2xl text-ink">
                   {locale === "ar" && s.nameAr ? s.nameAr : s.name}
                 </h3>
                 <p className="mt-1 text-sm text-ink-soft">{s.shortDescription}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

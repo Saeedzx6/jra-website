@@ -33,7 +33,7 @@ export default async function TrainingPage({
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-5xl text-ink">{t("training")}</h1>
+      <h1 className="font-display font-semibold text-5xl text-ink">{t("training")}</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">{tt("description")}</p>
 
       {courses.length === 0 ? (
@@ -59,7 +59,7 @@ export default async function TrainingPage({
                   <GraduationCap className="h-4 w-4" />
                   <span className="text-xs font-semibold uppercase tracking-wide">{c.track}</span>
                 </div>
-                <h2 className="mt-2 font-display text-2xl text-ink">
+                <h2 className="mt-2 font-display font-semibold text-2xl text-ink">
                   {tr?.title ?? c.slug}
                 </h2>
                 {tr?.descriptionHtml ? (

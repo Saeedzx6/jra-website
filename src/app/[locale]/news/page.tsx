@@ -28,7 +28,7 @@ export default async function NewsListPage({
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-5xl text-ink">{t("news")}</h1>
+      <h1 className="font-display font-semibold text-5xl text-ink">{t("news")}</h1>
 
       {articles.length === 0 ? (
         <p className="mt-12 text-center text-ink-soft">{tCommon("noResults")}</p>
@@ -61,7 +61,7 @@ export default async function NewsListPage({
                       {new Date(a.publishedAt).toLocaleDateString(locale)}
                     </time>
                   ) : null}
-                  <h2 className="mt-2 font-display text-2xl text-ink">{title}</h2>
+                  <h2 className="mt-2 font-display font-semibold text-2xl text-ink">{title}</h2>
                   {a.translations[0]?.excerpt ? (
                     <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-ink-soft">
                       {a.translations[0].excerpt}

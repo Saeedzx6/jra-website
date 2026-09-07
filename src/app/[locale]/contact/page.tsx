@@ -21,7 +21,7 @@ export default async function ContactPage({
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-5xl text-ink">{t("contact")}</h1>
+      <h1 className="font-display font-semibold text-5xl text-ink">{t("contact")}</h1>
       <div className="mt-10 grid gap-10 lg:grid-cols-5">
         <div className="lg:col-span-3">
           <ContactForm />

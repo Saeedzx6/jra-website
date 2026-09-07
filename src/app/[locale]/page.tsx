@@ -149,7 +149,7 @@ export default async function HomePage({
           is light and the cards keep their own solid surface rather than
           going translucent, which would drag their text onto the navy. */}
       <section className="mx-auto max-w-6xl px-4 pb-28 pt-16 sm:px-6 sm:pb-36">
-        <h2 className="font-display text-4xl text-white">
+        <h2 className="font-display font-semibold text-4xl text-white">
           {t("servicesTitle")}
         </h2>
         <div className="stagger mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -160,7 +160,7 @@ export default async function HomePage({
               className="motion-card group rounded-2xl border border-rule bg-surface p-6 sm:p-10"
             >
               <s.icon className="h-6 w-6 text-accent" strokeWidth={1.75} />
-              <h3 className="mt-4 font-display text-2xl text-ink">
+              <h3 className="mt-4 font-display font-semibold text-2xl text-ink">
                 {s.title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-ink-soft">{s.desc}</p>
@@ -206,7 +206,7 @@ export default async function HomePage({
       {featured.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <div className="flex items-end justify-between">
-            <h2 className="font-display text-4xl text-ink">
+            <h2 className="font-display font-semibold text-4xl text-ink">
               {t("serviceDirectory")}
             </h2>
             <Link href="/restaurants" className="text-sm font-medium text-accent">
@@ -227,7 +227,7 @@ export default async function HomePage({
       {latestNews.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <div className="flex items-end justify-between">
-            <h2 className="font-display text-4xl text-ink">
+            <h2 className="font-display font-semibold text-4xl text-ink">
               {t("newsTitle")}
             </h2>
             <Link href="/news" className="text-sm font-medium text-accent">
@@ -246,7 +246,7 @@ export default async function HomePage({
                     {new Date(n.publishedAt).toLocaleDateString(locale)}
                   </time>
                 ) : null}
-                <h3 className="mt-2 font-display text-2xl leading-snug text-ink">
+                <h3 className="mt-2 font-display font-semibold text-2xl leading-snug text-ink">
                   {n.translations[0]?.title ?? "—"}
                 </h3>
               </Link>
@@ -265,7 +265,7 @@ export default async function HomePage({
       {/* Newsletter */}
       <section className="border-t border-rule text-ink">
         <div className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6">
-          <h2 className="font-display text-4xl">{t("newsletterTitle")}</h2>
+          <h2 className="font-display font-semibold text-4xl">{t("newsletterTitle")}</h2>
           <p className="mt-2 text-ink-soft">{t("newsletterSubtitle")}</p>
           <NewsletterForm />
         </div>

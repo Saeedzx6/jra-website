@@ -43,7 +43,7 @@ export default async function MarketplacePage({
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-5xl text-ink">{t("marketplace")}</h1>
+      <h1 className="font-display font-semibold text-5xl text-ink">{t("marketplace")}</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">{tm("description")}</p>
 
       <div className="mt-6 flex flex-wrap gap-2">
@@ -78,7 +78,7 @@ export default async function MarketplacePage({
                 <Tag className="h-3 w-3" />
                 {tCategory(l.category)}
               </span>
-              <h3 className="mt-3 font-display text-2xl text-ink">{l.title}</h3>
+              <h3 className="mt-3 font-display font-semibold text-2xl text-ink">{l.title}</h3>
               {l.price ? (
                 <p className="tabular mt-1 text-sm font-medium text-accent">
                   {l.price} {l.priceCurrency}
