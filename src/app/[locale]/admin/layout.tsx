@@ -8,6 +8,7 @@ import { Link } from "@/i18n/navigation";
 import {
   LayoutDashboard,
   Store,
+  Building2,
   Newspaper,
   Mail,
   Users,
@@ -37,6 +38,7 @@ const ADMIN_NAV = [
   { href: "/admin", labelKey: "dashboard", icon: LayoutDashboard },
   { href: "/admin/settings", labelKey: "siteSettings", icon: ImageIcon },
   { href: "/admin/restaurants", labelKey: "restaurants", icon: Store },
+  { href: "/admin/suppliers", labelKey: "suppliers", icon: Building2 },
   { href: "/admin/news", labelKey: "news", icon: Newspaper },
   { href: "/admin/contact", labelKey: "contactInbox", icon: Mail },
   { href: "/admin/membership", labelKey: "membershipApplications", icon: Users },

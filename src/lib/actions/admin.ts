@@ -5,28 +5,10 @@ import path from "node:path";
 import bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
-import { requireRole } from "@/lib/rbac";
+import { requireAdmin, writeAudit } from "@/lib/rbac";
 import { putFile, usingCloudinary } from "@/lib/storage";
 import { provisionMembership } from "@/lib/membership";
 import slugifyLib from "slugify";
-
-async function requireAdmin() {
-  const session = await requireRole(["ADMIN", "EDITOR"]);
-  if (!session) throw new Error("Forbidden");
-  return session;
-}
-
-async function writeAudit(
-  actorUserId: string,
-  action: string,
-  entityType: string,
-  entityId: string,
-  diff?: unknown
-) {
-  await db.auditLog.create({
-    data: { actorUserId, action, entityType, entityId, diff: diff as never },
-  });
-}
 
 // --- Restaurants -----------------------------------------------------------
 

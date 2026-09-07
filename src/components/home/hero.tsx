@@ -61,7 +61,7 @@ export async function HomeHero({
       cards={7}
       speed={26}
       axis={48}
-      className="bg-[#173156]"
+      className="bg-canvas-deep"
     >
       {/* Scrim. A floor that settles the corridor into the ground, and a
           directional wash keeping the text side dark wherever the photography
@@ -71,11 +71,11 @@ export async function HomeHero({
           a colour rather than an absence of one. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#173156] via-[#173156]/80 to-[#173156]/40"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-canvas-deep via-canvas-deep/80 to-canvas-deep/40"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#173156] via-[#173156]/75 to-transparent rtl:bg-gradient-to-l"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-canvas-deep via-canvas-deep/75 to-transparent rtl:bg-gradient-to-l"
       />
       {/* No bottom fade here any more. The page wraps the hero and the
           services grid in one container that owns the whole navy-to-paper

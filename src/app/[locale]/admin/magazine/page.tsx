@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
+import { CoverImageField } from "@/components/admin/cover-image-field";
 import { createMagazineArticle } from "@/lib/actions/magazine";
 
 export default async function AdminMagazinePage() {
@@ -13,6 +14,7 @@ export default async function AdminMagazinePage() {
   const tm = await getTranslations("admin.magazine");
   const tMag = await getTranslations("magazine");
   const tAccess = await getTranslations("admin.magazine.accessLevelOptions");
+  const tmedia = await getTranslations("admin.media");
 
   return (
     <div>
@@ -26,6 +28,16 @@ export default async function AdminMagazinePage() {
               <h2 className="font-display text-lg font-semibold text-ink">
                 {tMag("issue", { number: issue.issueNumber })} — {issue.month}/{issue.year}
               </h2>
+
+              <div className="mt-3">
+                <CoverImageField
+                  target="magazineIssue"
+                  id={issue.id}
+                  currentUrl={issue.coverImageUrl}
+                  label={tmedia("coverImage")}
+                  hint={tmedia("coverHintPortrait")}
+                />
+              </div>
 
               <ul className="mt-3 space-y-1">
                 {issue.articles.map((a) => (

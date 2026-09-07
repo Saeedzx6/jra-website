@@ -13,6 +13,8 @@ import { RestaurantCard } from "@/components/restaurant-card";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { CountUp } from "@/components/count-up";
 import { HomeHero } from "@/components/home/hero";
+import { PartnerStrip } from "@/components/home/partner-strip";
+import { ReachUs } from "@/components/home/reach-us";
 import { getFeaturedRestaurants } from "@/lib/restaurants";
 import { db } from "@/lib/db";
 
@@ -123,19 +125,20 @@ export default async function HomePage({
 
   return (
     /* The descent runs the whole page. It is deliberately two gradients, not
-       one: the murky middle of a navy-to-white ramp is where text becomes
+       one: the murky middle of a navy-to-parchment ramp is where text becomes
        unreadable, so that part is compressed into the inner container below,
        where the styling is under control. Everything out here stays light —
-       #eef1f5 drifting to paper across the remaining sections — which is a
-       change you feel while scrolling rather than one you can point at. */
-    <div className="bg-gradient-to-b from-[#d5dfec] to-white">
+       raised surface drifting to parchment across the remaining sections —
+       which is a change you feel while scrolling rather than one you can
+       point at. */
+    <div className="bg-gradient-to-b from-surface-2 to-paper">
       {/* The navy-to-paper fade spans exactly this container: the hero and
           the services grid. Anchoring it to a real element rather than
           guessing viewport heights is what keeps it predictable — the fade
           finishes at a known edge, so nothing further down can drift onto a
           mid-tone where neither dark nor light text is readable. Everything
           inside is styled for a dark ground; everything after is on paper. */}
-      <div className="bg-[linear-gradient(180deg,#173156_0%,#173156_58%,#16304d_78%,#d5dfec_100%)]">
+      <div className="bg-[linear-gradient(180deg,var(--color-canvas-deep)_0%,var(--color-canvas-deep)_58%,var(--color-canvas-deep-2)_78%,var(--color-surface-2)_100%)]">
       <HomeHero
         images={heroImages}
         cuisines={heroCuisines}
@@ -146,24 +149,24 @@ export default async function HomePage({
           is light and the cards keep their own solid surface rather than
           going translucent, which would drag their text onto the navy. */}
       <section className="mx-auto max-w-6xl px-4 pb-28 pt-16 sm:px-6 sm:pb-36">
-        <h2 className="font-display text-2xl font-semibold text-white">
+        <h2 className="font-display font-semibold text-4xl text-white">
           {t("servicesTitle")}
         </h2>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="stagger mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((s) => (
             <Link
               key={s.href}
               href={s.href}
-              className="motion-card group rounded-2xl border border-rule bg-surface p-6"
+              className="motion-card group rounded-2xl border border-rule bg-surface p-6 sm:p-10"
             >
               <s.icon className="h-6 w-6 text-accent" strokeWidth={1.75} />
-              <h3 className="mt-4 font-display text-lg font-semibold text-ink">
+              <h3 className="mt-4 font-display font-semibold text-2xl text-ink">
                 {s.title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-ink-soft">{s.desc}</p>
               <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent">
                 {tCommon("learnMore")}
-                <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
+                <ArrowRight className="cta-arrow h-3.5 w-3.5 rtl:rotate-180" />
               </span>
             </Link>
           ))}
@@ -203,14 +206,14 @@ export default async function HomePage({
       {featured.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <div className="flex items-end justify-between">
-            <h2 className="font-display text-2xl font-semibold text-ink">
+            <h2 className="font-display font-semibold text-4xl text-ink">
               {t("serviceDirectory")}
             </h2>
             <Link href="/restaurants" className="text-sm font-medium text-accent">
               {tCommon("viewAll")} →
             </Link>
           </div>
-          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="stagger mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((r) => (
               <div key={r.slug}>
                 <RestaurantCard restaurant={r} />
@@ -224,26 +227,26 @@ export default async function HomePage({
       {latestNews.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <div className="flex items-end justify-between">
-            <h2 className="font-display text-2xl font-semibold text-ink">
+            <h2 className="font-display font-semibold text-4xl text-ink">
               {t("newsTitle")}
             </h2>
             <Link href="/news" className="text-sm font-medium text-accent">
               {tCommon("viewAll")} →
             </Link>
           </div>
-          <div className="mt-8 grid gap-5 sm:grid-cols-3">
+          <div className="stagger mt-8 grid gap-5 sm:grid-cols-3">
             {latestNews.map((n) => (
               <Link
                 key={n.id}
                 href={`/news/${n.slug}`}
-                className="motion-card block rounded-2xl border border-rule bg-surface p-5"
+                className="motion-card block rounded-2xl border border-rule bg-surface p-6 sm:p-10"
               >
                 {n.publishedAt ? (
                   <time className="text-xs font-medium uppercase tracking-wide text-ink-faint">
                     {new Date(n.publishedAt).toLocaleDateString(locale)}
                   </time>
                 ) : null}
-                <h3 className="mt-2 font-display text-base font-semibold leading-snug text-ink">
+                <h3 className="mt-2 font-display font-semibold text-2xl leading-snug text-ink">
                   {n.translations[0]?.title ?? "—"}
                 </h3>
               </Link>
@@ -252,10 +255,17 @@ export default async function HomePage({
         </section>
       )}
 
+      {/* The three destinations JRA sends people to that are not on this
+          site, and where the association physically is. Both sit after the
+          site's own content and before the newsletter ask. */}
+      <PartnerStrip />
+
+      <ReachUs />
+
       {/* Newsletter */}
       <section className="border-t border-rule text-ink">
         <div className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6">
-          <h2 className="font-display text-2xl font-semibold">{t("newsletterTitle")}</h2>
+          <h2 className="font-display font-semibold text-4xl">{t("newsletterTitle")}</h2>
           <p className="mt-2 text-ink-soft">{t("newsletterSubtitle")}</p>
           <NewsletterForm />
         </div>

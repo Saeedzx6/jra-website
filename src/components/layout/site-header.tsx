@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Menu, X, UserPlus, LogIn } from "lucide-react";
@@ -13,9 +13,39 @@ import { PrimaryNav } from "./primary-nav";
 export function SiteHeader() {
   const t = useTranslations();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  /**
+   * The header is flat against the page until the reader has moved past it,
+   * then picks up a blur and a hairline. Height never changes — a header that
+   * shrinks on scroll reflows the page under the reader.
+   *
+   * Read inside rAF and listener registered passive, so this cannot block
+   * scrolling; state is only set when the boolean actually flips, so the
+   * common case is a comparison and nothing else.
+   */
+  useEffect(() => {
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        setScrolled(window.scrollY > 80);
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
 
   return (
-    <header className="animate-nav-drop sticky top-0 z-40 border-b border-rule bg-paper/85 backdrop-blur-md">
+    <header
+      data-scrolled={scrolled}
+      className="site-header animate-nav-drop sticky top-0 z-40 bg-paper/85"
+    >
       {/* Utility row — brand, global search, account actions */}
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
         <Link href="/" className="flex shrink-0 items-center" onClick={() => setOpen(false)}>
@@ -33,14 +63,14 @@ export function SiteHeader() {
           <LocaleSwitcher />
           <Link
             href="/login"
-            className="lift flex cursor-pointer items-center gap-1.5 rounded-full border border-rule px-4 py-2 text-sm font-medium text-ink-soft transition-colors hover:border-accent/40 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="ui-caps lift flex cursor-pointer items-center gap-1.5 rounded-full border border-rule px-4 py-2 text-sm font-medium text-ink-soft transition-colors hover:border-accent/40 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             <LogIn className="h-4 w-4" />
             {t("nav.login")}
           </Link>
           <Link
             href="/membership"
-            className="lift flex cursor-pointer items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-accent-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="pill-press ui-caps lift flex cursor-pointer items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white hover:bg-accent-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             <UserPlus className="h-4 w-4" />
             {t("nav.membership")}
@@ -90,7 +120,7 @@ export function SiteHeader() {
             <Link
               href="/membership"
               onClick={() => setOpen(false)}
-              className="mt-2 flex items-center justify-center gap-1.5 rounded-full bg-accent px-4 py-2.5 text-center text-sm font-semibold text-white"
+              className="pill-press mt-2 flex items-center justify-center gap-1.5 rounded-full bg-accent px-4 py-2.5 text-center text-sm font-semibold text-white"
             >
               <UserPlus className="h-4 w-4" />
               {t("nav.membership")}

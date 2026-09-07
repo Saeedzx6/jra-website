@@ -151,7 +151,12 @@ export function organizationLd(locale: string) {
     foundingDate: "2002",
     telephone: "+962-6-462-1558",
     email: "info@jra.jo",
-    sameAs: ["https://www.facebook.com/JoRestaurants"],
+    sameAs: [
+      "https://www.facebook.com/JoRestaurants",
+      "https://www.instagram.com/jorestaurantassociation/",
+      "https://www.linkedin.com/company/jordan-restaurant-association-jra/",
+      "https://www.youtube.com/user/JoRestaurants",
+    ],
     address: {
       "@type": "PostalAddress",
       addressCountry: "JO",

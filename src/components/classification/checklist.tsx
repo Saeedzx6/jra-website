@@ -162,7 +162,7 @@ export function ClassificationChecklist({
         <button suppressHydrationWarning
           onClick={handleSubmit}
           disabled={pending}
-          className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-60"
+          className="pill-press mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-60"
         >
           {pending && <Loader2 className="h-4 w-4 animate-spin" />}
           {tc("submitAssessment")}

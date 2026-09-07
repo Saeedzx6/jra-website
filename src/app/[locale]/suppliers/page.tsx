@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Boxes } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
+import { CoverThumb } from "@/components/cover-thumb";
 import { pageMetadata } from "@/lib/page-metadata";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
@@ -28,32 +29,46 @@ export default async function SuppliersPage({
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-3xl font-semibold text-ink">{t("suppliers")}</h1>
+      <h1 className="font-display font-semibold text-5xl text-ink">{t("suppliers")}</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">{ts("description")}</p>
 
       {suppliers.length === 0 ? (
         <div className="mt-12 rounded-2xl border border-dashed border-rule bg-surface p-12 text-center">
           <Boxes className="mx-auto h-10 w-10 text-brass-text" strokeWidth={1.5} />
-          <h2 className="mt-4 font-display text-xl font-semibold text-ink">
+          <h2 className="mt-4 font-display font-semibold text-xl text-ink">
             {ts("emptyTitle")}
           </h2>
           <p className="mx-auto mt-2 max-w-md text-ink-soft">{ts("emptyBody")}</p>
           <Link
             href="/membership"
-            className="mt-6 inline-block rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+            className="pill-press mt-6 inline-block rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
           >
             {ts("applyAsSupplier")}
           </Link>
         </div>
       ) : (
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="stagger mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {suppliers.map((s) => (
-            <div key={s.id} className="motion-card rounded-2xl border border-rule bg-surface p-5">
-              <h3 className="font-display text-base font-semibold text-ink">
-                {locale === "ar" && s.nameAr ? s.nameAr : s.name}
-              </h3>
-              <p className="mt-1 text-sm text-ink-soft">{s.shortDescription}</p>
-            </div>
+            <Link
+              key={s.id}
+              href={`/suppliers/${s.slug}`}
+              className="motion-card group block overflow-hidden rounded-2xl border border-rule bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            >
+              <CoverThumb
+                url={s.images[0]?.url}
+                alt={s.images[0]?.altTextEn ?? ""}
+                seed={s.slug}
+                title={locale === "ar" && s.nameAr ? s.nameAr : s.name}
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                aspect="aspect-[4/3]"
+              />
+              <div className="p-6 sm:p-10">
+                <h3 className="font-display font-semibold text-2xl text-ink">
+                  {locale === "ar" && s.nameAr ? s.nameAr : s.name}
+                </h3>
+                <p className="mt-1 text-sm text-ink-soft">{s.shortDescription}</p>
+              </div>
+            </Link>
           ))}
         </div>
       )}
