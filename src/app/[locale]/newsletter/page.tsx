@@ -20,7 +20,7 @@ export default async function NewsletterPage({
 
   return (
     <div className="mx-auto max-w-xl px-4 py-20 text-center sm:px-6">
-      <h1 className="font-display text-3xl font-semibold text-ink">{tNav("newsletter")}</h1>
+      <h1 className="font-display text-5xl text-ink">{tNav("newsletter")}</h1>
       <p className="mt-3 text-ink-soft">{t("newsletterSubtitle")}</p>
       <div className="mt-8 rounded-2xl border border-rule bg-ink p-8 text-paper">
         <NewsletterForm />

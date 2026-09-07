@@ -43,7 +43,7 @@ export default async function MarketplacePage({
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-3xl font-semibold text-ink">{t("marketplace")}</h1>
+      <h1 className="font-display text-5xl text-ink">{t("marketplace")}</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">{tm("description")}</p>
 
       <div className="mt-6 flex flex-wrap gap-2">
@@ -72,13 +72,13 @@ export default async function MarketplacePage({
             <Link
               key={l.id}
               href={`/marketplace/${l.id}`}
-              className="motion-card block rounded-2xl border border-rule bg-surface p-5"
+              className="motion-card block rounded-2xl border border-rule bg-surface p-6 sm:p-10"
             >
               <span className="inline-flex items-center gap-1.5 rounded-full bg-brass-soft px-2.5 py-0.5 text-xs font-medium text-brass-text">
                 <Tag className="h-3 w-3" />
                 {tCategory(l.category)}
               </span>
-              <h3 className="mt-3 font-display text-base font-semibold text-ink">{l.title}</h3>
+              <h3 className="mt-3 font-display text-2xl text-ink">{l.title}</h3>
               {l.price ? (
                 <p className="tabular mt-1 text-sm font-medium text-accent">
                   {l.price} {l.priceCurrency}
@@ -91,7 +91,7 @@ export default async function MarketplacePage({
         </div>
       )}
 
-      <div className="mt-12 rounded-2xl border border-dashed border-rule bg-surface p-6 text-center">
+      <div className="mt-12 rounded-2xl border border-dashed border-rule bg-surface p-6 sm:p-10 text-center">
         <p className="text-sm text-ink-soft">{tm("membersNote")}</p>
         <Link href="/portal/marketplace" className="mt-2 inline-block text-sm font-medium text-accent">
           {tm("goToPortal")} →

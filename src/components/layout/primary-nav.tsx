@@ -75,7 +75,7 @@ export function PrimaryNav() {
                 onMouseEnter={() => setHovered(i)}
                 onFocus={() => setHovered(i)}
                 onBlur={() => setHovered(null)}
-                className={`block cursor-pointer rounded-md px-3.5 pb-3 pt-2 text-sm transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+                className={`ui-caps block cursor-pointer rounded-md px-3.5 pb-3 pt-2 text-sm transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
                   active
                     ? "font-semibold text-accent"
                     : "font-medium text-ink-soft hover:text-ink"

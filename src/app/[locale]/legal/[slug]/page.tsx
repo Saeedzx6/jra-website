@@ -74,11 +74,11 @@ export default async function LegalDocumentPage({
       <span className="text-xs font-semibold uppercase tracking-wide text-brass-text">
         {tType(doc.type)} {doc.year ? `· ${doc.year}` : ""}
       </span>
-      <h1 className="mt-1 font-display text-2xl font-semibold text-ink">
+      <h1 className="mt-1 font-display text-5xl text-ink">
         {doc.topic ?? doc.slug}
       </h1>
 
-      <h2 className="mt-8 font-display text-lg font-semibold text-ink">{tl("versionHistory")}</h2>
+      <h2 className="mt-8 font-display text-2xl text-ink">{tl("versionHistory")}</h2>
       <div className="mt-4 space-y-3">
         {doc.versions.map((v) => (
           <div key={v.id} className="rounded-xl border border-rule bg-surface p-4">

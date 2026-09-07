@@ -59,7 +59,7 @@ export function PublicClassificationChecklist({
 
   return (
     <div className="grid gap-10 lg:grid-cols-[280px_1fr]">
-      <div className="h-fit rounded-2xl border border-rule bg-surface p-6 lg:sticky lg:top-24">
+      <div className="h-fit rounded-2xl border border-rule bg-surface p-6 sm:p-10 lg:sticky lg:top-24">
         <ClassificationSeal
           percent={percent}
           score={score}
@@ -73,7 +73,7 @@ export function PublicClassificationChecklist({
         {!revealed && answeredCount === allCriteria.length && (
           <button suppressHydrationWarning
             onClick={() => setRevealed(true)}
-            className="mt-4 w-full rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+            className="pill-press mt-4 w-full rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
           >
             {tc("seeMyResult")}
           </button>
@@ -88,7 +88,7 @@ export function PublicClassificationChecklist({
               </p>
               <Link
                 href="/membership"
-                className="mt-3 block rounded-full bg-accent px-4 py-2 text-xs font-semibold text-white"
+                className="pill-press mt-3 block rounded-full bg-accent px-4 py-2 text-xs font-semibold text-white"
               >
                 {tc("applyToJoin")}
               </Link>
@@ -109,8 +109,8 @@ export function PublicClassificationChecklist({
 
       <div className="space-y-8">
         {sections.map((section) => (
-          <section key={section.id} className="rounded-2xl border border-rule bg-surface p-6">
-            <h2 className="font-display text-lg font-semibold text-ink">
+          <section key={section.id} className="rounded-2xl border border-rule bg-surface p-6 sm:p-10">
+            <h2 className="font-display text-2xl text-ink">
               {locale === "ar" && section.nameAr ? section.nameAr : section.nameEn}
             </h2>
             <div className="mt-4 divide-y divide-rule">

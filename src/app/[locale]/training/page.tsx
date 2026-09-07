@@ -32,7 +32,7 @@ export default async function TrainingPage({
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-3xl font-semibold text-ink">{t("training")}</h1>
+      <h1 className="font-display text-5xl text-ink">{t("training")}</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">{tt("description")}</p>
 
       {courses.length === 0 ? (
@@ -42,12 +42,12 @@ export default async function TrainingPage({
           {courses.map((c) => {
             const tr = c.translations[0];
             return (
-              <div key={c.id} className="rounded-2xl border border-rule bg-surface p-6">
+              <div key={c.id} className="rounded-2xl border border-rule bg-surface p-6 sm:p-10">
                 <div className="flex items-center gap-2 text-brass-text">
                   <GraduationCap className="h-4 w-4" />
                   <span className="text-xs font-semibold uppercase tracking-wide">{c.track}</span>
                 </div>
-                <h2 className="mt-2 font-display text-lg font-semibold text-ink">
+                <h2 className="mt-2 font-display text-2xl text-ink">
                   {tr?.title ?? c.slug}
                 </h2>
                 {tr?.descriptionHtml ? (

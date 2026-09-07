@@ -44,7 +44,7 @@ export function LoginForm() {
       <button suppressHydrationWarning
         type="submit"
         disabled={pending}
-        className="w-full rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-60"
+        className="pill-press w-full rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-60"
       >
         {tl("logIn")}
       </button>

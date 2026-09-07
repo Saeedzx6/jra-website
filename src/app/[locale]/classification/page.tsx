@@ -38,7 +38,7 @@ export default async function ClassificationHubPage({
       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
         {t("classification")}
       </p>
-      <h1 className="mt-2 font-display text-3xl font-semibold text-ink">
+      <h1 className="mt-2 font-display text-5xl text-ink">
         {tc("heroTitle")}
       </h1>
       <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">{tc("heroBody")}</p>
@@ -50,7 +50,7 @@ export default async function ClassificationHubPage({
           choice is now the page's first action rather than a library below the
           fold. */}
       <section aria-labelledby="choose-type" className="mt-10">
-        <h2 id="choose-type" className="font-display text-xl font-semibold text-ink">
+        <h2 id="choose-type" className="font-display text-xl text-ink">
           {tc("chooseTypeHeading")}
         </h2>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-soft">
@@ -71,9 +71,9 @@ export default async function ClassificationHubPage({
                 {scoreable ? (
                   <Link
                     href={href}
-                    className="motion-card group flex h-full flex-col rounded-2xl border border-rule bg-surface p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                    className="motion-card group flex h-full flex-col rounded-2xl border border-rule bg-surface p-6 sm:p-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   >
-                    <h3 className="font-display text-base font-semibold text-ink transition-colors group-hover:text-accent">
+                    <h3 className="font-display text-2xl text-ink transition-colors group-hover:text-accent">
                       {tType(s.establishmentType)}
                     </h3>
                     <p className="mt-1 text-sm text-ink-soft" dir="rtl">
@@ -88,8 +88,8 @@ export default async function ClassificationHubPage({
                     </span>
                   </Link>
                 ) : (
-                  <div className="flex h-full flex-col rounded-2xl border border-dashed border-rule bg-surface p-5">
-                    <h3 className="font-display text-base font-semibold text-ink-soft">
+                  <div className="flex h-full flex-col rounded-2xl border border-dashed border-rule bg-surface p-6 sm:p-10">
+                    <h3 className="font-display text-2xl text-ink-soft">
                       {tType(s.establishmentType)}
                     </h3>
                     <p className="mt-1 text-sm text-ink-faint" dir="rtl">
@@ -116,7 +116,7 @@ export default async function ClassificationHubPage({
 
         {/* The published documents stay reachable for anyone who wants to read
             the standard itself rather than score against it. */}
-        <details className="mt-8 rounded-2xl border border-rule bg-surface p-5">
+        <details className="mt-8 rounded-2xl border border-rule bg-surface p-6 sm:p-10">
           <summary className="cursor-pointer text-sm font-semibold text-ink">
             {tc("standardsLibrary")}
           </summary>
