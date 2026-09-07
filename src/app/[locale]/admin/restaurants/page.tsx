@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
+import { createRestaurant } from "@/lib/actions/admin";
 import { DeleteRestaurantButton } from "@/components/admin/delete-restaurant-button";
 
 export default async function AdminRestaurantsPage({
@@ -14,12 +15,17 @@ export default async function AdminRestaurantsPage({
   const tr = await getTranslations("admin.restaurants");
   const tStatus = await getTranslations("admin.restaurants.statusOptions");
 
+  const governorates = await db.governorate.findMany({ orderBy: { nameEn: "asc" } });
+
   const restaurants = await db.restaurant.findMany({
     where: q ? { name: { contains: q, mode: "insensitive" } } : undefined,
     orderBy: { name: "asc" },
     take: 50,
     include: { governorate: true },
   });
+
+  const createField =
+    "w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm focus:border-accent focus:outline-none";
 
   return (
     <div>
@@ -34,6 +40,75 @@ export default async function AdminRestaurantsPage({
           className="w-full max-w-sm rounded-full border border-rule bg-surface px-4 py-2 text-sm focus:border-accent focus:outline-none"
         />
       </form>
+
+      <details className="mt-6 rounded-2xl border border-rule bg-surface p-5">
+        <summary className="cursor-pointer font-medium text-ink">{tr("newRestaurant")}</summary>
+        <form action={createRestaurant} className="mt-4 grid gap-3 sm:grid-cols-2">
+          <input
+            suppressHydrationWarning
+            name="name"
+            required
+            placeholder={tr("namePlaceholder")}
+            className={createField}
+          />
+          <input
+            suppressHydrationWarning
+            name="nameAr"
+            dir="rtl"
+            placeholder={tr("nameArPlaceholder")}
+            className={createField}
+          />
+          <textarea
+            suppressHydrationWarning
+            name="shortDescription"
+            rows={2}
+            placeholder={tr("descriptionPlaceholder")}
+            className={`${createField} sm:col-span-2`}
+          />
+          <input
+            suppressHydrationWarning
+            name="addressText"
+            placeholder={tr("addressPlaceholder")}
+            className={createField}
+          />
+          <select suppressHydrationWarning name="governorateId" defaultValue="" className={createField}>
+            <option value="">{tr("noGovernorate")}</option>
+            {governorates.map((g) => (
+              <option key={g.id} value={g.id}>
+                {g.nameEn}
+              </option>
+            ))}
+          </select>
+          <input
+            suppressHydrationWarning
+            name="phone"
+            dir="ltr"
+            placeholder={tr("phonePlaceholder")}
+            className={createField}
+          />
+          <input
+            suppressHydrationWarning
+            name="email"
+            type="email"
+            dir="ltr"
+            placeholder={tr("emailPlaceholder")}
+            className={createField}
+          />
+          <select suppressHydrationWarning name="status" defaultValue="DRAFT" className={createField}>
+            <option value="DRAFT">{tStatus("DRAFT")}</option>
+            <option value="PUBLISHED">{tStatus("PUBLISHED")}</option>
+          </select>
+          <div className="sm:col-span-2">
+            <button
+              suppressHydrationWarning
+              className="pill-press rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white"
+            >
+              {ta("create")}
+            </button>
+            <p className="mt-2 text-xs text-ink-faint">{tr("photosAfterCreate")}</p>
+          </div>
+        </form>
+      </details>
 
       <div className="mt-6 overflow-x-auto rounded-2xl border border-rule bg-surface">
         <table className="w-full text-sm">
