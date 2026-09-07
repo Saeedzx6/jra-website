@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CalendarDays, MapPin, GraduationCap } from "lucide-react";
 import { db } from "@/lib/db";
+import { CoverThumb } from "@/components/cover-thumb";
 import { CourseRegisterForm } from "@/components/training/register-form";
 import { pageMetadata } from "@/lib/page-metadata";
 
@@ -42,7 +43,18 @@ export default async function TrainingPage({
           {courses.map((c) => {
             const tr = c.translations[0];
             return (
-              <div key={c.id} className="rounded-2xl border border-rule bg-surface p-6 sm:p-10">
+              <div
+                key={c.id}
+                className="motion-card group overflow-hidden rounded-2xl border border-rule bg-surface"
+              >
+                <CoverThumb
+                  url={c.coverImageUrl}
+                  alt=""
+                  seed={c.slug}
+                  title={tr?.title ?? c.slug}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                />
+                <div className="p-6 sm:p-10">
                 <div className="flex items-center gap-2 text-brass-text">
                   <GraduationCap className="h-4 w-4" />
                   <span className="text-xs font-semibold uppercase tracking-wide">{c.track}</span>
@@ -70,6 +82,7 @@ export default async function TrainingPage({
                     <CourseRegisterForm sessionId={s.id} />
                   </div>
                 ))}
+                </div>
               </div>
             );
           })}

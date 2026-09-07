@@ -79,7 +79,33 @@
     "heroSearchLabel": "Search restaurants",
     "heroSearchPlaceholder": "Search by name, cuisine or area…",
     "heroSearchHint": "{count} classified restaurants, coffee shops and venues across Jordan.",
-    "browseByCuisine": "Browse by cuisine"
+    "browseByCuisine": "Browse by cuisine",
+    "partners": {
+      "title": "Beyond the association",
+      "intro": "Three places JRA points its members and the public toward — recruitment, the national events calendar, and reaching Jordan's restaurant sector directly.",
+      "opensInNewTab": "Opens in a new tab",
+      "jobs": {
+        "title": "Looking for a job, or hiring?",
+        "body": "Employment for the tourism restaurant sector runs on SiyahaJobs, the national tourism jobs platform. JRA does not keep a separate board.",
+        "cta": "Explore SiyahaJobs"
+      },
+      "events": {
+        "title": "Jordan's calendar of events",
+        "body": "The Jordan Tourism Board's national calendar — festivals, exhibitions and seasonal events that bring diners into the sector.",
+        "cta": "View the calendar"
+      },
+      "advertise": {
+        "title": "Advertise with JRA",
+        "body": "Reach the heart of Jordan's restaurant industry. Talk to the association about placement across the directory and the magazine.",
+        "cta": "Call the association"
+      }
+    },
+    "reachUs": {
+      "title": "Reach us",
+      "intro": "The association's office is in Jabal Amman, by the 2nd Circle. Members and the public are welcome during working hours.",
+      "directions": "Get directions",
+      "mapTitle": "Map showing the Jordan Restaurant Association office in Jabal Amman"
+    }
   },
   "footer": {
     "tagline": "One network. One voice. Endless opportunities.",
@@ -509,6 +535,13 @@
       "fileUrlOnly": "File URL",
       "amendmentSummaryPlaceholder": "Amendment summary (HTML)",
       "addVersion": "Add version"
+    },
+    "media": {
+      "coverImage": "Cover image",
+      "coverHintWide": "Shown on cards and at the top of the article. Landscape works best — around 1200x675.",
+      "coverHintPortrait": "Shown on the cover grid. Portrait works best — around 800x1100.",
+      "photo": "Photo",
+      "photoHint": "Shown on the About page. A square headshot works best."
     }
   },
   "contactForm": {
