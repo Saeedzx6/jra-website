@@ -363,7 +363,8 @@
       "magazineArticles": "مقالات المجلة",
       "knowledgeHub": "مركز المعرفة / المشاريع / الفرص",
       "newsletterSubscribers": "مشتركو النشرة الإخبارية",
-      "suppliers": "المورّدون"
+      "suppliers": "المورّدون",
+      "people": "المجلس وفريق العمل"
     },
     "dashboard": {
       "title": "لوحة التحكم",
@@ -415,7 +416,16 @@
         "PUBLISHED": "منشور",
         "ARCHIVED": "مؤرشف"
       },
-      "deleteConfirm": "حذف \"{name}\"؟ سيؤدي هذا لإزالة ملفه وصوره وسجل تقييماته نهائياً. لا يمكن التراجع عن هذا الإجراء."
+      "deleteConfirm": "حذف \"{name}\"؟ سيؤدي هذا لإزالة ملفه وصوره وسجل تقييماته نهائياً. لا يمكن التراجع عن هذا الإجراء.",
+      "newRestaurant": "إضافة مطعم",
+      "namePlaceholder": "اسم المطعم",
+      "nameArPlaceholder": "اسم المطعم بالعربية",
+      "descriptionPlaceholder": "وصف مختصر يظهر على بطاقة الدليل",
+      "addressPlaceholder": "العنوان",
+      "noGovernorate": "بدون محافظة",
+      "phonePlaceholder": "الهاتف",
+      "emailPlaceholder": "البريد الإلكتروني",
+      "photosAfterCreate": "أضف الصور من صفحة المطعم بعد إنشائه."
     },
     "news": {
       "newArticle": "+ مقال جديد",
@@ -569,6 +579,34 @@
       "published": "منشور",
       "photos": "الصور",
       "empty": "لا يوجد مورّدون بعد. أضف الأول أعلاه."
+    },
+    "people": {
+      "intro": "أعضاء مجلس الإدارة وفريق العمل، كما يظهرون في صفحة عن النقابة. يتحكم ترتيب الفرز بالتسلسل داخل كل مجموعة.",
+      "newPerson": "إضافة شخص",
+      "namePlaceholder": "الاسم الكامل",
+      "positionEnPlaceholder": "المنصب بالإنجليزية",
+      "positionArPlaceholder": "المنصب بالعربية",
+      "emailPlaceholder": "البريد الإلكتروني",
+      "termPlaceholder": "الدورة، مثال ٢٠٢٤–٢٠٢٨",
+      "sortOrderPlaceholder": "ترتيب الفرز",
+      "board": "أعضاء مجلس الإدارة",
+      "staff": "فريق العمل",
+      "uploadPhoto": "رفع صورة",
+      "replacePhoto": "استبدال الصورة",
+      "removePhoto": "إزالة",
+      "noPhoto": "لا توجد صورة بعد.",
+      "removePerson": "إزالة هذا الشخص",
+      "photoAfterCreate": "أضف الصورة بعد إنشاء الإدخال.",
+      "emptyGroup": "لا يوجد أحد في هذه المجموعة بعد."
+    },
+    "magazineIssues": {
+      "newIssue": "إضافة عدد",
+      "issueNumber": "رقم العدد (اختياري)",
+      "month": "الشهر (١–١٢)",
+      "year": "السنة",
+      "status": "الحالة",
+      "draft": "مسودة",
+      "published": "منشور"
     }
   },
   "contactForm": {
