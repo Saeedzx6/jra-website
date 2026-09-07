@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Boxes } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
+import { CoverThumb } from "@/components/cover-thumb";
 import { pageMetadata } from "@/lib/page-metadata";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
@@ -48,11 +49,24 @@ export default async function SuppliersPage({
       ) : (
         <div className="stagger mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {suppliers.map((s) => (
-            <div key={s.id} className="motion-card rounded-2xl border border-rule bg-surface p-6 sm:p-10">
-              <h3 className="font-display text-2xl text-ink">
-                {locale === "ar" && s.nameAr ? s.nameAr : s.name}
-              </h3>
-              <p className="mt-1 text-sm text-ink-soft">{s.shortDescription}</p>
+            <div
+              key={s.id}
+              className="motion-card group overflow-hidden rounded-2xl border border-rule bg-surface"
+            >
+              <CoverThumb
+                url={s.images[0]?.url}
+                alt={s.images[0]?.altTextEn ?? ""}
+                seed={s.slug}
+                title={locale === "ar" && s.nameAr ? s.nameAr : s.name}
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                aspect="aspect-[4/3]"
+              />
+              <div className="p-6 sm:p-10">
+                <h3 className="font-display text-2xl text-ink">
+                  {locale === "ar" && s.nameAr ? s.nameAr : s.name}
+                </h3>
+                <p className="mt-1 text-sm text-ink-soft">{s.shortDescription}</p>
+              </div>
             </div>
           ))}
         </div>

@@ -13,6 +13,8 @@ import { RestaurantCard } from "@/components/restaurant-card";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { CountUp } from "@/components/count-up";
 import { HomeHero } from "@/components/home/hero";
+import { PartnerStrip } from "@/components/home/partner-strip";
+import { ReachUs } from "@/components/home/reach-us";
 import { getFeaturedRestaurants } from "@/lib/restaurants";
 import { db } from "@/lib/db";
 
@@ -252,6 +254,13 @@ export default async function HomePage({
           </div>
         </section>
       )}
+
+      {/* The three destinations JRA sends people to that are not on this
+          site, and where the association physically is. Both sit after the
+          site's own content and before the newsletter ask. */}
+      <PartnerStrip />
+
+      <ReachUs />
 
       {/* Newsletter */}
       <section className="border-t border-rule text-ink">

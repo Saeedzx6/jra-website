@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { upsertNewsArticle } from "@/lib/actions/admin";
+import { CoverImageField } from "@/components/admin/cover-image-field";
 
 export default async function AdminNewsPage() {
   const articles = await db.newsArticle.findMany({
@@ -13,6 +14,7 @@ export default async function AdminNewsPage() {
   const ta = await getTranslations("admin.common");
   const tnews = await getTranslations("admin.news");
   const tStatus = await getTranslations("admin.news.statusOptions");
+  const tmedia = await getTranslations("admin.media");
 
   return (
     <div>
@@ -50,17 +52,28 @@ export default async function AdminNewsPage() {
 
       <div className="mt-6 divide-y divide-rule rounded-2xl border border-rule bg-surface">
         {articles.map((a) => (
-          <div key={a.id} className="flex items-center justify-between px-4 py-3">
-            <span className="text-sm font-medium text-ink">
-              {a.translations[0]?.title ?? a.slug}
-            </span>
-            <span
-              className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                a.status === "PUBLISHED" ? "bg-olive-soft text-olive-text" : "bg-brass-soft text-brass-text"
-              }`}
-            >
-              {tStatus(a.status)}
-            </span>
+          <div key={a.id} className="px-4 py-3">
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-sm font-medium text-ink">
+                {a.translations[0]?.title ?? a.slug}
+              </span>
+              <span
+                className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                  a.status === "PUBLISHED" ? "bg-olive-soft text-olive-text" : "bg-brass-soft text-brass-text"
+                }`}
+              >
+                {tStatus(a.status)}
+              </span>
+            </div>
+            <div className="mt-3">
+              <CoverImageField
+                target="news"
+                id={a.id}
+                currentUrl={a.coverImageUrl}
+                label={tmedia("coverImage")}
+                hint={tmedia("coverHintWide")}
+              />
+            </div>
           </div>
         ))}
       </div>

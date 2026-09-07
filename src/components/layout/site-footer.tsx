@@ -1,11 +1,29 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Phone, Mail, MapPin, Facebook, ExternalLink, ArrowUpRight } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Facebook,
+  Instagram,
+  Linkedin,
+  Youtube,
+  ExternalLink,
+  ArrowUpRight,
+} from "lucide-react";
 import { Link } from "@/i18n/navigation";
 
 /** Entries with a null url are omitted automatically. */
 const SOCIAL_LINKS = [
   { label: "Facebook", url: "https://www.facebook.com/JoRestaurants", Icon: Facebook },
+  // The old site linked four networks. Only Facebook's address is recorded
+  // anywhere in this project, and a guessed handle sends members to a
+  // stranger's account, so the other three stay null until JRA supplies them.
+  // The filter below drops any entry without a url, so adding one is a
+  // one-line change with no other edits.
+  { label: "Instagram", url: null, Icon: Instagram },
+  { label: "LinkedIn", url: null, Icon: Linkedin },
+  { label: "YouTube", url: null, Icon: Youtube },
 ] as const;
 
 const COLUMNS = [
