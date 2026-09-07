@@ -323,3 +323,52 @@ export async function submitProfileEditRequest(
   });
   revalidatePath("/[locale]/portal", "page");
 }
+
+/**
+ * Creates a restaurant.
+ *
+ * The back office could edit and delete the 701 seeded records but never add
+ * a new one — a new member had to be inserted by hand, or arrive through the
+ * membership-approval path. Slug collisions get a numeric suffix rather than
+ * failing, because two venues genuinely can share a name.
+ */
+export async function createRestaurant(formData: FormData): Promise<void> {
+  const session = await requireAdmin();
+
+  const name = String(formData.get("name") ?? "").trim();
+  if (!name) throw new Error("A restaurant name is required.");
+
+  const base = slugifyLib(name, { lower: true, strict: true }) || "restaurant";
+  let slug = base;
+  for (let n = 2; await db.restaurant.findUnique({ where: { slug } }); n++) {
+    slug = `${base}-${n}`;
+  }
+
+  const text = (key: string) => {
+    const v = formData.get(key);
+    const t = typeof v === "string" ? v.trim() : "";
+    return t.length > 0 ? t : null;
+  };
+
+  const restaurant = await db.restaurant.create({
+    data: {
+      slug,
+      name,
+      nameAr: text("nameAr"),
+      shortDescription: text("shortDescription"),
+      addressText: text("addressText"),
+      phone: text("phone"),
+      email: text("email"),
+      website: text("website"),
+      governorateId: text("governorateId"),
+      // Draft by default. A record with no description and no photo should not
+      // reach a public directory of 701 classified members on creation.
+      status: formData.get("status") === "PUBLISHED" ? "PUBLISHED" : "DRAFT",
+      source: "ADMIN_CREATED",
+    },
+  });
+
+  await writeAudit(session.user.id, "CREATE", "RESTAURANT", restaurant.id, { name, slug });
+  revalidatePath("/[locale]/admin/restaurants", "page");
+  revalidatePath("/[locale]/restaurants", "page");
+}
