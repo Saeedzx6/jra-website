@@ -41,7 +41,7 @@ export function CriterionInput({
             className="w-32 shrink-0 disabled:cursor-not-allowed sm:w-40"
             aria-label={`${tc("rateLabel")}: ${label}`}
           />
-          <span className="tabular flex h-7 w-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-xs font-semibold text-accent-strong">
+          <span className="pill-press tabular flex h-7 w-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-xs font-semibold text-accent-strong">
             {dontHave ? "–" : rating}
           </span>
         </div>

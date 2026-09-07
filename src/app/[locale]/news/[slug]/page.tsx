@@ -91,7 +91,7 @@ export default async function NewsDetailPage({
           {new Date(article.publishedAt).toLocaleDateString(locale)}
         </time>
       ) : null}
-      <h1 className="mt-2 font-display text-3xl font-semibold leading-tight text-ink">
+      <h1 className="mt-2 font-display text-5xl leading-tight text-ink">
         {tr.title}
       </h1>
       {article.coverImageUrl ? (

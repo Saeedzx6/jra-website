@@ -70,7 +70,7 @@ export default async function ListingDetailPage({
       <span className="inline-block rounded-full bg-brass-soft px-2.5 py-0.5 text-xs font-medium text-brass-text">
         {tCategory(listing.category)}
       </span>
-      <h1 className="mt-3 font-display text-2xl font-semibold text-ink">{listing.title}</h1>
+      <h1 className="mt-3 font-display text-5xl text-ink">{listing.title}</h1>
       {listing.price ? (
         <p className="tabular mt-1 text-lg font-semibold text-accent">
           {listing.price} {listing.priceCurrency}

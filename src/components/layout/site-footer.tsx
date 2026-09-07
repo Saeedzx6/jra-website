@@ -75,7 +75,7 @@ export function SiteFooter() {
                 {t("footer.tagline")}
               </p>
               
-              <span className="mt-3 inline-block rounded-full bg-accent-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-accent">
+              <span className="pill-press mt-3 inline-block rounded-full bg-accent-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-accent">
                 {t("footer.established")}
               </span>
 
@@ -134,7 +134,7 @@ export function SiteFooter() {
           {/* Navigation Directory Columns */}
           {COLUMNS.map((col) => (
             <nav key={col.headingKey} aria-label={t(col.headingKey)}>
-              <h3 className="text-xs font-bold uppercase tracking-widest text-ink">
+              <h3 className="ui-caps font-semibold text-ink">
                 {t(col.headingKey)}
               </h3>
               <ul className="mt-5 space-y-3">

@@ -185,7 +185,7 @@ export default async function RestaurantDetailPage({
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 mx-auto max-w-6xl px-4 pb-6 sm:px-6">
-          <h1 className="font-display text-3xl font-semibold text-white sm:text-4xl">
+          <h1 className="font-display text-5xl text-white sm:text-4xl">
             {displayName}
           </h1>
           {/* Stars sit over the dark hero gradient, so the brand brass is the
@@ -224,7 +224,7 @@ export default async function RestaurantDetailPage({
 
           {restaurant.cuisines.length > 0 && (
             <div className="mt-8">
-              <h2 className="font-display text-lg font-semibold text-ink">{tr("cuisine")}</h2>
+              <h2 className="font-display text-2xl text-ink">{tr("cuisine")}</h2>
               <div className="mt-3 flex flex-wrap gap-2">
                 {restaurant.cuisines.map((c) => (
                   <span
@@ -240,7 +240,7 @@ export default async function RestaurantDetailPage({
 
           {restaurant.amenityTags.length > 0 && (
             <div className="mt-6">
-              <h2 className="font-display text-lg font-semibold text-ink">{tr("features")}</h2>
+              <h2 className="font-display text-2xl text-ink">{tr("features")}</h2>
               <div className="mt-3 flex flex-wrap gap-2">
                 {restaurant.amenityTags.map((a) => (
                   <span
@@ -273,7 +273,7 @@ export default async function RestaurantDetailPage({
           )}
         </div>
 
-        <aside className="h-fit rounded-2xl border border-rule bg-surface p-6">
+        <aside className="h-fit rounded-2xl border border-rule bg-surface p-6 sm:p-10">
           {/* Grouped by what the reader is actually looking for, and each group
               renders only when it has content. The directory holds an address
               for ~92% of listings and no contact channel at all for any of
@@ -281,7 +281,7 @@ export default async function RestaurantDetailPage({
               norm rather than the exception. */}
           {locationRows.length > 0 ? (
             <section>
-              <h2 className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
+              <h2 className="ui-caps font-semibold text-ink-faint">
                 {tr("location")}
               </h2>
               <div className="mt-3 space-y-2.5">
@@ -297,7 +297,7 @@ export default async function RestaurantDetailPage({
 
           {contactRows.length > 0 ? (
             <section className={locationRows.length > 0 ? "mt-6 border-t border-rule pt-6" : ""}>
-              <h2 className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
+              <h2 className="ui-caps font-semibold text-ink-faint">
                 {tr("contact")}
               </h2>
               <div className="mt-3 space-y-2.5">
@@ -326,7 +326,7 @@ export default async function RestaurantDetailPage({
                person who can fix it — the owner — a way to do so, which is also
                how the directory's missing contact data gets filled in. */
             <section className={locationRows.length > 0 ? "mt-6 border-t border-rule pt-6" : ""}>
-              <h2 className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
+              <h2 className="ui-caps font-semibold text-ink-faint">
                 {tr("contact")}
               </h2>
               <p className="mt-3 text-sm font-medium text-ink">{tr("noContactTitle")}</p>
@@ -366,7 +366,7 @@ export default async function RestaurantDetailPage({
               {...(primaryAction.external
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {})}
-              className="mt-6 block rounded-full bg-accent px-4 py-2.5 text-center text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              className="pill-press mt-6 block rounded-full bg-accent px-4 py-2.5 text-center text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               {primaryAction.label}
             </a>

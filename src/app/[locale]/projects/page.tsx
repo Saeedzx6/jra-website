@@ -28,7 +28,7 @@ export default async function ProjectsPage({
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-3xl font-semibold text-ink">{t("projects")}</h1>
+      <h1 className="font-display text-5xl text-ink">{t("projects")}</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">{tp("description")}</p>
 
       {projects.length === 0 ? (
@@ -38,9 +38,9 @@ export default async function ProjectsPage({
           {projects.map((p) => {
             const tr = p.translations.find((t) => t.locale === locale) ?? p.translations[0];
             return (
-              <div key={p.id} className="motion-card rounded-2xl border border-rule bg-surface p-5">
+              <div key={p.id} className="motion-card rounded-2xl border border-rule bg-surface p-6 sm:p-10">
                 <FolderKanban className="h-5 w-5 text-accent" />
-                <h3 className="mt-2 font-display text-base font-semibold text-ink">
+                <h3 className="mt-2 font-display text-2xl text-ink">
                   {tr?.title ?? p.slug}
                 </h3>
                 {tr?.summary ? <p className="mt-1 text-sm text-ink-soft">{tr.summary}</p> : null}

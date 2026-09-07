@@ -27,7 +27,7 @@ export default async function MagazinePage({
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-3xl font-semibold text-ink">{t("magazine")}</h1>
+      <h1 className="font-display text-5xl text-ink">{t("magazine")}</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">{tm("description")}</p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-3">
@@ -35,7 +35,7 @@ export default async function MagazinePage({
           <Link
             key={issue.id}
             href={`/magazine/${issue.id}`}
-            className="motion-card rounded-2xl border border-rule bg-surface p-6 text-center"
+            className="motion-card rounded-2xl border border-rule bg-surface p-6 sm:p-10 text-center"
           >
             <BookOpen className="mx-auto h-8 w-8 text-accent" />
             <p className="mt-3 font-display text-lg font-semibold text-ink">

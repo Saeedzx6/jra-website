@@ -73,7 +73,7 @@ export function SubmitAssessmentForm({ payload }: { payload: AssessmentPayload }
       <button
         suppressHydrationWarning
         disabled={pending}
-        className="flex w-full items-center justify-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
+        className="pill-press flex w-full items-center justify-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
       >
         <Send className="h-3.5 w-3.5" />
         {tc("submitForReview")}
