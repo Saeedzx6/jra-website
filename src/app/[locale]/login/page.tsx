@@ -1,5 +1,8 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { LoginForm } from "@/components/login-form";
+import { pageMetadata } from "@/lib/page-metadata";
+
+export const generateMetadata = pageMetadata("/login", "login", { noIndex: true });
 
 export default async function LoginPage({
   params,

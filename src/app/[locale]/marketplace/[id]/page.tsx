@@ -1,11 +1,48 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Mail, Phone } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { db } from "@/lib/db";
+import { buildMetadata, toDescription } from "@/lib/seo";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 // Cached and revalidated every 600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
 export const revalidate = 600;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; id: string }>;
+}): Promise<Metadata> {
+  const { locale, id } = await params;
+  const t = await getTranslations({ locale, namespace: "meta" });
+
+  const listing = await db.marketplaceListing.findUnique({
+    where: { id },
+    select: { title: true, descriptionHtml: true, status: true, images: { select: { url: true }, take: 1 } },
+  });
+
+  // Unpublished listings must never be indexed — they are pending review or
+  // expired, and the page itself 404s.
+  if (!listing || listing.status !== "PUBLISHED") {
+    return buildMetadata({
+      locale,
+      path: `/marketplace/${id}`,
+      title: t("marketplaceTitle"),
+      description: t("marketplaceDescription"),
+      noIndex: true,
+    });
+  }
+
+  return buildMetadata({
+    locale,
+    path: `/marketplace/${id}`,
+    title: listing.title,
+    description: toDescription(listing.descriptionHtml) ?? t("marketplaceDescription"),
+    image: listing.images[0]?.url ?? null,
+  });
+}
 
 export default async function ListingDetailPage({
   params,
@@ -16,11 +53,20 @@ export default async function ListingDetailPage({
   setRequestLocale(locale);
   const tm = await getTranslations("marketplace");
   const tCategory = await getTranslations("marketplace.categoryLabels");
+  const tn = await getTranslations("nav");
   const listing = await db.marketplaceListing.findUnique({ where: { id } });
   if (!listing || listing.status !== "PUBLISHED") notFound();
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
+      <Breadcrumbs
+        locale={locale}
+        trail={[
+          { name: tn("home"), path: "/" },
+          { name: tn("marketplace"), path: "/marketplace" },
+          { name: listing.title, path: `/marketplace/${id}` },
+        ]}
+      />
       <span className="inline-block rounded-full bg-warning-soft px-2.5 py-0.5 text-xs font-medium text-warning-text">
         {tCategory(listing.category)}
       </span>

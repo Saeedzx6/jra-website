@@ -17,6 +17,16 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: false,
   },
+
+  // Next's default, pinned explicitly so it is a decision rather than an
+  // accident. Browser source maps would publish readable copies of every
+  // client component — including the admin UI — to anyone who opens devtools.
+  // Server-side stack traces are unaffected; those never leave the server.
+  productionBrowserSourceMaps: false,
+
+  // Drops `X-Powered-By: Next.js` from every response. It tells a visitor
+  // nothing and tells a scanner which CVE list to try first.
+  poweredByHeader: false,
 };
 
 export default withNextIntl(nextConfig);

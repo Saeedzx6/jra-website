@@ -1,11 +1,49 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { FileText } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { db } from "@/lib/db";
+import { buildMetadata } from "@/lib/seo";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
 export const revalidate = 3600;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const t = await getTranslations({ locale, namespace: "meta" });
+  const tType = await getTranslations({ locale, namespace: "legalTypes" });
+
+  const doc = await db.legalDocument.findUnique({
+    where: { slug },
+    select: { topic: true, type: true, year: true },
+  });
+  if (!doc) {
+    return buildMetadata({
+      locale,
+      path: `/legal/${slug}`,
+      title: t("legalTitle"),
+      description: t("legalDescription"),
+      noIndex: true,
+    });
+  }
+
+  const title = [doc.topic ?? tType(doc.type), doc.year].filter(Boolean).join(" · ");
+
+  return buildMetadata({
+    locale,
+    path: `/legal/${slug}`,
+    title,
+    // Distinct per document rather than reusing the section description: the
+    // type and year are the only facts guaranteed present on every record.
+    description: `${tType(doc.type)}${doc.year ? ` (${doc.year})` : ""} — ${t("legalDescription")}`,
+  });
+}
 
 export default async function LegalDocumentPage({
   params,
@@ -16,6 +54,7 @@ export default async function LegalDocumentPage({
   setRequestLocale(locale);
   const tl = await getTranslations("legal");
   const tType = await getTranslations("legalTypes");
+  const tn = await getTranslations("nav");
   const doc = await db.legalDocument.findUnique({
     where: { slug },
     include: { versions: { orderBy: { publishedAt: "desc" } } },
@@ -24,6 +63,14 @@ export default async function LegalDocumentPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+      <Breadcrumbs
+        locale={locale}
+        trail={[
+          { name: tn("home"), path: "/" },
+          { name: tn("legal"), path: "/legal" },
+          { name: doc.topic ?? tType(doc.type), path: `/legal/${slug}` },
+        ]}
+      />
       <span className="text-xs font-semibold uppercase tracking-wide text-warning-text">
         {tType(doc.type)} {doc.year ? `· ${doc.year}` : ""}
       </span>

@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { db } from "@/lib/db";
 import type { RestaurantCardData } from "@/components/restaurant-card";
 
@@ -112,7 +113,13 @@ export async function searchRestaurants(filters: RestaurantFilters) {
   };
 }
 
-export async function getRestaurantBySlug(slug: string) {
+/**
+ * Wrapped in React's `cache` because every restaurant page calls this twice:
+ * once from `generateMetadata` and once from the component itself. Without
+ * it, the site's 701 highest-traffic pages each ran the same query — with its
+ * images, cuisines and governorate joins — two times per request.
+ */
+export const getRestaurantBySlug = cache(async (slug: string) => {
   return db.restaurant.findUnique({
     where: { slug },
     include: {
@@ -124,7 +131,7 @@ export async function getRestaurantBySlug(slug: string) {
       amenityTags: { include: { amenityTag: true } },
     },
   });
-}
+});
 
 export async function getDirectoryFacets() {
   const [governorates, cuisines] = await Promise.all([
