@@ -1,11 +1,31 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Phone, Mail, MapPin, Facebook, ExternalLink, ArrowUpRight } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Facebook,
+  Instagram,
+  Linkedin,
+  Youtube,
+  ExternalLink,
+  ArrowUpRight,
+} from "lucide-react";
 import { Link } from "@/i18n/navigation";
 
 /** Entries with a null url are omitted automatically. */
 const SOCIAL_LINKS = [
   { label: "Facebook", url: "https://www.facebook.com/JoRestaurants", Icon: Facebook },
+  { label: "Instagram", url: "https://www.instagram.com/jorestaurantassociation/", Icon: Instagram },
+  // Stored as the company root rather than the /posts/?feedView=all URL it was
+  // supplied as — that suffix is LinkedIn's own view state, not part of the
+  // page's address, and it does not survive their redirects.
+  {
+    label: "LinkedIn",
+    url: "https://www.linkedin.com/company/jordan-restaurant-association-jra/",
+    Icon: Linkedin,
+  },
+  { label: "YouTube", url: "https://www.youtube.com/user/JoRestaurants", Icon: Youtube },
 ] as const;
 
 const COLUMNS = [
@@ -75,7 +95,7 @@ export function SiteFooter() {
                 {t("footer.tagline")}
               </p>
               
-              <span className="mt-3 inline-block rounded-full bg-accent-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-accent">
+              <span className="pill-press mt-3 inline-block rounded-full bg-accent-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-accent">
                 {t("footer.established")}
               </span>
 
@@ -134,7 +154,7 @@ export function SiteFooter() {
           {/* Navigation Directory Columns */}
           {COLUMNS.map((col) => (
             <nav key={col.headingKey} aria-label={t(col.headingKey)}>
-              <h3 className="text-xs font-bold uppercase tracking-widest text-ink">
+              <h3 className="ui-caps font-semibold text-ink">
                 {t(col.headingKey)}
               </h3>
               <ul className="mt-5 space-y-3">

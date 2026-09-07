@@ -44,7 +44,7 @@ export function HeaderSearch() {
   }
 
   return (
-    <div className="flex items-center gap-1 rounded-full border border-rule bg-surface ps-3 pe-1 py-1 shadow-sm animate-fade-rise" style={{ animationDuration: "180ms" }}>
+    <div className="flex items-center gap-1 rounded-full border border-rule bg-surface ps-3 pe-1 py-1 animate-fade-rise" style={{ animationDuration: "180ms" }}>
       <Search className="h-3.5 w-3.5 shrink-0 text-ink-faint" />
       <input
         ref={inputRef}

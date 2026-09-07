@@ -15,7 +15,7 @@ export default async function LoginPage({
 
   return (
     <div className="mx-auto max-w-sm px-4 py-16 sm:px-6">
-      <h1 className="text-center font-display text-2xl font-semibold text-ink">
+      <h1 className="text-center font-display font-semibold text-5xl text-ink">
         {tl("welcomeBack")}
       </h1>
       <p className="mt-2 text-center text-sm text-ink-soft">{tl("intro")}</p>

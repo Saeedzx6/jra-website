@@ -24,7 +24,8 @@
     "contact": "Contact Us",
     "login": "Log In",
     "portal": "My Account",
-    "logout": "Log Out"
+    "logout": "Log Out",
+    "gallery": "Gallery"
   },
   "common": {
     "learnMore": "Learn more",
@@ -79,7 +80,33 @@
     "heroSearchLabel": "Search restaurants",
     "heroSearchPlaceholder": "Search by name, cuisine or area…",
     "heroSearchHint": "{count} classified restaurants, coffee shops and venues across Jordan.",
-    "browseByCuisine": "Browse by cuisine"
+    "browseByCuisine": "Browse by cuisine",
+    "partners": {
+      "title": "Beyond the association",
+      "intro": "Three places JRA points its members and the public toward — recruitment, the national events calendar, and reaching Jordan's restaurant sector directly.",
+      "opensInNewTab": "Opens in a new tab",
+      "jobs": {
+        "title": "Looking for a job, or hiring?",
+        "body": "Employment for the tourism restaurant sector runs on SiyahaJobs, the national tourism jobs platform. JRA does not keep a separate board.",
+        "cta": "Explore SiyahaJobs"
+      },
+      "events": {
+        "title": "Jordan's calendar of events",
+        "body": "The Jordan Tourism Board's national calendar — festivals, exhibitions and seasonal events that bring diners into the sector.",
+        "cta": "View the calendar"
+      },
+      "advertise": {
+        "title": "Advertise with JRA",
+        "body": "Reach the heart of Jordan's restaurant industry. Talk to the association about placement across the directory and the magazine.",
+        "cta": "Call the association"
+      }
+    },
+    "reachUs": {
+      "title": "Reach us",
+      "intro": "The association's office is in Jabal Amman, by the 2nd Circle. Members and the public are welcome during working hours.",
+      "directions": "Get directions",
+      "mapTitle": "Map showing the Jordan Restaurant Association office in Jabal Amman"
+    }
   },
   "footer": {
     "tagline": "One network. One voice. Endless opportunities.",
@@ -164,7 +191,12 @@
     "description": "A directory of associate members — companies supplying food, equipment, technology, and services to JRA restaurants.",
     "emptyTitle": "This directory is just getting started",
     "emptyBody": "We're building the supplier directory from scratch. If your company supplies food, beverages, equipment, or services to the hospitality sector, be one of the first to join.",
-    "applyAsSupplier": "Apply as a supplier"
+    "applyAsSupplier": "Apply as a supplier",
+    "gallery": "Gallery",
+    "categories": "Categories",
+    "contact": "Contact",
+    "noContactYet": "No contact details recorded yet.",
+    "photoAlt": "Photo {number} of {name}"
   },
   "classification": {
     "heroTitle": "Know exactly where your establishment stands",
@@ -330,7 +362,8 @@
       "trainingCourses": "Training & Courses",
       "magazineArticles": "Magazine Articles",
       "knowledgeHub": "Knowledge / Projects / Opportunities",
-      "newsletterSubscribers": "Newsletter Subscribers"
+      "newsletterSubscribers": "Newsletter Subscribers",
+      "suppliers": "Suppliers"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -509,6 +542,33 @@
       "fileUrlOnly": "File URL",
       "amendmentSummaryPlaceholder": "Amendment summary (HTML)",
       "addVersion": "Add version"
+    },
+    "media": {
+      "coverImage": "Cover image",
+      "coverHintWide": "Shown on cards and at the top of the article. Landscape works best — around 1200x675.",
+      "coverHintPortrait": "Shown on the cover grid. Portrait works best — around 800x1100.",
+      "photo": "Photo",
+      "photoHint": "Shown on the About page. A square headshot works best.",
+      "galleryHeading": "More photos",
+      "galleryAdd": "Add photo",
+      "galleryCaption": "Caption (also used as alt text)",
+      "galleryEmpty": "No extra photos yet."
+    },
+    "suppliers": {
+      "intro": "Associate members shown in the public supplier directory. New entries start as drafts.",
+      "newSupplier": "Add a supplier",
+      "namePlaceholder": "Company name",
+      "nameArPlaceholder": "اسم الشركة (Arabic)",
+      "descriptionPlaceholder": "Short description shown on the directory card",
+      "addressPlaceholder": "Address",
+      "noGovernorate": "No governorate",
+      "phonePlaceholder": "Phone",
+      "emailPlaceholder": "Email",
+      "websitePlaceholder": "Website (https://…)",
+      "draft": "Draft",
+      "published": "Published",
+      "photos": "Photos",
+      "empty": "No suppliers yet. Add the first one above."
     }
   },
   "contactForm": {

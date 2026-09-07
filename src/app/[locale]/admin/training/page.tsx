@@ -1,6 +1,7 @@
 import { Download } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
+import { CoverImageField } from "@/components/admin/cover-image-field";
 import { createCourseWithSession } from "@/lib/actions/training";
 
 export default async function AdminTrainingPage() {
@@ -16,6 +17,7 @@ export default async function AdminTrainingPage() {
   const ta = await getTranslations("admin.common");
   const tt = await getTranslations("admin.training");
   const tTrack = await getTranslations("admin.training.trackOptions");
+  const tmedia = await getTranslations("admin.media");
 
   return (
     <div>
@@ -48,6 +50,16 @@ export default async function AdminTrainingPage() {
             <p className="font-medium text-ink">
               {c.translations[0]?.title ?? c.slug} <span className="text-xs text-ink-faint">({c.track})</span>
             </p>
+
+            <div className="mt-3">
+              <CoverImageField
+                target="course"
+                id={c.id}
+                currentUrl={c.coverImageUrl}
+                label={tmedia("coverImage")}
+                hint={tmedia("coverHintWide")}
+              />
+            </div>
             {c.sessions.map((s) => (
               <div key={s.id} className="mt-2 flex items-center justify-between rounded-lg bg-surface-2 px-3 py-2 text-sm">
                 <span className="text-ink-soft">

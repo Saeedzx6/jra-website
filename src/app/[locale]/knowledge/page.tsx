@@ -28,7 +28,7 @@ export default async function KnowledgeCenterPage({
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-3xl font-semibold text-ink">{t("knowledge")}</h1>
+      <h1 className="font-display font-semibold text-5xl text-ink">{t("knowledge")}</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">{tk("description")}</p>
 
       <div className="mt-8 grid gap-3 sm:grid-cols-2">

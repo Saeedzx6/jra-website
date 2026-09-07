@@ -43,7 +43,7 @@ export function SuggestEditForm({
             setSent(true);
           })
         }
-        className="rounded-full bg-accent px-4 py-1.5 text-xs font-semibold text-white disabled:opacity-60"
+        className="pill-press rounded-full bg-accent px-4 py-1.5 text-xs font-semibold text-white disabled:opacity-60"
       >
         {tp("suggestThisUpdate")}
       </button>
