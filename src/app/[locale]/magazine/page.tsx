@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookOpen } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
+import { CoverThumb } from "@/components/cover-thumb";
 import { pageMetadata } from "@/lib/page-metadata";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
@@ -27,7 +28,7 @@ export default async function MagazinePage({
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-3xl font-semibold text-ink">{t("magazine")}</h1>
+      <h1 className="font-display font-semibold text-5xl text-ink">{t("magazine")}</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">{tm("description")}</p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-3">
@@ -35,10 +36,17 @@ export default async function MagazinePage({
           <Link
             key={issue.id}
             href={`/magazine/${issue.id}`}
-            className="motion-card rounded-2xl border border-rule bg-surface p-6 text-center"
+            className="motion-card group overflow-hidden rounded-2xl border border-rule bg-surface text-center"
           >
-            <BookOpen className="mx-auto h-8 w-8 text-accent" />
-            <p className="mt-3 font-display text-lg font-semibold text-ink">
+            <CoverThumb
+              url={issue.coverImageUrl}
+              alt=""
+              seed={issue.id}
+              title={String(issue.issueNumber ?? issue.year)}
+              sizes="(min-width: 640px) 33vw, 100vw"
+              aspect="aspect-[3/4]"
+            />
+            <p className="mt-4 font-display text-lg text-ink">
               {tm("issue", { number: issue.issueNumber })}
             </p>
             <p className="text-sm text-ink-faint">

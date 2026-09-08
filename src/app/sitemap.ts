@@ -66,8 +66,13 @@ function entry(
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [restaurants, news, legal, magazine, resources, courses] = await Promise.all([
+  const [restaurants, suppliers, news, legal, magazine, resources, courses] = await Promise.all([
     db.restaurant.findMany({
+      where: { status: "PUBLISHED" },
+      select: { slug: true, updatedAt: true },
+    }),
+    // Supplier profiles became addressable when /suppliers/[slug] was added.
+    db.supplier.findMany({
       where: { status: "PUBLISHED" },
       select: { slug: true, updatedAt: true },
     }),
@@ -97,6 +102,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // The 701 restaurant pages are the site's real SEO surface.
     ...restaurants.flatMap((r) => entry(`/restaurants/${r.slug}`, r.updatedAt, 0.8)),
+    ...suppliers.flatMap((s) => entry(`/suppliers/${s.slug}`, s.updatedAt, 0.7)),
     ...news.flatMap((n) => entry(`/news/${n.slug}`, n.publishedAt ?? undefined, 0.7)),
     ...legal.flatMap((l) => entry(`/legal/${l.slug}`, undefined, 0.6)),
     ...magazine.flatMap((m) => entry(`/magazine/${m.slug}`, undefined, 0.5)),

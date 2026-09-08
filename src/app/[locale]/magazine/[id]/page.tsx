@@ -84,7 +84,7 @@ export default async function MagazineIssuePage({
           { name: `${issue.month}/${issue.year}`, path: `/magazine/${id}` },
         ]}
       />
-      <h1 className="font-display text-3xl font-semibold text-ink">
+      <h1 className="font-display font-semibold text-5xl text-ink">
         {tm("issue", { number: issue.issueNumber })} — {issue.month}/{issue.year}
       </h1>
       {issue.pdfUrl ? (
@@ -98,13 +98,13 @@ export default async function MagazineIssuePage({
           const tr = a.translations[0];
           const locked = a.accessLevel === "MEMBERS_ONLY" && !isMember;
           return (
-            <article key={a.id} className="rounded-2xl border border-rule bg-surface p-6">
+            <article key={a.id} className="rounded-2xl border border-rule bg-surface p-6 sm:p-10">
               {a.category ? (
                 <span className="text-xs font-semibold uppercase tracking-wide text-warning-text">
                   {a.category}
                 </span>
               ) : null}
-              <h2 className="mt-1 font-display text-lg font-semibold text-ink">
+              <h2 className="mt-1 font-display font-semibold text-2xl text-ink">
                 {tr?.title ?? a.slug}
               </h2>
               {locked ? (

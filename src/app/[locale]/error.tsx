@@ -32,14 +32,14 @@ export default function LocaleError({
       <div className="flex h-14 w-14 items-center justify-center rounded-full bg-warning-soft">
         <AlertTriangle className="h-6 w-6 text-warning-text" aria-hidden="true" />
       </div>
-      <h1 className="mt-6 font-display text-3xl font-semibold text-ink">{t("errorTitle")}</h1>
+      <h1 className="mt-6 font-display font-semibold text-5xl text-ink">{t("errorTitle")}</h1>
       <p className="mt-3 leading-relaxed text-ink-soft">{t("errorBody")}</p>
 
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
         <button
           type="button"
           onClick={reset}
-          className="inline-flex items-center rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          className="pill-press inline-flex items-center rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
           {t("errorRetry")}
         </button>

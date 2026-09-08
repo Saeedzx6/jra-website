@@ -23,7 +23,7 @@ export function CourseRegisterForm({ sessionId }: { sessionId: string }) {
       <input suppressHydrationWarning name="fullName" required placeholder={tt("fullNamePlaceholder")} className="flex-1 min-w-[140px] rounded-lg border border-rule bg-paper px-3 py-2 text-sm focus:border-accent focus:outline-none" />
       <input suppressHydrationWarning name="email" type="email" required placeholder={tt("emailPlaceholder")} className="flex-1 min-w-[140px] rounded-lg border border-rule bg-paper px-3 py-2 text-sm focus:border-accent focus:outline-none" />
       <input suppressHydrationWarning name="phone" placeholder={tt("phonePlaceholder")} className="w-32 rounded-lg border border-rule bg-paper px-3 py-2 text-sm focus:border-accent focus:outline-none" />
-      <button suppressHydrationWarning disabled={pending} className="rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white disabled:opacity-60">
+      <button suppressHydrationWarning disabled={pending} className="pill-press rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white disabled:opacity-60">
         {tt("register")}
       </button>
     </form>

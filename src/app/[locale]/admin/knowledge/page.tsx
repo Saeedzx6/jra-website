@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
+import { CoverImageField } from "@/components/admin/cover-image-field";
 import { createResource } from "@/lib/actions/resources";
 
 const TYPE_KEYS = ["STUDY", "GUIDE", "TEMPLATE", "PROJECT", "OPPORTUNITY", "CASE_STUDY"] as const;
@@ -14,6 +15,7 @@ export default async function AdminKnowledgePage() {
   const ta = await getTranslations("admin.common");
   const tk = await getTranslations("admin.knowledge");
   const tType = await getTranslations("resourceTypes");
+  const tmedia = await getTranslations("admin.media");
 
   return (
     <div>
@@ -40,13 +42,24 @@ export default async function AdminKnowledgePage() {
 
       <div className="mt-6 divide-y divide-rule rounded-2xl border border-rule bg-surface">
         {resources.map((r) => (
-          <div key={r.id} className="flex items-center justify-between px-4 py-3">
-            <span className="text-sm font-medium text-ink">
-              {r.translations[0]?.title ?? r.slug}
-            </span>
-            <span className="rounded-full bg-warning-soft px-2.5 py-0.5 text-xs font-medium text-warning-text">
-              {tType(r.type)}
-            </span>
+          <div key={r.id} className="px-4 py-3">
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-sm font-medium text-ink">
+                {r.translations[0]?.title ?? r.slug}
+              </span>
+              <span className="shrink-0 rounded-full bg-brass-soft px-2.5 py-0.5 text-xs font-medium text-brass-text">
+                {tType(r.type)}
+              </span>
+            </div>
+            <div className="mt-3">
+              <CoverImageField
+                target="resource"
+                id={r.id}
+                currentUrl={r.coverImageUrl}
+                label={tmedia("coverImage")}
+                hint={tmedia("coverHintPortrait")}
+              />
+            </div>
           </div>
         ))}
         {resources.length === 0 && <p className="p-4 text-ink-soft">{tk("noEntriesYet")}</p>}

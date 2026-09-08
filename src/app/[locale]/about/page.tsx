@@ -32,12 +32,12 @@ export default async function AboutPage({
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-3xl font-semibold text-ink">{t("about")}</h1>
+      <h1 className="font-display font-semibold text-5xl text-ink">{t("about")}</h1>
       <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">{tAbout("intro")}</p>
 
       {board.length > 0 && (
         <section className="mt-14">
-          <h2 className="font-display text-xl font-semibold text-ink">{t("aboutBoard")}</h2>
+          <h2 className="font-display font-semibold text-xl text-ink">{t("aboutBoard")}</h2>
           <div className="mt-6 grid gap-6 sm:grid-cols-3 lg:grid-cols-6">
             {board.map((p) => (
               <div key={p.id} className="text-center">
@@ -58,7 +58,7 @@ export default async function AboutPage({
 
       {staff.length > 0 && (
         <section className="mt-14">
-          <h2 className="font-display text-xl font-semibold text-ink">{t("aboutTeam")}</h2>
+          <h2 className="font-display font-semibold text-xl text-ink">{t("aboutTeam")}</h2>
           <div className="mt-6 grid gap-6 sm:grid-cols-3 lg:grid-cols-4">
             {staff.map((p) => (
               <div key={p.id} className="motion-card rounded-2xl border border-rule bg-surface p-4 text-center">
@@ -82,7 +82,7 @@ export default async function AboutPage({
 
       {reports.length > 0 && (
         <section className="mt-14">
-          <h2 className="font-display text-xl font-semibold text-ink">{t("aboutReports")}</h2>
+          <h2 className="font-display font-semibold text-xl text-ink">{t("aboutReports")}</h2>
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             {reports.map((r) => (
               <a

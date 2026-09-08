@@ -18,117 +18,68 @@
    ========================================================================== */
 
 :root {
-  /* --- the two brand colours, unmodified ------------------------------- */
-  --jra-blue: #0053a0;
-  --jra-grey: #6c6d70;
-
-  /* --- blue ramp -------------------------------------------------------- */
-  --blue-950: #041f3a;
-  --blue-925: #072742; /* dark-theme surface; added for the dark build */
-  --blue-900: #062e55;
-  --blue-875: #0a3053; /* dark-theme raised surface */
-  --blue-800: #003a73;
-  --blue-600: #0053a0; /* brand */
-  --blue-500: #0a66bc;
-  --blue-300: #7fb3e3; /* on dark: links, eyebrows */
-  --blue-200: #a8cbee; /* on dark: hover lift */
-  --blue-100: #d6e5f3;
-  --blue-50: #edf3f9;
-
-  /* --- neutral ramp, anchored on the logo grey -------------------------- */
-  --grey-900: #232427;
-  --grey-800: #333437;
-  --grey-700: #4a4b4e;
-  --grey-600: #6c6d70; /* brand — 5.17:1 on white */
-  --grey-400: #a0a1a4;
-  --grey-300: #c8c9cb;
-  --grey-200: #dfe0e2;
-  --grey-100: #efeff0;
-  --grey-50: #f7f7f8;
-
-  /* ----------------------------------------------------------------------
-     Semantic layer. These are the names the app already uses, so remapping
-     them here re-skins every component without touching a single .tsx file.
-     ---------------------------------------------------------------------- */
-  --color-paper: var(--grey-50);
-  --color-surface: #ffffff;
-  --color-surface-2: var(--grey-100);
-  --color-ink: var(--grey-900); /* 14.50:1 on paper */
-  --color-ink-soft: var(--grey-700); /* 8.15:1 on paper */
-  /* Brand grey. Clears AA on all three light surfaces, but only just:
-     4.50:1 on surface-2, the floor with zero margin. MASTER.md records
-     this — anything set on a tinted panel uses --color-ink-soft instead. */
-  --color-ink-faint: var(--grey-600);
-  --color-accent: var(--jra-blue); /* 7.65:1 on surface */
-  --color-accent-strong: var(--blue-800); /* white on it: 11.33:1 */
-  --color-accent-soft: var(--blue-50);
-  --color-rule: var(--grey-200);
-  --color-navy: var(--blue-950); /* white on it: 16.64:1 */
-
-  /* ----------------------------------------------------------------------
-     FENCED EXCEPTION 1 — classification and sustainability only.
-
-     Olive and brass are not brand colours and are not available for
-     decoration. They exist because JRA is the only body that can certify a
-     star grade or a Green Key, and those two marks have to read as marks.
-     Use them on the classification seal, the star bands, and the
-     sustainability score. Nowhere else. If you are reaching for one to make
-     a panel look less blue, the answer is no.
-     ---------------------------------------------------------------------- */
-  --color-olive: #1e8a5f; /* fill only — 4.32:1 on surface */
+  --color-paper: #f6f3f1;
+  --color-surface: #f6f3f1;
+  --color-surface-2: #efebe8;
+  --color-ink: #242424;
+  --color-ink-soft: #4e4d4d;
+  /* Was #8b9098, which measured 3.00:1 on --color-paper — below the 4.5:1 AA
+     floor for the captions and metadata it is used for. Darkened to the
+     lightest value that clears 4.5:1 on surface, paper and surface-2. */
+  --color-ink-faint: #6c6a69;
+  --color-accent: #0050a0;
+  --color-accent-strong: #003d7a;
+  --color-accent-soft: #e8f1fb;
+  --color-olive: #2f6b4f;
   --color-olive-soft: #dceee3;
-  --color-olive-text: #1a7853; /* 4.51:1 on olive-soft */
-  /* Was #b8901f, which measured 2.98:1 on white — under the 3:1 floor for
-     graphic objects (WCAG 1.4.11), and a star is a graphic object.
-     Darkened along its own hue to the lightest value clearing 3:1 on both
-     white and paper. */
-  --color-brass: #ad871d; /* 3.35:1 on surface, 3.13:1 on paper */
-  --color-brass-soft: #f3e8cc;
-  --color-brass-text: #816516; /* 4.53:1 on brass-soft */
+  --color-brass: #c8a24a;
+  --color-brass-soft: #f0e6d2;
+  --color-rule: #cecac8;
 
-  /* ----------------------------------------------------------------------
-     FENCED EXCEPTION 2 — status, never decorative.
+  /* Hero ground. The homepage opens dark before descending into parchment;
+     these were raw hex literals in hero.tsx and page.tsx, which is the one
+     thing the design system is meant to prevent. Not part of the Monad
+     palette — a deliberate deep register the rest of the site never uses. */
+  --color-canvas-deep: #173156;
+  --color-canvas-deep-2: #16304d;
 
-     MASTER.md permits exactly two status colours: one for "a rule changed",
-     one for "an opportunity opened", because those must be told apart at a
-     glance. This schema carries eight status enums, so a negative token is
-     genuinely required and blue cannot carry it. Danger is the one value
-     this port adds to the spec, and it is added deliberately.
-     ---------------------------------------------------------------------- */
-  --color-success: #12645a; /* MASTER --status-good — 7.01:1 on surface */
-  --color-success-soft: #e3efed;
-  --color-success-text: #12645a; /* 5.95:1 on its soft chip */
-  --color-warning: #8a5a12; /* MASTER --status-alert — 5.91:1 on surface */
-  --color-warning-soft: #f4ecdd;
-  --color-warning-text: #8a5a12; /* 5.04:1 on its soft chip */
-  --color-danger: #a3231a; /* 7.47:1 on surface; white on it: 7.47:1 */
-  --color-danger-soft: #fbe9e7;
-  --color-danger-text: #a3231a; /* 6.37:1 on its soft chip */
-  --color-info: var(--jra-blue);
-  --color-info-soft: var(--blue-50);
-  --color-info-text: var(--jra-blue); /* 6.85:1 on its soft chip */
+  /* -- Readable text variants -------------------------------------------
+     The brand olive and brass are correct as *fills* — icons, stars,
+     borders, chip backgrounds — where 3:1 is the bar (WCAG 1.4.11). As
+     text they failed: brass measured 2.98:1 on white and 2.44:1 on its own
+     soft chip. These are the darkened equivalents that clear 4.5:1 on
+     surface, paper and their soft background. Use *-text for glyphs,
+     the base token for fills. The dark theme needs no equivalent — it
+     already measures 8:1+, so both map back to the base there. */
+  --color-olive-text: #2f6b4f;
+  --color-brass-text: #7e662f;
 
-  /* --- shape. This is the fully-rounded direction; no square corners. --- */
-  --r-pill: 999px;
-  --r-lg: 20px; /* cards, tiles, panels */
-  --r-md: 16px; /* quick-action pills */
-  --r-sm: 10px;
-  --radius-editorial: var(--r-lg); /* was 2rem — folded into the scale */
+  /* -- Semantic status ---------------------------------------------------
+     Distinct from the brand accents, which were previously doing double
+     duty. The schema carries eight status enums (DRAFT/PUBLISHED/ARCHIVED,
+     PENDING/APPROVED/REJECTED/MORE_INFO, MET/PARTIAL/NOT_MET, EXPIRED …)
+     and there was no danger token at all to render the negative half.
+     Never use these alone to carry meaning — always pair with an icon or
+     text label (WCAG 1.4.1). */
+  --color-success: #2f6b4f;
+  --color-success-soft: #dceee3;
+  --color-success-text: #2f6b4f;
+  --color-warning: #b77a16;
+  --color-warning-soft: #f2e5cd;
+  --color-warning-text: #916011;
+  --color-danger: #a32035;
+  --color-danger-soft: #fee4e2;
+  --color-danger-text: #a32035;
+  --color-info: #0050a0;
+  --color-info-soft: #e8f1fb;
+  --color-info-text: #0050a0;
+  --shadow-card: none;
 
-  /* --- elevation -------------------------------------------------------- */
-  --shadow-card: 0 24px 44px -36px rgb(0 0 0 / 0.6);
-  --shadow-raised: 0 20px 40px -32px rgb(0 0 0 / 0.65);
-  --shadow-float: 0 24px 50px -30px rgb(0 0 0 / 0.7);
-  --shadow-float-lg: 0 30px 60px -30px rgb(0 0 0 / 0.6);
-  --shadow-pop: 0 30px 60px -30px rgb(0 0 0 / 0.6);
-  --shadow-stuck: 0 14px 34px -30px rgb(0 0 0 / 0.8);
-
-  /* --- motion ----------------------------------------------------------- */
-  --dur-fast: 0.18s;
-  --dur-mid: 0.3s;
-  --dur-slow: 0.45s;
-  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --ease-media: cubic-bezier(0.2, 0.6, 0.2, 1);
+  /* Editorial layer — floating white surfaces over an atmospheric backdrop.
+     Stacked shadows read as real depth; one large blur reads flat. */
+  --shadow-float: none;
+  --shadow-float-lg: none;
+  --radius-editorial: 2rem;
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* --- header ----------------------------------------------------------- */
@@ -245,12 +196,68 @@
   --shadow-pop: 0 20px 48px rgb(0 0 0 / 0.55);
   --shadow-stuck: 0 10px 30px rgb(0 0 0 / 0.5);
 
+  --color-success: #4cc08a;
+  --color-success-soft: #123b2a;
+  --color-success-text: #4cc08a;
+  --color-warning: #e0bb4e;
+  --color-warning-soft: #2e2610;
+  --color-warning-text: #e0bb4e;
+  --color-danger: #f97066;
+  --color-danger-soft: #3b1412;
+  --color-danger-text: #f97066;
+  --color-info: #4a9be0;
+  --color-info-soft: #123354;
+  /* Slightly lighter than --color-info: the base measured 4.34:1 on
+     info-soft, just under the AA floor. */
+  --color-info-text: #509fe1;
+  --shadow-card: none;
+  /* Dark mode can't lean on shadow for elevation — the ambient light is gone.
+     Keep a soft cast for grounding and let borders carry the separation. */
+  --shadow-float: none;
+  --shadow-float-lg: none;
+  --radius-editorial: 2rem;
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
   color-scheme: dark;
 }
 
 /* The explicit light choice, so the toggle wins in both directions. All
    values are already the :root defaults — only the flag needs restating. */
 :root[data-theme="light"] {
+  --color-paper: #f6f3f1;
+  --color-surface: #f6f3f1;
+  --color-surface-2: #efebe8;
+  --color-ink: #242424;
+  --color-ink-soft: #4e4d4d;
+  --color-ink-faint: #6c6a69;
+  --color-accent: #0050a0;
+  --color-accent-strong: #003d7a;
+  --color-accent-soft: #e8f1fb;
+  --color-olive: #2f6b4f;
+  --color-olive-soft: #dceee3;
+  --color-brass: #c8a24a;
+  --color-brass-soft: #f0e6d2;
+  --color-rule: #cecac8;
+
+  --color-olive-text: #2f6b4f;
+  --color-brass-text: #7e662f;
+
+  --color-success: #2f6b4f;
+  --color-success-soft: #dceee3;
+  --color-success-text: #2f6b4f;
+  --color-warning: #b77a16;
+  --color-warning-soft: #f2e5cd;
+  --color-warning-text: #916011;
+  --color-danger: #a32035;
+  --color-danger-soft: #fee4e2;
+  --color-danger-text: #a32035;
+  --color-info: #0050a0;
+  --color-info-soft: #e8f1fb;
+  --color-info-text: #0050a0;
+  --shadow-card: none;
+  --shadow-float: none;
+  --shadow-float-lg: none;
+  --radius-editorial: 2rem;
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
   color-scheme: light;
 }
 
@@ -274,6 +281,8 @@
   --color-brass-text: var(--color-brass-text);
   --color-rule: var(--color-rule);
   --color-navy: var(--color-navy);
+  --color-canvas-deep: var(--color-canvas-deep);
+  --color-canvas-deep-2: var(--color-canvas-deep-2);
 
   --color-success: var(--color-success);
   --color-success-soft: var(--color-success-soft);
@@ -311,6 +320,125 @@
   --ease-media: var(--ease-media);
 }
 
+
+/* ---------------------------------------------------------------------- */
+/* Monad scale — type, radius, spacing, layout                             */
+/*                                                                         */
+/* These override Tailwind's defaults rather than adding a parallel set of  */
+/* utilities, so the ~450 existing `text-*` and `rounded-*` classes across  */
+/* the app adopt the system without every component being rewritten.       */
+/*                                                                         */
+/* The pixel sizes were already close to Tailwind's defaults; what actually */
+/* changes the feel is the line-height (1.2 on headings, 1.35 on body) and  */
+/* the negative tracking that lets the serif hold hierarchy at weight 400.  */
+/* ---------------------------------------------------------------------- */
+@theme {
+  /* Minor third from 16px. */
+  --text-xs: 12px;
+  --text-xs--line-height: 1.2;
+  --text-xs--letter-spacing: -0.4px;
+  --text-sm: 14px;
+  --text-sm--line-height: 1.35;
+  --text-sm--letter-spacing: -0.28px;
+  --text-base: 16px;
+  --text-base--line-height: 1.35;
+  --text-base--letter-spacing: -0.4px;
+  --text-lg: 18px;
+  --text-lg--line-height: 1.2;
+  --text-lg--letter-spacing: -0.4px;
+  --text-xl: 20px;
+  --text-xl--line-height: 1.35;
+  --text-xl--letter-spacing: -0.4px;
+  --text-2xl: 24px;
+  --text-2xl--line-height: 1.2;
+  --text-2xl--letter-spacing: -0.48px;
+  --text-3xl: 32px;
+  --text-3xl--line-height: 1.2;
+  --text-3xl--letter-spacing: -0.64px;
+  --text-4xl: 40px;
+  --text-4xl--line-height: 1.2;
+  --text-4xl--letter-spacing: -0.8px;
+  --text-5xl: 48px;
+  --text-5xl--line-height: 1.2;
+  --text-5xl--letter-spacing: -0.96px;
+  --text-6xl: 64px;
+  --text-6xl--line-height: 1.2;
+  --text-6xl--letter-spacing: -1.28px;
+  --text-7xl: 80px;
+  --text-7xl--line-height: 1.2;
+  --text-7xl--letter-spacing: -1.6px;
+
+  /* Editorial card radius. `rounded-2xl` is the card class used in 65 places,
+     so remapping it is what turns the whole surface language editorial. */
+  --radius-2xl: 40px;
+  /* Data and dashboard panels stay at 12px — the Mercury-derived radius for
+     dense screens, where 40px would waste the corners. */
+  --radius-xl: 12px;
+  /* Inputs, buttons and nav items are pills. */
+  --radius-lg: 100px;
+
+  /* Named aliases, so new work can say what it means. */
+  --radius-card: 40px;
+  --radius-panel: 12px;
+  --radius-button: 100px;
+  --radius-pill: 9999px;
+
+  --spacing-section: 64px;
+  --spacing-card: 40px;
+
+  /* The page measure. `max-w-6xl` is the container on every page, so remapping
+     it here widens the whole site at once — 1152px to Monad's 1432px. The
+     extra 280px is what lets a 3-up card grid breathe at 40px padding. */
+  --container-6xl: 1432px;
+}
+
+/* A pill is wrong for anything that wraps to several lines: the radius eats
+   into the text box. Multi-line controls take the panel radius instead. */
+textarea.rounded-lg,
+textarea.rounded-2xl {
+  border-radius: var(--radius-panel);
+}
+
+
+/* ---------------------------------------------------------------------- */
+/* B8 — uppercase UI text, Latin only                                      */
+/*                                                                         */
+/* Nav labels, button text and tag text are set in caps with open tracking */
+/* in the mono UI face. Gated on [dir="ltr"] because Arabic is unicameral:  */
+/* `text-transform` does nothing to it at best, and to a reader it signals  */
+/* an English convention leaking into the page. Tracking is opened rather   */
+/* than tightened — caps need air, which is the opposite of the negative    */
+/* tracking the headings use.                                              */
+/* ---------------------------------------------------------------------- */
+[dir="ltr"] .ui-caps {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+}
+
+/* Arabic keeps its own case-free rhythm and its normal size. */
+[dir="rtl"] .ui-caps {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+
+/* ---------------------------------------------------------------------- */
+/* C1 — Motion tokens                                                      */
+/* Monad is restrained, so motion explains state change and never          */
+/* decorates. Nothing here exceeds 420ms.                                  */
+/* ---------------------------------------------------------------------- */
+@theme {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-instant: 90ms;
+  --dur-fast: 140ms;
+  --dur-base: 240ms;
+  --dur-slow: 420ms;
+  --dur-page: 200ms;
+}
+
 html,
 body {
   background: var(--color-paper);
@@ -326,9 +454,15 @@ body {
   font-family: var(--font-body-ar), var(--font-body-en), system-ui, sans-serif;
 }
 
-/* The display voice. Style, tracking and weight all come from tokens so the
-   [dir="rtl"] block near the top of this file can neutralise them in one
-   place — the Latin italic and negative tracking both damage Arabic. */
+/* Typefaces. Monad pairs an editorial serif with a monospace UI face; that
+   pairing was tried and rejected, so these are the project's own faces —
+   Plus Jakarta Sans for headings and UI, Playfair Display for editorial
+   leads, Cairo and Noto Sans Arabic for RTL.
+   Everything else Monad contributes — the parchment palette, hairline
+   borders, 40px card radius, the type *scale*, the spacing rhythm and the
+   motion system — is unaffected: none of it depends on which family is
+   loaded. The weight is no longer pinned to 400, because these families
+   have real bolds to resolve to. */
 .font-display {
   font-family: var(--font-display-en), sans-serif;
   font-style: var(--display-style);
@@ -340,10 +474,9 @@ body {
   font-family: var(--font-display-ar), sans-serif;
 }
 
-/* `.font-editorial` used to be a third Latin voice (a serif). MASTER.md
-   defines two Latin roles, so it now resolves to the display face. The class
-   is kept rather than removed so the call site in home/hero.tsx and any
-   future one keep working. */
+/* Editorial serif for hero and section leads. Arabic has no matched serif
+   here, so RTL falls back to the Arabic display face — a deliberate asymmetry
+   rather than pairing Arabic with an unrelated Latin serif. */
 .font-editorial {
   font-family: var(--font-display-en), sans-serif;
   font-style: var(--display-style);
@@ -375,18 +508,160 @@ body {
 /* Motion primitives — "service, not spectacle" (see plan §5)              */
 /* ---------------------------------------------------------------------- */
 
+/* Card hover. Shadows are banned and the lift went with them: the affordance
+   is the border darkening to off-black and the cover image pushing inside its
+   frame. Only `border-color` here — the image transform lives on
+   .motion-card-image, so nothing animates layout. */
 .motion-card {
-  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 320ms ease;
+  transition: border-color var(--dur-fast) var(--ease-out);
 }
 .motion-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-card);
+  border-color: var(--color-ink);
 }
 .motion-card-image {
-  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 400ms var(--ease-out);
 }
 .motion-card:hover .motion-card-image {
-  transform: scale(1.045);
+  transform: scale(1.03);
+}
+
+
+
+/* ---------------------------------------------------------------------- */
+/* C3 — Component motion                                                   */
+/* Every rule below animates transform or opacity only, with the single    */
+/* documented exception of the accordion's grid-template-rows.             */
+/* ---------------------------------------------------------------------- */
+
+/* Pill buttons. The fill darkens; a trailing arrow moves toward the reading
+   edge. `margin-inline-start` would animate layout, so the arrow uses a
+   translate whose sign is flipped under RTL rather than a directional
+   property — the same motion, mirrored, in both scripts. */
+.cta-arrow {
+  transition: transform 180ms var(--ease-out);
+}
+.group:hover .cta-arrow,
+a:hover > .cta-arrow,
+button:hover > .cta-arrow {
+  transform: translateX(4px);
+}
+[dir="rtl"] .group:hover .cta-arrow,
+[dir="rtl"] a:hover > .cta-arrow,
+[dir="rtl"] button:hover > .cta-arrow {
+  transform: translateX(-4px);
+}
+
+.pill-press {
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-instant) var(--ease-out);
+}
+.pill-press:active {
+  transform: scale(0.98);
+}
+
+/* Result grid entrance. Capped at the first twelve children: beyond that the
+   stagger reads as the page being slow, and C6 forbids running an animation
+   on more than twelve elements at once. Children past the cap simply appear. */
+@keyframes grid-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.stagger > *:nth-child(-n + 12) {
+  animation: grid-rise var(--dur-base) var(--ease-out) both;
+}
+.stagger > *:nth-child(1) { animation-delay: 0ms; }
+.stagger > *:nth-child(2) { animation-delay: 40ms; }
+.stagger > *:nth-child(3) { animation-delay: 80ms; }
+.stagger > *:nth-child(4) { animation-delay: 120ms; }
+.stagger > *:nth-child(5) { animation-delay: 160ms; }
+.stagger > *:nth-child(6) { animation-delay: 200ms; }
+.stagger > *:nth-child(7) { animation-delay: 240ms; }
+.stagger > *:nth-child(8) { animation-delay: 280ms; }
+.stagger > *:nth-child(9) { animation-delay: 320ms; }
+.stagger > *:nth-child(10) { animation-delay: 360ms; }
+.stagger > *:nth-child(11) { animation-delay: 400ms; }
+.stagger > *:nth-child(12) { animation-delay: 440ms; }
+
+/* Result count. The number crossfades rather than swapping, keyed on its own
+   text so React remounts it when the count changes. */
+@keyframes count-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.count-fade {
+  animation: count-fade 180ms var(--ease-out) both;
+}
+
+/* Accordion. grid-template-rows 0fr -> 1fr is the one non-transform property
+   animated anywhere in the system: it is the only way to animate to an
+   intrinsic height without measuring in JS. The child must own overflow. */
+.accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-base) var(--ease-in-out);
+}
+.accordion-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+.accordion-panel > * {
+  overflow: hidden;
+}
+.accordion-chevron {
+  transition: transform var(--dur-base) var(--ease-in-out);
+}
+[data-open="true"] > .accordion-chevron,
+[aria-expanded="true"] .accordion-chevron {
+  transform: rotate(180deg);
+}
+
+/* Sticky header. Gains a blur and a hairline past 80px of scroll. Height is
+   deliberately unchanged — a shrinking header reflows the page under the
+   reader's cursor. */
+.site-header {
+  transition:
+    backdrop-filter var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out),
+    background-color var(--dur-base) var(--ease-out);
+  border-bottom: 1px solid transparent;
+}
+.site-header[data-scrolled="true"] {
+  backdrop-filter: blur(12px);
+  border-bottom-color: var(--color-rule);
+}
+
+/* Skeletons sweep parchment -> raised surface. A grey pulse reads as broken
+   on a warm canvas, which is what the stock `animate-pulse` gives here. */
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+.skeleton {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-paper) 0%,
+    var(--color-surface-2) 50%,
+    var(--color-paper) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+
+
+/* Route crossfade — see [locale]/template.tsx. */
+@keyframes route-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.route-fade {
+  animation: route-fade var(--dur-page) var(--ease-out) both;
 }
 
 
@@ -549,11 +824,11 @@ body {
 .lift {
   transition:
     transform 300ms var(--ease-editorial),
-    box-shadow 300ms var(--ease-editorial);
+    border-color 300ms var(--ease-editorial);
 }
 .lift:hover {
   transform: scale(1.03);
-  box-shadow: var(--shadow-float);
+  border-color: var(--color-ink-faint);
 }
 
 .zoom-frame {
@@ -589,29 +864,57 @@ body {
   animation: drift 9s ease-in-out infinite;
 }
 
+/* ---------------------------------------------------------------------- */
+/* C5 — Reduced motion                                                     */
+/*                                                                         */
+/* This was an allowlist of known classes, which fails the moment anyone    */
+/* adds an animation and forgets to register it. It is now universal.       */
+/*                                                                         */
+/* Durations collapse to 0.01ms rather than `animation: none`, and that is  */
+/* deliberate: `none` cancels an animation and reverts the element to its   */
+/* pre-animation state, which for anything entering from opacity 0 means    */
+/* invisible content. A near-zero duration runs the animation to its final  */
+/* keyframe instantly, so everything lands visible. Content must never be   */
+/* unreachable because someone asked for less motion.                       */
+/* ---------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  .motion-card,
-  .motion-card-image,
-  .reveal,
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Transform-based entrances are dropped entirely; the opacity half stays. */
   .animate-fade-rise,
-  .animate-drift,
-  .animate-editorial-shell,
-  .animate-nav-drop,
   .animate-editorial-rise,
-  .nav-indicator,
-  .lift,
+  .animate-nav-drop,
+  .animate-editorial-shell,
+  .stagger > *,
+  .parallax-layer,
   .zoom-frame img,
-  .parallax-layer {
-    transition: none !important;
-    animation: none !important;
+  .motion-card-image {
     transform: none !important;
   }
-  .reveal {
-    opacity: 1;
+
+  /* Anything that fades in must end visible, whatever its fill mode. */
+  .reveal,
+  .stagger > * {
+    opacity: 1 !important;
   }
-  /* The indicator still needs to mark the current page — it just won't slide. */
+
+  /* The indicator still marks the current page — it just won't slide. */
   .nav-indicator {
     transform: translateX(var(--nav-x, 0px)) !important;
+  }
+
+  /* An infinite shimmer is exactly what this preference exists to stop. */
+  .skeleton {
+    animation: none !important;
+    background-image: none;
+    background-color: var(--color-surface-2);
   }
 }
 
@@ -651,7 +954,7 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 999px;
   background: var(--color-accent);
   border: 3px solid var(--color-surface);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  outline: 1px solid var(--color-rule);
   transition: transform 150ms ease;
 }
 input[type="range"]::-webkit-slider-thumb:hover {
@@ -663,7 +966,7 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 999px;
   background: var(--color-accent);
   border: 3px solid var(--color-surface);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  outline: 1px solid var(--color-rule);
   transition: transform 150ms ease;
 }
 input[type="range"]::-moz-range-thumb:hover {
@@ -1151,4 +1454,11 @@ input[type="range"]:focus-visible {
   accent-color: var(--accent);
   inline-size: 1rem;
   block-size: 1rem;
+}
+.locale-switcher-btn:hover {
+  transform: translateY(-3px);
+  /* Was a drop shadow. The system has none — the lift is carried by the
+     border darkening, the same way .motion-card and .lift now do it. */
+  border-color: var(--color-ink-faint);
+  cursor: pointer;
 }

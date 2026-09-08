@@ -99,7 +99,7 @@ export default async function PublicAssessmentPage({
       <p className="text-xs font-eyebrow font-semibold text-accent">
         {tc("selfAssessmentKicker")}
       </p>
-      <h1 className="mt-1 font-display text-2xl font-semibold text-ink">{standardTitle}</h1>
+      <h1 className="mt-1 font-display font-semibold text-5xl text-ink">{standardTitle}</h1>
       <p className="mt-2 max-w-2xl text-sm text-ink-soft">{tc("publicIntro")}</p>
 
       <div className="mt-8">

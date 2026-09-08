@@ -49,7 +49,7 @@ export default async function RestaurantsPage({
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-3xl font-semibold text-ink">{t("restaurants")}</h1>
+      <h1 className="font-display font-semibold text-5xl text-ink">{t("restaurants")}</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">{tr("description")}</p>
 
       <DirectoryFilters
@@ -59,14 +59,16 @@ export default async function RestaurantsPage({
       />
 
       <div className="mt-6 text-sm text-ink-faint">
-        {results.total} {results.total === 1 ? tCommon("result") : tCommon("results")}
+        <span key={results.total} className="count-fade">
+          {results.total} {results.total === 1 ? tCommon("result") : tCommon("results")}
+        </span>
       </div>
 
       {results.items.length === 0 ? (
         <p className="mt-16 text-center text-ink-soft">{tCommon("noResults")}</p>
       ) : (
         <div
-          className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          className="stagger mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
         >
           {results.items.map((r) => (
             <div key={r.slug}>
