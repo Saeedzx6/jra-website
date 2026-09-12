@@ -25,7 +25,9 @@
     "login": "تسجيل الدخول",
     "portal": "حسابي",
     "logout": "تسجيل الخروج",
-    "gallery": "معرض الصور"
+    "gallery": "معرض الصور",
+    "signedInAs": "مسجّل الدخول باسم",
+    "dashboard": "لوحة التحكم"
   },
   "common": {
     "learnMore": "المزيد",
