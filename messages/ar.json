@@ -31,7 +31,9 @@
     "languageLabel": "التبديل إلى الإنجليزية",
     "menu": "القائمة",
     "close": "إغلاق",
-    "gallery": "معرض الصور"
+    "gallery": "معرض الصور",
+    "signedInAs": "مسجّل الدخول باسم",
+    "dashboard": "لوحة التحكم"
   },
   "common": {
     "learnMore": "المزيد",
@@ -648,6 +650,36 @@
       "status": "الحالة",
       "draft": "مسودة",
       "published": "منشور"
+    },
+    "feedback": {
+      "saved": "تم حفظ التغييرات.",
+      "created": "تمت إضافة {name}.",
+      "deleted": "تم حذف {name}.",
+      "nameRequired": "اسم المورّد مطلوب.",
+      "titleRequired": "العنوان مطلوب.",
+      "supplierGone": "هذا المورّد لم يعد موجوداً.",
+      "articleGone": "هذا المقال لم يعد موجوداً.",
+      "articleCreated": "تم إنشاء «{title}».",
+      "articleDeleted": "تم حذف «{title}».",
+      "cannotDeleteMember": "{name} يحمل العضوية {memberNumber} مع سجل فواتير، لذلك لا يمكن حذفه. اجعله مسودة بدلاً من ذلك لإزالته من الدليل العام.",
+      "chooseImage": "اختر صورة أولاً.",
+      "notAnImage": "هذا الملف ليس صورة. استخدم JPEG أو PNG أو WebP أو AVIF أو GIF.",
+      "imageTooLarge": "الصورة كبيرة جداً حتى بعد تصغيرها. يرجى قصّها أو حفظ نسخة أصغر.",
+      "notFound": "هذا السجل لم يعد موجوداً.",
+      "coverNotImage": "تم حفظ المقال، لكن ملف الغلاف ليس صورة.",
+      "uploadFailed": "لم يكتمل الرفع. يرجى المحاولة مرة أخرى.",
+      "uploading": "جارٍ الرفع…",
+      "working": "جارٍ التنفيذ…",
+      "noImage": "لا توجد صورة",
+      "noPhotosYet": "لا توجد صور بعد — أول صورة تضيفها تصبح صورة بطاقة الدليل.",
+      "noPhotosSimple": "لا توجد صور بعد — أضف واحدة أدناه.",
+      "primary": "رئيسية",
+      "makePrimary": "اجعلها رئيسية",
+      "deletePhoto": "حذف الصورة",
+      "upload": "رفع",
+      "replace": "استبدال",
+      "remove": "إزالة",
+      "addPhoto": "إضافة صورة"
     }
   },
   "contactForm": {

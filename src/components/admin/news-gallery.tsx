@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState, useTransition } from "react";
 import { Trash2, Loader2, ImagePlus, AlertCircle } from "lucide-react";
@@ -25,6 +26,7 @@ export function NewsGalleryManager({
   items: GalleryRow[];
   labels: { heading: string; add: string; caption: string; empty: string };
 }) {
+  const tf = useTranslations("admin.feedback");
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [formKey, setFormKey] = useState(0);
@@ -52,7 +54,7 @@ export function NewsGalleryManager({
       } catch {
         // Without this the rejected action reaches the segment's error
         // boundary and replaces the whole page with "Something went wrong".
-        setError("The upload did not complete. Please try again.");
+        setError(tf("uploadFailed"));
       }
     });
   }
@@ -93,7 +95,7 @@ export function NewsGalleryManager({
               ) : (
                 <Trash2 className="h-3 w-3" aria-hidden="true" />
               )}
-              <span className="sr-only">Delete photo</span>
+              <span className="sr-only">{tf("deletePhoto")}</span>
             </button>
           </figure>
         ))}
@@ -130,7 +132,7 @@ export function NewsGalleryManager({
       </form>
 
       <p aria-live="polite" className="mt-2 min-h-4 text-xs">
-        {pending ? <span className="text-ink-faint">Uploading…</span> : null}
+        {pending ? <span className="text-ink-faint">{tf("uploading")}</span> : null}
         {error ? (
           <span className="inline-flex items-center gap-1 text-danger-text">
             <AlertCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />

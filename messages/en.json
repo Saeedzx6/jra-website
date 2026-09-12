@@ -31,7 +31,9 @@
     "languageLabel": "Switch to Arabic",
     "menu": "Menu",
     "close": "Close",
-    "gallery": "Gallery"
+    "gallery": "Gallery",
+    "signedInAs": "Signed in as",
+    "dashboard": "Admin dashboard"
   },
   "common": {
     "learnMore": "Learn more",
@@ -648,6 +650,36 @@
       "status": "Status",
       "draft": "Draft",
       "published": "Published"
+    },
+    "feedback": {
+      "saved": "Changes saved.",
+      "created": "{name} added.",
+      "deleted": "{name} deleted.",
+      "nameRequired": "A supplier name is required.",
+      "titleRequired": "A title is required.",
+      "supplierGone": "That supplier no longer exists.",
+      "articleGone": "That article no longer exists.",
+      "articleCreated": "\"{title}\" created.",
+      "articleDeleted": "\"{title}\" deleted.",
+      "cannotDeleteMember": "{name} holds membership {memberNumber} with billing history, so it cannot be deleted. Set it to Draft instead to remove it from the public directory.",
+      "chooseImage": "Choose an image first.",
+      "notAnImage": "That file is not an image. Use JPEG, PNG, WebP, AVIF or GIF.",
+      "imageTooLarge": "That image is too large even after resizing. Please crop it or save a smaller copy.",
+      "notFound": "That record no longer exists.",
+      "coverNotImage": "The article was saved, but the cover was not an image file.",
+      "uploadFailed": "The upload did not complete. Please try again.",
+      "uploading": "Uploading…",
+      "working": "Working…",
+      "noImage": "No image",
+      "noPhotosYet": "No photos yet — the first one you add becomes the directory card image.",
+      "noPhotosSimple": "No photos yet — add one below.",
+      "primary": "Primary",
+      "makePrimary": "Make primary",
+      "deletePhoto": "Delete photo",
+      "upload": "Upload",
+      "replace": "Replace",
+      "remove": "Remove",
+      "addPhoto": "Add photo"
     }
   },
   "contactForm": {
