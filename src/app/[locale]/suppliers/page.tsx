@@ -1,5 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Boxes } from "lucide-react";
+import { Boxes, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 import { CoverThumb } from "@/components/cover-thumb";
@@ -29,8 +29,25 @@ export default async function SuppliersPage({
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-      <h1 className="font-display font-semibold text-5xl text-ink">{t("suppliers")}</h1>
-      <p className="mt-2 max-w-2xl text-ink-soft">{ts("description")}</p>
+      <div className="flex flex-wrap items-start justify-between gap-6">
+        <div>
+          <h1 className="font-display font-semibold text-5xl text-ink">{t("suppliers")}</h1>
+          <p className="mt-2 max-w-2xl text-ink-soft">{ts("description")}</p>
+        </div>
+
+        {/* The directory is where a prospective supplier actually looks, so the
+            way in belongs here rather than only on /membership.
+            `?apply=supplier` opens that form on the supplier half. */}
+        <Link
+          href="/membership?apply=supplier"
+          className="pill-press ui-caps inline-flex shrink-0 items-center gap-2 rounded-full bg-accent px-6 py-3 font-semibold text-white"
+        >
+          {ts("applyCta")}
+          <ArrowRight className="cta-arrow h-3.5 w-3.5 rtl:rotate-180" aria-hidden="true" />
+        </Link>
+      </div>
+
+      <p className="mt-3 max-w-2xl text-sm text-ink-faint">{ts("applyHint")}</p>
 
       {suppliers.length === 0 ? (
         <div className="mt-12 rounded-2xl border border-dashed border-rule bg-surface p-12 text-center">

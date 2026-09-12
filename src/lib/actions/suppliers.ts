@@ -25,6 +25,14 @@ import { UPLOAD_MAX_BYTES as MAX_BYTES } from "@/lib/prepare-image";
 
 const ALLOWED = ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"];
 
+/** What the admin forms render back to the editor after a submit. */
+export type SupplierFormState = {
+  status: "idle" | "saved" | "created" | "deleted" | "error";
+  message?: string;
+  /** Timestamp so two identical saves are still distinct states. */
+  at?: number;
+};
+
 function revalidateSuppliers() {
   revalidatePath("/[locale]/admin/suppliers", "page");
   revalidatePath("/[locale]/suppliers", "page");
@@ -47,11 +55,14 @@ function str(formData: FormData, key: string) {
   return s.length > 0 ? s : null;
 }
 
-export async function createSupplier(formData: FormData): Promise<void> {
+export async function createSupplier(
+  _prev: SupplierFormState,
+  formData: FormData
+): Promise<SupplierFormState> {
   const session = await requireAdmin();
 
   const name = str(formData, "name");
-  if (!name) throw new Error("A supplier name is required.");
+  if (!name) return { status: "error", message: "A supplier name is required." };
 
   const status = formData.get("status") === "PUBLISHED" ? "PUBLISHED" : "DRAFT";
   const governorateId = str(formData, "governorateId");
@@ -74,13 +85,18 @@ export async function createSupplier(formData: FormData): Promise<void> {
 
   await writeAudit(session.user.id, "CREATE", "SUPPLIER", supplier.id, { name, status });
   revalidateSuppliers();
+  return { status: "created", message: `${name} added.`, at: Date.now() };
 }
 
-export async function updateSupplier(id: string, formData: FormData): Promise<void> {
+export async function updateSupplier(
+  id: string,
+  _prev: SupplierFormState,
+  formData: FormData
+): Promise<SupplierFormState> {
   const session = await requireAdmin();
 
   const name = str(formData, "name");
-  if (!name) throw new Error("A supplier name is required.");
+  if (!name) return { status: "error", message: "A supplier name is required." };
 
   await db.supplier.update({
     where: { id },
@@ -99,6 +115,9 @@ export async function updateSupplier(id: string, formData: FormData): Promise<vo
 
   await writeAudit(session.user.id, "UPDATE", "SUPPLIER", id, { name });
   revalidateSuppliers();
+  // `at` makes each save a distinct state object, so React re-runs the
+  // effect that clears the confirmation even when two saves are identical.
+  return { status: "saved", message: "Changes saved.", at: Date.now() };
 }
 
 export async function uploadSupplierImage(
@@ -165,4 +184,41 @@ export async function setPrimarySupplierImage(supplierId: string, imageId: strin
   await db.supplierImage.update({ where: { id: imageId }, data: { isPrimary: true } });
   await writeAudit(session.user.id, "SET_PRIMARY_IMAGE", "SUPPLIER", supplierId, { imageId });
   revalidateSuppliers();
+}
+
+/**
+ * Deletes a supplier.
+ *
+ * Images, category links and manager links all cascade. A Membership does not:
+ * its `supplierId` is `SetNull`, so deleting a supplier that has one would
+ * leave a membership — and every invoice and payment hanging off it — pointing
+ * at nothing, with no way to tell afterwards who it belonged to.
+ *
+ * Rather than silently strand billing history, this refuses and explains. The
+ * way to take such a supplier off the site is to set it back to Draft, which
+ * removes it from the public directory and keeps the record intact.
+ */
+export async function deleteSupplier(
+  id: string,
+  _prev: SupplierFormState
+): Promise<SupplierFormState> {
+  const session = await requireAdmin();
+
+  const supplier = await db.supplier.findUnique({
+    where: { id },
+    select: { name: true, membership: { select: { id: true, memberNumber: true } } },
+  });
+  if (!supplier) return { status: "error", message: "That supplier no longer exists." };
+
+  if (supplier.membership) {
+    return {
+      status: "error",
+      message: `${supplier.name} holds membership ${supplier.membership.memberNumber} with billing history, so it cannot be deleted. Set it to Draft instead to remove it from the public directory.`,
+    };
+  }
+
+  await db.supplier.delete({ where: { id } });
+  await writeAudit(session.user.id, "DELETE", "SUPPLIER", id, { name: supplier.name });
+  revalidateSuppliers();
+  return { status: "deleted", message: `${supplier.name} deleted.`, at: Date.now() };
 }
