@@ -1,9 +1,21 @@
 @import "tailwindcss";
 
-/* ---------------------------------------------------------------------- */
-/* Design tokens — colors sampled directly from the real JRA logo          */
-/* (public/brand/jra-logo.png): primary blue #0050A0, wordmark gray #707070*/
-/* ---------------------------------------------------------------------- */
+/* ==========================================================================
+   JRA design tokens — ported from design-system/MASTER.md
+
+   The identity is strictly two colours, sampled from the JRA logo:
+     #0053A0  blue  — the ellipse mark
+     #6C6D70  grey  — all type, Arabic and Latin
+   Everything below is a tonal derivation of those two.
+
+   THE STANDING RULE: no third hue. Two exceptions are fenced below and
+   neither is decorative — read the comment above each before reaching for
+   one.
+
+   Ratios in the comments were measured, not estimated. Re-measure before
+   changing a value: these tokens reach ~82 component files through the
+   @theme mapping further down, so a change here is a change everywhere.
+   ========================================================================== */
 
 :root {
   --color-paper: #f6f3f1;
@@ -69,30 +81,120 @@
   --shadow-float-lg: none;
   --radius-editorial: 2rem;
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* --- header ----------------------------------------------------------- */
+  /* The header is fixed and overlays the hero, so anything that has to clear
+     it measures against this. Kept generous on purpose: a few pixels too
+     many is invisible, a few too few puts content under the header. */
+  --header-h: 7.5rem;
+
+  /* ======================================================================
+     Bilingual typography
+
+     The [dir="rtl"] overrides below are not preferences. Each one corrects
+     a way the Latin styling actively damages Arabic text. Never hardcode
+     letter-spacing, font-style: italic, or text-transform: uppercase — go
+     through these tokens so the Arabic build can neutralise them.
+     ====================================================================== */
+  --display-style: italic;
+  --display-tracking: -0.02em;
+  --display-weight: 700;
+  --body-leading: 1.6;
+
+  --eyebrow-tracking: 0.22em;
+  --eyebrow-transform: uppercase;
+  --label-tracking: 0.14em;
+  --btn-tracking: 0.12em;
+  --nav-tracking: 0.1em;
+
   color-scheme: light;
 }
 
-:root[data-theme="dark"] {
-  --color-paper: #0b1520;
-  --color-surface: #101e2b;
-  --color-surface-2: #16283a;
-  --color-ink: #e7eef5;
-  --color-ink-soft: #a9b7c3;
-  /* Was #6e7c89 — lightened to clear 4.5:1 on paper, surface and surface-2. */
-  --color-ink-faint: #828f9c;
-  --color-accent: #4a9be0;
-  --color-accent-strong: #6fb4ec;
-  --color-accent-soft: #123354;
-  --color-olive: #4cc08a;
-  --color-olive-soft: #123b2a;
-  --color-brass: #e0bb4e;
-  --color-brass-soft: #2e2610;
-  --color-rule: #223244;
+/* --------------------------------------------------------------------------
+   Arabic overrides.
 
-  /* Dark-theme brand hues already measure 8:1+ as text, so the readable
-     variants are the base tokens — no separate value needed. */
-  --color-olive-text: #4cc08a;
-  --color-brass-text: #e0bb4e;
+   1. font-style — Arabic has no italic tradition. A slanted Arabic word
+      reads as a rendering fault, not as emphasis. The display voice here is
+      italic Poppins, so Arabic carries the same weight through Cairo 700
+      upright instead.
+
+   2. letter-spacing — the destructive one. Arabic is cursive: letters join.
+      Positive tracking pulls those joins apart and renders the word as
+      disconnected glyphs. Zeroed, not reduced.
+
+   3. text-transform — Arabic is unicameral, so uppercase is a no-op on
+      Arabic glyphs but still uppercases any Latin mixed into the same run,
+      which reads as accidental.
+
+   4. line-height — Arabic has a smaller x-height but taller ascenders and
+      descenders, so it needs more leading at the same nominal size.
+   -------------------------------------------------------------------------- */
+[dir="rtl"] {
+  --display-style: normal;
+  --display-tracking: 0;
+  --display-weight: 700;
+  --body-leading: 1.8;
+
+  --eyebrow-tracking: 0;
+  --eyebrow-transform: none;
+  --label-tracking: 0;
+  --btn-tracking: 0;
+  --nav-tracking: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Dark theme.
+
+   MASTER.md never specified one — this is the single place the port extends
+   the spec rather than applying it. It stays inside the two-colour rule by
+   grounding on the blue ramp rather than on a neutral black: the deep navy
+   is already the system's darkest surface. Two ramp steps (--blue-925 and
+   --blue-875) were added for the raised surfaces, which satisfies the
+   "don't add a step without a use" clause rather than ignoring it.
+
+   Every value below was measured against all three dark grounds.
+   -------------------------------------------------------------------------- */
+:root[data-theme="dark"] {
+  --color-paper: var(--blue-950);
+  --color-surface: var(--blue-925);
+  --color-surface-2: var(--blue-875);
+  --color-ink: #eef2f6; /* 14.79:1 on paper */
+  --color-ink-soft: #b6c4d3; /* 9.37:1 on paper */
+  --color-ink-faint: #8fa1b4; /* 6.28:1 on paper, 5.08:1 on surface-2 */
+  --color-accent: var(--blue-300); /* 7.49:1 on paper */
+  --color-accent-strong: var(--blue-200); /* 9.86:1 on paper */
+  --color-accent-soft: #0c3a63;
+  --color-rule: #17395c;
+  --color-navy: var(--blue-950);
+
+  --color-olive: #5fd3a0;
+  --color-olive-soft: #0d3d2c;
+  --color-olive-text: #5fd3a0; /* 6.57:1 on its soft chip */
+  --color-brass: #e2bd5a;
+  --color-brass-soft: #33280d;
+  --color-brass-text: #e2bd5a; /* 8.04:1 on its soft chip */
+
+  --color-success: #4fc7b6;
+  --color-success-soft: #08332e;
+  --color-success-text: #4fc7b6; /* 6.68:1 on its soft chip */
+  --color-warning: #e0b268;
+  --color-warning-soft: #33260c;
+  --color-warning-text: #e0b268; /* 7.54:1 on its soft chip */
+  --color-danger: #f79b91;
+  --color-danger-soft: #3a1512;
+  --color-danger-text: #f79b91; /* 7.76:1 on its soft chip */
+  --color-info: var(--blue-300);
+  --color-info-soft: #0c3a63;
+  --color-info-text: var(--blue-300);
+
+  /* Dark mode cannot lean on shadow for elevation — the ambient light is
+     gone. Keep a soft cast for grounding and let the rules carry the
+     separation. */
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.35), 0 10px 32px rgb(0 0 0 / 0.4);
+  --shadow-float: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px rgb(0 0 0 / 0.45);
+  --shadow-float-lg: 0 2px 4px rgb(0 0 0 / 0.45), 0 16px 40px rgb(0 0 0 / 0.5);
+  --shadow-pop: 0 20px 48px rgb(0 0 0 / 0.55);
+  --shadow-stuck: 0 10px 30px rgb(0 0 0 / 0.5);
 
   --color-success: #4cc08a;
   --color-success-soft: #123b2a;
@@ -118,6 +220,8 @@
   color-scheme: dark;
 }
 
+/* The explicit light choice, so the toggle wins in both directions. All
+   values are already the :root defaults — only the flag needs restating. */
 :root[data-theme="light"] {
   --color-paper: #f6f3f1;
   --color-surface: #f6f3f1;
@@ -176,6 +280,7 @@
   --color-brass-soft: var(--color-brass-soft);
   --color-brass-text: var(--color-brass-text);
   --color-rule: var(--color-rule);
+  --color-navy: var(--color-navy);
   --color-canvas-deep: var(--color-canvas-deep);
   --color-canvas-deep-2: var(--color-canvas-deep-2);
 
@@ -193,10 +298,26 @@
   --color-info-text: var(--color-info-text);
 
   --font-display-en: var(--font-display-en);
-  --font-editorial-en: var(--font-editorial-en);
   --font-display-ar: var(--font-display-ar);
   --font-body-en: var(--font-body-en);
   --font-body-ar: var(--font-body-ar);
+
+  /* The radius scale, exposed as rounded-pill / rounded-card / rounded-action.
+     Deliberately NOT remapped onto Tailwind's own --radius-lg etc: doing that
+     would silently resize every existing `rounded-lg` in the app from 8px to
+     20px. Migrating those call sites is a separate pass. */
+  --radius-pill: var(--r-pill);
+  --radius-card: var(--r-lg);
+  --radius-action: var(--r-md);
+
+  --shadow-card: var(--shadow-card);
+  --shadow-raised: var(--shadow-raised);
+  --shadow-float: var(--shadow-float);
+  --shadow-pop: var(--shadow-pop);
+  --shadow-stuck: var(--shadow-stuck);
+
+  --ease-out: var(--ease-out);
+  --ease-media: var(--ease-media);
 }
 
 
@@ -326,6 +447,7 @@ body {
 
 body {
   font-family: var(--font-body-en), var(--font-body-ar), system-ui, sans-serif;
+  line-height: var(--body-leading);
 }
 
 [dir="rtl"] body {
@@ -343,25 +465,35 @@ body {
    have real bolds to resolve to. */
 .font-display {
   font-family: var(--font-display-en), sans-serif;
-  letter-spacing: -0.01em;
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
 }
 
 [dir="rtl"] .font-display {
   font-family: var(--font-display-ar), sans-serif;
-  letter-spacing: 0;
 }
 
 /* Editorial serif for hero and section leads. Arabic has no matched serif
    here, so RTL falls back to the Arabic display face — a deliberate asymmetry
    rather than pairing Arabic with an unrelated Latin serif. */
 .font-editorial {
-  font-family: var(--font-editorial-en), Georgia, serif;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display-en), sans-serif;
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
 }
 
 [dir="rtl"] .font-editorial {
   font-family: var(--font-display-ar), sans-serif;
-  letter-spacing: 0;
+}
+
+/* Eyebrows and small caps labels. Tracked and uppercased through tokens for
+   the same reason — positive tracking renders cursive Arabic as disconnected
+   glyphs, and uppercase silently shouts any Latin inside an Arabic run. */
+.font-eyebrow {
+  letter-spacing: var(--eyebrow-tracking);
+  text-transform: var(--eyebrow-transform);
 }
 
 * {
@@ -598,6 +730,73 @@ button:hover > .cta-arrow {
 /* Sliding active-nav indicator. Position/width are driven from JS via these
    custom properties so the pill can travel between links; the spring-ish
    easing approximates stiffness 300 / damping 30 without a physics lib. */
+/* --------------------------------------------------------------------------
+   Header chrome — MASTER.md §4a.
+
+   Three things flip with the ground the header is sitting on, and none of
+   them may be hardcoded in the markup:
+
+   --nav-accent    brand blue is close to invisible against a dark photographic
+                   hero, so it resolves to white while the header is transparent
+   --nav-hover-bg  the wash under the language toggle and menu button
+   --nav-focus     the focus ring, for the same reason as the accent — a dark
+                   blue ring over photography cannot be found
+
+   The transparent state is scoped by [data-overlay], which the header only
+   sets on routes that open with a dark section. See site-header.tsx.
+   -------------------------------------------------------------------------- */
+.site-header {
+  --nav-fg: var(--color-ink);
+  --nav-fg-soft: var(--color-ink-soft);
+  --nav-accent: var(--color-accent);
+  --nav-hover-bg: var(--color-surface-2);
+  --nav-focus: var(--color-accent);
+  --nav-border: var(--color-rule);
+}
+
+.site-header[data-overlay="true"] {
+  /* Explicit, rather than leaning on Tailwind's `border-transparent`. The
+     `* { border-color: var(--color-rule) }` rule further down this file is
+     unlayered, and unlayered CSS beats anything in @layer utilities no matter
+     how specific — so the utility loses and the rule stays visible over the
+     hero. This declaration is unlayered too, and later, so it wins. */
+  border-bottom-color: transparent;
+
+  --nav-fg: #ffffff;
+  --nav-fg-soft: rgb(255 255 255 / 0.82);
+  --nav-accent: #ffffff;
+  --nav-hover-bg: rgb(255 255 255 / 0.14);
+  --nav-focus: #ffffff;
+  --nav-border: rgb(255 255 255 / 0.24);
+}
+
+/* Both logo lockups occupy the same grid cell and cross-fade, so the swap
+   costs neither a layout shift nor a second request mid-scroll. */
+.logo-stack {
+  display: grid;
+}
+
+.logo-stack > * {
+  grid-area: 1 / 1;
+  transition: opacity var(--dur-mid) var(--ease-out);
+}
+
+.site-header[data-overlay="true"] .logo-on-light,
+.site-header[data-overlay="false"] .logo-on-dark {
+  opacity: 0;
+}
+
+.site-header[data-overlay="true"] .logo-on-dark,
+.site-header[data-overlay="false"] .logo-on-light {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-stack > * {
+    transition: none;
+  }
+}
+
 .nav-indicator {
   position: absolute;
   /* Physical `left` on purpose: --nav-x comes from offsetLeft, which is also
@@ -608,7 +807,7 @@ button:hover > .cta-arrow {
   bottom: 0;
   height: 3px;
   border-radius: 999px;
-  background: var(--color-accent);
+  background: var(--nav-accent, var(--color-accent));
   transform: translateX(var(--nav-x, 0px));
   width: var(--nav-w, 0px);
   opacity: 0;
@@ -809,10 +1008,452 @@ input[type="range"]:focus-visible {
 .nav-link[aria-current="page"]::after {
   transform: scaleX(1);
 }
-.locale-switcher-btn {
+
+/* ==========================================================================
+   Direction B layer — ported from web/styles/{tokens,base,components}.css
+
+   Two things live here:
+
+   1. Short aliases (--ink, --accent, --cream, …) onto the --color-* tokens
+      above. The design system's own stylesheets and CSS modules are written
+      against these names, so aliasing rather than renaming means a component
+      can be carried across verbatim instead of being translated by hand.
+
+   2. The shared classes those components expect: .wrap, .section, .display,
+      .eyebrow, .lede, .btn and the hero. None of these names collide with a
+      Tailwind utility, and Tailwind's own utilities keep working alongside
+      them — this is additive.
+   ========================================================================== */
+
+:root {
+  --ink: var(--color-ink);
+  --ink-soft: var(--color-ink-soft);
+  --cream: var(--color-paper);
+  --surface: var(--color-surface);
+  --line: var(--color-rule);
+  --accent: var(--color-accent);
+  --accent-alt: var(--color-accent-strong);
+  --navy: var(--color-navy);
+  --pale: var(--blue-300);
+  --focus: var(--color-accent);
+  --maxw: 1280px;
+  --media-bg: var(--grey-200);
+
+  --display: var(--font-display-en), "Poppins", system-ui, sans-serif;
+  --sans: var(--font-body-en), "DM Sans", system-ui, sans-serif;
+}
+
+[dir="rtl"] {
+  --display: var(--font-display-ar), "Cairo", system-ui, sans-serif;
+  --sans: var(--font-body-ar), "Cairo", system-ui, sans-serif;
+}
+
+/* --- layout --------------------------------------------------------------- */
+
+.wrap {
+  inline-size: min(100% - 2.5rem, var(--maxw));
+  margin-inline: auto;
+}
+@media (min-width: 768px) {
+  .wrap {
+    inline-size: min(100% - 4rem, var(--maxw));
+  }
+}
+
+.section {
+  padding-block: var(--section-pad, clamp(3.5rem, 7vw, 7rem));
+}
+
+.section-head {
+  text-align: center;
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+  margin-block-end: clamp(2.25rem, 5vw, 3.5rem);
+}
+.section-head h2 {
+  font-size: clamp(2.1rem, 5.5vw, 3.75rem);
+}
+.section-head .eyebrow {
+  color: var(--accent);
+}
+
+/* --- type ----------------------------------------------------------------- */
+
+.display {
+  font-family: var(--display);
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  line-height: 1.04;
+  letter-spacing: var(--display-tracking);
+}
+
+.eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: var(--eyebrow-tracking);
+  text-transform: var(--eyebrow-transform);
+}
+
+.lede {
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  color: var(--ink-soft);
+  max-inline-size: 62ch;
+}
+
+/* --- buttons -------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-block-size: 44px;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--r-pill);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: var(--btn-tracking);
+  text-transform: var(--eyebrow-transform);
+  background: var(--accent);
+  color: #fff;
+  border: 2px solid var(--accent);
+  cursor: pointer;
+  /* Labels are short, uppercase and widely tracked; letting them wrap doubles
+     the button's height and, in the header, silently inflates the whole bar. */
+  white-space: nowrap;
+  transition:
+    transform var(--dur-fast) ease,
+    background var(--dur-mid) ease,
+    color var(--dur-mid) ease,
+    border-color var(--dur-mid) ease;
+}
+.btn:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  transform: translateY(-1px);
+}
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-outline {
+  background: none;
+  color: var(--ink);
+  border-color: currentColor;
+}
+.btn-outline:hover {
+  background: var(--ink);
+  color: var(--cream);
+  border-color: var(--ink);
+}
+
+.btn-light {
+  background: #fff;
+  border-color: #fff;
+  color: var(--ink);
+}
+.btn-light:hover {
+  background: transparent;
+  color: #fff;
+  border-color: #fff;
+}
+
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 44px;
+  block-size: 44px;
+  border-radius: var(--r-pill);
+  border: 2px solid currentColor;
+  transition: background var(--dur-mid) ease;
+}
+.icon-btn:hover {
+  background: rgb(0 0 0 / 0.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn:hover {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* --- hero ----------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-block-size: min(88vh, 46rem);
+  color: #fff;
+  isolation: isolate;
+  text-align: center;
+}
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+/* Covers both the <video> and the still <img> the reduced-motion path renders
+   in its place, so the two are visually interchangeable. */
+.hero-media :is(img, video) {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  /* The poster is a still frame of the same scene, so any gap before the first
+     video frame paints is invisible rather than black. */
+  background: var(--navy);
+}
+/* Two-layer scrim. A single linear gradient puts its weakest stop right where
+   the headline and lede sit, which over a bright photograph composites to
+   roughly 3.3:1 — fine for the headline, below AA for the 16px lede. The
+   radial layer adds a localised scrim behind the copy column (~0.74 effective
+   alpha, AA at any photo brightness) while the edges keep the lighter linear
+   wash, so the photography still reads as full-bleed. */
+.hero-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 92% 72% at 50% 50%, rgb(4 31 58 / 0.55), transparent 72%),
+    linear-gradient(
+      to bottom,
+      rgb(4 31 58 / 0.66),
+      rgb(4 31 58 / 0.42) 45%,
+      rgb(0 83 160 / 0.62)
+    );
+}
+/* Leading padding includes the fixed header's height. On mobile the search
+   console makes this block tall enough to outgrow the hero's min-height, at
+   which point the content stops being vertically centred and the headline
+   would otherwise sit underneath the header. */
+.hero .wrap {
+  padding-block: calc(var(--header-h) + clamp(2rem, 8vw, 4rem)) clamp(5rem, 12vw, 8rem);
+  display: grid;
+  gap: 1.5rem;
+  justify-items: center;
+}
+.hero .eyebrow {
+  color: rgb(255 255 255 / 0.85);
+}
+.hero h1 {
+  font-size: clamp(2.75rem, 9vw, 6rem);
+  text-shadow: 0 2px 30px rgb(0 0 0 / 0.35);
+}
+.hero .lede {
+  color: rgb(255 255 255 / 0.9);
+  text-align: center;
+}
+
+/* --- media, rails, tags, stats -------------------------------------------- */
+
+.media {
+  position: relative;
+  overflow: hidden;
+  background: var(--media-bg);
+}
+.media > img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+/* Horizontal carousels scroll natively; the arrows only nudge scroll position,
+   so the control is usable by touch, trackpad and keyboard without them. */
+.rail {
+  display: flex;
+  gap: var(--gap, 1.5rem);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline-start: 1px;
+  padding-block-end: 1rem;
+  scrollbar-width: thin;
+  margin: 0;
+  padding-inline: 0;
+  list-style: none;
+}
+.rail > * {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+}
+
+.flow-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap, 1rem);
+}
+
+/* Arrows and chevrons are the only things that must physically mirror. */
+[dir="rtl"] .mirror {
+  transform: scaleX(-1);
+}
+
+.tag {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.28rem 0.6rem;
+  border-radius: var(--r-pill);
+  background: var(--cream);
+  color: var(--ink-soft);
+}
+[dir="rtl"] .tag {
+  letter-spacing: 0;
+}
+
+.card-title {
+  font-family: var(--display);
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+}
+
+.stats {
+  background: var(--navy);
+  color: #fff;
+}
+.stats ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(2rem, 5vw, 3rem);
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 900px) {
+  .stats ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.stats .num {
+  display: block;
+  font-family: var(--display);
+  font-style: var(--display-style);
+  font-weight: var(--display-weight);
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--pale);
+}
+.stats .num .suffix {
+  font-size: 0.5em;
+}
+.stats .label {
+  display: block;
+  margin-block-start: 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: var(--label-tracking);
+  text-transform: var(--eyebrow-transform);
+  color: rgb(255 255 255 / 0.7);
+}
+.stats .section-head .eyebrow {
+  color: var(--pale);
+}
+
+/* The newsletter band sits on the palest blue in the ramp, so the section
+   reads as a distinct invitation without introducing a surface colour. */
+.signup {
+  background: var(--blue-50);
+}
+.signup-grid {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3rem);
+}
+@media (min-width: 900px) {
+  .signup-grid {
+    grid-template-columns: 1fr 1.1fr;
+    align-items: center;
+  }
+}
+.signup-grid h2 {
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  margin-block-start: 2.5rem;
+}
+
+/* Accessible label that stays available to screen readers only. */
+.sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --- forms ---------------------------------------------------------------- */
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+}
+.field label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: var(--label-tracking);
+  text-transform: var(--eyebrow-transform);
+  color: var(--ink-soft);
+}
+.field input,
+.field select,
+.field textarea {
+  min-block-size: 44px;
+  padding: 0.85rem 1.15rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: #fff;
+  color: var(--ink);
+}
+.field textarea {
+  border-radius: var(--r-md);
+  min-block-size: 8rem;
+  resize: vertical;
+}
+/* The error sits beside the field it belongs to rather than in a summary at
+   the top, and is linked by aria-describedby. */
+.field-error {
+  font-size: 0.8125rem;
   font-weight: 600;
-  backdrop-filter: blur(4px);
-  
+  color: var(--color-warning);
+}
+.field :is(input, select, textarea)[aria-invalid="true"] {
+  border-color: var(--color-warning);
+}
+
+.checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.checks label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-block-size: 44px;
+  padding: 0.55rem 1rem;
+  border-radius: var(--r-pill);
+  background: #fff;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+.checks input {
+  accent-color: var(--accent);
+  inline-size: 1rem;
+  block-size: 1rem;
 }
 .locale-switcher-btn:hover {
   transform: translateY(-3px);

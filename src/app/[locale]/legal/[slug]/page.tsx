@@ -71,7 +71,7 @@ export default async function LegalDocumentPage({
           { name: doc.topic ?? tType(doc.type), path: `/legal/${slug}` },
         ]}
       />
-      <span className="text-xs font-semibold uppercase tracking-wide text-brass-text">
+      <span className="text-xs font-semibold uppercase tracking-wide text-warning-text">
         {tType(doc.type)} {doc.year ? `· ${doc.year}` : ""}
       </span>
       <h1 className="mt-1 font-display font-semibold text-5xl text-ink">

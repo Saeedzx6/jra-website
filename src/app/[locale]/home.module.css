@@ -1,0 +1,16 @@
+/* Home page composition. Section internals live with their components; this
+   file only positions them relative to one another. */
+
+.heroConsole {
+  inline-size: min(100%, 62rem);
+  margin-block-start: 0.5rem;
+}
+
+.railHead {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-block-end: 2rem;
+}

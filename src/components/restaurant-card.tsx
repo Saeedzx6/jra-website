@@ -14,6 +14,8 @@ export type RestaurantCardData = {
   cuisineName: string | null;
   cuisineNameAr?: string | null;
   stars: number | null;
+  /** Amenity tags, both languages, for the card's chips. */
+  tags?: { en: string; ar: string | null }[];
   /** Signals below — the directory now holds real contact data for ~65%. */
   hasPhone?: boolean;
   hasHours?: boolean;

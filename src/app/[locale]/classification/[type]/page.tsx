@@ -96,7 +96,7 @@ export default async function PublicAssessmentPage({
           { name: standardTitle, path: `/classification/${type}` },
         ]}
       />
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
+      <p className="text-xs font-eyebrow font-semibold text-accent">
         {tc("selfAssessmentKicker")}
       </p>
       <h1 className="mt-1 font-display font-semibold text-5xl text-ink">{standardTitle}</h1>

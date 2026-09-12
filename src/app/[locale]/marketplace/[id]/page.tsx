@@ -67,7 +67,7 @@ export default async function ListingDetailPage({
           { name: listing.title, path: `/marketplace/${id}` },
         ]}
       />
-      <span className="inline-block rounded-full bg-brass-soft px-2.5 py-0.5 text-xs font-medium text-brass-text">
+      <span className="inline-block rounded-full bg-warning-soft px-2.5 py-0.5 text-xs font-medium text-warning-text">
         {tCategory(listing.category)}
       </span>
       <h1 className="mt-3 font-display font-semibold text-5xl text-ink">{listing.title}</h1>

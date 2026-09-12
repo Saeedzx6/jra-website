@@ -27,7 +27,7 @@ export default async function AdminContactPage() {
                   <SubmitButton className="shrink-0 rounded-full border border-accent px-4 py-1.5 text-xs font-semibold text-accent hover:bg-accent hover:text-white">{tc("markHandled")}</SubmitButton>
                 </form>
               ) : (
-                <span className="shrink-0 rounded-full bg-olive-soft px-3 py-1 text-xs font-medium text-olive-text">
+                <span className="shrink-0 rounded-full bg-success-soft px-3 py-1 text-xs font-medium text-success-text">
                   {tc("handled")}
                 </span>
               )}

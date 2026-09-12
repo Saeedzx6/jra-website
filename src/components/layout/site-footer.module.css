@@ -1,0 +1,79 @@
+.footer {
+  background: var(--navy);
+  color: rgb(255 255 255 / 0.75);
+  padding-block: clamp(3rem, 6vw, 5rem) 2rem;
+  /* Keep the last row clear of the gesture bar on mobile. */
+  padding-block-end: max(2rem, env(safe-area-inset-bottom));
+}
+
+.grid {
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 760px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1100px) {
+  .grid {
+    grid-template-columns: 1.3fr repeat(5, 1fr);
+  }
+}
+
+.footer h2 {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: var(--eyebrow-tracking);
+  text-transform: var(--eyebrow-transform);
+  color: var(--pale);
+  margin-block-end: 1rem;
+}
+
+/* Links carry their own 44px hit area, so the list needs no extra gap —
+   without this the footer would grow by ~14px per row for no visual gain. */
+.footer a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+  font-size: 0.875rem;
+}
+.footer a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.brand {
+  --logo-h: 42px;
+}
+.brand img {
+  block-size: var(--logo-h);
+  inline-size: auto;
+}
+.brand p {
+  font-size: 0.875rem;
+  margin-block-start: 1.25rem;
+  max-inline-size: 34ch;
+}
+
+.contact {
+  margin-block-start: 1rem;
+  display: grid;
+  font-size: 0.875rem;
+  font-style: normal;
+}
+.contact span {
+  padding-block: 0.5rem;
+}
+
+.bottom {
+  margin-block-start: 3rem;
+  padding-block-start: 1.5rem;
+  border-block-start: 1px solid rgb(255 255 255 / 0.14);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+}

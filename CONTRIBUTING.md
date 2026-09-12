@@ -153,6 +153,53 @@ runs `prisma migrate deploy`, so an uncommitted migration means a broken deploy.
 Be careful with anything that drops or renames a column — production holds real
 membership applications.
 
+**The design tokens reach ~82 files at once.** `src/app/globals.css` feeds the
+tokens into Tailwind through `@theme inline`, so `bg-paper`, `text-ink`,
+`border-rule` and the rest all resolve to CSS variables defined in one `:root`
+block. Changing a value there re-skins the whole app. That is the point, but it
+also means there is no such thing as a local colour tweak — re-measure contrast
+before changing a token, and keep the measured ratio in the comment beside it.
+
+**Olive and brass are fenced.** They are not brand colours. They exist for the
+classification seal, the star bands and the sustainability score — the two marks
+JRA alone can certify. For anything that is merely a status (draft/published,
+pending/approved, a form succeeding) use the `success` / `warning` / `danger`
+tokens. If you are reaching for olive or brass to make a panel look less blue,
+the answer is no. `--color-brass` is `#ad871d` rather than the logo's lighter
+value because a star is a graphic object and needs 3:1; the original measured
+2.98:1 on white.
+
+**Never hardcode `letter-spacing`, `font-style: italic` or `text-transform:
+uppercase`.** Use `.font-display`, `.font-eyebrow` and the `--display-*` /
+`--eyebrow-*` tokens. Each of those three properties actively damages Arabic:
+Arabic has no italic tradition, so a slanted word reads as a rendering fault;
+Arabic is cursive, so positive tracking pulls the joins apart into disconnected
+glyphs; and uppercase is a no-op on Arabic glyphs but still shouts any Latin
+mixed into the same run. The tokens neutralise all three under `[dir="rtl"]` in
+one place — a hardcoded utility silently reintroduces the bug.
+
+**Numbers go through next-intl's formatter**, never `toLocaleString`. The two
+disagree: `toLocaleString("ar-JO")` selects Arabic-Indic digits while next-intl
+renders Latin ones, and a page showing both looks unfinished. Use
+`useFormatter()` in client components and `getFormatter()` on the server.
+
+**A server-actions file can only export async functions.** `"use server"`
+modules are compiled to server references, so a plain `const` exported from one
+arrives on the client as a function stub — `NEWSLETTER_INTERESTS.map is not a
+function` rather than anything that names the real cause. Constants shared with
+client components live in their own module; see `src/lib/newsletter-interests.ts`.
+
+**Unlayered CSS beats Tailwind utilities.** The `* { border-color: … }` rule in
+`globals.css` sits outside any `@layer`, and unlayered CSS wins over anything in
+`@layer utilities` no matter how specific. So `border-transparent` on an element
+silently does nothing. Override it in `globals.css` further down the file rather
+than reaching for `!important`.
+
+**Do not run `next build` while `next dev` is running.** They share `.next/`, and
+the build leaves the dev server serving stale chunks — every request then fails
+with `Cannot find module './1331.js'` and reloading does not fix it. Stop the dev
+server, `rm -rf .next`, start it again.
+
 **Public forms are rate limited** (`src/lib/rate-limit.ts`): 5 submissions per
 hour per IP for contact and membership, 10 for the newsletter. If you are testing
 submissions repeatedly and start getting `rate_limited`, that is why.

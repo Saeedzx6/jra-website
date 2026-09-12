@@ -1,0 +1,56 @@
+/* Solid brand-blue copy half beside a photo half. */
+
+.deck {
+  background: var(--accent);
+  color: #fff;
+}
+
+.slide {
+  display: grid;
+}
+@media (min-width: 900px) {
+  .slide {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.copy {
+  padding: clamp(2.5rem, 6vw, 5rem);
+  display: grid;
+  gap: 1.25rem;
+  align-content: center;
+  justify-items: start;
+}
+.copy .eyebrow {
+  color: rgb(255 255 255 / 0.8);
+}
+.copy h2 {
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  line-height: 1.08;
+}
+.copy p {
+  color: rgb(255 255 255 / 0.9);
+  max-inline-size: 44ch;
+}
+
+.media {
+  min-block-size: 20rem;
+}
+
+.foot {
+  padding: 0 clamp(2.5rem, 6vw, 5rem) clamp(2.5rem, 6vw, 4rem);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.count {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: var(--btn-tracking);
+  color: rgb(255 255 255 / 0.75);
+  font-variant-numeric: tabular-nums;
+}
