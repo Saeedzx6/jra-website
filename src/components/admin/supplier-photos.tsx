@@ -8,6 +8,7 @@ import {
   deleteSupplierImage,
   setPrimarySupplierImage,
 } from "@/lib/actions/suppliers";
+import { prepareImage, UPLOAD_MAX_BYTES, tooLargeMessage } from "@/lib/prepare-image";
 
 type ImageRow = { id: string; url: string; isPrimary: boolean };
 
@@ -36,9 +37,28 @@ export function SupplierPhotoManager({
   function upload(formData: FormData) {
     setError(null);
     startTransition(async () => {
-      const result = await uploadSupplierImage(supplierId, formData);
-      if (result.error) setError(result.error);
-      else setFormKey((k) => k + 1);
+      try {
+        // Resize before sending. A phone photo is far larger than a server
+        // action's request body can carry, and that failure arrives as a
+        // platform 413 that no code of ours can turn into a message.
+        const picked = formData.get("file");
+        if (picked instanceof File && picked.size > 0) {
+          const prepared = await prepareImage(picked);
+          if (prepared.size > UPLOAD_MAX_BYTES) {
+            setError(tooLargeMessage(prepared.size));
+            return;
+          }
+          formData.set("file", prepared, prepared.name);
+        }
+
+        const result = await uploadSupplierImage(supplierId, formData);
+        if (result.error) setError(result.error);
+        else setFormKey((k) => k + 1);
+      } catch {
+        // Without this the rejected action reaches the segment's error
+        // boundary and replaces the whole page with "Something went wrong".
+        setError("The upload did not complete. Please try again.");
+      }
     });
   }
 
