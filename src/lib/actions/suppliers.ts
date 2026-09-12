@@ -203,17 +203,35 @@ export async function deleteSupplier(
 
   const supplier = await db.supplier.findUnique({
     where: { id },
-    select: { name: true, membership: { select: { id: true, memberNumber: true } } },
+    select: {
+      name: true,
+      membership: {
+        select: { id: true, memberNumber: true, _count: { select: { invoices: true } } },
+      },
+    },
   });
   if (!supplier) return fail(t("supplierGone"));
 
-  if (supplier.membership) {
+  // The first version of this refused any supplier holding a membership, and
+  // said it had billing history. That was too blunt and, for a membership with
+  // no invoices raised against it, simply untrue. What must not be destroyed is
+  // the billing record, so that is what is actually checked.
+  const invoices = supplier.membership?._count.invoices ?? 0;
+  if (supplier.membership && invoices > 0) {
     return fail(
       t("cannotDeleteMember", {
         name: supplier.name,
         memberNumber: supplier.membership.memberNumber,
+        count: invoices,
       })
     );
+  }
+
+  // A membership with nothing billed against it is meaningless once its owner
+  // is gone — `supplierId` is SetNull, so leaving it behind would strand a
+  // member number belonging to nobody. Remove it in the same breath.
+  if (supplier.membership) {
+    await db.membership.delete({ where: { id: supplier.membership.id } });
   }
 
   await db.supplier.delete({ where: { id } });

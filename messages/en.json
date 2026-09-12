@@ -634,7 +634,7 @@
       "articleGone": "That article no longer exists.",
       "articleCreated": "\"{title}\" created.",
       "articleDeleted": "\"{title}\" deleted.",
-      "cannotDeleteMember": "{name} holds membership {memberNumber} with billing history, so it cannot be deleted. Set it to Draft instead to remove it from the public directory.",
+      "cannotDeleteMember": "{name} holds membership {memberNumber}, which has {count} invoice(s) raised against it, so it cannot be deleted. Set it to Draft instead to remove it from the public directory.",
       "chooseImage": "Choose an image first.",
       "notAnImage": "That file is not an image. Use JPEG, PNG, WebP, AVIF or GIF.",
       "imageTooLarge": "That image is too large even after resizing. Please crop it or save a smaller copy.",

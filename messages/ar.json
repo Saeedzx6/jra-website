@@ -634,7 +634,7 @@
       "articleGone": "هذا المقال لم يعد موجوداً.",
       "articleCreated": "تم إنشاء «{title}».",
       "articleDeleted": "تم حذف «{title}».",
-      "cannotDeleteMember": "{name} يحمل العضوية {memberNumber} مع سجل فواتير، لذلك لا يمكن حذفه. اجعله مسودة بدلاً من ذلك لإزالته من الدليل العام.",
+      "cannotDeleteMember": "{name} يحمل العضوية {memberNumber} وعليها {count} فاتورة، لذلك لا يمكن حذفه. اجعله مسودة بدلاً من ذلك لإزالته من الدليل العام.",
       "chooseImage": "اختر صورة أولاً.",
       "notAnImage": "هذا الملف ليس صورة. استخدم JPEG أو PNG أو WebP أو AVIF أو GIF.",
       "imageTooLarge": "الصورة كبيرة جداً حتى بعد تصغيرها. يرجى قصّها أو حفظ نسخة أصغر.",
