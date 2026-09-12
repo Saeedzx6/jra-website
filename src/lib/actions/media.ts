@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { putFile } from "@/lib/storage";
 import { requireAdmin, writeAudit } from "@/lib/rbac";
@@ -90,19 +91,20 @@ export async function setCoverImage(
   id: string,
   formData: FormData
 ): Promise<{ error?: string }> {
+  const t = await getTranslations("admin.feedback");
   const session = await requireAdmin();
 
-  if (!(target in FOLDER)) return { error: "Unknown image target." };
+  if (!(target in FOLDER)) return { error: t("notFound") };
 
   const file = formData.get("file");
   if (!(file instanceof File) || file.size === 0) {
-    return { error: "Choose an image first." };
+    return { error: t("chooseImage") };
   }
   if (!ALLOWED.includes(file.type)) {
-    return { error: "That file is not an image. Use JPEG, PNG, WebP, AVIF or GIF." };
+    return { error: t("notAnImage") };
   }
   if (file.size > MAX_BYTES) {
-    return { error: "That image is too large even after resizing. Please crop it or save a smaller copy." };
+    return { error: t("imageTooLarge") };
   }
 
   const stored = await putFile(file, { folder: FOLDER[target], basename: target });
@@ -126,8 +128,9 @@ export async function clearCoverImage(
   target: MediaTarget,
   id: string
 ): Promise<{ error?: string }> {
+  const t = await getTranslations("admin.feedback");
   const session = await requireAdmin();
-  if (!(target in FOLDER)) return { error: "Unknown image target." };
+  if (!(target in FOLDER)) return { error: t("notFound") };
 
   await writeUrl(target, id, null);
   await writeAudit(session.user.id, "DELETE_IMAGE", target.toUpperCase(), id, {});
@@ -148,17 +151,18 @@ export async function uploadNewsGalleryImage(
   newsArticleId: string,
   formData: FormData
 ): Promise<{ error?: string }> {
+  const t = await getTranslations("admin.feedback");
   const session = await requireAdmin();
 
   const file = formData.get("file");
-  if (!(file instanceof File) || file.size === 0) return { error: "Choose an image first." };
+  if (!(file instanceof File) || file.size === 0) return { error: t("chooseImage") };
   if (!ALLOWED.includes(file.type)) {
-    return { error: "That file is not an image. Use JPEG, PNG, WebP, AVIF or GIF." };
+    return { error: t("notAnImage") };
   }
-  if (file.size > MAX_BYTES) return { error: "That image is too large even after resizing. Please crop it or save a smaller copy." };
+  if (file.size > MAX_BYTES) return { error: t("imageTooLarge") };
 
   const article = await db.newsArticle.findUnique({ where: { id: newsArticleId } });
-  if (!article) return { error: "Article not found." };
+  if (!article) return { error: t("notFound") };
 
   const stored = await putFile(file, { folder: `news/${article.slug}`, basename: "gallery" });
   const caption = formData.get("caption");
