@@ -9,6 +9,7 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SITE_URL, alternatesFor } from "@/lib/seo";
 import { jsonLdScript, organizationLd, webSiteLd } from "@/lib/json-ld";
 import { publicClientMessages } from "@/i18n/client-messages";
+import { AuthSessionProvider } from "@/components/session-provider";
 import "../globals.css";
 
 export async function generateMetadata({
@@ -96,6 +97,7 @@ export default async function LocaleLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLdScript(webSiteLd(locale)) }}
         />
+        <AuthSessionProvider>
         <NextIntlClientProvider messages={publicClientMessages(messages)}>
           {/* Keyboard users land here first and can jump the 8-item nav.
               Visually hidden until focused (WCAG 2.4.1). */}
@@ -111,6 +113,7 @@ export default async function LocaleLayout({
           </main>
           <SiteFooter />
         </NextIntlClientProvider>
+        </AuthSessionProvider>
       </body>
     </html>
   );

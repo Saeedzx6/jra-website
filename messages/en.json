@@ -25,7 +25,9 @@
     "login": "Log In",
     "portal": "My Account",
     "logout": "Log Out",
-    "gallery": "Gallery"
+    "gallery": "Gallery",
+    "signedInAs": "Signed in as",
+    "dashboard": "Admin dashboard"
   },
   "common": {
     "learnMore": "Learn more",
