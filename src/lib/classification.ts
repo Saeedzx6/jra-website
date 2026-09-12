@@ -1,4 +1,3 @@
-import { cache } from "react";
 import { db } from "@/lib/db";
 
 export async function getAllStandards() {
@@ -7,9 +6,7 @@ export async function getAllStandards() {
   });
 }
 
-/** Cached per request: the standard pages read this from `generateMetadata`
- *  as well as from the page body. */
-export const getStandardWithCriteria = cache(async (establishmentType: string) => {
+export async function getStandardWithCriteria(establishmentType: string) {
   return db.classificationStandard.findUnique({
     where: { establishmentType: establishmentType as never },
     include: {
@@ -20,7 +17,7 @@ export const getStandardWithCriteria = cache(async (establishmentType: string) =
       starBands: { orderBy: { minScore: "asc" } },
     },
   });
-});
+}
 
 export async function getSessionWithDetails(sessionId: string) {
   return db.assessmentSession.findUnique({

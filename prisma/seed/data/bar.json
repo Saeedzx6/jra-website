@@ -1,0 +1,1093 @@
+{
+  "type": "BAR",
+  "titleEn": "Bar classification standard",
+  "titleAr": "مواصفات واسس تصنيف البار",
+  "gradingMode": "STARS",
+  "totalMarks": 164,
+  "sourcePdf": "مواصفات_واسس_تصنيف_البار-0.pdf",
+  "bands": [
+    {
+      "stars": 1,
+      "min": 100,
+      "max": 120
+    },
+    {
+      "stars": 2,
+      "min": 121,
+      "max": 141
+    },
+    {
+      "stars": 3,
+      "min": 142,
+      "max": 164
+    }
+  ],
+  "sections": [
+    {
+      "code": "building",
+      "no": 1,
+      "nameEn": "The building",
+      "nameAr": "المبنى",
+      "max": 12,
+      "rows": [
+        {
+          "no": "1.1",
+          "group": {
+            "ar": "الهندسة المعمارية والواجهات",
+            "en": "Architecture and facades"
+          },
+          "basis": {
+            "ar": "أن يكون التصميم الخارجي ذا طابع هندسي مميز ويوحي بوجود بار.",
+            "en": "The exterior design shall have a distinctive architectural character that signals the presence of a bar."
+          },
+          "definition": {
+            "ar": "ان يكون المبنى مستقل او طابق من مبنى. ان تكون التشطيبات النهائية مكتملة من الداخل والخارج .",
+            "en": "The building shall be standalone or a floor of a building. Final finishes shall be complete inside and out."
+          },
+          "marks": 6
+        },
+        {
+          "no": "1.2",
+          "group": {
+            "ar": "لافتة",
+            "en": "Signage"
+          },
+          "basis": {
+            "ar": "أن تحمل الاسم التجاري او العلامة التجارية للبار وتدل عليه .",
+            "en": "It shall carry the trade name or trademark of the bar and identify it."
+          },
+          "definition": {
+            "ar": "وهي التي توضع على مدخل البار والمضاءة والملفتة للنظر على أن تكون مصممة بأشكال هندسية مناسبة.",
+            "en": "Placed at the bar entrance, illuminated and eye-catching, and designed in suitable geometric forms."
+          },
+          "marks": 2
+        },
+        {
+          "no": "1.3",
+          "group": {
+            "ar": "لائحة اسعار",
+            "en": "Price list"
+          },
+          "basis": {
+            "ar": "تكون على مدخل مضاءة واضحة للزبائن .",
+            "en": "Located at the entrance, illuminated and legible to guests."
+          },
+          "definition": {
+            "ar": "وهي اللائحة التي توضع على مدخل البار أو داخله على أن تكون بداخلها قائمة الاسعار المقررة مكتوبة بخط واضح وبارز وبلغتين احداها عربية ومدون عليها اسم المطعم و درجة تصنيفه.",
+            "en": "The board placed at the bar entrance or inside it, containing the approved price list written in a clear prominent font in two languages, one of which is Arabic, and bearing the restaurant name and its classification grade."
+          },
+          "marks": 2
+        },
+        {
+          "no": "1.4",
+          "group": {
+            "ar": "ميزات خاصة",
+            "en": "Special features"
+          },
+          "basis": {
+            "ar": "—",
+            "en": "—"
+          },
+          "definition": {
+            "ar": "—",
+            "en": "—"
+          },
+          "marks": 2
+        }
+      ]
+    },
+    {
+      "code": "parking",
+      "no": 2,
+      "nameEn": "Parking",
+      "nameAr": "مواقف السيارات",
+      "max": 3,
+      "rows": [
+        {
+          "no": "2.1",
+          "group": {
+            "ar": "المواقف المخصصة لوقوف السيارات",
+            "en": "Dedicated car parking"
+          },
+          "basis": {
+            "ar": "اعداد كافية من المواقف ضمن حرم البار او خارجه",
+            "en": "A sufficient number of spaces within the bar premises or outside it"
+          },
+          "definition": {
+            "ar": "بحيث تكون المواقف بموجب عقود رسمية أو من ضمن حرم البار وباعداد كافية تتناسب مع حجمه.",
+            "en": "Parking shall be under formal contracts or within the bar premises, in sufficient numbers proportionate to its size."
+          },
+          "marks": 2
+        },
+        {
+          "no": "2.2",
+          "group": {
+            "ar": "المواقف المخصصة لوقوف السيارات",
+            "en": "Dedicated car parking"
+          },
+          "basis": {
+            "ar": "خدمة التوصيل من السيارة الى باب البار الرئيسي (valet).",
+            "en": "Valet service from the car to the main door of the bar."
+          },
+          "definition": {
+            "ar": "بحيث تكون المواقف بموجب عقود رسمية أو من ضمن حرم البار وباعداد كافية تتناسب مع حجمه.",
+            "en": "Parking shall be under formal contracts or within the bar premises, in sufficient numbers proportionate to its size."
+          },
+          "marks": 1
+        }
+      ]
+    },
+    {
+      "code": "entrances",
+      "no": 3,
+      "nameEn": "Types of entrances",
+      "nameAr": "انواع المداخل",
+      "max": 6,
+      "rows": [
+        {
+          "no": "3.1",
+          "group": {
+            "ar": "مداخل البار",
+            "en": "Bar entrances"
+          },
+          "basis": {
+            "ar": "مدخل خاص بالزبائن",
+            "en": "A dedicated guest entrance"
+          },
+          "definition": {
+            "ar": "ان يتوفر مداخل منفصلة في البار كل حسب طبيعة استخدامه",
+            "en": "Separate entrances shall be provided in the bar, each according to the nature of its use"
+          },
+          "marks": 2
+        },
+        {
+          "no": "3.2",
+          "group": {
+            "ar": "مداخل البار",
+            "en": "Bar entrances"
+          },
+          "basis": {
+            "ar": "مدخل الخدمات",
+            "en": "A service entrance"
+          },
+          "definition": {
+            "ar": "ان يتوفر مداخل منفصلة في البار كل حسب طبيعة استخدامه",
+            "en": "Separate entrances shall be provided in the bar, each according to the nature of its use"
+          },
+          "marks": 2
+        },
+        {
+          "no": "3.3",
+          "group": {
+            "ar": "ميزات خاصة",
+            "en": "Special features"
+          },
+          "basis": {
+            "ar": "—",
+            "en": "—"
+          },
+          "definition": {
+            "ar": "مثال : نباتات زينة ، موسيقى خلفية ...الخ",
+            "en": "e.g. ornamental plants, background music, etc."
+          },
+          "marks": 2
+        }
+      ]
+    },
+    {
+      "code": "service",
+      "no": 4,
+      "nameEn": "Reception",
+      "nameAr": "الاستقبال",
+      "max": 8,
+      "rows": [
+        {
+          "no": "4.1",
+          "group": {
+            "ar": "المظهر العام",
+            "en": "General appearance"
+          },
+          "basis": {
+            "ar": "خدمة من الباب الى الطاولة",
+            "en": "Door-to-table service"
+          },
+          "definition": {
+            "ar": "يقصد بها أن يقوم مدير القاعة أو أي موظف باستقبال الزبون والترحيب به وتوجيهه إلى الطاولة المناسبة",
+            "en": "The hall manager or any staff member receives the guest, welcomes them and directs them to a suitable table"
+          },
+          "marks": 2
+        },
+        {
+          "no": "4.2",
+          "group": {
+            "ar": "المظهر العام",
+            "en": "General appearance"
+          },
+          "basis": {
+            "ar": "خدمة بالداخل الى الطاولة",
+            "en": "Inside-to-table service"
+          },
+          "definition": {
+            "ar": "أن يقوم أحد موظفي الصالة بتوجيه الزبون إلى الطاولة في داخل الصالة.",
+            "en": "A hall staff member directs the guest to the table inside the hall."
+          },
+          "marks": 2
+        },
+        {
+          "no": "4.3",
+          "group": {
+            "ar": "المظهر العام",
+            "en": "General appearance"
+          },
+          "basis": {
+            "ar": "منطقة الاستقبال",
+            "en": "Reception area"
+          },
+          "definition": {
+            "ar": "المقصود بذلك وجود مكان خاص لاستقبال الزبائن وانتظارهم ولتناول بعض المشروبات لحين إعداد الطاولة الخاصة بهم ويجب توفر مشجب لحفظ وتعليق الملابس.",
+            "en": "A dedicated area for receiving guests and for them to wait and have some drinks until their table is prepared; a coat rack for storing and hanging clothes must be available."
+          },
+          "marks": 2
+        },
+        {
+          "no": "4.4",
+          "group": {
+            "ar": "ميزات خاصة",
+            "en": "Special features"
+          },
+          "basis": {
+            "ar": "—",
+            "en": "—"
+          },
+          "definition": {
+            "ar": "—",
+            "en": "—"
+          },
+          "marks": 2
+        }
+      ]
+    },
+    {
+      "code": "hall",
+      "no": 5,
+      "nameEn": "Bar hall",
+      "nameAr": "صالة البار",
+      "max": 72,
+      "rows": [
+        {
+          "no": "5.1",
+          "group": {
+            "ar": "صالة رئيسية ذات مساحة كافية · كاونتر البار",
+            "en": "Main hall of sufficient area · bar counter"
+          },
+          "basis": {
+            "ar": "ارضية الصالة",
+            "en": "Hall flooring"
+          },
+          "definition": {
+            "ar": "ان تكون الارضية مغطاة بالسجاد المقاوم للحريق ولا يحدث عنه كهرباء ساكنة كما يجب ان تكون الارضية من الرخام وخالية من الشقوق او ما يناسبها من المستوى العالي",
+            "en": "The floor shall be covered with fire-resistant carpet that does not generate static electricity; the floor shall also be of marble free of cracks, or a comparable high-grade finish"
+          },
+          "marks": 6
+        },
+        {
+          "no": "5.2",
+          "group": {
+            "ar": "صالة رئيسية ذات مساحة كافية · كاونتر البار",
+            "en": "Main hall of sufficient area · bar counter"
+          },
+          "basis": {
+            "ar": "نوعية الطاولات",
+            "en": "Type of tables"
+          },
+          "definition": {
+            "ar": "من الخشب او من الستنالس ستيل او ما يعادلها",
+            "en": "Wood, stainless steel or the equivalent"
+          },
+          "marks": 6
+        },
+        {
+          "no": "5.3",
+          "group": {
+            "ar": "صالة رئيسية ذات مساحة كافية · كاونتر البار",
+            "en": "Main hall of sufficient area · bar counter"
+          },
+          "basis": {
+            "ar": "نوعية المقاعد",
+            "en": "Type of seating"
+          },
+          "definition": {
+            "ar": "من الخشب المنجد بالقماش او الجلد او ما شابه",
+            "en": "Wood upholstered in fabric or leather, or similar"
+          },
+          "marks": 6
+        },
+        {
+          "no": "5.4",
+          "group": {
+            "ar": "صالة رئيسية ذات مساحة كافية · كاونتر البار",
+            "en": "Main hall of sufficient area · bar counter"
+          },
+          "basis": {
+            "ar": "الفضيات (الشوك والسكاكين والملاعق)",
+            "en": "Silverware (forks, knives and spoons)"
+          },
+          "definition": {
+            "ar": "ان تكون مطلية بالفضة مقابضها او ستنالس ذو جودة عالية تحمل شعار المحل",
+            "en": "Handles shall be silver-plated, or high-grade stainless steel carrying the venue's logo"
+          },
+          "marks": 4
+        },
+        {
+          "no": "5.5",
+          "group": {
+            "ar": "صالة رئيسية ذات مساحة كافية · كاونتر البار",
+            "en": "Main hall of sufficient area · bar counter"
+          },
+          "basis": {
+            "ar": "الزجاجيات (الكاسات والاطباق)",
+            "en": "Glassware (glasses and plates)"
+          },
+          "definition": {
+            "ar": "كاسات خالية من الشوائب ومناسبة بجميع المقاسات لخدمة كافة أنواع المشروبات وان يتوفر كافة الأطباق المتناسقة",
+            "en": "Glasses free of flaws and in all sizes suitable for serving every type of beverage, together with a full set of matching plates"
+          },
+          "marks": 6
+        },
+        {
+          "no": "5.6",
+          "group": {
+            "ar": "صالة رئيسية ذات مساحة كافية · كاونتر البار",
+            "en": "Main hall of sufficient area · bar counter"
+          },
+          "basis": {
+            "ar": "الديكورات",
+            "en": "Décor"
+          },
+          "definition": {
+            "ar": "ان يكون من الخشب او ورق الجدران او الجبس من النوعية الجيدة مع وجود لوحات فنية عادية على الجدران",
+            "en": "Good-quality wood, wallpaper or gypsum, with ordinary artworks on the walls"
+          },
+          "marks": 8
+        },
+        {
+          "no": "5.7",
+          "group": {
+            "ar": "صالة رئيسية ذات مساحة كافية · كاونتر البار",
+            "en": "Main hall of sufficient area · bar counter"
+          },
+          "basis": {
+            "ar": "الستائر",
+            "en": "Curtains"
+          },
+          "definition": {
+            "ar": "ان تكون مصنوعة من القماش المناسب للديكور او ماشابه",
+            "en": "Made of fabric suited to the décor, or similar"
+          },
+          "marks": 6
+        },
+        {
+          "no": "5.8",
+          "group": {
+            "ar": "صالة رئيسية ذات مساحة كافية · كاونتر البار",
+            "en": "Main hall of sufficient area · bar counter"
+          },
+          "basis": {
+            "ar": "التدفئة والتبريد",
+            "en": "Heating and cooling"
+          },
+          "definition": {
+            "ar": "تكييف بارد /ساخن كافي ومناسب",
+            "en": "Adequate and appropriate cooling/heating"
+          },
+          "marks": 6
+        },
+        {
+          "no": "5.9",
+          "group": {
+            "ar": "صالة رئيسية ذات مساحة كافية · كاونتر البار",
+            "en": "Main hall of sufficient area · bar counter"
+          },
+          "basis": {
+            "ar": "قائمة الطعام Menu",
+            "en": "Menu"
+          },
+          "definition": {
+            "ar": "ان تكون باللغة العربية والانجليزية وان تكون نافرة وغير ممزقة وان يتوفر قائمة منفصلة بالمشروبات مع تحديد الاسعار والضرائب المترتبة.",
+            "en": "In Arabic and English, embossed and undamaged, with a separate beverage list stating prices and applicable taxes."
+          },
+          "marks": 2
+        },
+        {
+          "no": "5.10",
+          "group": {
+            "ar": "صالة رئيسية ذات مساحة كافية · كاونتر البار",
+            "en": "Main hall of sufficient area · bar counter"
+          },
+          "basis": {
+            "ar": "وسائل التهوية",
+            "en": "Ventilation"
+          },
+          "definition": {
+            "ar": "ان تكون وسائل التهوية كافية ومناسبة",
+            "en": "Ventilation shall be adequate and appropriate"
+          },
+          "marks": 4
+        },
+        {
+          "no": "5.11",
+          "group": {
+            "ar": "صالة رئيسية ذات مساحة كافية · كاونتر البار",
+            "en": "Main hall of sufficient area · bar counter"
+          },
+          "basis": {
+            "ar": "نظام العزل الصوتي",
+            "en": "Sound insulation"
+          },
+          "definition": {
+            "ar": "ان يكون نظام العزل الصوتي كافي ومناسب",
+            "en": "The sound insulation system shall be adequate and appropriate"
+          },
+          "marks": 4
+        },
+        {
+          "no": "5.12",
+          "group": {
+            "ar": "صالة رئيسية ذات مساحة كافية · كاونتر البار",
+            "en": "Main hall of sufficient area · bar counter"
+          },
+          "basis": {
+            "ar": "الانارة",
+            "en": "Lighting"
+          },
+          "definition": {
+            "ar": "ان تكون الانارة كافية ومناسبة",
+            "en": "Lighting shall be adequate and appropriate"
+          },
+          "marks": 2
+        },
+        {
+          "no": "5.13",
+          "group": {
+            "ar": "صالة رئيسية ذات مساحة كافية · كاونتر البار",
+            "en": "Main hall of sufficient area · bar counter"
+          },
+          "basis": {
+            "ar": "كاونتر البار",
+            "en": "Bar counter"
+          },
+          "definition": {
+            "ar": "كاونتر مناسب لحجم الصالة ومجهز بالرفوف والثلاجات ومقاعد متحركة على طول الكاونتر",
+            "en": "A counter suited to the size of the hall, fitted with shelving and refrigerators and movable seats along the length of the counter"
+          },
+          "marks": 8
+        },
+        {
+          "no": "5.14",
+          "group": {
+            "ar": "صالة رئيسية ذات مساحة كافية · كاونتر البار",
+            "en": "Main hall of sufficient area · bar counter"
+          },
+          "basis": {
+            "ar": "مجهز المشروبات (Bar Man)",
+            "en": "Bartender (Bar Man)"
+          },
+          "definition": {
+            "ar": "ان يكون مجهز المشروبات ذو مؤهل علمي وخبرة عملية في تحضير واعداد المشروبات بكافة انواعها .",
+            "en": "The bartender shall hold an academic qualification and practical experience in preparing and making beverages of every kind."
+          },
+          "marks": 2
+        },
+        {
+          "no": "5.15",
+          "group": {
+            "ar": "ميزات خاصة",
+            "en": "Special features"
+          },
+          "basis": {
+            "ar": "—",
+            "en": "—"
+          },
+          "definition": {
+            "ar": "مثال: استقبال القنوات الفضائية، العاب حائط... الخ",
+            "en": "e.g. satellite channel reception, wall games, etc."
+          },
+          "marks": 2
+        }
+      ]
+    },
+    {
+      "code": "washrooms",
+      "no": 6,
+      "nameEn": "Restrooms and washbasins",
+      "nameAr": "المرافق الصحية و المغاسل",
+      "max": 13,
+      "rows": [
+        {
+          "no": "6.1",
+          "group": {
+            "ar": "مرافق صحية منفصلة للرجال والنساء",
+            "en": "Separate restrooms for men and women"
+          },
+          "basis": {
+            "ar": "مرافق صحية منفصلة للرجال والنساء",
+            "en": "Separate restrooms for men and women"
+          },
+          "definition": {
+            "ar": "وجود غرف مراحيض بأبواب خشبية جيدة مع وجوب توفر أقفال وإشارات دالة وتوفر التهوية الجيدة وان يكون غطاء المقعدة من الستانلس او الخزف .",
+            "en": "Cubicles with good wooden doors, with locks and clear signage required, good ventilation, and a seat cover of stainless steel or ceramic."
+          },
+          "marks": 1
+        },
+        {
+          "no": "6.2",
+          "group": {
+            "ar": "مرافق صحية منفصلة للرجال والنساء",
+            "en": "Separate restrooms for men and women"
+          },
+          "basis": {
+            "ar": "مرافق صحية منفصلة للرجال والنساء",
+            "en": "Separate restrooms for men and women"
+          },
+          "definition": {
+            "ar": "وجود حاملة ورق تواليت وأخرى إحتياط مع وجود سلة مهملات من الستانلس مغلقة بكيس نايلون من الداخل.",
+            "en": "A toilet-paper holder plus a spare, and a closed stainless-steel bin lined with a nylon bag."
+          },
+          "marks": 1
+        },
+        {
+          "no": "6.3",
+          "group": {
+            "ar": "مرافق صحية منفصلة للرجال والنساء",
+            "en": "Separate restrooms for men and women"
+          },
+          "basis": {
+            "ar": "مرافق صحية منفصلة للرجال والنساء",
+            "en": "Separate restrooms for men and women"
+          },
+          "definition": {
+            "ar": "الجدران مغطاة بالبلاط الصيني أو السيراميك والأرضية من السيراميك.",
+            "en": "Walls covered in porcelain or ceramic tile, with a ceramic floor."
+          },
+          "marks": 1
+        },
+        {
+          "no": "6.4",
+          "group": {
+            "ar": "مرافق صحية منفصلة للرجال والنساء",
+            "en": "Separate restrooms for men and women"
+          },
+          "basis": {
+            "ar": "مرافق صحية منفصلة للرجال والنساء",
+            "en": "Separate restrooms for men and women"
+          },
+          "definition": {
+            "ar": "توفر الانارة الكافية المغطاة.",
+            "en": "Adequate, covered lighting."
+          },
+          "marks": 1
+        },
+        {
+          "no": "6.5",
+          "group": {
+            "ar": "مرافق صحية منفصلة للرجال والنساء",
+            "en": "Separate restrooms for men and women"
+          },
+          "basis": {
+            "ar": "مرافق صحية منفصلة للرجال والنساء",
+            "en": "Separate restrooms for men and women"
+          },
+          "definition": {
+            "ar": "وجود ماكنة تعطير او ما شابه.",
+            "en": "An air-freshening machine or similar."
+          },
+          "marks": 1
+        },
+        {
+          "no": "6.6",
+          "group": {
+            "ar": "مرافق صحية منفصلة للرجال والنساء",
+            "en": "Separate restrooms for men and women"
+          },
+          "basis": {
+            "ar": "مرافق صحية منفصلة للرجال والنساء",
+            "en": "Separate restrooms for men and women"
+          },
+          "definition": {
+            "ar": "ان تكون وسائل التهوية كافية ومناسبة.",
+            "en": "Ventilation shall be adequate and appropriate."
+          },
+          "marks": 1
+        },
+        {
+          "no": "6.7",
+          "group": {
+            "ar": "مرافق صحية منفصلة للرجال والنساء",
+            "en": "Separate restrooms for men and women"
+          },
+          "basis": {
+            "ar": "المغاسل",
+            "en": "Washbasins"
+          },
+          "definition": {
+            "ar": "أن تكون من الخزف او الستانلس ستيل ومزودة بالماء الساخن والبارد.",
+            "en": "Ceramic or stainless steel, supplied with hot and cold water."
+          },
+          "marks": 1
+        },
+        {
+          "no": "6.8",
+          "group": {
+            "ar": "مرافق صحية منفصلة للرجال والنساء",
+            "en": "Separate restrooms for men and women"
+          },
+          "basis": {
+            "ar": "المغاسل",
+            "en": "Washbasins"
+          },
+          "definition": {
+            "ar": "وجود مرآة جيدة ذات جوانب مناسبة عليها إنارة كافية.",
+            "en": "A good mirror with suitable framing and adequate lighting."
+          },
+          "marks": 1
+        },
+        {
+          "no": "6.9",
+          "group": {
+            "ar": "مرافق صحية منفصلة للرجال والنساء",
+            "en": "Separate restrooms for men and women"
+          },
+          "basis": {
+            "ar": "المغاسل",
+            "en": "Washbasins"
+          },
+          "definition": {
+            "ar": "وجود الصابون السائل .",
+            "en": "Liquid soap available."
+          },
+          "marks": 1
+        },
+        {
+          "no": "6.10",
+          "group": {
+            "ar": "مرافق صحية منفصلة للرجال والنساء",
+            "en": "Separate restrooms for men and women"
+          },
+          "basis": {
+            "ar": "المغاسل",
+            "en": "Washbasins"
+          },
+          "definition": {
+            "ar": "وجود محارم ورقية لتنشيف الأيدي ضمن حاملة خاصة أو أجهزة تنشيف كهربائية.",
+            "en": "Paper towels for drying hands in a dedicated dispenser, or electric hand dryers."
+          },
+          "marks": 1
+        },
+        {
+          "no": "6.11",
+          "group": {
+            "ar": "مرافق صحية منفصلة للرجال والنساء",
+            "en": "Separate restrooms for men and women"
+          },
+          "basis": {
+            "ar": "المغاسل",
+            "en": "Washbasins"
+          },
+          "definition": {
+            "ar": "وجود سلة مهملات تحت المغسلة على ان تكون من الستانلس.",
+            "en": "A bin beneath the basin, made of stainless steel."
+          },
+          "marks": 1
+        },
+        {
+          "no": "6.12",
+          "group": {
+            "ar": "ميزات خاصة",
+            "en": "Special features"
+          },
+          "basis": {
+            "ar": "—",
+            "en": "—"
+          },
+          "definition": {
+            "ar": "مثال : نباتات زينة، موسيقى ... الخ",
+            "en": "e.g. ornamental plants, music, etc."
+          },
+          "marks": 2
+        }
+      ]
+    },
+    {
+      "code": "kitchen",
+      "no": 7,
+      "nameEn": "The kitchen",
+      "nameAr": "المطبخ",
+      "max": 22,
+      "rows": [
+        {
+          "no": "7.1",
+          "group": {
+            "ar": "تجهيزات المطبخ وتقسيماته",
+            "en": "Kitchen equipment and zoning"
+          },
+          "basis": {
+            "ar": "ان يكون ذا مساحة كافية كما يجب ان يحتوي على ما يلي:\n• مجلى لغسيل معدات و اواني الطعام والشراب.\n• مغسلة لغسل ايدي عاملين المطبخ.\n• مكان لتحضير الحلويات والسلطات والكوكتيلات.\n• ركن خاص لتحضير المرطبات الساخنة والباردة.\n• رفوف بديكور مناسب موزعة على جدران المطبخ\n• طاولات ستنالس.\n• فرن او غاز.\n• ماكنة تصنيع الثلج (مطحون ومثلج).\n• مناخل و شفاطات.\n• مياه ساخنة وباردة جارية.\n• توفير معدات واواني الطعام.\n• مستودع خاص بالمواد التموينية.\n• ركن خاص لاستلام الطلبات.",
+            "en": "It shall have sufficient area, and shall contain the following:\n• A sink for washing food and beverage equipment and utensils.\n• A basin for washing the kitchen staff's hands.\n• An area for preparing desserts, salads and cocktails.\n• A dedicated corner for preparing hot and cold refreshments.\n• Suitably finished shelving distributed along the kitchen walls\n• Stainless steel tables.\n• An oven or gas burner.\n• An ice-making machine (crushed and cubed).\n• Sieves and extractor fans.\n• Running hot and cold water.\n• Provision of tableware and equipment.\n• A dedicated store for supplies.\n• A dedicated order-pass corner."
+          },
+          "definition": {
+            "ar": "المساحة ان تتناسب مع حجم صالة البار.",
+            "en": "The area shall be proportionate to the size of the bar hall."
+          },
+          "marks": 6
+        },
+        {
+          "no": "7.2",
+          "group": {
+            "ar": "تجهيزات المطبخ وتقسيماته",
+            "en": "Kitchen equipment and zoning"
+          },
+          "basis": {
+            "ar": "ان يكون ذا مساحة كافية كما يجب ان يحتوي على ما يلي:\n• مجلى لغسيل معدات و اواني الطعام والشراب.\n• مغسلة لغسل ايدي عاملين المطبخ.\n• مكان لتحضير الحلويات والسلطات والكوكتيلات.\n• ركن خاص لتحضير المرطبات الساخنة والباردة.\n• رفوف بديكور مناسب موزعة على جدران المطبخ\n• طاولات ستنالس.\n• فرن او غاز.\n• ماكنة تصنيع الثلج (مطحون ومثلج).\n• مناخل و شفاطات.\n• مياه ساخنة وباردة جارية.\n• توفير معدات واواني الطعام.\n• مستودع خاص بالمواد التموينية.\n• ركن خاص لاستلام الطلبات.",
+            "en": "It shall have sufficient area, and shall contain the following:\n• A sink for washing food and beverage equipment and utensils.\n• A basin for washing the kitchen staff's hands.\n• An area for preparing desserts, salads and cocktails.\n• A dedicated corner for preparing hot and cold refreshments.\n• Suitably finished shelving distributed along the kitchen walls\n• Stainless steel tables.\n• An oven or gas burner.\n• An ice-making machine (crushed and cubed).\n• Sieves and extractor fans.\n• Running hot and cold water.\n• Provision of tableware and equipment.\n• A dedicated store for supplies.\n• A dedicated order-pass corner."
+          },
+          "definition": {
+            "ar": "نظافة المطبخ والعاملين به. يشترط في ذلك أن تكون الأرضية مبلطة مع الجدران أما بالبلاط الصيني أو العادي او السيراميك مع توفير حاويات مغطاة لحفظ القمامة وتوفر النظافة العامة فيه.",
+            "en": "Cleanliness of the kitchen and its staff. This requires the floor and walls to be tiled in porcelain, ordinary tile or ceramic, with covered containers for holding waste and general cleanliness maintained."
+          },
+          "marks": 1
+        },
+        {
+          "no": "7.3",
+          "group": {
+            "ar": "تجهيزات المطبخ وتقسيماته",
+            "en": "Kitchen equipment and zoning"
+          },
+          "basis": {
+            "ar": "ان يكون ذا مساحة كافية كما يجب ان يحتوي على ما يلي:\n• مجلى لغسيل معدات و اواني الطعام والشراب.\n• مغسلة لغسل ايدي عاملين المطبخ.\n• مكان لتحضير الحلويات والسلطات والكوكتيلات.\n• ركن خاص لتحضير المرطبات الساخنة والباردة.\n• رفوف بديكور مناسب موزعة على جدران المطبخ\n• طاولات ستنالس.\n• فرن او غاز.\n• ماكنة تصنيع الثلج (مطحون ومثلج).\n• مناخل و شفاطات.\n• مياه ساخنة وباردة جارية.\n• توفير معدات واواني الطعام.\n• مستودع خاص بالمواد التموينية.\n• ركن خاص لاستلام الطلبات.",
+            "en": "It shall have sufficient area, and shall contain the following:\n• A sink for washing food and beverage equipment and utensils.\n• A basin for washing the kitchen staff's hands.\n• An area for preparing desserts, salads and cocktails.\n• A dedicated corner for preparing hot and cold refreshments.\n• Suitably finished shelving distributed along the kitchen walls\n• Stainless steel tables.\n• An oven or gas burner.\n• An ice-making machine (crushed and cubed).\n• Sieves and extractor fans.\n• Running hot and cold water.\n• Provision of tableware and equipment.\n• A dedicated store for supplies.\n• A dedicated order-pass corner."
+          },
+          "definition": {
+            "ar": "أن تكون الطاولات من الستانلس ستيل.",
+            "en": "Work tables shall be of stainless steel."
+          },
+          "marks": 2
+        },
+        {
+          "no": "7.4",
+          "group": {
+            "ar": "تجهيزات المطبخ وتقسيماته",
+            "en": "Kitchen equipment and zoning"
+          },
+          "basis": {
+            "ar": "ان يكون ذا مساحة كافية كما يجب ان يحتوي على ما يلي:\n• مجلى لغسيل معدات و اواني الطعام والشراب.\n• مغسلة لغسل ايدي عاملين المطبخ.\n• مكان لتحضير الحلويات والسلطات والكوكتيلات.\n• ركن خاص لتحضير المرطبات الساخنة والباردة.\n• رفوف بديكور مناسب موزعة على جدران المطبخ\n• طاولات ستنالس.\n• فرن او غاز.\n• ماكنة تصنيع الثلج (مطحون ومثلج).\n• مناخل و شفاطات.\n• مياه ساخنة وباردة جارية.\n• توفير معدات واواني الطعام.\n• مستودع خاص بالمواد التموينية.\n• ركن خاص لاستلام الطلبات.",
+            "en": "It shall have sufficient area, and shall contain the following:\n• A sink for washing food and beverage equipment and utensils.\n• A basin for washing the kitchen staff's hands.\n• An area for preparing desserts, salads and cocktails.\n• A dedicated corner for preparing hot and cold refreshments.\n• Suitably finished shelving distributed along the kitchen walls\n• Stainless steel tables.\n• An oven or gas burner.\n• An ice-making machine (crushed and cubed).\n• Sieves and extractor fans.\n• Running hot and cold water.\n• Provision of tableware and equipment.\n• A dedicated store for supplies.\n• A dedicated order-pass corner."
+          },
+          "definition": {
+            "ar": "شفاطات ومناخل. يجب توفر هذه العناصر وخاصة شفاطات الهواء لشفط الروائح مع ضرورة المحافظة عليها نظيفة وباستمرار",
+            "en": "Extractors and sieves. These must be provided, in particular air extractors for drawing off odours, and must be kept clean at all times"
+          },
+          "marks": 1
+        },
+        {
+          "no": "7.5",
+          "group": {
+            "ar": "تجهيزات المطبخ وتقسيماته",
+            "en": "Kitchen equipment and zoning"
+          },
+          "basis": {
+            "ar": "ان يكون ذا مساحة كافية كما يجب ان يحتوي على ما يلي:\n• مجلى لغسيل معدات و اواني الطعام والشراب.\n• مغسلة لغسل ايدي عاملين المطبخ.\n• مكان لتحضير الحلويات والسلطات والكوكتيلات.\n• ركن خاص لتحضير المرطبات الساخنة والباردة.\n• رفوف بديكور مناسب موزعة على جدران المطبخ\n• طاولات ستنالس.\n• فرن او غاز.\n• ماكنة تصنيع الثلج (مطحون ومثلج).\n• مناخل و شفاطات.\n• مياه ساخنة وباردة جارية.\n• توفير معدات واواني الطعام.\n• مستودع خاص بالمواد التموينية.\n• ركن خاص لاستلام الطلبات.",
+            "en": "It shall have sufficient area, and shall contain the following:\n• A sink for washing food and beverage equipment and utensils.\n• A basin for washing the kitchen staff's hands.\n• An area for preparing desserts, salads and cocktails.\n• A dedicated corner for preparing hot and cold refreshments.\n• Suitably finished shelving distributed along the kitchen walls\n• Stainless steel tables.\n• An oven or gas burner.\n• An ice-making machine (crushed and cubed).\n• Sieves and extractor fans.\n• Running hot and cold water.\n• Provision of tableware and equipment.\n• A dedicated store for supplies.\n• A dedicated order-pass corner."
+          },
+          "definition": {
+            "ar": "مياه ساخنة جارية في المطبخ.",
+            "en": "Running hot water in the kitchen."
+          },
+          "marks": 1
+        },
+        {
+          "no": "7.6",
+          "group": {
+            "ar": "تجهيزات المطبخ وتقسيماته",
+            "en": "Kitchen equipment and zoning"
+          },
+          "basis": {
+            "ar": "ان يكون ذا مساحة كافية كما يجب ان يحتوي على ما يلي:\n• مجلى لغسيل معدات و اواني الطعام والشراب.\n• مغسلة لغسل ايدي عاملين المطبخ.\n• مكان لتحضير الحلويات والسلطات والكوكتيلات.\n• ركن خاص لتحضير المرطبات الساخنة والباردة.\n• رفوف بديكور مناسب موزعة على جدران المطبخ\n• طاولات ستنالس.\n• فرن او غاز.\n• ماكنة تصنيع الثلج (مطحون ومثلج).\n• مناخل و شفاطات.\n• مياه ساخنة وباردة جارية.\n• توفير معدات واواني الطعام.\n• مستودع خاص بالمواد التموينية.\n• ركن خاص لاستلام الطلبات.",
+            "en": "It shall have sufficient area, and shall contain the following:\n• A sink for washing food and beverage equipment and utensils.\n• A basin for washing the kitchen staff's hands.\n• An area for preparing desserts, salads and cocktails.\n• A dedicated corner for preparing hot and cold refreshments.\n• Suitably finished shelving distributed along the kitchen walls\n• Stainless steel tables.\n• An oven or gas burner.\n• An ice-making machine (crushed and cubed).\n• Sieves and extractor fans.\n• Running hot and cold water.\n• Provision of tableware and equipment.\n• A dedicated store for supplies.\n• A dedicated order-pass corner."
+          },
+          "definition": {
+            "ar": "توفر المعدات واواني وآلات المطبخ.",
+            "en": "Kitchen equipment, utensils and machinery available."
+          },
+          "marks": 4
+        },
+        {
+          "no": "7.7",
+          "group": {
+            "ar": "تجهيزات المطبخ وتقسيماته",
+            "en": "Kitchen equipment and zoning"
+          },
+          "basis": {
+            "ar": "ان يكون ذا مساحة كافية كما يجب ان يحتوي على ما يلي:\n• مجلى لغسيل معدات و اواني الطعام والشراب.\n• مغسلة لغسل ايدي عاملين المطبخ.\n• مكان لتحضير الحلويات والسلطات والكوكتيلات.\n• ركن خاص لتحضير المرطبات الساخنة والباردة.\n• رفوف بديكور مناسب موزعة على جدران المطبخ\n• طاولات ستنالس.\n• فرن او غاز.\n• ماكنة تصنيع الثلج (مطحون ومثلج).\n• مناخل و شفاطات.\n• مياه ساخنة وباردة جارية.\n• توفير معدات واواني الطعام.\n• مستودع خاص بالمواد التموينية.\n• ركن خاص لاستلام الطلبات.",
+            "en": "It shall have sufficient area, and shall contain the following:\n• A sink for washing food and beverage equipment and utensils.\n• A basin for washing the kitchen staff's hands.\n• An area for preparing desserts, salads and cocktails.\n• A dedicated corner for preparing hot and cold refreshments.\n• Suitably finished shelving distributed along the kitchen walls\n• Stainless steel tables.\n• An oven or gas burner.\n• An ice-making machine (crushed and cubed).\n• Sieves and extractor fans.\n• Running hot and cold water.\n• Provision of tableware and equipment.\n• A dedicated store for supplies.\n• A dedicated order-pass corner."
+          },
+          "definition": {
+            "ar": "توفر المستودعات. يقصد بها مستودعات التبريد والتجميد ومستودعات تخزين الخضار والفواكه والمواد التموينية ومواد التعقيم وغيرها على أن تكون مراعية لشروط الصحة والنظافة العامة.",
+            "en": "Stores available. These are the chilled and frozen stores and the stores for vegetables, fruit, supplies, sanitising materials and the like, complying with health and general hygiene requirements."
+          },
+          "marks": 2
+        },
+        {
+          "no": "7.8",
+          "group": {
+            "ar": "تجهيزات المطبخ وتقسيماته",
+            "en": "Kitchen equipment and zoning"
+          },
+          "basis": {
+            "ar": "ان يكون ذا مساحة كافية كما يجب ان يحتوي على ما يلي:\n• مجلى لغسيل معدات و اواني الطعام والشراب.\n• مغسلة لغسل ايدي عاملين المطبخ.\n• مكان لتحضير الحلويات والسلطات والكوكتيلات.\n• ركن خاص لتحضير المرطبات الساخنة والباردة.\n• رفوف بديكور مناسب موزعة على جدران المطبخ\n• طاولات ستنالس.\n• فرن او غاز.\n• ماكنة تصنيع الثلج (مطحون ومثلج).\n• مناخل و شفاطات.\n• مياه ساخنة وباردة جارية.\n• توفير معدات واواني الطعام.\n• مستودع خاص بالمواد التموينية.\n• ركن خاص لاستلام الطلبات.",
+            "en": "It shall have sufficient area, and shall contain the following:\n• A sink for washing food and beverage equipment and utensils.\n• A basin for washing the kitchen staff's hands.\n• An area for preparing desserts, salads and cocktails.\n• A dedicated corner for preparing hot and cold refreshments.\n• Suitably finished shelving distributed along the kitchen walls\n• Stainless steel tables.\n• An oven or gas burner.\n• An ice-making machine (crushed and cubed).\n• Sieves and extractor fans.\n• Running hot and cold water.\n• Provision of tableware and equipment.\n• A dedicated store for supplies.\n• A dedicated order-pass corner."
+          },
+          "definition": {
+            "ar": "تقسيمات المطبخ. يقصد بها أن يكون المجلى منفصل عن أماكن إعداد الطعام والأدوات الحرارية بعيدة عن اللحوم والأطعمة التي تتأثر بالحرارة.",
+            "en": "Kitchen zoning. This means the sink shall be separated from the food-preparation areas, and heat-producing equipment kept away from meat and heat-sensitive foods."
+          },
+          "marks": 3
+        },
+        {
+          "no": "7.9",
+          "group": {
+            "ar": "ميزات خاصة",
+            "en": "Special features"
+          },
+          "basis": {
+            "ar": "—",
+            "en": "—"
+          },
+          "definition": {
+            "ar": "—",
+            "en": "—"
+          },
+          "marks": 2
+        }
+      ]
+    },
+    {
+      "code": "extras",
+      "no": 8,
+      "nameEn": "Additional facilities",
+      "nameAr": "المرافق الإضافية",
+      "max": 3,
+      "rows": [
+        {
+          "no": "8.1",
+          "group": {
+            "ar": "انواع المرافق",
+            "en": "Types of facilities"
+          },
+          "basis": {
+            "ar": "مكتب الادارة والمحاسبة",
+            "en": "Administration and accounts office"
+          },
+          "definition": {
+            "ar": "و هي عبارة عن المرافق المساندة للخدمات التي يقدمها البار",
+            "en": "These are the support facilities for the services the bar provides"
+          },
+          "marks": 1
+        },
+        {
+          "no": "8.2",
+          "group": {
+            "ar": "انواع المرافق",
+            "en": "Types of facilities"
+          },
+          "basis": {
+            "ar": "مستودعات للتخزين",
+            "en": "Storage rooms"
+          },
+          "definition": {
+            "ar": "و هي عبارة عن المرافق المساندة للخدمات التي يقدمها البار",
+            "en": "These are the support facilities for the services the bar provides"
+          },
+          "marks": 1
+        },
+        {
+          "no": "8.3",
+          "group": {
+            "ar": "ميزات خاصة",
+            "en": "Special features"
+          },
+          "basis": {
+            "ar": "—",
+            "en": "—"
+          },
+          "definition": {
+            "ar": "—",
+            "en": "—"
+          },
+          "marks": 1
+        }
+      ]
+    },
+    {
+      "code": "quality",
+      "no": 9,
+      "nameEn": "Food and beverage quality",
+      "nameAr": "جودة الطعام و الشراب",
+      "max": 8,
+      "rows": [
+        {
+          "no": "9.1",
+          "group": {
+            "ar": "نوعية وجودة الطعام و الشراب",
+            "en": "Type and quality of food and beverages"
+          },
+          "basis": {
+            "ar": "طريقة التحضير ونوعية المواد المستخدمة في اعداد الطعام والشراب والقائمين عليها",
+            "en": "The preparation method, the type of materials used in preparing food and beverages, and those responsible for them"
+          },
+          "definition": {
+            "ar": "يتم الحكم على ذلك من حيث جودة المواد الغذائية المستعملة ونوعيتها ومذاقها وطريقة تحضيرها واعدادها ويتم الحكم على ذلك بشكل دوري.",
+            "en": "This is judged on the quality, type and taste of the foodstuffs used and the method of their preparation and making; it is assessed periodically."
+          },
+          "marks": 8
+        }
+      ]
+    },
+    {
+      "code": "staff",
+      "no": 10,
+      "nameEn": "Staff",
+      "nameAr": "العاملون",
+      "max": 17,
+      "rows": [
+        {
+          "no": "10.1",
+          "group": {
+            "ar": "الوصف الوظيفي وشروط العمل للعاملين",
+            "en": "Job description and working conditions for staff"
+          },
+          "basis": {
+            "ar": "ان يتوفر ادارة للبار و مدير القاعة",
+            "en": "Management for the bar and a hall manager shall be available"
+          },
+          "definition": {
+            "ar": "إدارة البار. مدير البار : يقصد بذلك وجود مدير مؤهل ومتفرغ يسهل الوصول إليه من قبل الزبائن.",
+            "en": "Bar management. The bar manager: a qualified, full-time manager whom guests can reach easily."
+          },
+          "marks": 3
+        },
+        {
+          "no": "10.2",
+          "group": {
+            "ar": "الوصف الوظيفي وشروط العمل للعاملين",
+            "en": "Job description and working conditions for staff"
+          },
+          "basis": {
+            "ar": "ان يتوفر ادارة للبار و مدير القاعة",
+            "en": "Management for the bar and a hall manager shall be available"
+          },
+          "definition": {
+            "ar": "مدير القاعة: يقصد به رئيس الخدم في الصالة ويشترط أن يكون حاصل على مؤهل علمي وخبرات عملية بذلك.",
+            "en": "The hall manager: the head of service in the hall, who must hold an academic qualification and practical experience in it."
+          },
+          "marks": 1
+        },
+        {
+          "no": "10.3",
+          "group": {
+            "ar": "الوصف الوظيفي وشروط العمل للعاملين",
+            "en": "Job description and working conditions for staff"
+          },
+          "basis": {
+            "ar": "لباس خاص و موحد حسب اقسام البار المختلفة",
+            "en": "A dedicated, uniform outfit according to the bar's different departments"
+          },
+          "definition": {
+            "ar": "الزي الخاص بالعاملين. زي متناسق و موحد لكافة العاملين يحمل شعار المحل .",
+            "en": "Staff uniform. A matching, uniform outfit for all staff carrying the venue's logo."
+          },
+          "marks": 2
+        },
+        {
+          "no": "10.4",
+          "group": {
+            "ar": "الوصف الوظيفي وشروط العمل للعاملين",
+            "en": "Job description and working conditions for staff"
+          },
+          "basis": {
+            "ar": "ان تتوفر الشروط الصحية للعاملين",
+            "en": "Health requirements for staff shall be met"
+          },
+          "definition": {
+            "ar": "الشكل العام واللياقة الصحية. يقصد بذلك اللياقة الصحية والبدنية للعاملين، مع توفر الشهادات الصحية الرسمية لكل عامل.",
+            "en": "General appearance and health fitness. This means the health and physical fitness of staff, with an official health certificate available for every worker."
+          },
+          "marks": 1
+        },
+        {
+          "no": "10.5",
+          "group": {
+            "ar": "الوصف الوظيفي وشروط العمل للعاملين",
+            "en": "Job description and working conditions for staff"
+          },
+          "basis": {
+            "ar": "ان تتوفر المؤهلات العلمية والعملية للعاملين",
+            "en": "Academic and practical qualifications of staff shall be available"
+          },
+          "definition": {
+            "ar": "المؤهلات العلمية. وهي وجود خريجي الكليات الفندقية والمؤهلين علميا .",
+            "en": "Academic qualifications. That is, the presence of hospitality-college graduates and academically qualified staff."
+          },
+          "marks": 2
+        },
+        {
+          "no": "10.6",
+          "group": {
+            "ar": "الوصف الوظيفي وشروط العمل للعاملين",
+            "en": "Job description and working conditions for staff"
+          },
+          "basis": {
+            "ar": "عدد كافي من العاملين لجميع اقسام و مرافق البار",
+            "en": "Sufficient staff for all the bar's departments and facilities"
+          },
+          "definition": {
+            "ar": "ان يكون عدد العاملين كافي في كافة مرافق البار.",
+            "en": "The number of staff shall be sufficient across all the bar's facilities."
+          },
+          "marks": 2
+        },
+        {
+          "no": "10.7",
+          "group": {
+            "ar": "الوصف الوظيفي وشروط العمل للعاملين",
+            "en": "Job description and working conditions for staff"
+          },
+          "basis": {
+            "ar": "ان تتوفر غرفة خاصة لغيار و استراحة الموظفين",
+            "en": "A dedicated changing and rest room for staff shall be provided"
+          },
+          "definition": {
+            "ar": "مكان خاص لتبديل الملابس: وهو مكان خاص لتبديل الملابس للعاملين بمساحة تتناسب مع عددهم مع توفر الحمامات و وسائل النظافة من فوط التنشيف والصابون و ورق التواليت الصحي.",
+            "en": "A dedicated changing place: a dedicated place for staff to change clothes, of an area proportionate to their number, with bathrooms and hygiene supplies including drying towels, soap and sanitary toilet paper."
+          },
+          "marks": 4
+        },
+        {
+          "no": "10.8",
+          "group": {
+            "ar": "الميزات الخاصة",
+            "en": "Special features"
+          },
+          "basis": {
+            "ar": "—",
+            "en": "—"
+          },
+          "definition": {
+            "ar": "—",
+            "en": "—"
+          },
+          "marks": 2
+        }
+      ]
+    }
+  ]
+}
