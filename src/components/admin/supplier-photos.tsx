@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState, useTransition } from "react";
 import { Star, Trash2, Loader2, ImagePlus, AlertCircle } from "lucide-react";
@@ -30,6 +31,7 @@ export function SupplierPhotoManager({
   supplierId: string;
   images: ImageRow[];
 }) {
+  const tf = useTranslations("admin.feedback");
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [formKey, setFormKey] = useState(0);
@@ -57,7 +59,7 @@ export function SupplierPhotoManager({
       } catch {
         // Without this the rejected action reaches the segment's error
         // boundary and replaces the whole page with "Something went wrong".
-        setError("The upload did not complete. Please try again.");
+        setError(tf("uploadFailed"));
       }
     });
   }
@@ -87,11 +89,11 @@ export function SupplierPhotoManager({
                   onClick={() =>
                     startTransition(() => setPrimarySupplierImage(supplierId, img.id))
                   }
-                  title="Make primary"
+                  title={tf("makePrimary")}
                   className="flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-ink hover:bg-white"
                 >
                   <Star className="h-3 w-3" aria-hidden="true" />
-                  <span className="sr-only">Make primary</span>
+                  <span className="sr-only">{tf("makePrimary")}</span>
                 </button>
               ) : null}
               <button
@@ -107,14 +109,14 @@ export function SupplierPhotoManager({
                 ) : (
                   <Trash2 className="h-3 w-3" aria-hidden="true" />
                 )}
-                <span className="sr-only">Delete photo</span>
+                <span className="sr-only">{tf("deletePhoto")}</span>
               </button>
             </div>
           </div>
         ))}
         {images.length === 0 ? (
           <p className="col-span-full text-sm text-ink-faint">
-            No photos yet — the first one you add becomes the directory card image.
+            {tf("noPhotosYet")}
           </p>
         ) : null}
       </div>
@@ -135,12 +137,12 @@ export function SupplierPhotoManager({
           className="pill-press inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-xs font-semibold text-white disabled:opacity-60"
         >
           <ImagePlus className="h-3.5 w-3.5" aria-hidden="true" />
-          Add photo
+          {tf("addPhoto")}
         </button>
       </form>
 
       <p aria-live="polite" className="mt-2 min-h-4 text-xs">
-        {pending ? <span className="text-ink-faint">Working…</span> : null}
+        {pending ? <span className="text-ink-faint">{tf("working")}</span> : null}
         {error ? (
           <span className="inline-flex items-center gap-1 text-danger-text">
             <AlertCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />

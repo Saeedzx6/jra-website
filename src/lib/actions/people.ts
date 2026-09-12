@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { putFile } from "@/lib/storage";
 import { requireAdmin, writeAudit } from "@/lib/rbac";
@@ -107,17 +108,18 @@ export async function setPersonPhoto(
   id: string,
   formData: FormData
 ): Promise<{ error?: string }> {
+  const t = await getTranslations("admin.feedback");
   const session = await requireAdmin();
 
   const file = formData.get("file");
-  if (!(file instanceof File) || file.size === 0) return { error: "Choose an image first." };
+  if (!(file instanceof File) || file.size === 0) return { error: t("chooseImage") };
   if (!ALLOWED.includes(file.type)) {
-    return { error: "That file is not an image. Use JPEG, PNG, WebP, AVIF or GIF." };
+    return { error: t("notAnImage") };
   }
-  if (file.size > MAX_BYTES) return { error: "That image is too large even after resizing. Please crop it or save a smaller copy." };
+  if (file.size > MAX_BYTES) return { error: t("imageTooLarge") };
 
   const person = await db.person.findUnique({ where: { id } });
-  if (!person) return { error: "Person not found." };
+  if (!person) return { error: t("notFound") };
 
   const stored = await putFile(file, { folder: "people", basename: "person" });
   await db.person.update({ where: { id }, data: { photoUrl: stored.url } });

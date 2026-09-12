@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import slugifyLib from "slugify";
+import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { putFile } from "@/lib/storage";
 import { requireAdmin, writeAudit } from "@/lib/rbac";
@@ -53,10 +54,11 @@ export async function createSupplier(
   _prev: ActionState,
   formData: FormData
 ): Promise<ActionState> {
+  const t = await getTranslations("admin.feedback");
   const session = await requireAdmin();
 
   const name = str(formData, "name");
-  if (!name) return fail("A supplier name is required.");
+  if (!name) return fail(t("nameRequired"));
 
   const status = formData.get("status") === "PUBLISHED" ? "PUBLISHED" : "DRAFT";
   const governorateId = str(formData, "governorateId");
@@ -79,7 +81,7 @@ export async function createSupplier(
 
   await writeAudit(session.user.id, "CREATE", "SUPPLIER", supplier.id, { name, status });
   revalidateSuppliers();
-  return ok(`${name} added.`);
+  return ok(t("created", { name }));
 }
 
 export async function updateSupplier(
@@ -87,10 +89,11 @@ export async function updateSupplier(
   _prev: ActionState,
   formData: FormData
 ): Promise<ActionState> {
+  const t = await getTranslations("admin.feedback");
   const session = await requireAdmin();
 
   const name = str(formData, "name");
-  if (!name) return fail("A supplier name is required.");
+  if (!name) return fail(t("nameRequired"));
 
   await db.supplier.update({
     where: { id },
@@ -109,24 +112,25 @@ export async function updateSupplier(
 
   await writeAudit(session.user.id, "UPDATE", "SUPPLIER", id, { name });
   revalidateSuppliers();
-  return ok("Changes saved.");
+  return ok(t("saved"));
 }
 
 export async function uploadSupplierImage(
   supplierId: string,
   formData: FormData
 ): Promise<{ error?: string }> {
+  const t = await getTranslations("admin.feedback");
   const session = await requireAdmin();
 
   const file = formData.get("file");
-  if (!(file instanceof File) || file.size === 0) return { error: "Choose an image first." };
+  if (!(file instanceof File) || file.size === 0) return { error: t("chooseImage") };
   if (!ALLOWED.includes(file.type)) {
-    return { error: "That file is not an image. Use JPEG, PNG, WebP, AVIF or GIF." };
+    return { error: t("notAnImage") };
   }
-  if (file.size > MAX_BYTES) return { error: "That image is too large even after resizing. Please crop it or save a smaller copy." };
+  if (file.size > MAX_BYTES) return { error: t("imageTooLarge") };
 
   const supplier = await db.supplier.findUnique({ where: { id: supplierId } });
-  if (!supplier) return { error: "Supplier not found." };
+  if (!supplier) return { error: t("notFound") };
 
   const stored = await putFile(file, {
     folder: `suppliers/${supplier.slug}`,
@@ -194,22 +198,26 @@ export async function deleteSupplier(
   id: string,
   _prev: ActionState
 ): Promise<ActionState> {
+  const t = await getTranslations("admin.feedback");
   const session = await requireAdmin();
 
   const supplier = await db.supplier.findUnique({
     where: { id },
     select: { name: true, membership: { select: { id: true, memberNumber: true } } },
   });
-  if (!supplier) return fail("That supplier no longer exists.");
+  if (!supplier) return fail(t("supplierGone"));
 
   if (supplier.membership) {
     return fail(
-      `${supplier.name} holds membership ${supplier.membership.memberNumber} with billing history, so it cannot be deleted. Set it to Draft instead to remove it from the public directory.`
+      t("cannotDeleteMember", {
+        name: supplier.name,
+        memberNumber: supplier.membership.memberNumber,
+      })
     );
   }
 
   await db.supplier.delete({ where: { id } });
   await writeAudit(session.user.id, "DELETE", "SUPPLIER", id, { name: supplier.name });
   revalidateSuppliers();
-  return ok(`${supplier.name} deleted.`);
+  return ok(t("deleted", { name: supplier.name }));
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 import Image from "next/image";
 import { Star, Trash2, Loader2 } from "lucide-react";
@@ -14,6 +15,7 @@ export function RestaurantPhotoManager({
   restaurantId: string;
   images: ImageRow[];
 }) {
+  const tf = useTranslations("admin.feedback");
   const [pending, startTransition] = useTransition();
 
   return (
@@ -34,7 +36,7 @@ export function RestaurantPhotoManager({
                 type="button"
                 disabled={pending}
                 onClick={() => startTransition(() => setPrimaryRestaurantImage(restaurantId, img.id))}
-                title="Make primary"
+                title={tf("makePrimary")}
                 className="flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-ink hover:bg-white"
               >
                 <Star className="h-3 w-3" />
@@ -44,7 +46,7 @@ export function RestaurantPhotoManager({
               type="button"
               disabled={pending}
               onClick={() => startTransition(() => deleteRestaurantImage(img.id))}
-              title="Delete"
+              title={tf("deletePhoto")}
               className="ms-auto flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-accent-strong hover:bg-white"
             >
               {pending ? <Loader2 className="h-3 w-3 animate-spin" /> : <Trash2 className="h-3 w-3" />}
@@ -53,7 +55,7 @@ export function RestaurantPhotoManager({
         </div>
       ))}
       {images.length === 0 && (
-        <p className="col-span-full text-sm text-ink-faint">No photos yet — add one below.</p>
+        <p className="col-span-full text-sm text-ink-faint">{tf("noPhotosSimple")}</p>
       )}
     </div>
   );
