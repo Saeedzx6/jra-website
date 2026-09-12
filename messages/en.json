@@ -196,7 +196,9 @@
     "categories": "Categories",
     "contact": "Contact",
     "noContactYet": "No contact details recorded yet.",
-    "photoAlt": "Photo {number} of {name}"
+    "photoAlt": "Photo {number} of {name}",
+    "applyCta": "Apply as a supplier",
+    "applyHint": "JRA associate membership is open to companies supplying Jordan's restaurant sector. Applications are reviewed by the association."
   },
   "classification": {
     "heroTitle": "Know exactly where your establishment stands",
@@ -449,7 +451,11 @@
       "selfAssessmentAttached": "Self-assessment attached",
       "pointsSummary": "{score} / {total} points",
       "projectsToStars": "— projects to {stars} {starWord}",
-      "attachedDocuments": "Attached documents"
+      "attachedDocuments": "Attached documents",
+      "supplierDetails": "Supplier details",
+      "registrationNumber": "Registration no.",
+      "yearsTrading": "Years trading",
+      "website": "Website"
     },
     "assessments": {
       "description": "Submitted classification self-assessments from logged-in members, saved against their real restaurant profile.",
@@ -578,7 +584,10 @@
       "draft": "Draft",
       "published": "Published",
       "photos": "Photos",
-      "empty": "No suppliers yet. Add the first one above."
+      "empty": "No suppliers yet. Add the first one above.",
+      "remove": "Remove",
+      "confirmRemove": "Delete this supplier permanently?",
+      "cancel": "Cancel"
     },
     "people": {
       "intro": "Board members and staff, shown on the About page. Sort order controls the sequence within each group.",
@@ -633,7 +642,17 @@
     "supportingDocuments": "Supporting documents",
     "optional": "(optional)",
     "documentsHint": "Business license, ID, or photos — PDF, Word, or image, up to 10MB each.",
-    "submitApplication": "Submit application"
+    "submitApplication": "Submit application",
+    "supplierSectionTitle": "About your company",
+    "productsSuppliedPlaceholder": "What do you supply to restaurants? (e.g. commercial kitchen equipment, fresh produce, POS systems)",
+    "registrationNumberPlaceholder": "Commercial registration number",
+    "yearsTradingPlaceholder": "Years trading",
+    "websitePlaceholder": "Website (https://…)",
+    "governoratePlaceholder": "Governorate",
+    "filesTooLarge": "Your attachments total {mb} MB, which is over the limit. Please send fewer or smaller files.",
+    "error_invalid": "Some details are missing or incorrect. Please check the form and try again.",
+    "error_rate_limited": "Too many submissions from this connection. Please try again later.",
+    "error_supplier_details": "Please describe what your company supplies."
   },
   "errors": {
     "notFoundTitle": "We can't find that page",
