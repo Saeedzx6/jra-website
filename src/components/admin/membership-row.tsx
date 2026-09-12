@@ -13,7 +13,18 @@ type AssessmentSummary = {
   sections?: { name: string; score: number; max: number }[];
 };
 
-type Documents = { files?: string[]; assessment?: AssessmentSummary } | null;
+type SupplierDetails = {
+  productsSupplied?: string;
+  registrationNumber?: string;
+  website?: string;
+  yearsTrading?: string;
+};
+
+type Documents = {
+  files?: string[];
+  assessment?: AssessmentSummary;
+  supplier?: SupplierDetails;
+} | null;
 
 export function MembershipApplicationRow({
   id,
@@ -63,6 +74,7 @@ export function MembershipApplicationRow({
 
   const files = documents?.files ?? [];
   const assessment = documents?.assessment;
+  const supplier = documents?.supplier;
 
   return (
     <div className="rounded-2xl border border-rule bg-surface p-5">
@@ -103,6 +115,36 @@ export function MembershipApplicationRow({
           </button>
         </div>
       </div>
+
+      {/* What an associate supplier answered. Without this the review screen
+          showed a company name and an email and nothing about the business
+          being assessed. */}
+      {supplier ? (
+        <div className="mt-3 rounded-xl border border-rule bg-surface-2 p-4">
+          <p className="ui-caps font-semibold text-ink-faint">{tm("supplierDetails")}</p>
+          {supplier.productsSupplied ? (
+            <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+              {supplier.productsSupplied}
+            </p>
+          ) : null}
+          <dl className="mt-3 grid gap-x-6 gap-y-1 text-xs sm:grid-cols-2">
+            {[
+              [tm("registrationNumber"), supplier.registrationNumber],
+              [tm("yearsTrading"), supplier.yearsTrading],
+              [tm("website"), supplier.website],
+            ]
+              .filter(([, v]) => Boolean(v))
+              .map(([label, value]) => (
+                <div key={label} className="flex gap-2">
+                  <dt className="text-ink-faint">{label}</dt>
+                  <dd className="min-w-0 break-words text-ink-soft" dir="ltr">
+                    {value}
+                  </dd>
+                </div>
+              ))}
+          </dl>
+        </div>
+      ) : null}
 
       {assessment ? (
         <div className="mt-4 rounded-xl bg-surface-2 p-3">
