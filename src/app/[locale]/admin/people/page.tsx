@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { SubmitButton } from "@/components/admin/form-controls";
 import { db } from "@/lib/db";
 import { createPerson, updatePerson, deletePerson } from "@/lib/actions/people";
 import { PersonPhotoField } from "@/components/admin/person-photo";
@@ -88,12 +89,7 @@ export default async function AdminPeoplePage() {
             className={field}
           />
           <div className="sm:col-span-2">
-            <button
-              suppressHydrationWarning
-              className="pill-press rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white"
-            >
-              {ta("create")}
-            </button>
+            <SubmitButton>{ta("create")}</SubmitButton>
             <p className="mt-2 text-xs text-ink-faint">{tp("photoAfterCreate")}</p>
           </div>
         </form>
@@ -179,24 +175,14 @@ export default async function AdminPeoplePage() {
                         className={field}
                       />
                       <div className="sm:col-span-2">
-                        <button
-                          suppressHydrationWarning
-                          className="pill-press rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white"
-                        >
-                          {ta("save")}
-                        </button>
+                        <SubmitButton>{ta("save")}</SubmitButton>
                       </div>
                     </form>
 
                     {/* Its own form so a stray Enter in the edit fields cannot
                         submit a delete. */}
                     <form action={remove} className="mt-3">
-                      <button
-                        suppressHydrationWarning
-                        className="rounded-full border border-rule px-4 py-1.5 text-xs font-medium text-ink-soft hover:border-danger hover:text-danger-text"
-                      >
-                        {tp("removePerson")}
-                      </button>
+                      <SubmitButton variant="ghost">{tp("removePerson")}</SubmitButton>
                     </form>
                   </details>
                 </div>

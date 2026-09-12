@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
-import { Check } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import { registerForSession } from "@/lib/actions/training";
 
 export function CourseRegisterForm({ sessionId }: { sessionId: string }) {
@@ -24,6 +24,7 @@ export function CourseRegisterForm({ sessionId }: { sessionId: string }) {
       <input suppressHydrationWarning name="email" type="email" required placeholder={tt("emailPlaceholder")} className="flex-1 min-w-[140px] rounded-lg border border-rule bg-paper px-3 py-2 text-sm focus:border-accent focus:outline-none" />
       <input suppressHydrationWarning name="phone" placeholder={tt("phonePlaceholder")} className="w-32 rounded-lg border border-rule bg-paper px-3 py-2 text-sm focus:border-accent focus:outline-none" />
       <button suppressHydrationWarning disabled={pending} className="pill-press rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white disabled:opacity-60">
+        {pending ? <Loader2 className="me-1.5 inline h-3.5 w-3.5 animate-spin align-[-2px]" aria-hidden="true" /> : null}
         {tt("register")}
       </button>
     </form>
