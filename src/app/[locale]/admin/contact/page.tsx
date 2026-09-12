@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { SubmitButton } from "@/components/admin/form-controls";
 import { db } from "@/lib/db";
 import { markInquiryHandled } from "@/lib/actions/admin";
 
@@ -23,9 +24,7 @@ export default async function AdminContactPage() {
               </div>
               {inq.status === "NEW" ? (
                 <form action={markInquiryHandled.bind(null, inq.id)}>
-                  <button suppressHydrationWarning className="shrink-0 rounded-full border border-accent px-4 py-1.5 text-xs font-semibold text-accent hover:bg-accent hover:text-white">
-                    {tc("markHandled")}
-                  </button>
+                  <SubmitButton className="shrink-0 rounded-full border border-accent px-4 py-1.5 text-xs font-semibold text-accent hover:bg-accent hover:text-white">{tc("markHandled")}</SubmitButton>
                 </form>
               ) : (
                 <span className="shrink-0 rounded-full bg-success-soft px-3 py-1 text-xs font-medium text-success-text">

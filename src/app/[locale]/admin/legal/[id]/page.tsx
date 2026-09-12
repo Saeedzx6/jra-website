@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { SubmitButton } from "@/components/admin/form-controls";
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { addLegalDocumentVersion } from "@/lib/actions/legal";
@@ -35,7 +36,7 @@ export default async function AdminLegalDocumentPage({
         <input suppressHydrationWarning name="versionLabel" required placeholder={tl("versionLabelOnly")} className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
         <input suppressHydrationWarning name="fileUrl" placeholder={tl("fileUrlOnly")} className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
         <textarea suppressHydrationWarning name="bodyHtml" rows={3} placeholder={tl("amendmentSummaryPlaceholder")} className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
-        <button suppressHydrationWarning className="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white">{tl("addVersion")}</button>
+        <SubmitButton>{tl("addVersion")}</SubmitButton>
       </form>
     </div>
   );

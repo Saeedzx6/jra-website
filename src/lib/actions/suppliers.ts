@@ -5,6 +5,10 @@ import slugifyLib from "slugify";
 import { db } from "@/lib/db";
 import { putFile } from "@/lib/storage";
 import { requireAdmin, writeAudit } from "@/lib/rbac";
+import { ok, fail, type ActionState } from "@/lib/action-state";
+// One ceiling shared with the browser-side resizer, so the message a user
+// sees and the limit the server enforces cannot drift apart.
+import { UPLOAD_MAX_BYTES as MAX_BYTES } from "@/lib/prepare-image";
 
 /**
  * Supplier back office.
@@ -19,8 +23,9 @@ import { requireAdmin, writeAudit } from "@/lib/rbac";
  * reads the first image.
  */
 
-const MAX_BYTES = 8 * 1024 * 1024;
+
 const ALLOWED = ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"];
+
 
 function revalidateSuppliers() {
   revalidatePath("/[locale]/admin/suppliers", "page");
@@ -44,11 +49,14 @@ function str(formData: FormData, key: string) {
   return s.length > 0 ? s : null;
 }
 
-export async function createSupplier(formData: FormData): Promise<void> {
+export async function createSupplier(
+  _prev: ActionState,
+  formData: FormData
+): Promise<ActionState> {
   const session = await requireAdmin();
 
   const name = str(formData, "name");
-  if (!name) throw new Error("A supplier name is required.");
+  if (!name) return fail("A supplier name is required.");
 
   const status = formData.get("status") === "PUBLISHED" ? "PUBLISHED" : "DRAFT";
   const governorateId = str(formData, "governorateId");
@@ -71,13 +79,18 @@ export async function createSupplier(formData: FormData): Promise<void> {
 
   await writeAudit(session.user.id, "CREATE", "SUPPLIER", supplier.id, { name, status });
   revalidateSuppliers();
+  return ok(`${name} added.`);
 }
 
-export async function updateSupplier(id: string, formData: FormData): Promise<void> {
+export async function updateSupplier(
+  id: string,
+  _prev: ActionState,
+  formData: FormData
+): Promise<ActionState> {
   const session = await requireAdmin();
 
   const name = str(formData, "name");
-  if (!name) throw new Error("A supplier name is required.");
+  if (!name) return fail("A supplier name is required.");
 
   await db.supplier.update({
     where: { id },
@@ -96,6 +109,7 @@ export async function updateSupplier(id: string, formData: FormData): Promise<vo
 
   await writeAudit(session.user.id, "UPDATE", "SUPPLIER", id, { name });
   revalidateSuppliers();
+  return ok("Changes saved.");
 }
 
 export async function uploadSupplierImage(
@@ -109,7 +123,7 @@ export async function uploadSupplierImage(
   if (!ALLOWED.includes(file.type)) {
     return { error: "That file is not an image. Use JPEG, PNG, WebP, AVIF or GIF." };
   }
-  if (file.size > MAX_BYTES) return { error: "That image is larger than 8 MB." };
+  if (file.size > MAX_BYTES) return { error: "That image is too large even after resizing. Please crop it or save a smaller copy." };
 
   const supplier = await db.supplier.findUnique({ where: { id: supplierId } });
   if (!supplier) return { error: "Supplier not found." };
@@ -162,4 +176,40 @@ export async function setPrimarySupplierImage(supplierId: string, imageId: strin
   await db.supplierImage.update({ where: { id: imageId }, data: { isPrimary: true } });
   await writeAudit(session.user.id, "SET_PRIMARY_IMAGE", "SUPPLIER", supplierId, { imageId });
   revalidateSuppliers();
+}
+
+/**
+ * Deletes a supplier.
+ *
+ * Images, category links and manager links all cascade. A Membership does not:
+ * its `supplierId` is `SetNull`, so deleting a supplier that has one would
+ * leave a membership — and every invoice and payment hanging off it — pointing
+ * at nothing, with no way to tell afterwards who it belonged to.
+ *
+ * Rather than silently strand billing history, this refuses and explains. The
+ * way to take such a supplier off the site is to set it back to Draft, which
+ * removes it from the public directory and keeps the record intact.
+ */
+export async function deleteSupplier(
+  id: string,
+  _prev: ActionState
+): Promise<ActionState> {
+  const session = await requireAdmin();
+
+  const supplier = await db.supplier.findUnique({
+    where: { id },
+    select: { name: true, membership: { select: { id: true, memberNumber: true } } },
+  });
+  if (!supplier) return fail("That supplier no longer exists.");
+
+  if (supplier.membership) {
+    return fail(
+      `${supplier.name} holds membership ${supplier.membership.memberNumber} with billing history, so it cannot be deleted. Set it to Draft instead to remove it from the public directory.`
+    );
+  }
+
+  await db.supplier.delete({ where: { id } });
+  await writeAudit(session.user.id, "DELETE", "SUPPLIER", id, { name: supplier.name });
+  revalidateSuppliers();
+  return ok(`${supplier.name} deleted.`);
 }

@@ -1,7 +1,9 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ClipboardCheck } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { Suspense } from "react";
 import { MembershipForm } from "@/components/membership-form";
+import { db } from "@/lib/db";
 import { pageMetadata } from "@/lib/page-metadata";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
@@ -20,6 +22,10 @@ export default async function MembershipPage({
   const t = await getTranslations("nav");
   const tf = await getTranslations("footer");
   const tm = await getTranslations("membership");
+  const governorates = await db.governorate.findMany({
+    orderBy: { nameEn: "asc" },
+    select: { id: true, nameEn: true, nameAr: true },
+  });
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
@@ -42,7 +48,9 @@ export default async function MembershipPage({
       </Link>
 
       <div className="mt-6 rounded-2xl border border-rule bg-surface p-6 sm:p-10 sm:p-8">
-        <MembershipForm />
+        <Suspense fallback={null}>
+          <MembershipForm governorates={governorates} />
+        </Suspense>
       </div>
     </div>
   );

@@ -751,6 +751,16 @@ model MarketplaceListingImage {
 // Classification Hub — real criteria extracted from JRA's own PDFs
 // ---------------------------------------------------------------------------
 
+/// How a standard turns answers into a result. Six of the seven documents
+/// score against star bands. Fast food does not: it awards the flat
+/// (معتمد سياحي) tourism-approved category, and every one of its marks sits
+/// on a row printed (اجباري) mandatory — so the result is pass/fail on those
+/// rows rather than a position on a scale.
+enum GradingMode {
+  STARS
+  CERTIFICATION
+}
+
 model ClassificationStandard {
   id                  String            @id @default(cuid())
   establishmentType   EstablishmentType @unique
@@ -758,6 +768,7 @@ model ClassificationStandard {
   titleEn             String
   titleAr             String?
   totalPossiblePoints Float
+  gradingMode         GradingMode       @default(STARS)
 
   sections    ClassificationSection[]
   starBands   ClassificationStarBand[]
@@ -772,6 +783,13 @@ model ClassificationSection {
   code          String
   nameEn        String
   nameAr        String?
+  /// The ملاحظات column some documents print against a whole section, which
+  /// can waive it: the restaurant standard excuses its 33-mark kitchen section
+  /// for venues that need no kitchen, sushi counters among them. Dropping that
+  /// would score such a restaurant zero on a third of the kitchen marks and
+  /// misgrade it, so it is carried through and shown with the section.
+  noteEn        String?
+  noteAr        String?
   sortOrder     Int                    @default(0)
 
   criteria ClassificationCriterion[]
@@ -780,13 +798,30 @@ model ClassificationSection {
   @@map("classification_sections")
 }
 
+/// One row of a classification table.
+///
+/// The documents give each row three pieces of text: the الوصف العام heading a
+/// run of rows sits under, the أسس التصنيف requirement itself, and the التعريف
+/// explaining what meeting it means in practice. textEn/textAr carry the
+/// requirement — they always did — and the rest is stored alongside so an
+/// owner can see what is actually being asked of them instead of a bare label.
+/// All of it is nullable: the standards transcribed before this existed have
+/// only the requirement.
 model ClassificationCriterion {
   id         String                @id @default(cuid())
   sectionId  String
   section    ClassificationSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  /// The numbering printed in the document, e.g. "5.3".
+  code       String?
+  groupEn    String?
+  groupAr    String?
   textEn     String
   textAr     String?
+  detailEn   String?
+  detailAr   String?
   maxPoints  Float
+  /// CERTIFICATION standards only: the row is (اجباري) rather than (اختياري).
+  mandatory  Boolean               @default(false)
   sortOrder  Int                   @default(0)
 
   answers AssessmentAnswer[]
@@ -808,6 +843,10 @@ model ClassificationStarBand {
 }
 
 enum AssessmentStatus {
+  /// A re-rating the establishment has asked for and JRA has not opened yet.
+  /// The session exists so the request sits in the same queue as everything
+  /// else, but its answers cannot be filled in until an admin opens it.
+  REQUESTED
   IN_PROGRESS
   SUBMITTED
   SCORED
@@ -824,6 +863,12 @@ model AssessmentSession {
   establishmentType    EstablishmentType
   criteriaVersionLabel String?
   status               AssessmentStatus  @default(IN_PROGRESS)
+  /// 1 is the rating an establishment does when it joins, which happens once.
+  /// Everything above it is a re-rating JRA opened on request.
+  cycle                Int               @default(1)
+  /// Why a re-rating was asked for — renovated, added facilities, disputing
+  /// the grade. Set on the request, read by whoever decides to open it.
+  requestedReason      String?
   totalScore           Float?
   resultingStars       Int?
   startedById          String

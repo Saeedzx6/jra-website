@@ -1,8 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
-import { upsertNewsArticle } from "@/lib/actions/admin";
 import { CoverImageField } from "@/components/admin/cover-image-field";
 import { NewsGalleryManager } from "@/components/admin/news-gallery";
+import { NewsCreateForm, NewsEditForm, type NewsLabels } from "@/components/admin/news-form";
 
 export default async function AdminNewsPage() {
   const articles = await db.newsArticle.findMany({
@@ -20,76 +20,89 @@ export default async function AdminNewsPage() {
   const tStatus = await getTranslations("admin.news.statusOptions");
   const tmedia = await getTranslations("admin.media");
 
+  const labels: NewsLabels = {
+    title: ta("titlePlaceholder"),
+    body: ta("bodyHtmlPlaceholder"),
+    draft: tStatus("DRAFT"),
+    published: tStatus("PUBLISHED"),
+    create: ta("create"),
+    save: ta("save"),
+    remove: tnews("remove"),
+    confirmRemove: tnews("confirmRemove"),
+    cancel: tnews("cancel"),
+    coverOnCreate: tnews("coverOnCreate"),
+  };
+
   return (
     <div>
       <h1 className="font-display text-2xl font-semibold text-ink">{tn("news")}</h1>
 
       <details className="mt-6 rounded-2xl border border-rule bg-surface p-5">
         <summary className="cursor-pointer font-medium text-ink">{tnews("newArticle")}</summary>
-        <form action={upsertNewsArticle} className="mt-4 space-y-3">
-          <input suppressHydrationWarning
-            name="title"
-            required
-            placeholder={ta("titlePlaceholder")}
-            className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
-          />
-          <textarea suppressHydrationWarning
-            name="bodyHtml"
-            required
-            rows={5}
-            placeholder={ta("bodyHtmlPlaceholder")}
-            className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
-          />
-          <select suppressHydrationWarning
-            name="status"
-            defaultValue="DRAFT"
-            className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm"
-          >
-            <option value="DRAFT">{tStatus("DRAFT")}</option>
-            <option value="PUBLISHED">{tStatus("PUBLISHED")}</option>
-          </select>
-          <button suppressHydrationWarning className="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white">
-            {ta("create")}
-          </button>
-        </form>
+        <NewsCreateForm labels={labels} />
       </details>
 
-      <div className="mt-6 divide-y divide-rule rounded-2xl border border-rule bg-surface">
-        {articles.map((a) => (
-          <div key={a.id} className="px-4 py-3">
-            <div className="flex items-center justify-between gap-4">
-              <span className="text-sm font-medium text-ink">
-                {a.translations[0]?.title ?? a.slug}
-              </span>
-              <span
-                className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                  a.status === "PUBLISHED" ? "bg-olive-soft text-olive-text" : "bg-brass-soft text-brass-text"
-                }`}
-              >
-                {tStatus(a.status)}
-              </span>
+      {/* One card per article rather than a divided list: each row now carries
+          an edit form, a delete, a cover and a gallery, which a table row of
+          text cannot hold legibly. */}
+      <div className="mt-6 space-y-4">
+        {articles.map((a) => {
+          const tr = a.translations[0];
+          return (
+            <div key={a.id} className="rounded-2xl border border-rule bg-surface p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <span className="text-sm font-medium text-ink">{tr?.title ?? a.slug}</span>
+                <span
+                  className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                    a.status === "PUBLISHED"
+                      ? "bg-olive-soft text-olive-text"
+                      : "bg-brass-soft text-brass-text"
+                  }`}
+                >
+                  {tStatus(a.status)}
+                </span>
+              </div>
+
+              <details className="mt-3">
+                <summary className="cursor-pointer text-sm text-accent">{ta("edit")}</summary>
+                <NewsEditForm
+                  article={{
+                    id: a.id,
+                    title: tr?.title ?? "",
+                    bodyHtml: tr?.bodyHtml ?? "",
+                    status: a.status,
+                  }}
+                  labels={labels}
+                />
+              </details>
+
+              <div className="mt-4 space-y-3">
+                <CoverImageField
+                  target="news"
+                  id={a.id}
+                  currentUrl={a.coverImageUrl}
+                  label={tmedia("coverImage")}
+                  hint={tmedia("coverHintWide")}
+                />
+                <NewsGalleryManager
+                  articleId={a.id}
+                  items={a.gallery}
+                  labels={{
+                    heading: tmedia("galleryHeading"),
+                    add: tmedia("galleryAdd"),
+                    caption: tmedia("galleryCaption"),
+                    empty: tmedia("galleryEmpty"),
+                  }}
+                />
+              </div>
             </div>
-            <div className="mt-3 space-y-3">
-              <CoverImageField
-                target="news"
-                id={a.id}
-                currentUrl={a.coverImageUrl}
-                label={tmedia("coverImage")}
-                hint={tmedia("coverHintWide")}
-              />
-              <NewsGalleryManager
-                articleId={a.id}
-                items={a.gallery}
-                labels={{
-                  heading: tmedia("galleryHeading"),
-                  add: tmedia("galleryAdd"),
-                  caption: tmedia("galleryCaption"),
-                  empty: tmedia("galleryEmpty"),
-                }}
-              />
-            </div>
-          </div>
-        ))}
+          );
+        })}
+        {articles.length === 0 ? (
+          <p className="rounded-2xl border border-rule bg-surface p-5 text-sm text-ink-soft">
+            {tnews("empty")}
+          </p>
+        ) : null}
       </div>
     </div>
   );

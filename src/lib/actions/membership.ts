@@ -13,6 +13,24 @@ const schema = z.object({
   email: z.string().email(),
   phone: z.string().min(6),
   classificationClaim: z.string().optional(),
+  /// Nullable on the model and never collected until now, even though the
+  /// review screen wants to know where an applicant operates.
+  governorateId: z.string().optional().nullable(),
+});
+
+/**
+ * What an associate supplier is asked for beyond the common fields.
+ *
+ * These are stored inside the `documents` JSON rather than as new columns.
+ * That field is already a general payload — it carries `files` and, for
+ * restaurants, a classification `assessment` — and this keeps a form change
+ * from requiring a migration against a live database.
+ */
+const supplierSchema = z.object({
+  productsSupplied: z.string().min(3).max(600),
+  registrationNumber: z.string().max(60).optional(),
+  website: z.string().max(200).optional(),
+  yearsTrading: z.string().max(20).optional(),
 });
 
 const MAX_FILE_BYTES = 10 * 1024 * 1024; // 10MB per file
@@ -62,6 +80,7 @@ export async function submitMembershipApplication(
     email: formData.get("email"),
     phone: formData.get("phone"),
     classificationClaim: formData.get("classificationClaim") || undefined,
+    governorateId: formData.get("governorateId") || undefined,
   });
 
   if (!parsed.success) {
@@ -85,9 +104,30 @@ export async function submitMembershipApplication(
     }
   }
 
+  // Supplier applicants answer a few questions a restaurant never sees. They
+  // are required for that path: JRA cannot assess an associate member without
+  // knowing what the company actually supplies.
+  let supplier: z.infer<typeof supplierSchema> | undefined;
+  if (parsed.data.applicantType === "ASSOCIATE_SUPPLIER") {
+    const supplierParsed = supplierSchema.safeParse({
+      productsSupplied: formData.get("productsSupplied") ?? "",
+      registrationNumber: formData.get("registrationNumber") || undefined,
+      website: formData.get("website") || undefined,
+      yearsTrading: formData.get("yearsTrading") || undefined,
+    });
+    if (!supplierParsed.success) {
+      return { ok: false, error: "supplier_details" };
+    }
+    supplier = supplierParsed.data;
+  }
+
   const documents =
-    fileUrls.length > 0 || assessment
-      ? { files: fileUrls, ...(assessment ? { assessment } : {}) }
+    fileUrls.length > 0 || assessment || supplier
+      ? {
+          files: fileUrls,
+          ...(assessment ? { assessment } : {}),
+          ...(supplier ? { supplier } : {}),
+        }
       : undefined;
 
   // The establishment type comes from whichever standard the applicant
@@ -108,8 +148,15 @@ export async function submitMembershipApplication(
     ? (rawType as (typeof VALID_TYPES)[number])
     : null;
 
+  const { governorateId, ...common } = parsed.data;
+
   await db.membershipApplication.create({
-    data: { ...parsed.data, establishmentType, documents: documents as never },
+    data: {
+      ...common,
+      governorateId: governorateId || null,
+      establishmentType,
+      documents: documents as never,
+    },
   });
   return { ok: true };
 }

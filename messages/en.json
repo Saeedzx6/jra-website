@@ -223,7 +223,9 @@
     "categories": "Categories",
     "contact": "Contact",
     "noContactYet": "No contact details recorded yet.",
-    "photoAlt": "Photo {number} of {name}"
+    "photoAlt": "Photo {number} of {name}",
+    "applyCta": "Apply as a supplier",
+    "applyHint": "JRA associate membership is open to companies supplying Jordan's restaurant sector. Applications are reviewed by the association."
   },
   "classification": {
     "heroTitle": "Know exactly where your establishment stands",
@@ -390,7 +392,8 @@
       "magazineArticles": "Magazine Articles",
       "knowledgeHub": "Knowledge / Projects / Opportunities",
       "newsletterSubscribers": "Newsletter Subscribers",
-      "suppliers": "Suppliers"
+      "suppliers": "Suppliers",
+      "people": "Board & Staff"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -442,14 +445,28 @@
         "PUBLISHED": "Published",
         "ARCHIVED": "Archived"
       },
-      "deleteConfirm": "Delete \"{name}\"? This permanently removes its profile, photos, and assessment history. This cannot be undone."
+      "deleteConfirm": "Delete \"{name}\"? This permanently removes its profile, photos, and assessment history. This cannot be undone.",
+      "newRestaurant": "Add a restaurant",
+      "namePlaceholder": "Restaurant name",
+      "nameArPlaceholder": "اسم المطعم (Arabic)",
+      "descriptionPlaceholder": "Short description shown on the directory card",
+      "addressPlaceholder": "Address",
+      "noGovernorate": "No governorate",
+      "phonePlaceholder": "Phone",
+      "emailPlaceholder": "Email",
+      "photosAfterCreate": "Add photos from the restaurant page after creating it."
     },
     "news": {
       "newArticle": "+ New article",
       "statusOptions": {
         "DRAFT": "Draft",
         "PUBLISHED": "Published"
-      }
+      },
+      "remove": "Delete article",
+      "confirmRemove": "Delete this article permanently?",
+      "cancel": "Cancel",
+      "coverOnCreate": "Cover image (optional — you can also add one later)",
+      "empty": "No articles yet. Create the first one above."
     },
     "contact": {
       "markHandled": "Mark handled",
@@ -466,7 +483,11 @@
       "selfAssessmentAttached": "Self-assessment attached",
       "pointsSummary": "{score} / {total} points",
       "projectsToStars": "— projects to {stars} {starWord}",
-      "attachedDocuments": "Attached documents"
+      "attachedDocuments": "Attached documents",
+      "supplierDetails": "Supplier details",
+      "registrationNumber": "Registration no.",
+      "yearsTrading": "Years trading",
+      "website": "Website"
     },
     "assessments": {
       "description": "Submitted classification self-assessments from logged-in members, saved against their real restaurant profile.",
@@ -595,7 +616,38 @@
       "draft": "Draft",
       "published": "Published",
       "photos": "Photos",
-      "empty": "No suppliers yet. Add the first one above."
+      "empty": "No suppliers yet. Add the first one above.",
+      "remove": "Remove",
+      "confirmRemove": "Delete this supplier permanently?",
+      "cancel": "Cancel"
+    },
+    "people": {
+      "intro": "Board members and staff, shown on the About page. Sort order controls the sequence within each group.",
+      "newPerson": "Add a person",
+      "namePlaceholder": "Full name",
+      "positionEnPlaceholder": "Position (English)",
+      "positionArPlaceholder": "المنصب (Arabic)",
+      "emailPlaceholder": "Email",
+      "termPlaceholder": "Term, e.g. 2024–2028",
+      "sortOrderPlaceholder": "Sort order",
+      "board": "Board members",
+      "staff": "Staff",
+      "uploadPhoto": "Upload photo",
+      "replacePhoto": "Replace photo",
+      "removePhoto": "Remove",
+      "noPhoto": "No photo yet.",
+      "removePerson": "Remove this person",
+      "photoAfterCreate": "Add the photo after creating the entry.",
+      "emptyGroup": "Nobody in this group yet."
+    },
+    "magazineIssues": {
+      "newIssue": "Add an issue",
+      "issueNumber": "Issue number (optional)",
+      "month": "Month (1–12)",
+      "year": "Year",
+      "status": "Status",
+      "draft": "Draft",
+      "published": "Published"
     }
   },
   "contactForm": {
@@ -633,7 +685,17 @@
     "supportingDocuments": "Supporting documents",
     "optional": "(optional)",
     "documentsHint": "Business license, ID, or photos — PDF, Word, or image, up to 10MB each.",
-    "submitApplication": "Submit application"
+    "submitApplication": "Submit application",
+    "supplierSectionTitle": "About your company",
+    "productsSuppliedPlaceholder": "What do you supply to restaurants? (e.g. commercial kitchen equipment, fresh produce, POS systems)",
+    "registrationNumberPlaceholder": "Commercial registration number",
+    "yearsTradingPlaceholder": "Years trading",
+    "websitePlaceholder": "Website (https://…)",
+    "governoratePlaceholder": "Governorate",
+    "filesTooLarge": "Your attachments total {mb} MB, which is over the limit. Please send fewer or smaller files.",
+    "error_invalid": "Some details are missing or incorrect. Please check the form and try again.",
+    "error_rate_limited": "Too many submissions from this connection. Please try again later.",
+    "error_supplier_details": "Please describe what your company supplies."
   },
   "errors": {
     "notFoundTitle": "We can't find that page",

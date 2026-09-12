@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 import { requireAdmin, writeAudit } from "@/lib/rbac";
+import { ok, fail, type ActionState } from "@/lib/action-state";
 import { putFile, usingCloudinary } from "@/lib/storage";
 import { provisionMembership } from "@/lib/membership";
 import slugifyLib from "slugify";
@@ -112,12 +113,31 @@ export async function setPrimaryRestaurantImage(restaurantId: string, imageId: s
 
 // --- News --------------------------------------------------------------
 
-export async function upsertNewsArticle(formData: FormData) {
+/**
+ * Creates or updates an article.
+ *
+ * Edit was always supported here — pass an `id` — but nothing in the back
+ * office ever rendered an edit form, so in practice an article could be
+ * created and never corrected. It now reports its outcome so the screen can
+ * confirm a save instead of leaving the editor guessing.
+ *
+ * A cover image may be attached in the same submission. Previously the upload
+ * control only appeared once the record existed, which meant every new article
+ * was necessarily created without one and then edited.
+ */
+export async function upsertNewsArticle(
+  _prev: ActionState,
+  formData: FormData
+): Promise<ActionState> {
   const session = await requireAdmin();
   const id = formData.get("id") ? String(formData.get("id")) : null;
-  const title = String(formData.get("title") ?? "");
+  const title = String(formData.get("title") ?? "").trim();
   const bodyHtml = String(formData.get("bodyHtml") ?? "");
   const status = formData.get("status") as "DRAFT" | "PUBLISHED";
+
+  if (title.length < 2) return fail("A title is required.");
+
+  let newId: string | null = null;
 
   if (id) {
     await db.newsArticle.update({ where: { id }, data: { status } });
@@ -139,9 +159,54 @@ export async function upsertNewsArticle(formData: FormData) {
       },
     });
     await writeAudit(session.user.id, "CREATE", "NEWS_ARTICLE", created.id, { title, status });
+    newId = created.id;
+  }
+
+  // An optional cover, attached in the same step as the article itself.
+  const cover = formData.get("cover");
+  const targetId = id ?? newId;
+  if (cover instanceof File && cover.size > 0 && targetId) {
+    if (!cover.type.startsWith("image/")) {
+      return fail("The article was saved, but the cover was not an image file.");
+    }
+    const stored = await putFile(cover, { folder: "news", basename: "cover" });
+    await db.newsArticle.update({
+      where: { id: targetId },
+      data: { coverImageUrl: stored.url },
+    });
   }
 
   revalidatePath("/[locale]/admin/news", "page");
+  revalidatePath("/[locale]/news", "page");
+  revalidatePath("/[locale]", "page");
+  return ok(id ? "Changes saved." : `"${title}" created.`);
+}
+
+/**
+ * Deletes an article and its translations and gallery, which cascade.
+ *
+ * Nothing else references a NewsArticle, so unlike a supplier there is no
+ * billing history to strand and no reason to refuse.
+ */
+export async function deleteNewsArticle(
+  id: string,
+  _prev: ActionState
+): Promise<ActionState> {
+  const session = await requireAdmin();
+  const article = await db.newsArticle.findUnique({
+    where: { id },
+    include: { translations: { where: { locale: "en" }, select: { title: true } } },
+  });
+  if (!article) return fail("That article no longer exists.");
+
+  const title = article.translations[0]?.title ?? article.slug;
+  await db.newsArticle.delete({ where: { id } });
+  await writeAudit(session.user.id, "DELETE", "NEWS_ARTICLE", id, { title });
+
+  revalidatePath("/[locale]/admin/news", "page");
+  revalidatePath("/[locale]/news", "page");
+  revalidatePath("/[locale]", "page");
+  return ok(`"${title}" deleted.`);
 }
 
 // --- Contact inquiries ---------------------------------------------------
@@ -322,4 +387,53 @@ export async function submitProfileEditRequest(
     },
   });
   revalidatePath("/[locale]/portal", "page");
+}
+
+/**
+ * Creates a restaurant.
+ *
+ * The back office could edit and delete the 701 seeded records but never add
+ * a new one — a new member had to be inserted by hand, or arrive through the
+ * membership-approval path. Slug collisions get a numeric suffix rather than
+ * failing, because two venues genuinely can share a name.
+ */
+export async function createRestaurant(formData: FormData): Promise<void> {
+  const session = await requireAdmin();
+
+  const name = String(formData.get("name") ?? "").trim();
+  if (!name) throw new Error("A restaurant name is required.");
+
+  const base = slugifyLib(name, { lower: true, strict: true }) || "restaurant";
+  let slug = base;
+  for (let n = 2; await db.restaurant.findUnique({ where: { slug } }); n++) {
+    slug = `${base}-${n}`;
+  }
+
+  const text = (key: string) => {
+    const v = formData.get(key);
+    const t = typeof v === "string" ? v.trim() : "";
+    return t.length > 0 ? t : null;
+  };
+
+  const restaurant = await db.restaurant.create({
+    data: {
+      slug,
+      name,
+      nameAr: text("nameAr"),
+      shortDescription: text("shortDescription"),
+      addressText: text("addressText"),
+      phone: text("phone"),
+      email: text("email"),
+      website: text("website"),
+      governorateId: text("governorateId"),
+      // Draft by default. A record with no description and no photo should not
+      // reach a public directory of 701 classified members on creation.
+      status: formData.get("status") === "PUBLISHED" ? "PUBLISHED" : "DRAFT",
+      source: "ADMIN_CREATED",
+    },
+  });
+
+  await writeAudit(session.user.id, "CREATE", "RESTAURANT", restaurant.id, { name, slug });
+  revalidatePath("/[locale]/admin/restaurants", "page");
+  revalidatePath("/[locale]/restaurants", "page");
 }

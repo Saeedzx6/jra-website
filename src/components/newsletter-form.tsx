@@ -2,7 +2,7 @@
 
 import { useActionState, useId, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Check } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import { subscribeToNewsletter } from "@/lib/actions/newsletter";
 import { NEWSLETTER_INTERESTS } from "@/lib/newsletter-interests";
 
@@ -94,6 +94,7 @@ export function NewsletterForm() {
         disabled={pending}
         style={{ marginBlockStart: "1.25rem" }}
       >
+        {pending ? <Loader2 className="me-1.5 inline h-3.5 w-3.5 animate-spin align-[-2px]" aria-hidden="true" /> : null}
         {t("subscribe")}
       </button>
 

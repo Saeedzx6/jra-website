@@ -1,0 +1,156 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JRA classification standard transcription",
+  "description": "One transcribed classification PDF. Verified by scripts/verify-standard-json.mjs, which additionally checks the arithmetic the schema cannot: rows must sum to their section's printed max, sections must sum to totalMarks, and the top star band must end at totalMarks.",
+  "type": "object",
+  "required": ["type", "titleEn", "titleAr", "gradingMode", "totalMarks", "sections"],
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "description": "Which establishment type this standard grades.",
+      "enum": [
+        "RESTAURANT",
+        "FAST_FOOD",
+        "COFFEE_SHOP",
+        "BAR",
+        "DISCO",
+        "NIGHTCLUB",
+        "TOURIST_PARK"
+      ]
+    },
+    "titleEn": { "type": "string", "minLength": 1 },
+    "titleAr": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The document's own title, as printed on its first page."
+    },
+    "gradingMode": {
+      "description": "STARS: scored against star bands. CERTIFICATION: pass/fail on mandatory requirements, no stars — fast food only.",
+      "enum": ["STARS", "CERTIFICATION"]
+    },
+    "totalMarks": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "The grand total printed at the foot of the document (المجموع الكلي). Never computed — read it off the page, and let the validator prove the sections agree with it."
+    },
+    "sourcePdf": {
+      "type": "string",
+      "description": "Filename under public/uploads/classification/ this was transcribed from."
+    },
+    "bands": {
+      "description": "Star bands as printed at the foot of the document. Required for STARS, absent for CERTIFICATION.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["stars", "min", "max"],
+        "additionalProperties": false,
+        "properties": {
+          "stars": { "type": "integer", "minimum": 1, "maximum": 5 },
+          "min": { "type": "number" },
+          "max": { "type": "number" }
+        }
+      }
+    },
+    "sections": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["code", "no", "nameEn", "nameAr", "max", "rows"],
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "description": "The shared 10-section skeleton every document follows. One icon set and one set of labels serve all seven standards, so a section must map onto one of these rather than invent its own code.",
+            "enum": [
+              "building",
+              "parking",
+              "entrances",
+              "service",
+              "hall",
+              "washrooms",
+              "kitchen",
+              "extras",
+              "quality",
+              "staff"
+            ]
+          },
+          "no": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "The section number printed in the document (‏.1‏, ‏.2‏ …)."
+          },
+          "nameEn": { "type": "string", "minLength": 1 },
+          "nameAr": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The section heading as printed, e.g. صالة الطعام."
+          },
+          "max": {
+            "type": "number",
+            "minimum": 0,
+            "description": "The section's printed total (المجموع). Read it off the page; the validator checks the rows sum to it."
+          },
+          "note": {
+            "$ref": "#/definitions/bilingual",
+            "description": "The ملاحظات column where a document prints one against a whole section — often a waiver, e.g. the restaurant standard excusing its kitchen section for venues that need no kitchen. Omit the key when the document prints none."
+          },
+          "rows": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["no", "basis", "marks"],
+              "additionalProperties": false,
+              "properties": {
+                "no": {
+                  "type": "string",
+                  "description": "Printed numbering as section.row, e.g. \"5.3\". Unique within the file."
+                },
+                "group": {
+                  "$ref": "#/definitions/bilingual",
+                  "description": "The الوصف العام heading a run of rows sits under. Required when basis is a dash, since it is then the only text naming the requirement."
+                },
+                "basis": {
+                  "$ref": "#/definitions/bilingual",
+                  "description": "The أسس التصنيف cell — the requirement itself. Use \"—\" in both languages where the document prints a dash."
+                },
+                "definition": {
+                  "$ref": "#/definitions/bilingual",
+                  "description": "The التعريف cell — what the requirement means in practice. Omit the key entirely when the document leaves it blank."
+                },
+                "marks": {
+                  "type": "number",
+                  "minimum": 0,
+                  "description": "The العلامات cell for this row. A row printed with a dash instead of a number carries 0."
+                },
+                "mandatory": {
+                  "type": "boolean",
+                  "description": "CERTIFICATION standards only: true for اجباري, false for اختياري. Mandatory marks must sum to totalMarks."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "bilingual": {
+      "type": "object",
+      "required": ["ar", "en"],
+      "additionalProperties": false,
+      "properties": {
+        "ar": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Verbatim from the document — this is the authoritative text."
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A faithful translation. Not a paraphrase and not an expansion."
+        }
+      }
+    }
+  }
+}

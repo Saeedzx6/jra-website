@@ -223,7 +223,9 @@
     "categories": "الفئات",
     "contact": "التواصل",
     "noContactYet": "لم تُسجَّل بيانات تواصل بعد.",
-    "photoAlt": "صورة {number} من {name}"
+    "photoAlt": "صورة {number} من {name}",
+    "applyCta": "تقدّم كمورّد",
+    "applyHint": "العضوية المنتسبة في النقابة متاحة للشركات التي تزوّد قطاع المطاعم في الأردن. تُراجَع الطلبات من قبل النقابة."
   },
   "classification": {
     "heroTitle": "اعرف بدقة أين تقف منشأتك",
@@ -390,7 +392,8 @@
       "magazineArticles": "مقالات المجلة",
       "knowledgeHub": "مركز المعرفة / المشاريع / الفرص",
       "newsletterSubscribers": "مشتركو النشرة الإخبارية",
-      "suppliers": "المورّدون"
+      "suppliers": "المورّدون",
+      "people": "المجلس وفريق العمل"
     },
     "dashboard": {
       "title": "لوحة التحكم",
@@ -442,14 +445,28 @@
         "PUBLISHED": "منشور",
         "ARCHIVED": "مؤرشف"
       },
-      "deleteConfirm": "حذف \"{name}\"؟ سيؤدي هذا لإزالة ملفه وصوره وسجل تقييماته نهائياً. لا يمكن التراجع عن هذا الإجراء."
+      "deleteConfirm": "حذف \"{name}\"؟ سيؤدي هذا لإزالة ملفه وصوره وسجل تقييماته نهائياً. لا يمكن التراجع عن هذا الإجراء.",
+      "newRestaurant": "إضافة مطعم",
+      "namePlaceholder": "اسم المطعم",
+      "nameArPlaceholder": "اسم المطعم بالعربية",
+      "descriptionPlaceholder": "وصف مختصر يظهر على بطاقة الدليل",
+      "addressPlaceholder": "العنوان",
+      "noGovernorate": "بدون محافظة",
+      "phonePlaceholder": "الهاتف",
+      "emailPlaceholder": "البريد الإلكتروني",
+      "photosAfterCreate": "أضف الصور من صفحة المطعم بعد إنشائه."
     },
     "news": {
       "newArticle": "+ مقال جديد",
       "statusOptions": {
         "DRAFT": "مسودة",
         "PUBLISHED": "منشور"
-      }
+      },
+      "remove": "حذف المقال",
+      "confirmRemove": "حذف هذا المقال نهائياً؟",
+      "cancel": "إلغاء",
+      "coverOnCreate": "صورة الغلاف (اختياري — يمكنك إضافتها لاحقاً أيضاً)",
+      "empty": "لا توجد مقالات بعد. أنشئ الأول أعلاه."
     },
     "contact": {
       "markHandled": "وضع علامة تمت المعالجة",
@@ -466,7 +483,11 @@
       "selfAssessmentAttached": "تقييم ذاتي مرفق",
       "pointsSummary": "{score} / {total} نقطة",
       "projectsToStars": "— يُتوقع {stars} {starWord}",
-      "attachedDocuments": "المستندات المرفقة"
+      "attachedDocuments": "المستندات المرفقة",
+      "supplierDetails": "بيانات المورّد",
+      "registrationNumber": "رقم السجل",
+      "yearsTrading": "سنوات العمل",
+      "website": "الموقع الإلكتروني"
     },
     "assessments": {
       "description": "التقييمات الذاتية للتصنيف المُرسَلة من الأعضاء المسجَّلين، محفوظة على ملف مطعمهم الحقيقي.",
@@ -595,7 +616,38 @@
       "draft": "مسودة",
       "published": "منشور",
       "photos": "الصور",
-      "empty": "لا يوجد مورّدون بعد. أضف الأول أعلاه."
+      "empty": "لا يوجد مورّدون بعد. أضف الأول أعلاه.",
+      "remove": "إزالة",
+      "confirmRemove": "حذف هذا المورّد نهائياً؟",
+      "cancel": "إلغاء"
+    },
+    "people": {
+      "intro": "أعضاء مجلس الإدارة وفريق العمل، كما يظهرون في صفحة عن النقابة. يتحكم ترتيب الفرز بالتسلسل داخل كل مجموعة.",
+      "newPerson": "إضافة شخص",
+      "namePlaceholder": "الاسم الكامل",
+      "positionEnPlaceholder": "المنصب بالإنجليزية",
+      "positionArPlaceholder": "المنصب بالعربية",
+      "emailPlaceholder": "البريد الإلكتروني",
+      "termPlaceholder": "الدورة، مثال ٢٠٢٤–٢٠٢٨",
+      "sortOrderPlaceholder": "ترتيب الفرز",
+      "board": "أعضاء مجلس الإدارة",
+      "staff": "فريق العمل",
+      "uploadPhoto": "رفع صورة",
+      "replacePhoto": "استبدال الصورة",
+      "removePhoto": "إزالة",
+      "noPhoto": "لا توجد صورة بعد.",
+      "removePerson": "إزالة هذا الشخص",
+      "photoAfterCreate": "أضف الصورة بعد إنشاء الإدخال.",
+      "emptyGroup": "لا يوجد أحد في هذه المجموعة بعد."
+    },
+    "magazineIssues": {
+      "newIssue": "إضافة عدد",
+      "issueNumber": "رقم العدد (اختياري)",
+      "month": "الشهر (١–١٢)",
+      "year": "السنة",
+      "status": "الحالة",
+      "draft": "مسودة",
+      "published": "منشور"
     }
   },
   "contactForm": {
@@ -633,7 +685,17 @@
     "supportingDocuments": "مستندات داعمة",
     "optional": "(اختياري)",
     "documentsHint": "رخصة العمل، الهوية، أو صور — PDF أو Word أو صورة، حتى 10 ميغابايت لكل ملف.",
-    "submitApplication": "إرسال الطلب"
+    "submitApplication": "إرسال الطلب",
+    "supplierSectionTitle": "عن شركتك",
+    "productsSuppliedPlaceholder": "ما الذي تزوّد به المطاعم؟ (مثال: معدات مطابخ تجارية، خضار وفواكه، أنظمة نقاط بيع)",
+    "registrationNumberPlaceholder": "رقم السجل التجاري",
+    "yearsTradingPlaceholder": "سنوات العمل",
+    "websitePlaceholder": "الموقع الإلكتروني",
+    "governoratePlaceholder": "المحافظة",
+    "filesTooLarge": "حجم المرفقات {mb} ميغابايت، وهو أكبر من الحد المسموح. يرجى إرسال ملفات أقل أو أصغر.",
+    "error_invalid": "بعض البيانات ناقصة أو غير صحيحة. يرجى مراجعة النموذج والمحاولة مرة أخرى.",
+    "error_rate_limited": "محاولات كثيرة من هذا الاتصال. يرجى المحاولة لاحقاً.",
+    "error_supplier_details": "يرجى وصف ما تزوّده شركتك."
   },
   "errors": {
     "notFoundTitle": "لا يمكننا العثور على هذه الصفحة",
