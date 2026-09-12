@@ -434,7 +434,12 @@
       "statusOptions": {
         "DRAFT": "Draft",
         "PUBLISHED": "Published"
-      }
+      },
+      "remove": "Delete article",
+      "confirmRemove": "Delete this article permanently?",
+      "cancel": "Cancel",
+      "coverOnCreate": "Cover image (optional — you can also add one later)",
+      "empty": "No articles yet. Create the first one above."
     },
     "contact": {
       "markHandled": "Mark handled",

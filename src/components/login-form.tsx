@@ -1,5 +1,7 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
+
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
 import { loginAction } from "@/lib/actions/auth";
@@ -46,6 +48,7 @@ export function LoginForm() {
         disabled={pending}
         className="pill-press w-full rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-60"
       >
+        {pending ? <Loader2 className="me-1.5 inline h-3.5 w-3.5 animate-spin align-[-2px]" aria-hidden="true" /> : null}
         {tl("logIn")}
       </button>
       <p className="text-center text-xs text-ink-faint">{tl("memberAccountsNote")}</p>

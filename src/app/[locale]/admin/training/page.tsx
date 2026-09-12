@@ -1,4 +1,5 @@
 import { Download } from "lucide-react";
+import { SubmitButton } from "@/components/admin/form-controls";
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { CoverImageField } from "@/components/admin/cover-image-field";
@@ -40,7 +41,7 @@ export default async function AdminTrainingPage() {
             <input suppressHydrationWarning name="capacity" type="number" placeholder={tt("capacityPlaceholder")} className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
           </div>
           <textarea suppressHydrationWarning name="description" rows={3} placeholder={tt("descriptionPlaceholder")} className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
-          <button suppressHydrationWarning className="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white">{ta("create")}</button>
+          <SubmitButton>{ta("create")}</SubmitButton>
         </form>
       </details>
 
