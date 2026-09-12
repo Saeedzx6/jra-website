@@ -35,7 +35,7 @@ export default async function ClassificationHubPage({
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
+      <p className="text-xs ui-caps font-semibold text-accent">
         {t("classification")}
       </p>
       <h1 className="mt-2 font-display font-semibold text-5xl text-ink">
@@ -79,8 +79,13 @@ export default async function ClassificationHubPage({
                     <p className="mt-1 text-sm text-ink-soft" dir="rtl">
                       {s.titleAr}
                     </p>
+                    {/* Fast food is not scored on a scale — it is approved or
+                        it is not — so advertising it as "30 points" would
+                        describe the wrong kind of assessment. */}
                     <p className="mt-2 text-xs font-medium text-olive-text">
-                      {tc("pointsAcross", { points: s.totalPossiblePoints })}
+                      {s.gradingMode === "CERTIFICATION"
+                        ? tc("certificationAcross", { items: s.totalPossiblePoints })
+                        : tc("pointsAcross", { points: s.totalPossiblePoints })}
                     </p>
                     <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
                       <ClipboardCheck className="h-4 w-4 shrink-0" aria-hidden="true" />
