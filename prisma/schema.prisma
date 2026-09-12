@@ -1205,8 +1205,15 @@ model Person {
 // (e.g. the homepage hero image), as opposed to per-entity content.
 // ---------------------------------------------------------------------------
 
+/// One row, id "singleton". Holds the handful of settings that belong to the
+/// site rather than to any record.
 model SiteSetting {
   id           String   @id @default("singleton")
+  /// A video for the About page — a YouTube or Vimeo watch/share URL as
+  /// pasted, normalised to an embed URL when rendered. Stored rather than
+  /// uploaded because JRA already publishes to YouTube, and a self-hosted
+  /// video would cost bandwidth on every visit for no editorial gain.
+  aboutVideoUrl String?
   heroImageUrl String?
   // The two photos that overlap the homepage hero card. Null falls back to
   // the bundled JRA defaults under /public/brand.
@@ -1215,4 +1222,22 @@ model SiteSetting {
   updatedAt    DateTime @updatedAt
 
   @@map("site_settings")
+}
+
+/// Photographs for the About page carousel — board sittings, delegations,
+/// signings. Their own table rather than fields on SiteSetting because there
+/// is no fixed number of them and they are reordered often.
+model AboutSlide {
+  id        String  @id @default(cuid())
+  imageUrl  String
+  captionEn String?
+  captionAr String?
+  sortOrder Int     @default(0)
+  /// Lets a slide be pulled from rotation without deleting the upload.
+  isActive  Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  @@index([isActive, sortOrder])
+  @@map("about_slides")
 }
