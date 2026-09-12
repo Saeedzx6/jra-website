@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
-import { Check } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import { submitContactInquiry } from "@/lib/actions/contact";
 
 export function ContactForm() {
@@ -59,6 +59,7 @@ export function ContactForm() {
         disabled={pending}
         className="pill-press rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-60"
       >
+        {pending ? <Loader2 className="me-1.5 inline h-3.5 w-3.5 animate-spin align-[-2px]" aria-hidden="true" /> : null}
         {t("submit")}
       </button>
     </form>
