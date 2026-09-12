@@ -125,7 +125,18 @@
     "legalName": "Jordan Restaurant Association"
   },
   "about": {
-    "intro": "The Jordan Restaurant Association (JRA) is a mandatory, not-for-profit membership association empowered by Law No. 47 of 2002, amended by Law No. 33 of 2018 and Bylaw No. 59 of 2025. JRA represents over 1,300 classified establishments — restaurants, entertainment cities, coffee shops, fast food, discos, bars, and cabarets rated 1 to 5 stars — and is a member of the Jordan Tourism Board and an affiliate of UN Tourism."
+    "intro": "The Jordan Restaurant Association (JRA) is a mandatory, not-for-profit membership association empowered by Law No. 47 of 2002, amended by Law No. 33 of 2018 and Bylaw No. 59 of 2025. JRA represents over 1,300 classified establishments — restaurants, entertainment cities, coffee shops, fast food, discos, bars, and cabarets rated 1 to 5 stars — and is a member of the Jordan Tourism Board and an affiliate of UN Tourism.",
+    "kicker": "Who we are",
+    "galleryLabel": "Photographs from the association",
+    "previousSlide": "Previous photograph",
+    "nextSlide": "Next photograph",
+    "goToSlide": "Go to photograph {number}",
+    "pauseAuto": "Pause the slideshow",
+    "resumeAuto": "Resume the slideshow",
+    "videoTitle": "Watch",
+    "statYears": "Years representing the sector",
+    "statClassified": "Classified establishments listed",
+    "statGovernorates": "Governorates represented"
   },
   "membership": {
     "intro": "Joining the Jordan Restaurant Association is one of the smartest investments you can make for your establishment's success — advocacy, classification support, training, and a directory presence that reaches visitors and residents across Jordan. Submit your details below and our membership team will follow up.",
@@ -368,7 +379,8 @@
       "knowledgeHub": "Knowledge / Projects / Opportunities",
       "newsletterSubscribers": "Newsletter Subscribers",
       "suppliers": "Suppliers",
-      "people": "Board & Staff"
+      "people": "Board & Staff",
+      "aboutPage": "About Page"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -653,6 +665,26 @@
       "replace": "Replace",
       "remove": "Remove",
       "addPhoto": "Add photo"
+    },
+    "about": {
+      "intro": "The photographs and video shown on the public About page.",
+      "videoHeading": "Video",
+      "videoHint": "Paste a YouTube or Vimeo link exactly as the Share button gives it. Leave empty to hide the video.",
+      "saveVideo": "Save video",
+      "videoNotRecognised": "That link is not a YouTube or Vimeo video. Paste the address of the video page itself.",
+      "videoCleared": "Video removed from the page.",
+      "slidesHeading": "Carousel photographs",
+      "slidesHint": "Shown at the top of the About page. They advance every few seconds and can be reordered.",
+      "addSlide": "Add photograph",
+      "saveSlide": "Save",
+      "captionEnPlaceholder": "Caption (English) — also the alt text",
+      "captionArPlaceholder": "التعليق بالعربية",
+      "showInCarousel": "Show in carousel",
+      "noSlides": "No photographs yet. Add the first one above.",
+      "slideAdded": "Photograph added.",
+      "slideDeleted": "Photograph deleted.",
+      "confirmDeleteSlide": "Delete this photograph?",
+      "cancel": "Cancel"
     }
   },
   "contactForm": {
