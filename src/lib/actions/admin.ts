@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
+import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { requireAdmin, writeAudit } from "@/lib/rbac";
 import { ok, fail, type ActionState } from "@/lib/action-state";
@@ -129,13 +130,14 @@ export async function upsertNewsArticle(
   _prev: ActionState,
   formData: FormData
 ): Promise<ActionState> {
+  const t = await getTranslations("admin.feedback");
   const session = await requireAdmin();
   const id = formData.get("id") ? String(formData.get("id")) : null;
   const title = String(formData.get("title") ?? "").trim();
   const bodyHtml = String(formData.get("bodyHtml") ?? "");
   const status = formData.get("status") as "DRAFT" | "PUBLISHED";
 
-  if (title.length < 2) return fail("A title is required.");
+  if (title.length < 2) return fail(t("titleRequired"));
 
   let newId: string | null = null;
 
@@ -167,7 +169,7 @@ export async function upsertNewsArticle(
   const targetId = id ?? newId;
   if (cover instanceof File && cover.size > 0 && targetId) {
     if (!cover.type.startsWith("image/")) {
-      return fail("The article was saved, but the cover was not an image file.");
+      return fail(t("coverNotImage"));
     }
     const stored = await putFile(cover, { folder: "news", basename: "cover" });
     await db.newsArticle.update({
@@ -179,7 +181,7 @@ export async function upsertNewsArticle(
   revalidatePath("/[locale]/admin/news", "page");
   revalidatePath("/[locale]/news", "page");
   revalidatePath("/[locale]", "page");
-  return ok(id ? "Changes saved." : `"${title}" created.`);
+  return ok(id ? t("saved") : t("articleCreated", { title }));
 }
 
 /**
@@ -192,12 +194,13 @@ export async function deleteNewsArticle(
   id: string,
   _prev: ActionState
 ): Promise<ActionState> {
+  const t = await getTranslations("admin.feedback");
   const session = await requireAdmin();
   const article = await db.newsArticle.findUnique({
     where: { id },
     include: { translations: { where: { locale: "en" }, select: { title: true } } },
   });
-  if (!article) return fail("That article no longer exists.");
+  if (!article) return fail(t("articleGone"));
 
   const title = article.translations[0]?.title ?? article.slug;
   await db.newsArticle.delete({ where: { id } });
@@ -206,7 +209,7 @@ export async function deleteNewsArticle(
   revalidatePath("/[locale]/admin/news", "page");
   revalidatePath("/[locale]/news", "page");
   revalidatePath("/[locale]", "page");
-  return ok(`"${title}" deleted.`);
+  return ok(t("articleDeleted", { title }));
 }
 
 // --- Contact inquiries ---------------------------------------------------

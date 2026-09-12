@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState, useTransition } from "react";
 import { ImagePlus, Trash2, AlertCircle } from "lucide-react";
@@ -30,6 +31,7 @@ export function CoverImageField({
   label: string;
   hint?: string;
 }) {
+  const tf = useTranslations("admin.feedback");
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [formKey, setFormKey] = useState(0);
@@ -87,7 +89,7 @@ export function CoverImageField({
             />
           ) : (
             <span className="flex h-full items-center justify-center text-[11px] text-ink-faint">
-              No image
+              {tf("noImage")}
             </span>
           )}
         </div>
@@ -109,7 +111,7 @@ export function CoverImageField({
               className="pill-press inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-xs font-semibold text-white disabled:opacity-60"
             >
               <ImagePlus className="h-3.5 w-3.5" aria-hidden="true" />
-              {currentUrl ? "Replace" : "Upload"}
+              {currentUrl ? tf("replace") : tf("upload")}
             </button>
             {currentUrl ? (
               <button
@@ -120,7 +122,7 @@ export function CoverImageField({
                 className="inline-flex items-center gap-1.5 rounded-full border border-rule px-4 py-2 text-xs font-medium text-ink-soft hover:border-danger hover:text-danger-text disabled:opacity-60"
               >
                 <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
-                Remove
+                {tf("remove")}
               </button>
             ) : null}
           </form>
@@ -128,7 +130,7 @@ export function CoverImageField({
           {/* aria-live so the error reaches a screen reader: the upload is a
               transition, and nothing else about the page moves focus. */}
           <p aria-live="polite" className="mt-2 min-h-4 text-xs">
-            {pending ? <span className="text-ink-faint">Uploading…</span> : null}
+            {pending ? <span className="text-ink-faint">{tf("uploading")}</span> : null}
             {error ? (
               <span className="inline-flex items-center gap-1 text-danger-text">
                 <AlertCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
