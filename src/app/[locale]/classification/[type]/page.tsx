@@ -108,6 +108,7 @@ export default async function PublicAssessmentPage({
           sections={standard.sections}
           starBands={standard.starBands}
           totalPoints={standard.totalPossiblePoints}
+          gradingMode={standard.gradingMode}
         />
       </div>
     </div>
