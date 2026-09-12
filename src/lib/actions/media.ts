@@ -4,6 +4,9 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 import { putFile } from "@/lib/storage";
 import { requireAdmin, writeAudit } from "@/lib/rbac";
+// One ceiling shared with the browser-side resizer, so the message a user
+// sees and the limit the server enforces cannot drift apart.
+import { UPLOAD_MAX_BYTES as MAX_BYTES } from "@/lib/prepare-image";
 
 /**
  * Cover-image management for every content type that has one.
@@ -48,7 +51,7 @@ const ADMIN_PATH: Record<MediaTarget, string> = {
 };
 
 /** 8 MB, and images only. A PDF in a cover slot renders as a broken image. */
-const MAX_BYTES = 8 * 1024 * 1024;
+
 const ALLOWED = ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"];
 
 async function writeUrl(target: MediaTarget, id: string, url: string | null) {
@@ -99,7 +102,7 @@ export async function setCoverImage(
     return { error: "That file is not an image. Use JPEG, PNG, WebP, AVIF or GIF." };
   }
   if (file.size > MAX_BYTES) {
-    return { error: "That image is larger than 8 MB. Please resize it first." };
+    return { error: "That image is too large even after resizing. Please crop it or save a smaller copy." };
   }
 
   const stored = await putFile(file, { folder: FOLDER[target], basename: target });
@@ -152,7 +155,7 @@ export async function uploadNewsGalleryImage(
   if (!ALLOWED.includes(file.type)) {
     return { error: "That file is not an image. Use JPEG, PNG, WebP, AVIF or GIF." };
   }
-  if (file.size > MAX_BYTES) return { error: "That image is larger than 8 MB." };
+  if (file.size > MAX_BYTES) return { error: "That image is too large even after resizing. Please crop it or save a smaller copy." };
 
   const article = await db.newsArticle.findUnique({ where: { id: newsArticleId } });
   if (!article) return { error: "Article not found." };
