@@ -5,6 +5,9 @@ import slugifyLib from "slugify";
 import { db } from "@/lib/db";
 import { putFile } from "@/lib/storage";
 import { requireAdmin, writeAudit } from "@/lib/rbac";
+// One ceiling shared with the browser-side resizer, so the message a user
+// sees and the limit the server enforces cannot drift apart.
+import { UPLOAD_MAX_BYTES as MAX_BYTES } from "@/lib/prepare-image";
 
 /**
  * Supplier back office.
@@ -19,7 +22,7 @@ import { requireAdmin, writeAudit } from "@/lib/rbac";
  * reads the first image.
  */
 
-const MAX_BYTES = 8 * 1024 * 1024;
+
 const ALLOWED = ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"];
 
 function revalidateSuppliers() {
@@ -109,7 +112,7 @@ export async function uploadSupplierImage(
   if (!ALLOWED.includes(file.type)) {
     return { error: "That file is not an image. Use JPEG, PNG, WebP, AVIF or GIF." };
   }
-  if (file.size > MAX_BYTES) return { error: "That image is larger than 8 MB." };
+  if (file.size > MAX_BYTES) return { error: "That image is too large even after resizing. Please crop it or save a smaller copy." };
 
   const supplier = await db.supplier.findUnique({ where: { id: supplierId } });
   if (!supplier) return { error: "Supplier not found." };
