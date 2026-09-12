@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { SubmitButton } from "@/components/admin/form-controls";
 import { db } from "@/lib/db";
 import { CoverImageField } from "@/components/admin/cover-image-field";
 import { createResource } from "@/lib/actions/resources";
@@ -36,7 +37,7 @@ export default async function AdminKnowledgePage() {
             <input suppressHydrationWarning name="deadlineAt" type="date" placeholder={tk("deadlinePlaceholder")} className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
           </div>
           <textarea suppressHydrationWarning name="summary" rows={3} placeholder={tk("summaryPlaceholder")} className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
-          <button suppressHydrationWarning className="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white">{ta("create")}</button>
+          <SubmitButton>{ta("create")}</SubmitButton>
         </form>
       </details>
 

@@ -1,13 +1,10 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
-import { Check, AlertCircle, Trash2 } from "lucide-react";
-import {
-  createSupplier,
-  updateSupplier,
-  deleteSupplier,
-  type SupplierFormState,
-} from "@/lib/actions/suppliers";
+import { useActionState, useState } from "react";
+import { Save, Plus, Trash2 } from "lucide-react";
+import { SubmitButton, FormStatus } from "@/components/admin/form-controls";
+import { createSupplier, updateSupplier, deleteSupplier } from "@/lib/actions/suppliers";
+import { IDLE } from "@/lib/action-state";
 
 export type GovernorateOption = { id: string; nameEn: string };
 
@@ -45,49 +42,7 @@ export type SupplierLabels = {
 const FIELD =
   "w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm focus:border-accent focus:outline-none";
 
-const EMPTY: SupplierFormState = { status: "idle" };
-
-/**
- * Shows the outcome of a submit and then gets out of the way.
- *
- * Saving used to do nothing visible: the action returned void, the page
- * revalidated, and the editor was left wondering whether it had worked. The
- * success note clears itself after a few seconds; an error stays until the
- * next submit, because an error the reader has not dealt with should not
- * disappear on a timer.
- */
-function FormStatus({ state }: { state: SupplierFormState }) {
-  const [visible, setVisible] = useState(true);
-
-  useEffect(() => {
-    setVisible(true);
-    if (state.status === "error" || state.status === "idle") return;
-    const timer = setTimeout(() => setVisible(false), 4000);
-    return () => clearTimeout(timer);
-    // `at` changes on every save, so two identical saves still re-trigger this.
-  }, [state.status, state.at]);
-
-  if (state.status === "idle" || !state.message || !visible) {
-    return <p aria-live="polite" className="min-h-5" />;
-  }
-
-  const isError = state.status === "error";
-  return (
-    <p
-      aria-live="polite"
-      className={`flex min-h-5 items-start gap-1.5 text-xs ${
-        isError ? "text-danger-text" : "text-success-text"
-      }`}
-    >
-      {isError ? (
-        <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-      ) : (
-        <Check className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-      )}
-      {state.message}
-    </p>
-  );
-}
+const EMPTY = IDLE;
 
 function Fields({
   governorates,
@@ -190,19 +145,15 @@ export function SupplierCreateForm({
   governorates: GovernorateOption[];
   labels: SupplierLabels;
 }) {
-  const [state, action, pending] = useActionState(createSupplier, EMPTY);
+  const [state, action] = useActionState(createSupplier, EMPTY);
 
   return (
     <form action={action} className="mt-4 grid gap-3 sm:grid-cols-2">
       <Fields governorates={governorates} labels={labels} />
       <div className="sm:col-span-2">
-        <button
-          suppressHydrationWarning
-          disabled={pending}
-          className="pill-press rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white disabled:opacity-60"
-        >
+        <SubmitButton icon={<Plus className="h-3.5 w-3.5" aria-hidden="true" />}>
           {labels.create}
-        </button>
+        </SubmitButton>
         <div className="mt-2">
           <FormStatus state={state} />
         </div>
@@ -221,10 +172,10 @@ export function SupplierEditForm({
   labels: SupplierLabels;
 }) {
   const save = updateSupplier.bind(null, supplier.id);
-  const [state, action, pending] = useActionState(save, EMPTY);
+  const [state, action] = useActionState(save, EMPTY);
 
   const removeAction = deleteSupplier.bind(null, supplier.id);
-  const [deleteState, runDelete, deleting] = useActionState(removeAction, EMPTY);
+  const [deleteState, runDelete] = useActionState(removeAction, EMPTY);
   const [confirming, setConfirming] = useState(false);
 
   return (
@@ -232,13 +183,9 @@ export function SupplierEditForm({
       <form action={action} className="mt-3 grid gap-3 sm:grid-cols-2">
         <Fields governorates={governorates} labels={labels} value={supplier} />
         <div className="sm:col-span-2">
-          <button
-            suppressHydrationWarning
-            disabled={pending}
-            className="pill-press rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white disabled:opacity-60"
-          >
+          <SubmitButton icon={<Save className="h-3.5 w-3.5" aria-hidden="true" />}>
             {labels.save}
-          </button>
+          </SubmitButton>
           <div className="mt-2">
             <FormStatus state={state} />
           </div>
@@ -253,14 +200,12 @@ export function SupplierEditForm({
         {confirming ? (
           <form action={runDelete} className="flex flex-wrap items-center gap-2">
             <span className="text-xs text-ink-soft">{labels.confirmRemove}</span>
-            <button
-              suppressHydrationWarning
-              disabled={deleting}
-              className="inline-flex items-center gap-1.5 rounded-full bg-danger px-4 py-1.5 text-xs font-semibold text-white disabled:opacity-60"
+            <SubmitButton
+              variant="danger"
+              icon={<Trash2 className="h-3.5 w-3.5" aria-hidden="true" />}
             >
-              <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
               {labels.remove}
-            </button>
+            </SubmitButton>
             <button
               suppressHydrationWarning
               type="button"

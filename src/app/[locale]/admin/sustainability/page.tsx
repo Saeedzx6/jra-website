@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { SubmitButton } from "@/components/admin/form-controls";
 import { db } from "@/lib/db";
 import { upsertBenchmark, deleteBenchmark } from "@/lib/actions/benchmarks";
 
@@ -17,7 +18,7 @@ export default async function AdminSustainabilityPage() {
         <input suppressHydrationWarning name="metricKey" placeholder={ts("metricKeyPlaceholder")} required className="flex-1 min-w-[180px] rounded-lg border border-rule bg-paper px-3 py-2 text-sm" />
         <input suppressHydrationWarning name="sectorAvg" type="number" step="any" placeholder={ts("sectorAveragePlaceholder")} required className="w-40 rounded-lg border border-rule bg-paper px-3 py-2 text-sm" />
         <input suppressHydrationWarning name="unit" placeholder={ts("unitPlaceholder")} required className="w-28 rounded-lg border border-rule bg-paper px-3 py-2 text-sm" />
-        <button suppressHydrationWarning className="rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white">{ta("save")}</button>
+        <SubmitButton>{ta("save")}</SubmitButton>
       </form>
 
       <div className="mt-6 space-y-2">

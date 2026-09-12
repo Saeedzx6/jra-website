@@ -1,4 +1,5 @@
 import { ClipboardCheck } from "lucide-react";
+import { SubmitButton } from "@/components/admin/form-controls";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
@@ -49,10 +50,15 @@ export default async function PortalClassificationPage() {
                 )}
               </div>
               <form action={startAssessmentAndRedirect.bind(null, restaurant.id)}>
-                <button suppressHydrationWarning className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5">
-                  <ClipboardCheck className="h-4 w-4" />
+                {/* Starting an assessment creates a row and redirects, which
+                    takes a moment — long enough for a second click to create a
+                    second session if nothing says the first registered. */}
+                <SubmitButton
+                  className="px-5 py-2.5 text-sm"
+                  icon={<ClipboardCheck className="h-4 w-4" aria-hidden="true" />}
+                >
                   {latest?.status === "IN_PROGRESS" ? tc("resume") : tc("startNew")}
-                </button>
+                </SubmitButton>
               </form>
             </div>
           );

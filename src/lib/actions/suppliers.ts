@@ -5,6 +5,7 @@ import slugifyLib from "slugify";
 import { db } from "@/lib/db";
 import { putFile } from "@/lib/storage";
 import { requireAdmin, writeAudit } from "@/lib/rbac";
+import { ok, fail, type ActionState } from "@/lib/action-state";
 // One ceiling shared with the browser-side resizer, so the message a user
 // sees and the limit the server enforces cannot drift apart.
 import { UPLOAD_MAX_BYTES as MAX_BYTES } from "@/lib/prepare-image";
@@ -25,13 +26,6 @@ import { UPLOAD_MAX_BYTES as MAX_BYTES } from "@/lib/prepare-image";
 
 const ALLOWED = ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"];
 
-/** What the admin forms render back to the editor after a submit. */
-export type SupplierFormState = {
-  status: "idle" | "saved" | "created" | "deleted" | "error";
-  message?: string;
-  /** Timestamp so two identical saves are still distinct states. */
-  at?: number;
-};
 
 function revalidateSuppliers() {
   revalidatePath("/[locale]/admin/suppliers", "page");
@@ -56,13 +50,13 @@ function str(formData: FormData, key: string) {
 }
 
 export async function createSupplier(
-  _prev: SupplierFormState,
+  _prev: ActionState,
   formData: FormData
-): Promise<SupplierFormState> {
+): Promise<ActionState> {
   const session = await requireAdmin();
 
   const name = str(formData, "name");
-  if (!name) return { status: "error", message: "A supplier name is required." };
+  if (!name) return fail("A supplier name is required.");
 
   const status = formData.get("status") === "PUBLISHED" ? "PUBLISHED" : "DRAFT";
   const governorateId = str(formData, "governorateId");
@@ -85,18 +79,18 @@ export async function createSupplier(
 
   await writeAudit(session.user.id, "CREATE", "SUPPLIER", supplier.id, { name, status });
   revalidateSuppliers();
-  return { status: "created", message: `${name} added.`, at: Date.now() };
+  return ok(`${name} added.`);
 }
 
 export async function updateSupplier(
   id: string,
-  _prev: SupplierFormState,
+  _prev: ActionState,
   formData: FormData
-): Promise<SupplierFormState> {
+): Promise<ActionState> {
   const session = await requireAdmin();
 
   const name = str(formData, "name");
-  if (!name) return { status: "error", message: "A supplier name is required." };
+  if (!name) return fail("A supplier name is required.");
 
   await db.supplier.update({
     where: { id },
@@ -115,9 +109,7 @@ export async function updateSupplier(
 
   await writeAudit(session.user.id, "UPDATE", "SUPPLIER", id, { name });
   revalidateSuppliers();
-  // `at` makes each save a distinct state object, so React re-runs the
-  // effect that clears the confirmation even when two saves are identical.
-  return { status: "saved", message: "Changes saved.", at: Date.now() };
+  return ok("Changes saved.");
 }
 
 export async function uploadSupplierImage(
@@ -200,25 +192,24 @@ export async function setPrimarySupplierImage(supplierId: string, imageId: strin
  */
 export async function deleteSupplier(
   id: string,
-  _prev: SupplierFormState
-): Promise<SupplierFormState> {
+  _prev: ActionState
+): Promise<ActionState> {
   const session = await requireAdmin();
 
   const supplier = await db.supplier.findUnique({
     where: { id },
     select: { name: true, membership: { select: { id: true, memberNumber: true } } },
   });
-  if (!supplier) return { status: "error", message: "That supplier no longer exists." };
+  if (!supplier) return fail("That supplier no longer exists.");
 
   if (supplier.membership) {
-    return {
-      status: "error",
-      message: `${supplier.name} holds membership ${supplier.membership.memberNumber} with billing history, so it cannot be deleted. Set it to Draft instead to remove it from the public directory.`,
-    };
+    return fail(
+      `${supplier.name} holds membership ${supplier.membership.memberNumber} with billing history, so it cannot be deleted. Set it to Draft instead to remove it from the public directory.`
+    );
   }
 
   await db.supplier.delete({ where: { id } });
   await writeAudit(session.user.id, "DELETE", "SUPPLIER", id, { name: supplier.name });
   revalidateSuppliers();
-  return { status: "deleted", message: `${supplier.name} deleted.`, at: Date.now() };
+  return ok(`${supplier.name} deleted.`);
 }

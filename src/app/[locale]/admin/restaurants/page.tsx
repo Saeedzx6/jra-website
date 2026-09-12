@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { SubmitButton } from "@/components/admin/form-controls";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 import { createRestaurant } from "@/lib/actions/admin";
@@ -99,12 +100,7 @@ export default async function AdminRestaurantsPage({
             <option value="PUBLISHED">{tStatus("PUBLISHED")}</option>
           </select>
           <div className="sm:col-span-2">
-            <button
-              suppressHydrationWarning
-              className="pill-press rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white"
-            >
-              {ta("create")}
-            </button>
+            <SubmitButton>{ta("create")}</SubmitButton>
             <p className="mt-2 text-xs text-ink-faint">{tr("photosAfterCreate")}</p>
           </div>
         </form>

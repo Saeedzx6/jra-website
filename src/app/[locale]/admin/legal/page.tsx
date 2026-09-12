@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { SubmitButton } from "@/components/admin/form-controls";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 import { createLegalDocument } from "@/lib/actions/legal";
@@ -35,7 +36,7 @@ export default async function AdminLegalPage() {
           </div>
           <input suppressHydrationWarning name="fileUrl" placeholder={tl("fileUrlPlaceholder")} className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
           <textarea suppressHydrationWarning name="bodyHtml" rows={3} placeholder={tl("summaryPlaceholder")} className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
-          <button suppressHydrationWarning className="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white">{ta("create")}</button>
+          <SubmitButton>{ta("create")}</SubmitButton>
         </form>
       </details>
 

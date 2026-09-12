@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { SubmitButton } from "@/components/admin/form-controls";
 import { db } from "@/lib/db";
 import { CoverImageField } from "@/components/admin/cover-image-field";
 import { createMagazineArticle, createMagazineIssue } from "@/lib/actions/magazine";
@@ -109,9 +110,7 @@ export default async function AdminMagazinePage() {
                     </select>
                   </div>
                   <textarea suppressHydrationWarning name="bodyHtml" required rows={3} placeholder={ta("bodyHtmlPlaceholder")} className="w-full rounded-lg border border-rule bg-paper px-3 py-2 text-sm" />
-                  <button suppressHydrationWarning className="rounded-full bg-accent px-4 py-1.5 text-xs font-semibold text-white">
-                    {ta("add")}
-                  </button>
+                  <SubmitButton>{ta("add")}</SubmitButton>
                 </form>
               </details>
             </div>
