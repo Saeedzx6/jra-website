@@ -50,7 +50,7 @@ export function HeroSearch() {
         suppressHydrationWarning
         type="submit"
         aria-label={t("heroSearchLabel")}
-        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-ink transition-transform hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        className="flex size-[44px] shrink-0 items-center justify-center rounded-full bg-white text-ink transition-transform hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
       >
         <ArrowRight className="h-5 w-5 rtl:-scale-x-100" aria-hidden="true" />
       </button>
