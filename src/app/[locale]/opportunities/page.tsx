@@ -39,7 +39,7 @@ export default async function OpportunitiesPage({
             const tr = o.translations.find((t) => t.locale === locale) ?? o.translations[0];
             const expired = o.deadlineAt && o.deadlineAt < new Date();
             return (
-              <div key={o.id} className="flex items-start justify-between rounded-2xl border border-rule bg-surface p-6 sm:p-10">
+              <div key={o.id} className="flex items-start justify-between rounded-2xl border border-rule bg-surface p-6 sm:p-8">
                 <div>
                   <h3 className="font-display font-semibold text-2xl text-ink">
                     {tr?.title ?? o.slug}

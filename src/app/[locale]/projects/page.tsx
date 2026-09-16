@@ -38,7 +38,7 @@ export default async function ProjectsPage({
           {projects.map((p) => {
             const tr = p.translations.find((t) => t.locale === locale) ?? p.translations[0];
             return (
-              <div key={p.id} className="motion-card rounded-2xl border border-rule bg-surface p-6 sm:p-10">
+              <div key={p.id} className="motion-card rounded-2xl border border-rule bg-surface p-6 sm:p-8">
                 <FolderKanban className="h-5 w-5 text-accent" />
                 <h3 className="mt-2 font-display font-semibold text-2xl text-ink">
                   {tr?.title ?? p.slug}
