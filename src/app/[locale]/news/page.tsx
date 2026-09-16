@@ -36,7 +36,7 @@ export default async function NewsListPage({
         /* Monad's article index: a 2-up grid on parchment, cards bounded by a
            hairline rather than a divider. The cover leads — which is the
            point of giving every article an image. */
-        <div className="stagger mt-10 grid gap-6 sm:grid-cols-2">
+        <div className="stagger mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {articles.map((a, i) => {
             const title = a.translations[0]?.title ?? a.slug;
             return (
@@ -55,7 +55,7 @@ export default async function NewsListPage({
                   sizes="(min-width: 640px) 50vw, 100vw"
                   priority={i < 2}
                 />
-                <div className="flex flex-1 flex-col p-6 sm:p-10">
+                <div className="flex flex-1 flex-col p-6 sm:p-8">
                   {a.publishedAt ? (
                     <time className="ui-caps text-ink-faint">
                       {new Date(a.publishedAt).toLocaleDateString(locale)}

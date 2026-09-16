@@ -67,12 +67,12 @@ export default async function MarketplacePage({
       {listings.length === 0 ? (
         <p className="mt-16 text-center text-ink-soft">{tCommon("noResults")}</p>
       ) : (
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {listings.map((l) => (
             <Link
               key={l.id}
               href={`/marketplace/${l.id}`}
-              className="motion-card block rounded-2xl border border-rule bg-surface p-6 sm:p-10"
+              className="motion-card block rounded-2xl border border-rule bg-surface p-5"
             >
               <span className="inline-flex items-center gap-1.5 rounded-full bg-brass-soft px-2.5 py-0.5 text-xs font-medium text-brass-text">
                 <Tag className="h-3 w-3" />
@@ -91,7 +91,7 @@ export default async function MarketplacePage({
         </div>
       )}
 
-      <div className="mt-12 rounded-2xl border border-dashed border-rule bg-surface p-6 sm:p-10 text-center">
+      <div className="mt-12 rounded-2xl border border-dashed border-rule bg-surface p-5 text-center">
         <p className="text-sm text-ink-soft">{tm("membersNote")}</p>
         <Link href="/portal/marketplace" className="mt-2 inline-block text-sm font-medium text-accent">
           {tm("goToPortal")} →

@@ -71,7 +71,7 @@ export default async function ClassificationHubPage({
                 {scoreable ? (
                   <Link
                     href={href}
-                    className="motion-card group flex h-full flex-col rounded-2xl border border-rule bg-surface p-6 sm:p-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                    className="motion-card group flex h-full flex-col rounded-2xl border border-rule bg-surface p-6 sm:p-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   >
                     <h3 className="font-display font-semibold text-2xl text-ink transition-colors group-hover:text-accent">
                       {tType(s.establishmentType)}
@@ -93,7 +93,7 @@ export default async function ClassificationHubPage({
                     </span>
                   </Link>
                 ) : (
-                  <div className="flex h-full flex-col rounded-2xl border border-dashed border-rule bg-surface p-6 sm:p-10">
+                  <div className="flex h-full flex-col rounded-2xl border border-dashed border-rule bg-surface p-6 sm:p-8">
                     <h3 className="font-display font-semibold text-2xl text-ink-soft">
                       {tType(s.establishmentType)}
                     </h3>
@@ -121,7 +121,7 @@ export default async function ClassificationHubPage({
 
         {/* The published documents stay reachable for anyone who wants to read
             the standard itself rather than score against it. */}
-        <details className="mt-8 rounded-2xl border border-rule bg-surface p-6 sm:p-10">
+        <details className="mt-8 rounded-2xl border border-rule bg-surface p-6 sm:p-8">
           <summary className="cursor-pointer text-sm font-semibold text-ink">
             {tc("standardsLibrary")}
           </summary>

@@ -98,7 +98,7 @@ export default async function MagazineIssuePage({
           const tr = a.translations[0];
           const locked = a.accessLevel === "MEMBERS_ONLY" && !isMember;
           return (
-            <article key={a.id} className="rounded-2xl border border-rule bg-surface p-6 sm:p-10">
+            <article key={a.id} className="rounded-2xl border border-rule bg-surface p-6 sm:p-8">
               {a.category ? (
                 <span className="text-xs font-semibold uppercase tracking-wide text-brass-text">
                   {a.category}

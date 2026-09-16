@@ -54,7 +54,7 @@ export default async function TrainingPage({
                   title={tr?.title ?? c.slug}
                   sizes="(min-width: 1024px) 50vw, 100vw"
                 />
-                <div className="p-6 sm:p-10">
+                <div className="p-5">
                 <div className="flex items-center gap-2 text-brass-text">
                   <GraduationCap className="h-4 w-4" />
                   <span className="text-xs font-semibold uppercase tracking-wide">{c.track}</span>
