@@ -1214,6 +1214,11 @@ model SiteSetting {
   /// uploaded because JRA already publishes to YouTube, and a self-hosted
   /// video would cost bandwidth on every visit for no editorial gain.
   aboutVideoUrl String?
+  /// Seconds each About-page slide is held before the next one. Null falls
+  /// back to the component's own default. Clamped on write, because a value
+  /// of 0 would spin the carousel at frame rate and a very large one would
+  /// look broken.
+  aboutSlideSeconds Int?
   heroImageUrl String?
   // The two photos that overlap the homepage hero card. Null falls back to
   // the bundled JRA defaults under /public/brand.
@@ -1233,7 +1238,11 @@ model AboutSlide {
   captionEn String?
   captionAr String?
   sortOrder Int     @default(0)
-  /// Lets a slide be pulled from rotation without deleting the upload.
+  /// No longer written or read. Every slide added is shown; removing one
+  /// means deleting it. Retained rather than dropped because dropping a
+  /// column would reach production as soon as a pull request opened, and an
+  /// unused boolean is cheaper than that risk. Safe to remove in a migration
+  /// of its own if hiding is never wanted back.
   isActive  Boolean @default(true)
 
   createdAt DateTime @default(now())

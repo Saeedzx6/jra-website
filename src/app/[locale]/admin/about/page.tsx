@@ -11,7 +11,10 @@ import { AboutManager } from "@/components/admin/about-manager";
 export default async function AdminAboutPage() {
   const [slides, settings] = await Promise.all([
     db.aboutSlide.findMany({ orderBy: { sortOrder: "asc" } }),
-    db.siteSetting.findUnique({ where: { id: "singleton" }, select: { aboutVideoUrl: true } }),
+    db.siteSetting.findUnique({
+      where: { id: "singleton" },
+      select: { aboutVideoUrl: true, aboutSlideSeconds: true },
+    }),
   ]);
 
   const tn = await getTranslations("admin.nav");
@@ -23,7 +26,11 @@ export default async function AdminAboutPage() {
       <p className="mt-2 text-sm text-ink-soft">{t("intro")}</p>
 
       <div className="mt-6">
-        <AboutManager slides={slides} videoUrl={settings?.aboutVideoUrl ?? null} />
+        <AboutManager
+          slides={slides}
+          videoUrl={settings?.aboutVideoUrl ?? null}
+          slideSeconds={settings?.aboutSlideSeconds ?? null}
+        />
       </div>
     </div>
   );

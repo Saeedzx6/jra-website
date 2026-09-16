@@ -8,6 +8,11 @@ import { requireAdmin, writeAudit } from "@/lib/rbac";
 import { ok, fail, type ActionState } from "@/lib/action-state";
 import { UPLOAD_MAX_BYTES as MAX_BYTES } from "@/lib/prepare-image";
 import { toVideoEmbed } from "@/lib/video-embed";
+import {
+  SLIDE_SECONDS_MIN,
+  SLIDE_SECONDS_MAX,
+  clampSlideSeconds,
+} from "@/lib/about-timing";
 
 /**
  * The About page's carousel and video.
@@ -79,7 +84,6 @@ export async function updateAboutSlide(
       captionEn: str(formData, "captionEn"),
       captionAr: str(formData, "captionAr"),
       sortOrder: Number.isFinite(order) ? order : 0,
-      isActive: formData.get("isActive") === "on",
     },
   });
 
@@ -136,4 +140,41 @@ export async function setAboutVideo(
   });
   revalidateAbout();
   return ok(raw ? t("saved") : ta("videoCleared"));
+}
+
+/**
+ * How long each About-page slide is held.
+ *
+ * Clamped rather than trusted: 0 would spin the carousel at frame rate, and a
+ * very large number reads to a visitor as a carousel that has broken. The
+ * bounds are exported so the input can advertise the same ones it enforces.
+ */
+export async function setAboutSlideSeconds(
+  _prev: ActionState,
+  formData: FormData
+): Promise<ActionState> {
+  const session = await requireAdmin();
+  const t = await getTranslations("admin.feedback");
+  const ta = await getTranslations("admin.about");
+
+  const raw = Number(formData.get("aboutSlideSeconds"));
+  if (!Number.isFinite(raw)) {
+    return fail(ta("secondsInvalid", { min: SLIDE_SECONDS_MIN, max: SLIDE_SECONDS_MAX }));
+  }
+
+  const seconds = clampSlideSeconds(raw);
+
+  await db.siteSetting.upsert({
+    where: { id: "singleton" },
+    update: { aboutSlideSeconds: seconds },
+    create: { id: "singleton", aboutSlideSeconds: seconds },
+  });
+
+  await writeAudit(session.user.id, "UPDATE", "SITE_SETTING", "singleton", {
+    aboutSlideSeconds: seconds,
+  });
+  revalidateAbout();
+
+  // Say the stored value back, since it may have been clamped.
+  return ok(seconds === raw ? t("saved") : ta("secondsClamped", { seconds }));
 }
