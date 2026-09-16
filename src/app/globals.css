@@ -265,9 +265,13 @@
   --text-7xl--line-height: 1.08;
   --text-7xl--letter-spacing: -0.024em;
 
-  /* Editorial card radius. `rounded-2xl` is the card class used in 65 places,
-     so remapping it is what turns the whole surface language editorial. */
-  --radius-2xl: 40px;
+  /* `rounded-2xl` is the card class used in 65 places. It was 40px, Monad's
+     figure for a wide editorial card, and on a 330px directory tile that
+     radius is most of the corner: it rounds the logo off the artwork and
+     makes a grid of them read as bubbles rather than as a catalogue.
+     18px keeps the surface soft without the geometry becoming the loudest
+     thing on the page. */
+  --radius-2xl: 18px;
   /* Data and dashboard panels stay at 12px — the Mercury-derived radius for
      dense screens, where 40px would waste the corners. */
   --radius-xl: 12px;
