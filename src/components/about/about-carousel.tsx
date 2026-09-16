@@ -4,6 +4,11 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  SLIDE_SECONDS_MIN,
+  SLIDE_SECONDS_MAX,
+  SLIDE_SECONDS_DEFAULT,
+} from "@/lib/about-timing";
 
 export type Slide = {
   id: string;
@@ -14,9 +19,10 @@ export type Slide = {
 /**
  * The About page carousel.
  *
- * Advances on its own every six seconds, which is the behaviour the old jra.jo
- * had and what was asked for. Everything else here exists because an
- * auto-advancing carousel is one of the easiest components to get wrong.
+ * Advances on its own, which is the behaviour the old jra.jo had and what was
+ * asked for. How long each slide is held is set in the back office and arrives
+ * as `intervalMs`. Everything else here exists because an auto-advancing
+ * carousel is one of the easiest components to get wrong.
  *
  * There is no visible pause button, by request. WCAG 2.2.2 still applies —
  * anything that moves on its own for more than five seconds needs a way to
@@ -42,15 +48,27 @@ export type Slide = {
  * Slides cross-fade rather than slide. A horizontal translate has a direction
  * that has to mirror in Arabic; opacity does not.
  */
-const INTERVAL_MS = 6000;
+const DEFAULT_INTERVAL_MS = SLIDE_SECONDS_DEFAULT * 1000;
+const MIN_INTERVAL_MS = SLIDE_SECONDS_MIN * 1000;
+const MAX_INTERVAL_MS = SLIDE_SECONDS_MAX * 1000;
 
-export function AboutCarousel({ slides }: { slides: Slide[] }) {
+export function AboutCarousel({
+  slides,
+  intervalMs = DEFAULT_INTERVAL_MS,
+}: {
+  slides: Slide[];
+  intervalMs?: number;
+}) {
   const t = useTranslations("about");
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [tookControl, setTookControl] = useState(false);
   const [reduced, setReduced] = useState(false);
   const regionRef = useRef<HTMLDivElement>(null);
+
+  const delay = Number.isFinite(intervalMs)
+    ? Math.min(MAX_INTERVAL_MS, Math.max(MIN_INTERVAL_MS, intervalMs))
+    : DEFAULT_INTERVAL_MS;
 
   const count = slides.length;
   const go = useCallback(
@@ -70,9 +88,9 @@ export function AboutCarousel({ slides }: { slides: Slide[] }) {
 
   useEffect(() => {
     if (!running) return;
-    const id = setInterval(() => setIndex((i) => (i + 1) % count), INTERVAL_MS);
+    const id = setInterval(() => setIndex((i) => (i + 1) % count), delay);
     return () => clearInterval(id);
-  }, [running, count]);
+  }, [running, count, delay]);
 
   // A hidden tab should not be running a timer.
   useEffect(() => {

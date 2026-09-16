@@ -6,6 +6,7 @@ import { pageMetadata } from "@/lib/page-metadata";
 import { AboutCarousel } from "@/components/about/about-carousel";
 import { CountUp } from "@/components/count-up";
 import { toVideoEmbed } from "@/lib/video-embed";
+import { clampSlideSeconds } from "@/lib/about-timing";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -33,8 +34,13 @@ export default async function AboutPage({
         include: { translations: { where: { locale: ar ? "ar" : "en" } } },
         orderBy: { createdAt: "desc" },
       }),
-      db.aboutSlide.findMany({ where: { isActive: true }, orderBy: { sortOrder: "asc" } }),
-      db.siteSetting.findUnique({ where: { id: "singleton" }, select: { aboutVideoUrl: true } }),
+      // Every slide added is shown. There is no hidden state any more —
+      // removing one from the carousel means deleting it.
+      db.aboutSlide.findMany({ orderBy: { sortOrder: "asc" } }),
+      db.siteSetting.findUnique({
+        where: { id: "singleton" },
+        select: { aboutVideoUrl: true, aboutSlideSeconds: true },
+      }),
       db.restaurant.count({ where: { status: "PUBLISHED" } }),
       db.restaurant.findMany({
         where: { status: "PUBLISHED", governorateId: { not: null } },
@@ -77,6 +83,7 @@ export default async function AboutPage({
               imageUrl: s.imageUrl,
               caption: (ar && s.captionAr) || s.captionEn || null,
             }))}
+            intervalMs={clampSlideSeconds(settings?.aboutSlideSeconds) * 1000}
           />
         </div>
       ) : null}
