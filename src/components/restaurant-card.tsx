@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { MapPin, Star, Phone, Clock } from "lucide-react";
+import { MapPin, Star } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 
 export type RestaurantCardData = {
@@ -15,6 +15,9 @@ export type RestaurantCardData = {
   cuisineNameAr?: string | null;
   stars: number | null;
   /** Signals below — the directory now holds real contact data for ~65%. */
+  /** No longer rendered on the card — see the note where the row was
+   *  removed. Kept on the type so `getFeaturedRestaurants` and the
+   *  directory query need not change in the same commit. */
   hasPhone?: boolean;
   hasHours?: boolean;
 };
@@ -48,7 +51,11 @@ export function RestaurantCard({ restaurant }: { restaurant: RestaurantCardData 
       href={`/restaurants/${restaurant.slug}`}
       className="motion-card group block overflow-hidden rounded-2xl border border-rule bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-surface-2">
+      {/* 16:9 rather than a taller crop. These are mostly logos, which sit
+          in a wide frame without being cut, and a 4:3 image made the picture
+          three quarters of the card — a wall of artwork with captions rather
+          than a directory. At this ratio three rows fit a laptop screen. */}
+      <div className="relative aspect-[16/9] overflow-hidden bg-surface-2">
         {restaurant.imageUrl ? (
           <Image
             src={restaurant.imageUrl}
@@ -76,38 +83,18 @@ export function RestaurantCard({ restaurant }: { restaurant: RestaurantCardData 
         ) : null}
       </div>
 
-      <div className="p-5">
+      <div className="p-4">
         <h3 className="truncate font-display font-semibold text-lg text-ink transition-colors group-hover:text-accent">
           {displayName}
         </h3>
 
         {meta ? (
-          <p className="mt-1 flex items-center gap-1.5 truncate text-sm text-ink-soft">
+          <p className="mt-1.5 flex items-center gap-1.5 truncate text-sm text-ink-soft">
             <MapPin className="h-3.5 w-3.5 shrink-0 text-ink-faint" aria-hidden="true" />
             {meta}
           </p>
         ) : null}
 
-        {/* What a reader actually wants to know before clicking: can I ring
-            them, and do I know when they open. The card used to close with
-            "Learn more →" — the same four words on all 701 of them, on an
-            element that is already entirely a link. */}
-        {restaurant.hasPhone || restaurant.hasHours ? (
-          <ul className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-ink-faint">
-            {restaurant.hasPhone ? (
-              <li className="inline-flex items-center gap-1.5">
-                <Phone className="h-3 w-3 shrink-0" aria-hidden="true" />
-                {t("hasPhone")}
-              </li>
-            ) : null}
-            {restaurant.hasHours ? (
-              <li className="inline-flex items-center gap-1.5">
-                <Clock className="h-3 w-3 shrink-0" aria-hidden="true" />
-                {t("hasHours")}
-              </li>
-            ) : null}
-          </ul>
-        ) : null}
       </div>
     </Link>
   );

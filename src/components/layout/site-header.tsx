@@ -69,7 +69,7 @@ export function SiteHeader() {
           <HeaderSearch />
           <button
             suppressHydrationWarning
-            className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-md text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="inline-flex size-[44px] cursor-pointer items-center justify-center rounded-md text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
             aria-expanded={open}
