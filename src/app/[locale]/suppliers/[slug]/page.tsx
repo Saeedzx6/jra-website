@@ -180,7 +180,7 @@ export default async function SupplierDetailPage({
           ) : null}
         </div>
 
-        <aside className="h-fit rounded-2xl border border-rule bg-surface p-6 sm:p-10">
+        <aside className="h-fit rounded-2xl border border-rule bg-surface p-6 sm:p-8">
           <h2 className="ui-caps font-semibold text-ink-faint">{ts("contact")}</h2>
           {contact.length > 0 ? (
             <ul className="mt-4 space-y-3 text-sm">

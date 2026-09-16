@@ -68,7 +68,7 @@ export default async function RestaurantsPage({
         <p className="mt-16 text-center text-ink-soft">{tCommon("noResults")}</p>
       ) : (
         <div
-          className="stagger mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          className="stagger mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
         >
           {results.items.map((r) => (
             <div key={r.slug}>

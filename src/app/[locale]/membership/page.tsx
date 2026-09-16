@@ -38,7 +38,7 @@ export default async function MembershipPage({
       <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">{tm("intro")}</p>
       <Link
         href="/classification/restaurant"
-        className="mt-6 flex items-center gap-3 rounded-2xl border border-dashed border-accent bg-accent-soft p-6 sm:p-10 transition-transform hover:-translate-y-0.5"
+        className="mt-6 flex items-center gap-3 rounded-2xl border border-dashed border-accent bg-accent-soft p-6 sm:p-8 transition-transform hover:-translate-y-0.5"
       >
         <ClipboardCheck className="h-6 w-6 shrink-0 text-accent" />
         <span className="text-sm text-ink">
@@ -47,7 +47,7 @@ export default async function MembershipPage({
         </span>
       </Link>
 
-      <div className="mt-6 rounded-2xl border border-rule bg-surface p-6 sm:p-10 sm:p-8">
+      <div className="mt-6 rounded-2xl border border-rule bg-surface p-6 sm:p-8 sm:p-8">
         <Suspense fallback={null}>
           <MembershipForm governorates={governorates} />
         </Suspense>
