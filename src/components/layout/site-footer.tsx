@@ -12,21 +12,22 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { ORG } from "@/lib/organisation";
 
-/** Entries with a null url are omitted automatically. */
-const SOCIAL_LINKS = [
-  { label: "Facebook", url: "https://www.facebook.com/JoRestaurants", Icon: Facebook },
-  { label: "Instagram", url: "https://www.instagram.com/jorestaurantassociation/", Icon: Instagram },
-  // Stored as the company root rather than the /posts/?feedView=all URL it was
-  // supplied as — that suffix is LinkedIn's own view state, not part of the
-  // page's address, and it does not survive their redirects.
-  {
-    label: "LinkedIn",
-    url: "https://www.linkedin.com/company/jordan-restaurant-association-jra/",
-    Icon: Linkedin,
-  },
-  { label: "YouTube", url: "https://www.youtube.com/user/JoRestaurants", Icon: Youtube },
-] as const;
+/**
+ * The URLs live in `ORG.social` because the same list is emitted as schema.org
+ * `sameAs`; only the icon pairing is a footer concern.
+ *
+ * LinkedIn is stored as the company root rather than the /posts/?feedView=all
+ * URL it was supplied as -- that suffix is LinkedIn's own view state, not part
+ * of the page's address, and it does not survive their redirects.
+ */
+const SOCIAL_ICONS = {
+  facebook: Facebook,
+  instagram: Instagram,
+  linkedin: Linkedin,
+  youtube: Youtube,
+} as const;
 
 const COLUMNS = [
   {
@@ -82,8 +83,8 @@ export function SiteFooter() {
             <div>
               <Link href="/" className="inline-block transition-opacity hover:opacity-90">
                 <Image
-                  src="/brand/jra-logo.png"
-                  alt="Jordan Restaurant Association"
+                  src={ORG.brand.logo}
+                  alt={t("common.associationName")}
                   width={162}
                   height={31}
                   className="h-10 w-auto object-contain"
@@ -103,26 +104,26 @@ export function SiteFooter() {
               <ul className="mt-6 space-y-3 text-sm text-ink-soft">
                 <li>
                   <a 
-                    href="tel:+96264621558" 
+                    href={ORG.phone.href} 
                     className="group flex items-center gap-3 transition-colors hover:text-accent" 
                     dir="ltr"
                   >
                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-2 text-accent transition-colors group-hover:bg-accent group-hover:text-white">
                       <Phone className="h-4 w-4" aria-hidden="true" />
                     </span>
-                    <span className="font-medium">+962 6 462 1558</span>
+                    <span className="font-medium">{ORG.phone.display}</span>
                   </a>
                 </li>
                 <li>
                   <a 
-                    href="mailto:info@jra.jo" 
+                    href={ORG.emailHref} 
                     className="group flex items-center gap-3 transition-colors hover:text-accent" 
                     dir="ltr"
                   >
                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-2 text-accent transition-colors group-hover:bg-accent group-hover:text-white">
                       <Mail className="h-4 w-4" aria-hidden="true" />
                     </span>
-                    <span className="font-medium">info@jra.jo</span>
+                    <span className="font-medium">{ORG.email}</span>
                   </a>
                 </li>
                 <li className="flex items-start gap-3">
@@ -136,18 +137,21 @@ export function SiteFooter() {
 
             {/* Social Icons */}
             <div className="mt-8 flex gap-3">
-              {SOCIAL_LINKS.filter((s) => s.url).map(({ label, url, Icon }) => (
-                <a
-                  key={label}
-                  href={url as string}
+              {ORG.social.map(({ key, label, url }) => {
+                const Icon = SOCIAL_ICONS[key];
+                return (
+                  <a
+                    key={key}
+                    href={url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="lift flex h-10 w-10 items-center justify-center rounded-full bg-surface-2 text-ink-soft transition-colors hover:bg-accent hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   aria-label={label}
                 >
-                  <Icon className="h-4 w-4" aria-hidden="true" />
-                </a>
-              ))}
+                    <Icon className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                );
+              })}
             </div>
           </div>
 

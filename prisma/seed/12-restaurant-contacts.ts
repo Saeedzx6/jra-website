@@ -292,23 +292,40 @@ async function main() {
     }
 
     const phone = cleanPhone(clean(row.Phone));
-    if (phone && !current.phone) (data.phone = phone), bump("phone");
+    if (phone && !current.phone) {
+      data.phone = phone;
+      bump("phone");
+    }
 
     const email = cleanEmail(clean(row.Email));
-    if (email && !current.email) (data.email = email), bump("email");
+    if (email && !current.email) {
+      data.email = email;
+      bump("email");
+    }
 
     const hours = clean(row.Opening_Hours);
-    if (hours && !current.openingHoursText)
-      (data.openingHoursText = hours), bump("openingHoursText");
+    if (hours && !current.openingHoursText) {
+      data.openingHoursText = hours;
+      bump("openingHoursText");
+    }
 
     const fb = cleanUrl(clean(row.Facebook));
-    if (fb && !current.facebookUrl) (data.facebookUrl = fb), bump("facebookUrl");
+    if (fb && !current.facebookUrl) {
+      data.facebookUrl = fb;
+      bump("facebookUrl");
+    }
 
     const ig = cleanUrl(clean(row.Instagram));
-    if (ig && !current.instagramUrl) (data.instagramUrl = ig), bump("instagramUrl");
+    if (ig && !current.instagramUrl) {
+      data.instagramUrl = ig;
+      bump("instagramUrl");
+    }
 
     const address = clean(row.Location);
-    if (address && !current.addressText) (data.addressText = address), bump("addressText");
+    if (address && !current.addressText) {
+      data.addressText = address;
+      bump("addressText");
+    }
 
     if (Object.keys(data).length === 0) continue;
     stats.updated++;

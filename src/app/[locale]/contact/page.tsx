@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { ContactForm } from "@/components/contact-form";
 import { pageMetadata } from "@/lib/page-metadata";
+import { ORG } from "@/lib/organisation";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -44,7 +45,7 @@ export default async function ContactPage({
               <div className="text-xs uppercase tracking-wide text-ink-faint">
                 {tf("email")}
               </div>
-              <div className="text-sm font-medium text-ink">info@jra.jo</div>
+              <div className="text-sm font-medium text-ink">{ORG.email}</div>
             </div>
           </div>
           <div className="flex items-start gap-3 rounded-xl border border-rule bg-surface p-4">

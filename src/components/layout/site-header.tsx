@@ -10,6 +10,7 @@ import { LocaleSwitcher } from "./locale-switcher";
 import { HeaderSearch } from "./header-search";
 import { PrimaryNav } from "./primary-nav";
 import { AccountMenu } from "./account-menu";
+import { ORG } from "@/lib/organisation";
 
 export function SiteHeader() {
   const t = useTranslations();
@@ -51,8 +52,8 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
         <Link href="/" className="flex shrink-0 items-center" onClick={() => setOpen(false)}>
           <Image
-            src="/brand/jra-logo.png"
-            alt="Jordan Restaurant Association"
+            src={ORG.brand.logo}
+            alt={t("common.associationName")}
             width={162}
             height={31}
             priority
@@ -71,7 +72,7 @@ export function SiteHeader() {
             suppressHydrationWarning
             className="inline-flex size-[44px] cursor-pointer items-center justify-center rounded-md text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             onClick={() => setOpen((v) => !v)}
-            aria-label="Toggle menu"
+            aria-label={t("common.toggleMenu")}
             aria-expanded={open}
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}

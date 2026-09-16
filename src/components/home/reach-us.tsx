@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { MapPin, Phone, Mail, ArrowUpRight } from "lucide-react";
+import { ORG } from "@/lib/organisation";
 
 /**
  * Where JRA actually is.
@@ -16,7 +17,7 @@ import { MapPin, Phone, Mail, ArrowUpRight } from "lucide-react";
  * `q=` uses the written address rather than coordinates: JRA has never
  * supplied a lat/lng, and a wrong pin is worse than a searched one.
  */
-const MAP_QUERY = "Jordan Restaurant Association, Jabal Amman, Amman, Jordan";
+const MAP_QUERY = ORG.mapQuery;
 
 export async function ReachUs() {
   const t = await getTranslations("home.reachUs");
@@ -41,7 +42,7 @@ export async function ReachUs() {
             </li>
             <li>
               <a
-                href="tel:+96264621558"
+                href={ORG.phone.href}
                 dir="ltr"
                 className="group flex items-center gap-3 text-ink-soft transition-colors hover:text-accent"
               >
@@ -53,14 +54,14 @@ export async function ReachUs() {
             </li>
             <li>
               <a
-                href="mailto:info@jra.jo"
+                href={ORG.emailHref}
                 dir="ltr"
                 className="group flex items-center gap-3 text-ink-soft transition-colors hover:text-accent"
               >
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-surface-2 text-accent transition-colors group-hover:bg-accent group-hover:text-white">
                   <Mail className="h-4 w-4" aria-hidden="true" />
                 </span>
-                <span className="font-medium">info@jra.jo</span>
+                <span className="font-medium">{ORG.email}</span>
               </a>
             </li>
           </ul>
