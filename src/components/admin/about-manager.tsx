@@ -9,7 +9,13 @@ import {
   updateAboutSlide,
   deleteAboutSlide,
   setAboutVideo,
+  setAboutSlideSeconds,
 } from "@/lib/actions/about";
+import {
+  SLIDE_SECONDS_MIN,
+  SLIDE_SECONDS_MAX,
+  SLIDE_SECONDS_DEFAULT,
+} from "@/lib/about-timing";
 import { IDLE } from "@/lib/action-state";
 import { SubmitButton, FormStatus } from "@/components/admin/form-controls";
 import { prepareImage, UPLOAD_MAX_BYTES, tooLargeMessage } from "@/lib/prepare-image";
@@ -20,7 +26,6 @@ export type SlideRow = {
   captionEn: string | null;
   captionAr: string | null;
   sortOrder: number;
-  isActive: boolean;
 };
 
 const FIELD =
@@ -37,9 +42,11 @@ const FIELD =
 export function AboutManager({
   slides,
   videoUrl,
+  slideSeconds,
 }: {
   slides: SlideRow[];
   videoUrl: string | null;
+  slideSeconds: number | null;
 }) {
   const t = useTranslations("admin.about");
 
@@ -59,6 +66,7 @@ export function AboutManager({
   );
 
   const [videoState, videoAction] = useActionState(setAboutVideo, IDLE);
+  const [secondsState, secondsAction] = useActionState(setAboutSlideSeconds, IDLE);
 
   return (
     <div className="space-y-8">
@@ -90,6 +98,34 @@ export function AboutManager({
       <section className="rounded-2xl border border-rule bg-surface p-5">
         <h2 className="font-medium text-ink">{t("slidesHeading")}</h2>
         <p className="mt-1 text-xs text-ink-faint">{t("slidesHint")}</p>
+
+        <form
+          action={secondsAction}
+          className="mt-4 flex flex-wrap items-end gap-3 rounded-xl border border-rule bg-paper p-4"
+        >
+          <label className="flex flex-col gap-1.5">
+            <span className="text-xs font-medium text-ink">{t("secondsLabel")}</span>
+            <input
+              suppressHydrationWarning
+              name="aboutSlideSeconds"
+              type="number"
+              min={SLIDE_SECONDS_MIN}
+              max={SLIDE_SECONDS_MAX}
+              step={1}
+              defaultValue={slideSeconds ?? SLIDE_SECONDS_DEFAULT}
+              className={`${FIELD} w-28`}
+            />
+          </label>
+          <SubmitButton icon={<Save className="h-3.5 w-3.5" aria-hidden="true" />}>
+            {t("saveSeconds")}
+          </SubmitButton>
+          <p className="w-full text-xs text-ink-faint">
+            {t("secondsHint", { min: SLIDE_SECONDS_MIN, max: SLIDE_SECONDS_MAX })}
+          </p>
+          <div className="w-full">
+            <FormStatus state={secondsState} />
+          </div>
+        </form>
 
         <form action={addAction} className="mt-4 grid gap-3 sm:grid-cols-2">
           <input
@@ -168,22 +204,15 @@ function SlideRowEditor({ slide }: { slide: SlideRow }) {
             placeholder={t("captionArPlaceholder")}
             className={FIELD}
           />
-          <input
-            suppressHydrationWarning
-            name="sortOrder"
-            type="number"
-            defaultValue={slide.sortOrder}
-            className={FIELD}
-          />
-          <label className="flex items-center gap-2 text-sm text-ink-soft">
+          <label className="flex flex-col gap-1.5 sm:col-span-2">
+            <span className="text-xs font-medium text-ink">{t("orderLabel")}</span>
             <input
               suppressHydrationWarning
-              type="checkbox"
-              name="isActive"
-              defaultChecked={slide.isActive}
-              className="h-4 w-4 rounded border-rule text-accent"
+              name="sortOrder"
+              type="number"
+              defaultValue={slide.sortOrder}
+              className={`${FIELD} w-28`}
             />
-            {t("showInCarousel")}
           </label>
           <div className="sm:col-span-2">
             <SubmitButton icon={<Save className="h-3.5 w-3.5" aria-hidden="true" />}>
