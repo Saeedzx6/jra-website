@@ -3,7 +3,12 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  SLIDE_SECONDS_MIN,
+  SLIDE_SECONDS_MAX,
+  SLIDE_SECONDS_DEFAULT,
+} from "@/lib/about-timing";
 
 export type Slide = {
   id: string;
@@ -14,9 +19,16 @@ export type Slide = {
 /**
  * The About page carousel.
  *
- * Advances on its own every six seconds, which is the behaviour the old jra.jo
- * had and what was asked for. Everything else here exists because an
- * auto-advancing carousel is one of the easiest components to get wrong.
+ * Advances on its own, which is the behaviour the old jra.jo had and what was
+ * asked for. How long each slide is held is set in the back office and arrives
+ * as `intervalMs`. Everything else here exists because an auto-advancing
+ * carousel is one of the easiest components to get wrong.
+ *
+ * There is no visible pause button, by request. WCAG 2.2.2 still applies —
+ * anything that moves on its own for more than five seconds needs a way to
+ * stop it — and it is satisfied by the mechanisms below rather than by a
+ * control sitting on the page. Do not remove them: the arrows and dots
+ * stopping the rotation permanently is what makes this compliant.
  *
  * It stops when it should:
  *   - on hover and on keyboard focus, so a caption someone is reading does not
@@ -36,9 +48,17 @@ export type Slide = {
  * Slides cross-fade rather than slide. A horizontal translate has a direction
  * that has to mirror in Arabic; opacity does not.
  */
-const INTERVAL_MS = 6000;
+const DEFAULT_INTERVAL_MS = SLIDE_SECONDS_DEFAULT * 1000;
+const MIN_INTERVAL_MS = SLIDE_SECONDS_MIN * 1000;
+const MAX_INTERVAL_MS = SLIDE_SECONDS_MAX * 1000;
 
-export function AboutCarousel({ slides }: { slides: Slide[] }) {
+export function AboutCarousel({
+  slides,
+  intervalMs = DEFAULT_INTERVAL_MS,
+}: {
+  slides: Slide[];
+  intervalMs?: number;
+}) {
   const t = useTranslations("about");
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -46,10 +66,14 @@ export function AboutCarousel({ slides }: { slides: Slide[] }) {
   const [reduced, setReduced] = useState(false);
   const regionRef = useRef<HTMLDivElement>(null);
 
+  const delay = Number.isFinite(intervalMs)
+    ? Math.min(MAX_INTERVAL_MS, Math.max(MIN_INTERVAL_MS, intervalMs))
+    : DEFAULT_INTERVAL_MS;
+
   const count = slides.length;
   const go = useCallback(
     (next: number) => setIndex(((next % count) + count) % count),
-    [count]
+    [count],
   );
 
   useEffect(() => {
@@ -64,9 +88,9 @@ export function AboutCarousel({ slides }: { slides: Slide[] }) {
 
   useEffect(() => {
     if (!running) return;
-    const id = setInterval(() => setIndex((i) => (i + 1) % count), INTERVAL_MS);
+    const id = setInterval(() => setIndex((i) => (i + 1) % count), delay);
     return () => clearInterval(id);
-  }, [running, count]);
+  }, [running, count, delay]);
 
   // A hidden tab should not be running a timer.
   useEffect(() => {
@@ -131,7 +155,9 @@ export function AboutCarousel({ slides }: { slides: Slide[] }) {
             />
             {s.caption ? (
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent p-4 pt-12 sm:p-6 sm:pt-16">
-                <p className="text-sm leading-relaxed text-white sm:text-base">{s.caption}</p>
+                <p className="text-sm leading-relaxed text-white sm:text-base">
+                  {s.caption}
+                </p>
               </div>
             ) : null}
           </div>
@@ -146,7 +172,10 @@ export function AboutCarousel({ slides }: { slides: Slide[] }) {
               aria-label={t("previousSlide")}
               className="absolute start-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-ink/40 text-white backdrop-blur transition-colors hover:bg-ink/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
-              <ChevronLeft className="h-5 w-5 rtl:rotate-180" aria-hidden="true" />
+              <ChevronLeft
+                className="h-5 w-5 rtl:rotate-180"
+                aria-hidden="true"
+              />
             </button>
             <button
               suppressHydrationWarning
@@ -155,47 +184,30 @@ export function AboutCarousel({ slides }: { slides: Slide[] }) {
               aria-label={t("nextSlide")}
               className="absolute end-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-ink/40 text-white backdrop-blur transition-colors hover:bg-ink/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
-              <ChevronRight className="h-5 w-5 rtl:rotate-180" aria-hidden="true" />
+              <ChevronRight
+                className="h-5 w-5 rtl:rotate-180"
+                aria-hidden="true"
+              />
             </button>
           </>
         ) : null}
       </div>
 
       {count > 1 ? (
-        <div className="mt-4 flex items-center justify-center gap-3">
-          <div className="flex items-center gap-2">
-            {slides.map((s, i) => (
-              <button
-                suppressHydrationWarning
-                key={s.id}
-                type="button"
-                onClick={() => manual(i)}
-                aria-label={t("goToSlide", { number: i + 1 })}
-                aria-current={i === index}
-                className={`h-2 rounded-full transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
-                  i === index ? "w-6 bg-accent" : "w-2 bg-rule hover:bg-ink-faint"
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Only offered while it is actually capable of moving on its own.
-              Under reduced motion there is nothing to pause. */}
-          {!reduced ? (
+        <div className="mt-4 flex items-center justify-center gap-2">
+          {slides.map((s, i) => (
             <button
               suppressHydrationWarning
+              key={s.id}
               type="button"
-              onClick={() => setTookControl((v) => !v)}
-              aria-label={tookControl ? t("resumeAuto") : t("pauseAuto")}
-              className="ms-1 flex h-7 w-7 items-center justify-center rounded-full border border-rule text-ink-faint transition-colors hover:border-ink hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-            >
-              {tookControl ? (
-                <Play className="h-3 w-3" aria-hidden="true" />
-              ) : (
-                <Pause className="h-3 w-3" aria-hidden="true" />
-              )}
-            </button>
-          ) : null}
+              onClick={() => manual(i)}
+              aria-label={t("goToSlide", { number: i + 1 })}
+              aria-current={i === index}
+              className={`h-2 rounded-full transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+                i === index ? "w-6 bg-accent" : "w-2 bg-rule hover:bg-ink-faint"
+              }`}
+            />
+          ))}
         </div>
       ) : null}
     </section>
