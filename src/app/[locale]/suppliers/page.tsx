@@ -64,7 +64,7 @@ export default async function SuppliersPage({
           </Link>
         </div>
       ) : (
-        <div className="stagger mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="stagger mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {suppliers.map((s) => (
             <Link
               key={s.id}
@@ -79,8 +79,8 @@ export default async function SuppliersPage({
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                 aspect="aspect-[4/3]"
               />
-              <div className="p-6 sm:p-10">
-                <h3 className="font-display font-semibold text-2xl text-ink">
+              <div className="p-5">
+                <h3 className="font-display font-semibold text-lg text-ink">
                   {locale === "ar" && s.nameAr ? s.nameAr : s.name}
                 </h3>
                 <p className="mt-1 text-sm text-ink-soft">{s.shortDescription}</p>

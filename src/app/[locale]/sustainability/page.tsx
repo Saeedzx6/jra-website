@@ -55,7 +55,7 @@ export default async function SustainabilityPage({
 
       <div className="mt-12 grid gap-4 sm:grid-cols-3">
         {pillars.map((p) => (
-          <div key={p.title} className="motion-card rounded-2xl border border-rule bg-surface p-6 sm:p-10">
+          <div key={p.title} className="motion-card rounded-2xl border border-rule bg-surface p-6 sm:p-8">
             <p.icon className="h-6 w-6 text-olive-text" />
             <h3 className="mt-3 font-display font-semibold text-2xl text-ink">{p.title}</h3>
             <p className="mt-1 text-sm text-ink-soft">{p.desc}</p>

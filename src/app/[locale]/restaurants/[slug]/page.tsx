@@ -273,7 +273,7 @@ export default async function RestaurantDetailPage({
           )}
         </div>
 
-        <aside className="h-fit rounded-2xl border border-rule bg-surface p-6 sm:p-10">
+        <aside className="h-fit rounded-2xl border border-rule bg-surface p-6 sm:p-8">
           {/* Grouped by what the reader is actually looking for, and each group
               renders only when it has content. The directory holds an address
               for ~92% of listings and no contact channel at all for any of
