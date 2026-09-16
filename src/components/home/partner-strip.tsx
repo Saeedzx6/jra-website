@@ -52,7 +52,7 @@ export async function PartnerStrip() {
               {...(external
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {})}
-              className="motion-card group flex flex-col rounded-2xl border border-rule bg-surface p-6 sm:p-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              className="motion-card group flex flex-col rounded-2xl border border-rule bg-surface p-6 sm:p-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               <Icon className="h-6 w-6 text-accent" strokeWidth={1.75} aria-hidden="true" />
               <h3 className="mt-5 font-display font-semibold text-2xl text-ink">{t(`${key}.title`)}</h3>

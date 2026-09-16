@@ -31,7 +31,7 @@ export default async function MagazinePage({
       <h1 className="font-display font-semibold text-5xl text-ink">{t("magazine")}</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">{tm("description")}</p>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-3">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {issues.map((issue) => (
           <Link
             key={issue.id}

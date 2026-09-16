@@ -23,7 +23,7 @@ export default async function LocaleLoading() {
       <div className="h-9 w-2/3 max-w-sm rounded-lg skeleton" />
       <div className="mt-3 h-5 w-full max-w-xl rounded skeleton" />
 
-      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {Array.from({ length: 6 }).map((_, i) => (
           <div key={i} className="overflow-hidden rounded-2xl border border-rule bg-surface">
             <div className="aspect-[4/3] skeleton" />

@@ -157,7 +157,7 @@ export default async function HomePage({
             <Link
               key={s.href}
               href={s.href}
-              className="motion-card group rounded-2xl border border-rule bg-surface p-6 sm:p-10"
+              className="motion-card group rounded-2xl border border-rule bg-surface p-6 sm:p-8"
             >
               <s.icon className="h-6 w-6 text-accent" strokeWidth={1.75} />
               <h3 className="mt-4 font-display font-semibold text-2xl text-ink">
@@ -213,7 +213,7 @@ export default async function HomePage({
               {tCommon("viewAll")} →
             </Link>
           </div>
-          <div className="stagger mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="stagger mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {featured.map((r) => (
               <div key={r.slug}>
                 <RestaurantCard restaurant={r} />
@@ -239,7 +239,7 @@ export default async function HomePage({
               <Link
                 key={n.id}
                 href={`/news/${n.slug}`}
-                className="motion-card block rounded-2xl border border-rule bg-surface p-6 sm:p-10"
+                className="motion-card block rounded-2xl border border-rule bg-surface p-6 sm:p-8"
               >
                 {n.publishedAt ? (
                   <time className="text-xs font-medium uppercase tracking-wide text-ink-faint">
