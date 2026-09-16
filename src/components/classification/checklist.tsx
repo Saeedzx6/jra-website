@@ -10,7 +10,6 @@ import { SectionSheet } from "./section-sheet";
 import { localized, sectionMax, sectionScore, type GradingMode, type Section } from "./types";
 import {
   certificationResult,
-  starsForScore,
   type CriterionValue,
   type StarBand,
 } from "@/lib/classification-scoring";
@@ -69,7 +68,6 @@ export function ClassificationChecklist({
   );
 
   const maxStars = starBands.length > 0 ? Math.max(...starBands.map((b) => b.stars)) : 5;
-  const projectedStars = starsForScore(score, starBands);
   const mandatory = useMemo(() => allCriteria.filter((c) => c.mandatory), [allCriteria]);
   const certification = certificationResult(allCriteria, answers);
 

@@ -101,7 +101,7 @@ export function SupplierPhotoManager({
                 type="button"
                 disabled={pending}
                 onClick={() => startTransition(() => deleteSupplierImage(img.id))}
-                title="Delete"
+                title={tf("deletePhoto")}
                 className="ms-auto flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-accent-strong hover:bg-white"
               >
                 {pending ? (

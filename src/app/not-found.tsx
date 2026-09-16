@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { routing } from "@/i18n/routing";
 
 /**
@@ -68,7 +67,11 @@ export default function RootNotFound() {
               flexWrap: "wrap",
             }}
           >
-            {/* Plain anchors, not next-intl's Link — there is no locale context here. */}
+            {/* Plain anchors, not next-intl's Link — there is no locale context
+                here, so there is no locale for a Link to preserve. These two are
+                the choice of locale, which is why they are the only thing on the
+                page. */}
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a
               href="/en"
               style={{
@@ -83,6 +86,7 @@ export default function RootNotFound() {
             >
               English
             </a>
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a
               href="/ar"
               style={{

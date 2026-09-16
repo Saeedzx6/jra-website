@@ -11,6 +11,7 @@ import { jsonLdScript, organizationLd, webSiteLd } from "@/lib/json-ld";
 import { publicClientMessages } from "@/i18n/client-messages";
 import { AuthSessionProvider } from "@/components/session-provider";
 import "../globals.css";
+import { ORG } from "@/lib/organisation";
 
 export async function generateMetadata({
   params,
@@ -37,7 +38,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: `${SITE_URL}/brand/og-default.png`,
+          url: `${SITE_URL}${ORG.brand.ogImage}`,
           width: 1200,
           height: 630,
           alt: t("siteTitle"),
@@ -51,7 +52,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: t("siteTitle"),
       description: t("siteDescription"),
-      images: [`${SITE_URL}/brand/og-default.png`],
+      images: [`${SITE_URL}${ORG.brand.ogImage}`],
     },
   };
 }

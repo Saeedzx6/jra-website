@@ -101,7 +101,14 @@ async function seedSupplierCategories() {
   }
 
   // Insert parents before children (top-level = direct child of Suppliers root)
-  const sorted = [...keep].sort((a, b) => (a.ParentCategoryId === 2 ? -1 : 1));
+  // Top-level categories first, so a parent always exists before a child
+  // references it. Written as a difference rather than `a.x === 2 ? -1 : 1`,
+  // which never looked at `b`: that comparator says "a before b" for both
+  // orderings of two top-level rows, and a comparator that contradicts itself
+  // leaves the result up to the engine.
+  const topLevelFirst = (row: { ParentCategoryId: number }) =>
+    row.ParentCategoryId === 2 ? 0 : 1;
+  const sorted = [...keep].sort((a, b) => topLevelFirst(a) - topLevelFirst(b));
   for (const row of sorted) {
     const slug = slugById.get(row.Id)!;
     const parentSlug = row.ParentCategoryId !== 2 ? slugById.get(row.ParentCategoryId) : undefined;

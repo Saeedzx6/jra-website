@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import {
   Store,
@@ -6,7 +5,6 @@ import {
   Leaf,
   Handshake,
   ArrowRight,
-  Info,
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { RestaurantCard } from "@/components/restaurant-card";
@@ -31,7 +29,6 @@ export default async function HomePage({
   setRequestLocale(locale);
   const t = await getTranslations("home");
   const tCommon = await getTranslations("common");
-  const tNav = await getTranslations("nav");
 
   const [
     featured,
@@ -187,7 +184,7 @@ export default async function HomePage({
             <div className="font-display text-4xl font-semibold text-accent">
               <CountUp value={restaurantCount} />
             </div>
-            <div className="mt-1 text-sm text-ink-soft">Restaurants listed</div>
+            <div className="mt-1 text-sm text-ink-soft">{t("statRestaurants")}</div>
           </div>
           <div>
             <div className="font-display text-4xl font-semibold text-accent">

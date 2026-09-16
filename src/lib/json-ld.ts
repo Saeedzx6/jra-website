@@ -1,5 +1,6 @@
 import { SITE_URL, localeUrl } from "@/lib/seo";
 import type { PriceTier } from "@prisma/client";
+import { ORG, orgStreet } from "@/lib/organisation";
 
 /**
  * Structured data builders. These drive Google's rich results — the star
@@ -123,7 +124,7 @@ export function newsArticleLd(a: ArticleLdInput, locale: string) {
     publisher: {
       "@type": "Organization",
       name: "Jordan Restaurant Association",
-      logo: { "@type": "ImageObject", url: `${SITE_URL}/brand/jra-logo.png` },
+      logo: { "@type": "ImageObject", url: `${SITE_URL}${ORG.brand.logo}` },
     },
   };
 }
@@ -143,28 +144,20 @@ export function organizationLd(locale: string) {
     "@context": "https://schema.org",
     "@type": ["Organization", "LocalBusiness"],
     "@id": `${SITE_URL}/#organization`,
-    name: "Jordan Restaurant Association",
-    alternateName: "نقابة أصحاب المطاعم الأردنية",
+    name: ORG.name.en,
+    alternateName: ORG.name.ar,
     url: localeUrl(locale, "/"),
-    logo: `${SITE_URL}/brand/jra-logo.png`,
-    image: `${SITE_URL}/brand/og-default.png`,
-    foundingDate: "2002",
-    telephone: "+962-6-462-1558",
-    email: "info@jra.jo",
-    sameAs: [
-      "https://www.facebook.com/JoRestaurants",
-      "https://www.instagram.com/jorestaurantassociation/",
-      "https://www.linkedin.com/company/jordan-restaurant-association-jra/",
-      "https://www.youtube.com/user/JoRestaurants",
-    ],
+    logo: `${SITE_URL}${ORG.brand.logo}`,
+    image: `${SITE_URL}${ORG.brand.ogImage}`,
+    foundingDate: ORG.foundingDate,
+    telephone: ORG.phone.schema,
+    email: ORG.email,
+    sameAs: ORG.social.map((s) => s.url),
     address: {
       "@type": "PostalAddress",
-      addressCountry: "JO",
-      addressLocality: "Amman",
-      streetAddress:
-        locale === "ar"
-          ? "جبل عمان، الدوار الثاني، شارع سلمان المادبي، عمارة رقم 12"
-          : "Jabal Amman, 2nd Circle, Salman Al-Madabi St, Building 12",
+      addressCountry: ORG.address.country,
+      addressLocality: ORG.address.locality,
+      streetAddress: orgStreet(locale),
     },
     // No `geo` and no `openingHours`: JRA has not supplied coordinates or
     // office hours, and inventing either would be worse than omitting them.

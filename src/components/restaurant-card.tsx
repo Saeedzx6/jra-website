@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { MapPin, Star } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 
@@ -35,10 +35,9 @@ function placeholderGradient(seed: string) {
 
 export function RestaurantCard({ restaurant }: { restaurant: RestaurantCardData }) {
   const locale = useLocale();
-  const t = useTranslations("restaurants");
-  const displayName = locale === "ar" && restaurant.nameAr ? restaurant.nameAr : restaurant.name;
-
   const ar = locale === "ar";
+  const displayName = (ar && restaurant.nameAr) || restaurant.name;
+
   const governorate = (ar && restaurant.governorateNameAr) || restaurant.governorateName;
   const cuisine = (ar && restaurant.cuisineNameAr) || restaurant.cuisineName;
 

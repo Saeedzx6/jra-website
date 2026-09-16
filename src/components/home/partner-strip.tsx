@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { ArrowUpRight, Briefcase, CalendarDays, Megaphone } from "lucide-react";
+import { ORG } from "@/lib/organisation";
 
 /**
  * The three things JRA points members at that live outside this site.
@@ -29,7 +30,7 @@ const LINKS = [
     key: "advertise",
     // Not an outbound site: advertising enquiries go to the association's own
     // line, which is the number the old banner printed as plain text.
-    href: "tel:+96264621558",
+    href: ORG.phone.href,
     Icon: Megaphone,
   },
 ] as const;

@@ -16,6 +16,9 @@ export default async function AdminNewsletterPage() {
     <div>
       <div className="flex items-center justify-between">
         <h1 className="font-display text-2xl font-semibold text-ink">{tn("newsletterSubscribers")}</h1>
+        {/* A route handler that streams a CSV, not a page — next/link would
+            try to client-navigate to it instead of downloading it. */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         <a
           href="/api/admin/newsletter/export"
           className="flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white"

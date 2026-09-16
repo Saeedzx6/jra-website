@@ -1,5 +1,4 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { BookOpen } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 import { CoverThumb } from "@/components/cover-thumb";

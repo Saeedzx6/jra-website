@@ -56,7 +56,7 @@ export function PrimaryNav() {
   }, [measure]);
 
   return (
-    <nav aria-label="Primary" className="hidden xl:block">
+    <nav aria-label={t("common.primaryNav")} className="hidden xl:block">
       <ul
         ref={listRef}
         className="relative flex items-center gap-1"
