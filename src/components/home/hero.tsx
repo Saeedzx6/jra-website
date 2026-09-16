@@ -135,7 +135,7 @@ export async function HomeHero({
                 <li key={c.slug}>
                   <Link
                     href={`/restaurants?cuisine=${c.slug}`}
-                    className="group inline-flex min-h-11 items-center gap-2 py-3 text-white/80 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                    className="group inline-flex min-h-[44px] items-center gap-2 py-3 text-white/80 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                   >
                     <span className="text-sm font-medium">{c.label}</span>
                     <span className="tabular text-xs text-white/45 transition-colors group-hover:text-brass">
