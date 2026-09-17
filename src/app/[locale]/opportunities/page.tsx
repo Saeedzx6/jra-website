@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CalendarClock } from "lucide-react";
 import { db } from "@/lib/db";
 import { pageMetadata } from "@/lib/page-metadata";
+import { ui } from "@/lib/ui";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -28,7 +29,7 @@ export default async function OpportunitiesPage({
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="font-display font-semibold text-5xl text-ink">{t("opportunities")}</h1>
+      <h1 className={ui.pageTitle}>{t("opportunities")}</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">{to("description")}</p>
 
       {opportunities.length === 0 ? (

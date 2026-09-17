@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/rbac";
 import { SustainabilityCalculator } from "@/components/sustainability/calculator";
+import { ui } from "@/lib/ui";
 
 export default async function PortalSustainabilityPage() {
   const session = await getSession();
@@ -16,7 +17,7 @@ export default async function PortalSustainabilityPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">{ts("portalTitle")}</h1>
+      <h1 className={ui.sectionTitle}>{ts("portalTitle")}</h1>
       <p className="mt-2 max-w-xl text-ink-soft">{ts("portalIntro")}</p>
 
       <div className="mt-8 space-y-8">

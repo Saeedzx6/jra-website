@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import {
   Store,
@@ -6,17 +5,17 @@ import {
   Leaf,
   Handshake,
   ArrowRight,
-  Info,
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { RestaurantCard } from "@/components/restaurant-card";
 import { NewsletterForm } from "@/components/newsletter-form";
-import { CountUp } from "@/components/count-up";
 import { HomeHero } from "@/components/home/hero";
 import { PartnerStrip } from "@/components/home/partner-strip";
 import { ReachUs } from "@/components/home/reach-us";
 import { getFeaturedRestaurants } from "@/lib/restaurants";
 import { db } from "@/lib/db";
+import { StatGrid } from "@/components/stat-grid";
+import { ORG } from "@/lib/organisation";
 
 // Cached and revalidated every 300s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -31,7 +30,6 @@ export default async function HomePage({
   setRequestLocale(locale);
   const t = await getTranslations("home");
   const tCommon = await getTranslations("common");
-  const tNav = await getTranslations("nav");
 
   const [
     featured,
@@ -176,30 +174,15 @@ export default async function HomePage({
 
       {/* Stats */}
       <section className="border-y border-rule">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 px-4 py-12 text-center sm:grid-cols-4 sm:px-6">
-          <div>
-            <div className="font-display text-4xl font-semibold text-accent">
-              <CountUp value={totalMembers} suffix="+" />
-            </div>
-            <div className="mt-1 text-sm text-ink-soft">{t("statMembers")}</div>
-          </div>
-          <div>
-            <div className="font-display text-4xl font-semibold text-accent">
-              <CountUp value={restaurantCount} />
-            </div>
-            <div className="mt-1 text-sm text-ink-soft">Restaurants listed</div>
-          </div>
-          <div>
-            <div className="font-display text-4xl font-semibold text-accent">
-              <CountUp value={governorateCount} />
-            </div>
-            <div className="mt-1 text-sm text-ink-soft">{t("statGovernorates")}</div>
-          </div>
-          <div>
-            <div className="font-display text-4xl font-semibold text-accent">2002</div>
-            <div className="mt-1 text-sm text-ink-soft">{t("statFounded")}</div>
-          </div>
-        </div>
+        <StatGrid
+          className="mx-auto max-w-6xl grid-cols-2 px-4 py-12 sm:grid-cols-4 sm:px-6"
+          stats={[
+            { value: totalMembers, label: t("statMembers"), suffix: "+" },
+            { value: restaurantCount, label: t("statRestaurants") },
+            { value: governorateCount, label: t("statGovernorates") },
+            { value: ORG.foundingYear, label: t("statFounded"), animate: false },
+          ]}
+        />
       </section>
 
       {/* Featured restaurants */}

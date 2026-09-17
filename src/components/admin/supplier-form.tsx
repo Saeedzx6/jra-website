@@ -5,6 +5,7 @@ import { Save, Plus, Trash2 } from "lucide-react";
 import { SubmitButton, FormStatus } from "@/components/admin/form-controls";
 import { createSupplier, updateSupplier, deleteSupplier } from "@/lib/actions/suppliers";
 import { IDLE } from "@/lib/action-state";
+import { cx, ui } from "@/lib/ui";
 
 export type GovernorateOption = { id: string; nameEn: string };
 
@@ -39,8 +40,6 @@ export type SupplierLabels = {
   cancel: string;
 };
 
-const FIELD =
-  "w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm focus:border-accent focus:outline-none";
 
 const EMPTY = IDLE;
 
@@ -56,41 +55,36 @@ function Fields({
   return (
     <>
       <input
-        suppressHydrationWarning
         name="name"
         required
         defaultValue={value?.name ?? ""}
         placeholder={labels.namePlaceholder}
-        className={FIELD}
+        className={cx("w-full", ui.field)}
       />
       <input
-        suppressHydrationWarning
         name="nameAr"
         dir="rtl"
         defaultValue={value?.nameAr ?? ""}
         placeholder={labels.nameArPlaceholder}
-        className={FIELD}
+        className={cx("w-full", ui.field)}
       />
       <textarea
-        suppressHydrationWarning
         name="shortDescription"
         rows={2}
         defaultValue={value?.shortDescription ?? ""}
         placeholder={labels.descriptionPlaceholder}
-        className={`${FIELD} sm:col-span-2`}
+        className={cx(ui.field, "sm:col-span-2")}
       />
       <input
-        suppressHydrationWarning
         name="addressText"
         defaultValue={value?.addressText ?? ""}
         placeholder={labels.addressPlaceholder}
-        className={FIELD}
+        className={cx("w-full", ui.field)}
       />
       <select
-        suppressHydrationWarning
         name="governorateId"
         defaultValue={value?.governorateId ?? ""}
-        className={FIELD}
+        className={cx("w-full", ui.field)}
       >
         <option value="">{labels.noGovernorate}</option>
         {governorates.map((g) => (
@@ -100,36 +94,32 @@ function Fields({
         ))}
       </select>
       <input
-        suppressHydrationWarning
         name="phone"
         dir="ltr"
         defaultValue={value?.phone ?? ""}
         placeholder={labels.phonePlaceholder}
-        className={FIELD}
+        className={cx("w-full", ui.field)}
       />
       <input
-        suppressHydrationWarning
         name="email"
         type="email"
         dir="ltr"
         defaultValue={value?.email ?? ""}
         placeholder={labels.emailPlaceholder}
-        className={FIELD}
+        className={cx("w-full", ui.field)}
       />
       <input
-        suppressHydrationWarning
         name="website"
         type="url"
         dir="ltr"
         defaultValue={value?.website ?? ""}
         placeholder={labels.websitePlaceholder}
-        className={`${FIELD} sm:col-span-2`}
+        className={cx(ui.field, "sm:col-span-2")}
       />
       <select
-        suppressHydrationWarning
         name="status"
         defaultValue={value?.status ?? "DRAFT"}
-        className={FIELD}
+        className={cx("w-full", ui.field)}
       >
         <option value="DRAFT">{labels.draft}</option>
         <option value="PUBLISHED">{labels.published}</option>
@@ -207,7 +197,6 @@ export function SupplierEditForm({
               {labels.remove}
             </SubmitButton>
             <button
-              suppressHydrationWarning
               type="button"
               onClick={() => setConfirming(false)}
               className="rounded-full border border-rule px-4 py-1.5 text-xs font-medium text-ink-soft"
@@ -217,7 +206,6 @@ export function SupplierEditForm({
           </form>
         ) : (
           <button
-            suppressHydrationWarning
             type="button"
             onClick={() => setConfirming(true)}
             className="inline-flex items-center gap-1.5 rounded-full border border-rule px-4 py-1.5 text-xs font-medium text-ink-soft hover:border-danger hover:text-danger-text"

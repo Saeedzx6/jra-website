@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Star } from "lucide-react";
 import { pointsToNextBand, type StarBand } from "@/lib/classification-scoring";
 import type { GradingMode } from "./types";
+import { ui } from "@/lib/ui";
 
 /**
  * The running total, where it sits against the published grades, and what the
@@ -42,7 +43,7 @@ export function ScoreMeter({
     const qualified = total > 0 && outstanding === 0;
 
     return (
-      <div className="rounded-2xl border border-rule bg-surface p-5">
+      <div className={ui.panel}>
         <div className="flex items-baseline gap-2">
           <span className="tabular font-display text-3xl font-semibold text-ink">{met}</span>
           <span className="tabular text-sm text-ink-faint">/ {total}</span>
@@ -71,7 +72,7 @@ export function ScoreMeter({
   const percent = totalPoints > 0 ? Math.min(100, (score / totalPoints) * 100) : 0;
 
   return (
-    <div className="rounded-2xl border border-rule bg-surface p-5">
+    <div className={ui.panel}>
       <div className="flex items-baseline gap-2">
         <span className="tabular font-display text-3xl font-semibold text-ink">
           {Math.round(score)}

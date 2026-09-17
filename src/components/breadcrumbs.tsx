@@ -1,4 +1,5 @@
 import { ChevronRight } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { jsonLdScript, breadcrumbLd } from "@/lib/json-ld";
 
@@ -24,8 +25,15 @@ export type Crumb = {
  * Separators are decorative and flipped under RTL, where the trail reads
  * right-to-left and a right-pointing chevron would point back the way it came.
  */
-export function Breadcrumbs({ locale, trail }: { locale: string; trail: Crumb[] }) {
+export async function Breadcrumbs({
+  locale,
+  trail,
+}: {
+  locale: string;
+  trail: Crumb[];
+}) {
   if (trail.length < 2) return null;
+  const t = await getTranslations("common");
 
   return (
     <>
@@ -33,7 +41,7 @@ export function Breadcrumbs({ locale, trail }: { locale: string; trail: Crumb[] 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumbLd(locale, trail)) }}
       />
-      <nav aria-label="Breadcrumb" className="mb-4">
+      <nav aria-label={t("breadcrumb")} className="mb-4">
         <ol className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm text-ink-faint">
           {trail.map((crumb, i) => {
             const isLast = i === trail.length - 1;

@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react";
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
 import { loginAction } from "@/lib/actions/auth";
+import { cx, ui } from "@/lib/ui";
 
 export function LoginForm() {
   const tl = useTranslations("login");
@@ -18,32 +19,32 @@ export function LoginForm() {
         </div>
       ) : null}
       <div>
-        <label htmlFor="login-email" className="mb-1 block text-sm font-medium text-ink-soft">
+        <label htmlFor="login-email" className={ui.fieldLabel}>
           {tl("email")}
         </label>
-        <input suppressHydrationWarning
+        <input
           id="login-email"
           name="email"
           type="email"
           autoComplete="username"
           required
-          className="w-full rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+          className={cx("w-full", ui.fieldOnPaper)}
         />
       </div>
       <div>
-        <label htmlFor="login-password" className="mb-1 block text-sm font-medium text-ink-soft">
+        <label htmlFor="login-password" className={ui.fieldLabel}>
           {tl("password")}
         </label>
-        <input suppressHydrationWarning
+        <input
           id="login-password"
           name="password"
           type="password"
           autoComplete="current-password"
           required
-          className="w-full rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+          className={cx("w-full", ui.fieldOnPaper)}
         />
       </div>
-      <button suppressHydrationWarning
+      <button
         type="submit"
         disabled={pending}
         className="pill-press w-full rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-60"

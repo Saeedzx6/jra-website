@@ -3,6 +3,7 @@ import { Leaf, Droplet, Zap, ClipboardCheck } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 import { pageMetadata } from "@/lib/page-metadata";
+import { cx, ui } from "@/lib/ui";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -33,7 +34,7 @@ export default async function SustainabilityPage({
       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
         {t("serviceSustainability")}
       </p>
-      <h1 className="mt-2 font-display font-semibold text-5xl text-ink">
+      <h1 className={cx("mt-2", ui.pageTitle)}>
         {ts("heroTitle")}
       </h1>
       <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">{ts("heroBody")}</p>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Star } from "lucide-react";
+import { cx, ui } from "@/lib/ui";
 
 /**
  * The classification "seal" — the one deliberate motion moment in the
@@ -61,7 +62,7 @@ export function ClassificationSeal({
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="tabular font-display text-2xl font-semibold text-ink">
+          <span className={cx("tabular", ui.sectionTitle)}>
             {Math.round(score)}
           </span>
           <span className="tabular text-xs text-ink-faint">/ {totalPoints}</span>

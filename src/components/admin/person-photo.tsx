@@ -73,7 +73,6 @@ export function PersonPhotoField({
       <div className="min-w-0 flex-1">
         <form key={formKey} action={upload} className="flex flex-wrap items-center gap-2">
           <input
-            suppressHydrationWarning
             type="file"
             name="file"
             accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
@@ -81,7 +80,6 @@ export function PersonPhotoField({
             className="min-w-0 flex-1 text-xs text-ink-soft file:me-3 file:rounded-full file:border file:border-rule file:bg-surface file:px-3 file:py-1.5 file:text-xs file:text-ink hover:file:border-ink"
           />
           <button
-            suppressHydrationWarning
             type="submit"
             disabled={pending}
             className="pill-press inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-xs font-semibold text-white disabled:opacity-60"
@@ -91,7 +89,6 @@ export function PersonPhotoField({
           </button>
           {currentUrl ? (
             <button
-              suppressHydrationWarning
               type="button"
               disabled={pending}
               onClick={() => {

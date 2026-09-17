@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Check, X, Star, AlertCircle } from "lucide-react";
 import { approveAssessment, rejectAssessment } from "@/lib/actions/classification";
+import { cx, ui } from "@/lib/ui";
 
 /**
  * The decision step on a submitted assessment.
@@ -55,7 +56,7 @@ export function AssessmentReview({
   const canAward = stars != null && stars > 0;
 
   return (
-    <div className="rounded-2xl border border-rule bg-surface p-5">
+    <div className={ui.panel}>
       <h2 className="font-display text-base font-semibold text-ink">{t("heading")}</h2>
 
       {canAward ? (
@@ -85,7 +86,7 @@ export function AssessmentReview({
             onChange={(e) => setNote(e.target.value)}
             rows={3}
             required
-            className="mt-1 w-full rounded-lg border border-rule bg-paper px-3 py-2 text-sm focus:border-accent focus:outline-none"
+            className={cx("mt-1 w-full", ui.fieldCompact)}
           />
           <p className="mt-1 text-xs text-ink-faint">{t("reasonHint")}</p>
         </div>

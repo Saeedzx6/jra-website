@@ -3,6 +3,7 @@ import { SubmitButton } from "@/components/admin/form-controls";
 import { db } from "@/lib/db";
 import { createPerson, updatePerson, deletePerson } from "@/lib/actions/people";
 import { PersonPhotoField } from "@/components/admin/person-photo";
+import { cx, ui } from "@/lib/ui";
 
 /**
  * Board members and staff — the two lists on /about.
@@ -21,9 +22,6 @@ export default async function AdminPeoplePage() {
   const ta = await getTranslations("admin.common");
   const tp = await getTranslations("admin.people");
 
-  const field =
-    "w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm focus:border-accent focus:outline-none";
-
   const photoLabels = {
     upload: tp("uploadPhoto"),
     replace: tp("replacePhoto"),
@@ -36,57 +34,51 @@ export default async function AdminPeoplePage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">{tn("people")}</h1>
+      <h1 className={ui.sectionTitle}>{tn("people")}</h1>
       <p className="mt-2 text-sm text-ink-soft">{tp("intro")}</p>
 
-      <details className="mt-6 rounded-2xl border border-rule bg-surface p-5">
+      <details className={cx("mt-6", ui.panel)}>
         <summary className="cursor-pointer font-medium text-ink">{tp("newPerson")}</summary>
         <form action={createPerson} className="mt-4 grid gap-3 sm:grid-cols-2">
           <input
-            suppressHydrationWarning
             name="name"
             required
             placeholder={tp("namePlaceholder")}
-            className={field}
+            className={cx("w-full", ui.field)}
           />
-          <select suppressHydrationWarning name="kind" defaultValue="STAFF" className={field}>
+          <select name="kind" defaultValue="STAFF" className={cx("w-full", ui.field)}>
             <option value="BOARD_MEMBER">{tp("board")}</option>
             <option value="STAFF">{tp("staff")}</option>
           </select>
           <input
-            suppressHydrationWarning
             name="positionEn"
             placeholder={tp("positionEnPlaceholder")}
-            className={field}
+            className={cx("w-full", ui.field)}
           />
           <input
-            suppressHydrationWarning
             name="positionAr"
             dir="rtl"
             placeholder={tp("positionArPlaceholder")}
-            className={field}
+            className={cx("w-full", ui.field)}
           />
           <input
-            suppressHydrationWarning
             name="email"
             type="email"
             dir="ltr"
             placeholder={tp("emailPlaceholder")}
-            className={field}
+            className={cx("w-full", ui.field)}
           />
           <input
-            suppressHydrationWarning
             name="termLabel"
             placeholder={tp("termPlaceholder")}
-            className={field}
+            className={cx("w-full", ui.field)}
           />
           <input
-            suppressHydrationWarning
             name="sortOrder"
             type="number"
             defaultValue={0}
             placeholder={tp("sortOrderPlaceholder")}
-            className={field}
+            className={cx("w-full", ui.field)}
           />
           <div className="sm:col-span-2">
             <SubmitButton>{ta("create")}</SubmitButton>
@@ -107,7 +99,7 @@ export default async function AdminPeoplePage() {
               const save = updatePerson.bind(null, person.id);
               const remove = deletePerson.bind(null, person.id);
               return (
-                <div key={person.id} className="rounded-2xl border border-rule bg-surface p-5">
+                <div key={person.id} className={ui.panel}>
                   <PersonPhotoField
                     id={person.id}
                     currentUrl={person.photoUrl}
@@ -125,54 +117,47 @@ export default async function AdminPeoplePage() {
 
                     <form action={save} className="mt-3 grid gap-3 sm:grid-cols-2">
                       <input
-                        suppressHydrationWarning
                         name="name"
                         required
                         defaultValue={person.name}
-                        className={field}
+                        className={cx("w-full", ui.field)}
                       />
                       <select
-                        suppressHydrationWarning
                         name="kind"
                         defaultValue={person.kind}
-                        className={field}
+                        className={cx("w-full", ui.field)}
                       >
                         <option value="BOARD_MEMBER">{tp("board")}</option>
                         <option value="STAFF">{tp("staff")}</option>
                       </select>
                       <input
-                        suppressHydrationWarning
                         name="positionEn"
                         defaultValue={person.positionEn ?? ""}
-                        className={field}
+                        className={cx("w-full", ui.field)}
                       />
                       <input
-                        suppressHydrationWarning
                         name="positionAr"
                         dir="rtl"
                         defaultValue={person.positionAr ?? ""}
-                        className={field}
+                        className={cx("w-full", ui.field)}
                       />
                       <input
-                        suppressHydrationWarning
                         name="email"
                         type="email"
                         dir="ltr"
                         defaultValue={person.email ?? ""}
-                        className={field}
+                        className={cx("w-full", ui.field)}
                       />
                       <input
-                        suppressHydrationWarning
                         name="termLabel"
                         defaultValue={person.termLabel ?? ""}
-                        className={field}
+                        className={cx("w-full", ui.field)}
                       />
                       <input
-                        suppressHydrationWarning
                         name="sortOrder"
                         type="number"
                         defaultValue={person.sortOrder}
-                        className={field}
+                        className={cx("w-full", ui.field)}
                       />
                       <div className="sm:col-span-2">
                         <SubmitButton>{ta("save")}</SubmitButton>
@@ -189,7 +174,7 @@ export default async function AdminPeoplePage() {
               );
             })}
             {group.rows.length === 0 ? (
-              <p className="rounded-2xl border border-rule bg-surface p-5 text-sm text-ink-soft">
+              <p className={cx(ui.panel, "text-sm text-ink-soft")}>
                 {tp("emptyGroup")}
               </p>
             ) : null}

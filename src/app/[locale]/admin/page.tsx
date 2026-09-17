@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { membershipHealth } from "@/lib/membership";
 import { revenueSummary, formatMoney } from "@/lib/billing";
+import { cx, ui } from "@/lib/ui";
 
 export default async function AdminDashboard() {
   const td = await getTranslations("admin.dashboard");
@@ -40,21 +41,21 @@ export default async function AdminDashboard() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">{td("title")}</h1>
+      <h1 className={ui.sectionTitle}>{td("title")}</h1>
 
       <section className="mt-6">
         <h2 className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
           {tm("title")}
         </h2>
         {health.total === 0 ? (
-          <p className="mt-3 rounded-2xl border border-rule bg-surface p-5 text-sm text-ink-soft">
+          <p className={cx("mt-3", ui.panel, "text-sm text-ink-soft")}>
             {tm("empty")}
           </p>
         ) : (
           <>
             <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {standings.map((s) => (
-                <div key={s.label} className="rounded-2xl border border-rule bg-surface p-5">
+                <div key={s.label} className={ui.panel}>
                   <div className={`tabular font-display text-3xl font-semibold ${s.tone}`}>
                     {s.value}
                   </div>
@@ -79,7 +80,7 @@ export default async function AdminDashboard() {
           {trv("title")}
         </h2>
         {revenue.count === 0 ? (
-          <p className="mt-3 rounded-2xl border border-rule bg-surface p-5 text-sm text-ink-soft">
+          <p className={cx("mt-3", ui.panel, "text-sm text-ink-soft")}>
             {trv("empty")}
           </p>
         ) : (
@@ -90,7 +91,7 @@ export default async function AdminDashboard() {
               { label: trv("outstanding"), value: revenue.outstanding, tone: "text-ink-soft" },
               { label: trv("overdue"), value: revenue.overdue, tone: "text-danger-text" },
             ].map((r) => (
-              <div key={r.label} className="rounded-2xl border border-rule bg-surface p-5">
+              <div key={r.label} className={ui.panel}>
                 {/* Tabular figures so the columns line up rather than jittering. */}
                 <div className={`tabular font-display text-xl font-semibold ${r.tone}`}>
                   {formatMoney(r.value)}
@@ -104,7 +105,7 @@ export default async function AdminDashboard() {
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {stats.map((s) => (
-          <div key={s.label} className="rounded-2xl border border-rule bg-surface p-5">
+          <div key={s.label} className={ui.panel}>
             <div className="tabular font-display text-3xl font-semibold text-accent">
               {s.value}
             </div>

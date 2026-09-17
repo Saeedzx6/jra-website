@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { getSession } from "@/lib/rbac";
 import { getStandardWithCriteria } from "@/lib/classification";
 import { ClassificationChecklist } from "@/components/classification/checklist";
+import { cx, ui } from "@/lib/ui";
 
 export default async function AssessmentSessionPage({
   params,
@@ -54,7 +55,7 @@ export default async function AssessmentSessionPage({
       <p className="text-xs ui-caps font-semibold text-accent">
         {assessment.restaurant.name}
       </p>
-      <h1 className="mt-1 font-display text-2xl font-semibold text-ink">
+      <h1 className={cx("mt-1", ui.sectionTitle)}>
         {locale === "ar" && standard.titleAr ? standard.titleAr : standard.titleEn}
       </h1>
       <p className="mt-2 max-w-2xl text-sm text-ink-soft">

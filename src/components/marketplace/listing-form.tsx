@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import { useTranslations } from "next-intl";
 import { Check, Loader2 } from "lucide-react";
 import { createMarketplaceListing } from "@/lib/actions/marketplace";
+import { cx, ui } from "@/lib/ui";
 
 const CATEGORY_KEYS = [
   "RESTAURANT_FOR_SALE",
@@ -28,10 +29,10 @@ export function ListingForm() {
 
   return (
     <form action={formAction} className="space-y-4">
-      <select suppressHydrationWarning
+      <select
         name="category"
         required
-        className="w-full rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+        className={cx("w-full", ui.fieldOnPaper)}
       >
         {CATEGORY_KEYS.map((key) => (
           <option key={key} value={key}>
@@ -39,39 +40,39 @@ export function ListingForm() {
           </option>
         ))}
       </select>
-      <input suppressHydrationWarning
+      <input
         name="title"
         required
         placeholder={tm("titlePlaceholder")}
-        className="w-full rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+        className={cx("w-full", ui.fieldOnPaper)}
       />
-      <textarea suppressHydrationWarning
+      <textarea
         name="descriptionHtml"
         required
         rows={5}
         placeholder={tm("descriptionPlaceholder")}
-        className="w-full rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+        className={cx("w-full", ui.fieldOnPaper)}
       />
       <div className="grid gap-4 sm:grid-cols-3">
-        <input suppressHydrationWarning
+        <input
           name="price"
           type="number"
           placeholder={tm("pricePlaceholder")}
-          className="rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+          className={ui.fieldOnPaper}
         />
-        <input suppressHydrationWarning
+        <input
           name="contactPhone"
           placeholder={tm("contactPhonePlaceholder")}
-          className="rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+          className={ui.fieldOnPaper}
         />
-        <input suppressHydrationWarning
+        <input
           name="contactEmail"
           type="email"
           placeholder={tm("contactEmailPlaceholder")}
-          className="rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+          className={ui.fieldOnPaper}
         />
       </div>
-      <button suppressHydrationWarning
+      <button
         disabled={pending}
         className="pill-press rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-60"
       >

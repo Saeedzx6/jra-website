@@ -7,6 +7,7 @@ import { MapPin, Phone, Mail, Globe, Building2 } from "lucide-react";
 import { db } from "@/lib/db";
 import { buildMetadata, toDescription } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { ui } from "@/lib/ui";
 
 // Associate members are edited from the back office, so this is cached and
 // revalidated hourly rather than rendered per visit.
@@ -143,7 +144,7 @@ export default async function SupplierDetailPage({
 
           {supplier.categories.length > 0 ? (
             <section className="mt-10">
-              <h2 className="font-display text-2xl font-semibold text-ink">{ts("categories")}</h2>
+              <h2 className={ui.sectionTitle}>{ts("categories")}</h2>
               <div className="mt-4 flex flex-wrap gap-2">
                 {supplier.categories.map((c) => (
                   <span
@@ -159,7 +160,7 @@ export default async function SupplierDetailPage({
 
           {rest.length > 0 ? (
             <section className="mt-10">
-              <h2 className="font-display text-2xl font-semibold text-ink">{ts("gallery")}</h2>
+              <h2 className={ui.sectionTitle}>{ts("gallery")}</h2>
               <div className="stagger mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {rest.map((img, i) => (
                   <div

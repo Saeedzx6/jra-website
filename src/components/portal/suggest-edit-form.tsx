@@ -1,4 +1,5 @@
 "use client";
+import { cx, ui } from "@/lib/ui";
 
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
@@ -29,13 +30,13 @@ export function SuggestEditForm({
 
   return (
     <div className="mt-3 space-y-2">
-      <textarea suppressHydrationWarning
+      <textarea
         value={value}
         onChange={(e) => setValue(e.target.value)}
         rows={2}
-        className="w-full rounded-lg border border-rule bg-paper px-3 py-2 text-sm focus:border-accent focus:outline-none"
+        className={cx("w-full", ui.fieldCompact)}
       />
-      <button suppressHydrationWarning
+      <button
         disabled={pending}
         onClick={() =>
           startTransition(async () => {
