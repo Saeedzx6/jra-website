@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { db } from "@/lib/db";
 import { buildMetadata, toDescription } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { cx, ui } from "@/lib/ui";
 
 // Cached and revalidated every 600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -70,7 +71,7 @@ export default async function ListingDetailPage({
       <span className="inline-block rounded-full bg-brass-soft px-2.5 py-0.5 text-xs font-medium text-brass-text">
         {tCategory(listing.category)}
       </span>
-      <h1 className="mt-3 font-display font-semibold text-5xl text-ink">{listing.title}</h1>
+      <h1 className={cx("mt-3", ui.pageTitle)}>{listing.title}</h1>
       {listing.price ? (
         <p className="tabular mt-1 text-lg font-semibold text-accent">
           {listing.price} {listing.priceCurrency}

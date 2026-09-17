@@ -1,4 +1,5 @@
 "use client";
+import { ui } from "@/lib/ui";
 
 import { useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
@@ -82,7 +83,7 @@ export function PublicClassificationChecklist({
       />
 
       {touched ? (
-        <div className="rounded-2xl border border-rule bg-surface p-5">
+        <div className={ui.panel}>
           <p className="text-sm text-ink-soft">
             {gradingMode === "CERTIFICATION"
               ? certification.qualified

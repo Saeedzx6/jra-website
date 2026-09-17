@@ -51,7 +51,6 @@ export function SubmitButton({
 
   return (
     <button
-      suppressHydrationWarning
       type="submit"
       disabled={disabled || pending}
       aria-busy={pending}

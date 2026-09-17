@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { CoverImageField } from "@/components/admin/cover-image-field";
 import { createCourseWithSession } from "@/lib/actions/training";
+import { cx, ui } from "@/lib/ui";
 
 export default async function AdminTrainingPage() {
   const courses = await db.course.findMany({
@@ -22,32 +23,32 @@ export default async function AdminTrainingPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">{tn("trainingCourses")}</h1>
+      <h1 className={ui.sectionTitle}>{tn("trainingCourses")}</h1>
 
-      <details className="mt-6 rounded-2xl border border-rule bg-surface p-5">
+      <details className={cx("mt-6", ui.panel)}>
         <summary className="cursor-pointer font-medium text-ink">{tt("newCourse")}</summary>
         <form action={createCourseWithSession} className="mt-4 space-y-3">
           <div className="grid gap-3 sm:grid-cols-2">
-            <input suppressHydrationWarning name="title" required placeholder={tt("courseTitlePlaceholder")} className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
-            <select suppressHydrationWarning name="track" required className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm">
+            <input name="title" required placeholder={tt("courseTitlePlaceholder")} className={ui.field} />
+            <select name="track" required className={ui.field}>
               <option value="CHEFS">{tTrack("CHEFS")}</option>
               <option value="SERVICE">{tTrack("SERVICE")}</option>
               <option value="BARISTA">{tTrack("BARISTA")}</option>
               <option value="MANAGEMENT">{tTrack("MANAGEMENT")}</option>
               <option value="OTHER">{tTrack("OTHER")}</option>
             </select>
-            <input suppressHydrationWarning name="startDate" type="date" required className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
-            <input suppressHydrationWarning name="locationText" placeholder={tt("locationPlaceholder")} className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
-            <input suppressHydrationWarning name="capacity" type="number" placeholder={tt("capacityPlaceholder")} className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
+            <input name="startDate" type="date" required className={ui.field} />
+            <input name="locationText" placeholder={tt("locationPlaceholder")} className={ui.field} />
+            <input name="capacity" type="number" placeholder={tt("capacityPlaceholder")} className={ui.field} />
           </div>
-          <textarea suppressHydrationWarning name="description" rows={3} placeholder={tt("descriptionPlaceholder")} className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
+          <textarea name="description" rows={3} placeholder={tt("descriptionPlaceholder")} className={cx("w-full", ui.field)} />
           <SubmitButton>{ta("create")}</SubmitButton>
         </form>
       </details>
 
       <div className="mt-6 space-y-4">
         {courses.map((c) => (
-          <div key={c.id} className="rounded-2xl border border-rule bg-surface p-5">
+          <div key={c.id} className={ui.panel}>
             <p className="font-medium text-ink">
               {c.translations[0]?.title ?? c.slug} <span className="text-xs text-ink-faint">({c.track})</span>
             </p>

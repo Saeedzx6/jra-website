@@ -19,6 +19,7 @@ import {
 import { IDLE } from "@/lib/action-state";
 import { SubmitButton, FormStatus } from "@/components/admin/form-controls";
 import { prepareImage, UPLOAD_MAX_BYTES, tooLargeMessage } from "@/lib/prepare-image";
+import { cx, ui } from "@/lib/ui";
 
 export type SlideRow = {
   id: string;
@@ -28,8 +29,6 @@ export type SlideRow = {
   sortOrder: number;
 };
 
-const FIELD =
-  "w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm focus:border-accent focus:outline-none";
 
 /**
  * Carousel and video management for the About page.
@@ -70,7 +69,7 @@ export function AboutManager({
 
   return (
     <div className="space-y-8">
-      <section className="rounded-2xl border border-rule bg-surface p-5">
+      <section className={ui.panel}>
         <h2 className="flex items-center gap-2 font-medium text-ink">
           <Film className="h-4 w-4 text-accent" aria-hidden="true" />
           {t("videoHeading")}
@@ -78,13 +77,12 @@ export function AboutManager({
         <p className="mt-1 text-xs text-ink-faint">{t("videoHint")}</p>
         <form action={videoAction} className="mt-4 flex flex-wrap items-start gap-3">
           <input
-            suppressHydrationWarning
             name="aboutVideoUrl"
             type="url"
             dir="ltr"
             defaultValue={videoUrl ?? ""}
             placeholder="https://www.youtube.com/watch?v=…"
-            className={`${FIELD} min-w-0 flex-1`}
+            className={cx(ui.field, "min-w-0 flex-1")}
           />
           <SubmitButton icon={<Save className="h-3.5 w-3.5" aria-hidden="true" />}>
             {t("saveVideo")}
@@ -95,7 +93,7 @@ export function AboutManager({
         </form>
       </section>
 
-      <section className="rounded-2xl border border-rule bg-surface p-5">
+      <section className={ui.panel}>
         <h2 className="font-medium text-ink">{t("slidesHeading")}</h2>
         <p className="mt-1 text-xs text-ink-faint">{t("slidesHint")}</p>
 
@@ -106,14 +104,13 @@ export function AboutManager({
           <label className="flex flex-col gap-1.5">
             <span className="text-xs font-medium text-ink">{t("secondsLabel")}</span>
             <input
-              suppressHydrationWarning
               name="aboutSlideSeconds"
               type="number"
               min={SLIDE_SECONDS_MIN}
               max={SLIDE_SECONDS_MAX}
               step={1}
               defaultValue={slideSeconds ?? SLIDE_SECONDS_DEFAULT}
-              className={`${FIELD} w-28`}
+              className={cx(ui.field, "w-28")}
             />
           </label>
           <SubmitButton icon={<Save className="h-3.5 w-3.5" aria-hidden="true" />}>
@@ -129,7 +126,6 @@ export function AboutManager({
 
         <form action={addAction} className="mt-4 grid gap-3 sm:grid-cols-2">
           <input
-            suppressHydrationWarning
             type="file"
             name="file"
             accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
@@ -137,17 +133,15 @@ export function AboutManager({
             className="text-xs text-ink-soft file:me-3 file:rounded-full file:border file:border-rule file:bg-surface file:px-3 file:py-1.5 file:text-xs file:text-ink hover:file:border-ink sm:col-span-2"
           />
           <input
-            suppressHydrationWarning
             name="captionEn"
             placeholder={t("captionEnPlaceholder")}
-            className={FIELD}
+            className={cx("w-full", ui.field)}
           />
           <input
-            suppressHydrationWarning
             name="captionAr"
             dir="rtl"
             placeholder={t("captionArPlaceholder")}
-            className={FIELD}
+            className={cx("w-full", ui.field)}
           />
           <div className="sm:col-span-2">
             <SubmitButton icon={<Plus className="h-3.5 w-3.5" aria-hidden="true" />}>
@@ -190,28 +184,25 @@ function SlideRowEditor({ slide }: { slide: SlideRow }) {
 
         <form action={action} className="grid min-w-0 flex-1 gap-3 sm:grid-cols-2">
           <input
-            suppressHydrationWarning
             name="captionEn"
             defaultValue={slide.captionEn ?? ""}
             placeholder={t("captionEnPlaceholder")}
-            className={FIELD}
+            className={cx("w-full", ui.field)}
           />
           <input
-            suppressHydrationWarning
             name="captionAr"
             dir="rtl"
             defaultValue={slide.captionAr ?? ""}
             placeholder={t("captionArPlaceholder")}
-            className={FIELD}
+            className={cx("w-full", ui.field)}
           />
           <label className="flex flex-col gap-1.5 sm:col-span-2">
             <span className="text-xs font-medium text-ink">{t("orderLabel")}</span>
             <input
-              suppressHydrationWarning
               name="sortOrder"
               type="number"
               defaultValue={slide.sortOrder}
-              className={`${FIELD} w-28`}
+              className={cx(ui.field, "w-28")}
             />
           </label>
           <div className="sm:col-span-2">
@@ -237,7 +228,6 @@ function SlideRowEditor({ slide }: { slide: SlideRow }) {
               {tf("remove")}
             </SubmitButton>
             <button
-              suppressHydrationWarning
               type="button"
               onClick={() => setConfirming(false)}
               className="rounded-full border border-rule px-4 py-1.5 text-xs font-medium text-ink-soft"
@@ -247,7 +237,6 @@ function SlideRowEditor({ slide }: { slide: SlideRow }) {
           </form>
         ) : (
           <button
-            suppressHydrationWarning
             type="button"
             onClick={() => setConfirming(true)}
             className="inline-flex items-center gap-1.5 rounded-full border border-rule px-4 py-1.5 text-xs font-medium text-ink-soft hover:border-danger hover:text-danger-text"

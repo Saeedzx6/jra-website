@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { ImageIcon, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
+import { ui } from "@/lib/ui";
 
 /**
  * Admin site settings.
@@ -37,7 +38,7 @@ export default async function AdminSettingsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">{ts("title")}</h1>
+      <h1 className={ui.sectionTitle}>{ts("title")}</h1>
 
       <section className="mt-6 max-w-3xl rounded-2xl border border-rule bg-surface p-6">
         <h2 className="font-display text-lg font-semibold text-ink">{ts("heroSourceTitle")}</h2>

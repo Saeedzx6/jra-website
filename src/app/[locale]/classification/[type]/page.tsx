@@ -5,6 +5,7 @@ import { getStandardWithCriteria } from "@/lib/classification";
 import { PublicClassificationChecklist } from "@/components/classification/public-checklist";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { cx, ui } from "@/lib/ui";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -99,7 +100,7 @@ export default async function PublicAssessmentPage({
       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
         {tc("selfAssessmentKicker")}
       </p>
-      <h1 className="mt-1 font-display font-semibold text-5xl text-ink">{standardTitle}</h1>
+      <h1 className={cx("mt-1", ui.pageTitle)}>{standardTitle}</h1>
       <p className="mt-2 max-w-2xl text-sm text-ink-soft">{tc("publicIntro")}</p>
 
       <div className="mt-8">

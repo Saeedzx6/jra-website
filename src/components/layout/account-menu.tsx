@@ -118,7 +118,6 @@ export function AccountMenu({
           {dashboard === "/admin" ? t("dashboard") : t("portal")}
         </Link>
         <button
-          suppressHydrationWarning
           type="button"
           onClick={() => signOut({ callbackUrl: "/" })}
           className="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-sm font-medium text-ink-soft hover:bg-surface-2"
@@ -133,7 +132,6 @@ export function AccountMenu({
   return (
     <div ref={wrapRef} className="relative">
       <button
-        suppressHydrationWarning
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
@@ -196,7 +194,6 @@ export function AccountMenu({
           ) : null}
 
           <button
-            suppressHydrationWarning
             type="button"
             role="menuitem"
             onClick={() => {

@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { getSession } from "@/lib/rbac";
+import { ui } from "@/lib/ui";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -84,7 +85,7 @@ export default async function MagazineIssuePage({
           { name: `${issue.month}/${issue.year}`, path: `/magazine/${id}` },
         ]}
       />
-      <h1 className="font-display font-semibold text-5xl text-ink">
+      <h1 className={ui.pageTitle}>
         {tm("issue", { number: issue.issueNumber })} — {issue.month}/{issue.year}
       </h1>
       {issue.pdfUrl ? (

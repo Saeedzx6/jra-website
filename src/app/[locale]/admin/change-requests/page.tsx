@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { ChangeRequestRow } from "@/components/admin/change-request-row";
+import { ui } from "@/lib/ui";
 
 export default async function AdminChangeRequestsPage() {
   const requests = await db.changeRequest.findMany({
@@ -13,7 +14,7 @@ export default async function AdminChangeRequestsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">{tn("changeRequests")}</h1>
+      <h1 className={ui.sectionTitle}>{tn("changeRequests")}</h1>
       <p className="mt-2 max-w-xl text-sm text-ink-soft">{tcr("description")}</p>
       <div className="mt-6 space-y-3">
         {requests.map((r) => (

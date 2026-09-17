@@ -8,6 +8,7 @@ import { getSession } from "@/lib/rbac";
 import { startAssessmentAndRedirect } from "@/lib/actions/classification";
 import { nextAction } from "@/lib/classification-lifecycle";
 import { ReRatingRequestForm } from "@/components/portal/re-rating-request-form";
+import { ui } from "@/lib/ui";
 
 /**
  * An establishment rates itself once, when it joins. After JRA has ruled on
@@ -33,7 +34,7 @@ export default async function PortalClassificationPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">{tc("portalTitle")}</h1>
+      <h1 className={ui.sectionTitle}>{tc("portalTitle")}</h1>
       <p className="mt-2 max-w-xl text-ink-soft">{tc("portalIntro")}</p>
 
       <div className="mt-8 space-y-3">
@@ -52,7 +53,7 @@ export default async function PortalClassificationPage() {
           const waiting = action === "waiting";
 
           return (
-            <div key={m.id} className="rounded-2xl border border-rule bg-surface p-5">
+            <div key={m.id} className={ui.panel}>
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div className="min-w-0">
                   <h2 className="font-display text-lg font-semibold text-ink">{restaurant.name}</h2>

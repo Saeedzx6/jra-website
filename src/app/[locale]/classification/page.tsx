@@ -3,6 +3,7 @@ import { FileText, ClipboardCheck } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { getAllStandards } from "@/lib/classification";
 import { pageMetadata } from "@/lib/page-metadata";
+import { cx, ui } from "@/lib/ui";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -38,7 +39,7 @@ export default async function ClassificationHubPage({
       <p className="text-xs ui-caps font-semibold text-accent">
         {t("classification")}
       </p>
-      <h1 className="mt-2 font-display font-semibold text-5xl text-ink">
+      <h1 className={cx("mt-2", ui.pageTitle)}>
         {tc("heroTitle")}
       </h1>
       <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">{tc("heroBody")}</p>

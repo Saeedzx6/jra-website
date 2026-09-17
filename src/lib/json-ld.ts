@@ -149,7 +149,7 @@ export function organizationLd(locale: string) {
     url: localeUrl(locale, "/"),
     logo: `${SITE_URL}${ORG.brand.logo}`,
     image: `${SITE_URL}${ORG.brand.ogImage}`,
-    foundingDate: ORG.foundingDate,
+    foundingDate: String(ORG.foundingYear),
     telephone: ORG.phone.schema,
     email: ORG.email,
     sameAs: ORG.social.map((s) => s.url),

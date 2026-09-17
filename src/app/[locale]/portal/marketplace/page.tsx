@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/rbac";
 import { ListingForm } from "@/components/marketplace/listing-form";
+import { ui } from "@/lib/ui";
 
 export default async function PortalMarketplacePage() {
   const session = await getSession();
@@ -15,7 +16,7 @@ export default async function PortalMarketplacePage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">{tm("myListings")}</h1>
+      <h1 className={ui.sectionTitle}>{tm("myListings")}</h1>
 
       <div className="mt-6 rounded-2xl border border-rule bg-surface p-6">
         <h2 className="font-display text-lg font-semibold text-ink">{tm("postNewListing")}</h2>

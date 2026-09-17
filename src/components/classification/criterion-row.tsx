@@ -51,7 +51,6 @@ export function CriterionRow({
   return (
     <div className="border-t border-rule first:border-t-0">
       <button
-        suppressHydrationWarning
         type="button"
         aria-pressed={met}
         disabled={disabled}
@@ -94,7 +93,6 @@ export function CriterionRow({
       {hasDetail && detail !== label ? (
         <div className="pb-3">
           <button
-            suppressHydrationWarning
             type="button"
             onClick={() => setShowDetail((v) => !v)}
             aria-expanded={showDetail}

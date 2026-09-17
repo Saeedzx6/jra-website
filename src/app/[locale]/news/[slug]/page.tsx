@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { buildMetadata, toDescription } from "@/lib/seo";
 import { jsonLdScript, newsArticleLd } from "@/lib/json-ld";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { ui } from "@/lib/ui";
 
 export const revalidate = 3600;
 
@@ -30,7 +31,10 @@ export async function generateMetadata({
   const tr = article?.translations[0];
 
   if (!article || article.status !== "PUBLISHED" || !tr) {
-    return { title: "Not found", robots: { index: false, follow: false } };
+    return {
+      title: (await getTranslations({ locale, namespace: "meta" }))("notFoundTitle"),
+      robots: { index: false, follow: false },
+    };
   }
 
   return buildMetadata({
@@ -112,7 +116,7 @@ export default async function NewsDetailPage({
           one of the two goes stale. */}
       {article.gallery.length > 0 ? (
         <section className="mt-12">
-          <h2 className="font-display text-2xl font-semibold text-ink">{tn("gallery")}</h2>
+          <h2 className={ui.sectionTitle}>{tn("gallery")}</h2>
           <div className="stagger mt-4 grid gap-4 sm:grid-cols-2">
             {article.gallery.map((item) => (
               <figure key={item.id}>

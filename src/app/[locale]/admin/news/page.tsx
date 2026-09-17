@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { CoverImageField } from "@/components/admin/cover-image-field";
 import { NewsGalleryManager } from "@/components/admin/news-gallery";
 import { NewsCreateForm, NewsEditForm, type NewsLabels } from "@/components/admin/news-form";
+import { cx, ui } from "@/lib/ui";
 
 export default async function AdminNewsPage() {
   const articles = await db.newsArticle.findMany({
@@ -35,9 +36,9 @@ export default async function AdminNewsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">{tn("news")}</h1>
+      <h1 className={ui.sectionTitle}>{tn("news")}</h1>
 
-      <details className="mt-6 rounded-2xl border border-rule bg-surface p-5">
+      <details className={cx("mt-6", ui.panel)}>
         <summary className="cursor-pointer font-medium text-ink">{tnews("newArticle")}</summary>
         <NewsCreateForm labels={labels} />
       </details>
@@ -49,7 +50,7 @@ export default async function AdminNewsPage() {
         {articles.map((a) => {
           const tr = a.translations[0];
           return (
-            <div key={a.id} className="rounded-2xl border border-rule bg-surface p-5">
+            <div key={a.id} className={ui.panel}>
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <span className="text-sm font-medium text-ink">{tr?.title ?? a.slug}</span>
                 <span
@@ -99,7 +100,7 @@ export default async function AdminNewsPage() {
           );
         })}
         {articles.length === 0 ? (
-          <p className="rounded-2xl border border-rule bg-surface p-5 text-sm text-ink-soft">
+          <p className={cx(ui.panel, "text-sm text-ink-soft")}>
             {tnews("empty")}
           </p>
         ) : null}

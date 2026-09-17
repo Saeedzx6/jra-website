@@ -29,6 +29,7 @@
     "dashboard": "Admin dashboard"
   },
   "common": {
+    "associationName": "Jordan Restaurant Association",
     "learnMore": "Learn more",
     "viewAll": "View all",
     "search": "Search",
@@ -45,14 +46,13 @@
     "results": "results",
     "noRestaurantsLinked": "No restaurants are linked to your account yet.",
     "pagination": "Pagination",
-    "skipToContent": "Skip to main content",
-    "visitWebsite": "Visit website",
-    "callRestaurant": "Call",
-    "messageOnWhatsapp": "Message on WhatsApp",
     "breadcrumb": "Breadcrumb",
     "primaryNav": "Primary",
     "toggleMenu": "Toggle menu",
-    "associationName": "Jordan Restaurant Association"
+    "skipToContent": "Skip to main content",
+    "visitWebsite": "Visit website",
+    "callRestaurant": "Call",
+    "messageOnWhatsapp": "Message on WhatsApp"
   },
   "home": {
     "heroKicker": "Jordan Restaurant Association",
@@ -68,6 +68,7 @@
     "serviceSustainability": "Sustainability",
     "serviceSustainabilityDesc": "Energy, water, and food-waste tools for a greener sector.",
     "statMembers": "Classified members",
+    "statRestaurants": "Restaurants listed",
     "statGovernorates": "Governorates represented",
     "statFounded": "Founded",
     "newsTitle": "Latest news",
@@ -104,8 +105,7 @@
       "intro": "The association's office is in Jabal Amman, by the 2nd Circle. Members and the public are welcome during working hours.",
       "directions": "Get directions",
       "mapTitle": "Map showing the Jordan Restaurant Association office in Jabal Amman"
-    },
-    "statRestaurants": "Restaurants listed"
+    }
   },
   "footer": {
     "tagline": "One network. One voice. Endless opportunities.",
@@ -650,7 +650,8 @@
       "upload": "Upload",
       "replace": "Replace",
       "remove": "Remove",
-      "addPhoto": "Add photo"
+      "addPhoto": "Add photo",
+      "uploadDidNotComplete": "The upload did not complete. Please try again."
     },
     "about": {
       "intro": "The photographs and video shown on the public About page.",
@@ -727,8 +728,12 @@
   "meta": {
     "siteTitle": "Jordan Restaurant Association",
     "siteDescription": "The official platform of the Jordan Restaurant Association — a directory of classified restaurants across Jordan, classification standards, membership, and sector resources.",
+    "notFoundTitle": "Not found",
     "directoryTitle": "Restaurant Directory",
     "directoryDescription": "Browse restaurants, coffee shops and entertainment venues across Jordan, classified by the Jordan Restaurant Association. Filter by governorate, cuisine and star rating.",
+    "restaurantSummary": "{cuisine} — classified by the Jordan Restaurant Association.",
+    "restaurantSummaryWithPlace": "{cuisine} in {place} — classified by the Jordan Restaurant Association.",
+    "restaurantSummaryPlaceOnly": "A restaurant in {place} — classified by the Jordan Restaurant Association.",
     "newsTitle": "News & Press",
     "newsDescription": "Announcements, press releases and sector news from the Jordan Restaurant Association.",
     "aboutTitle": "About JRA",

@@ -31,7 +31,7 @@ export function DeleteRestaurantButton({
   }
 
   return (
-    <button suppressHydrationWarning
+    <button
       type="button"
       onClick={handleClick}
       disabled={pending}

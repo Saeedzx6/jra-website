@@ -1,4 +1,5 @@
 "use client";
+import { cx, ui } from "@/lib/ui";
 
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
@@ -40,38 +41,33 @@ export function SubmitAssessmentForm({ payload }: { payload: AssessmentPayload }
         {tc("submitResultsHeading")}
       </p>
       <input
-        suppressHydrationWarning
         name="businessName"
         required
         placeholder={tc("restaurantNamePlaceholder")}
-        className="w-full rounded-lg border border-rule bg-paper px-3 py-2 text-sm focus:border-accent focus:outline-none"
+        className={cx("w-full", ui.fieldCompact)}
       />
       <input
-        suppressHydrationWarning
         name="contactName"
         required
         placeholder={tc("yourNamePlaceholder")}
-        className="w-full rounded-lg border border-rule bg-paper px-3 py-2 text-sm focus:border-accent focus:outline-none"
+        className={cx("w-full", ui.fieldCompact)}
       />
       <div className="grid grid-cols-2 gap-2">
         <input
-          suppressHydrationWarning
           name="email"
           type="email"
           required
           placeholder={tc("emailPlaceholder")}
-          className="rounded-lg border border-rule bg-paper px-3 py-2 text-sm focus:border-accent focus:outline-none"
+          className={ui.fieldCompact}
         />
         <input
-          suppressHydrationWarning
           name="phone"
           required
           placeholder={tc("phonePlaceholder")}
-          className="rounded-lg border border-rule bg-paper px-3 py-2 text-sm focus:border-accent focus:outline-none"
+          className={ui.fieldCompact}
         />
       </div>
       <button
-        suppressHydrationWarning
         disabled={pending}
         className="pill-press flex w-full items-center justify-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
       >

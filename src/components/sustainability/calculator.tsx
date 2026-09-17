@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Leaf } from "lucide-react";
 import { submitSustainabilityAssessment } from "@/lib/actions/sustainability";
+import { cx, ui } from "@/lib/ui";
 
 type Result = { energyScore: number; waterScore: number; wasteScore: number; overall: number };
 
@@ -59,54 +60,54 @@ export function SustainabilityCalculator({ restaurantId }: { restaurantId: strin
     <form action={handleSubmit} className="space-y-4 rounded-2xl border border-rule bg-surface p-6">
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
-          <span className="mb-1 block text-sm font-medium text-ink-soft">{ts("seats")}</span>
-          <input suppressHydrationWarning
+          <span className={ui.fieldLabel}>{ts("seats")}</span>
+          <input
             name="seats"
             type="number"
             required
             min={1}
             defaultValue={40}
-            className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+            className={cx("w-full", ui.field)}
           />
         </label>
         <label className="block">
-          <span className="mb-1 block text-sm font-medium text-ink-soft">
+          <span className={ui.fieldLabel}>
             {ts("monthlyElectricity")}
           </span>
-          <input suppressHydrationWarning
+          <input
             name="energyKwhMonthly"
             type="number"
             required
             min={0}
-            className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+            className={cx("w-full", ui.field)}
           />
         </label>
         <label className="block">
-          <span className="mb-1 block text-sm font-medium text-ink-soft">
+          <span className={ui.fieldLabel}>
             {ts("monthlyWater")}
           </span>
-          <input suppressHydrationWarning
+          <input
             name="waterM3Monthly"
             type="number"
             required
             min={0}
-            className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+            className={cx("w-full", ui.field)}
           />
         </label>
         <label className="block">
-          <span className="mb-1 block text-sm font-medium text-ink-soft">
+          <span className={ui.fieldLabel}>
             {ts("weeklyFoodWaste")}
           </span>
-          <input suppressHydrationWarning
+          <input
             name="foodWasteKgWeekly"
             type="number"
             required
             min={0}
-            className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+            className={cx("w-full", ui.field)}
           />
         </label>
       </div>
-      <button suppressHydrationWarning
+      <button
         disabled={pending}
         className="pill-press rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-60"
       >

@@ -1,4 +1,5 @@
 "use client";
+import { cx, ui } from "@/lib/ui";
 
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -84,7 +85,6 @@ export function NewsGalleryManager({
               </figcaption>
             ) : null}
             <button
-              suppressHydrationWarning
               type="button"
               disabled={pending}
               onClick={() => startTransition(() => deleteNewsGalleryImage(item.id))}
@@ -106,7 +106,6 @@ export function NewsGalleryManager({
 
       <form key={formKey} action={upload} className="mt-3 flex flex-wrap items-center gap-2">
         <input
-          suppressHydrationWarning
           type="file"
           name="file"
           accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
@@ -114,14 +113,12 @@ export function NewsGalleryManager({
           className="min-w-0 flex-1 text-xs text-ink-soft file:me-3 file:rounded-full file:border file:border-rule file:bg-surface file:px-3 file:py-1.5 file:text-xs file:text-ink hover:file:border-ink"
         />
         <input
-          suppressHydrationWarning
           type="text"
           name="caption"
           placeholder={labels.caption}
-          className="min-w-0 flex-1 rounded-full border border-rule bg-surface px-4 py-1.5 text-xs focus:border-accent focus:outline-none"
+          className={cx("min-w-0 flex-1 py-1.5 text-xs", ui.fieldPillOnPaper)}
         />
         <button
-          suppressHydrationWarning
           type="submit"
           disabled={pending}
           className="pill-press inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-xs font-semibold text-white disabled:opacity-60"

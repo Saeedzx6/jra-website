@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { MembershipApplicationRow } from "@/components/admin/membership-row";
+import { ui } from "@/lib/ui";
 
 export default async function AdminMembershipPage() {
   const applications = await db.membershipApplication.findMany({
@@ -12,7 +13,7 @@ export default async function AdminMembershipPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">
+      <h1 className={ui.sectionTitle}>
         {tn("membershipApplications")}
       </h1>
       <div className="mt-6 space-y-3">

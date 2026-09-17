@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { AlertTriangle } from "lucide-react";
+import { cx, ui } from "@/lib/ui";
 
 /**
  * Error boundary for the locale segment. Must be a client component — Next
@@ -33,7 +34,7 @@ export default function LocaleError({
       <div className="flex h-14 w-14 items-center justify-center rounded-full bg-brass-soft">
         <AlertTriangle className="h-6 w-6 text-brass-text" aria-hidden="true" />
       </div>
-      <h1 className="mt-6 font-display font-semibold text-5xl text-ink">{t("errorTitle")}</h1>
+      <h1 className={cx("mt-6", ui.pageTitle)}>{t("errorTitle")}</h1>
       <p className="mt-3 leading-relaxed text-ink-soft">{t("errorBody")}</p>
 
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">

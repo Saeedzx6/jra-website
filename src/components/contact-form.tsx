@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import { useTranslations } from "next-intl";
 import { Check, Loader2 } from "lucide-react";
 import { submitContactInquiry } from "@/lib/actions/contact";
+import { cx, ui } from "@/lib/ui";
 
 export function ContactForm() {
   const t = useTranslations("common");
@@ -22,39 +23,39 @@ export function ContactForm() {
   return (
     <form action={formAction} className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-2">
-        <input suppressHydrationWarning
+        <input
           name="name"
           required
           placeholder={tf("fullNamePlaceholder")}
-          className="rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+          className={ui.fieldOnPaper}
         />
-        <input suppressHydrationWarning
+        <input
           name="email"
           type="email"
           required
           placeholder={tf("emailPlaceholder")}
-          className="rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+          className={ui.fieldOnPaper}
         />
       </div>
-      <input suppressHydrationWarning
+      <input
         name="phone"
         placeholder={tf("phoneOptionalPlaceholder")}
-        className="w-full rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+        className={cx("w-full", ui.fieldOnPaper)}
       />
-      <input suppressHydrationWarning
+      <input
         name="subject"
         required
         placeholder={tf("subjectPlaceholder")}
-        className="w-full rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+        className={cx("w-full", ui.fieldOnPaper)}
       />
-      <textarea suppressHydrationWarning
+      <textarea
         name="message"
         required
         rows={5}
         placeholder={tf("messagePlaceholder")}
-        className="w-full rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+        className={cx("w-full", ui.fieldOnPaper)}
       />
-      <button suppressHydrationWarning
+      <button
         type="submit"
         disabled={pending}
         className="pill-press rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-60"

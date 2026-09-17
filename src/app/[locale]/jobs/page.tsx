@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ExternalLink } from "lucide-react";
 import { pageMetadata } from "@/lib/page-metadata";
+import { ui } from "@/lib/ui";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -19,7 +20,7 @@ export default async function JobsPage({
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-20 text-center sm:px-6">
-      <h1 className="font-display font-semibold text-5xl text-ink">{t("title")}</h1>
+      <h1 className={ui.pageTitle}>{t("title")}</h1>
       <p className="mt-4 leading-relaxed text-ink-soft">{t("description")}</p>
       <a
         href="https://siyahajobs.jo"

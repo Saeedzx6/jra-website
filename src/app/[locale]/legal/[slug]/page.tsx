@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { db } from "@/lib/db";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { cx, ui } from "@/lib/ui";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -74,7 +75,7 @@ export default async function LegalDocumentPage({
       <span className="text-xs font-semibold uppercase tracking-wide text-brass-text">
         {tType(doc.type)} {doc.year ? `· ${doc.year}` : ""}
       </span>
-      <h1 className="mt-1 font-display font-semibold text-5xl text-ink">
+      <h1 className={cx("mt-1", ui.pageTitle)}>
         {doc.topic ?? doc.slug}
       </h1>
 

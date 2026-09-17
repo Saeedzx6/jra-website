@@ -3,6 +3,7 @@ import { SubmitButton } from "@/components/admin/form-controls";
 import { db } from "@/lib/db";
 import { CoverImageField } from "@/components/admin/cover-image-field";
 import { createMagazineArticle, createMagazineIssue } from "@/lib/actions/magazine";
+import { cx, ui } from "@/lib/ui";
 
 export default async function AdminMagazinePage() {
   const issues = await db.magazineIssue.findMany({
@@ -20,31 +21,28 @@ export default async function AdminMagazinePage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">{tn("magazineArticles")}</h1>
+      <h1 className={ui.sectionTitle}>{tn("magazineArticles")}</h1>
 
-      <details className="mt-6 rounded-2xl border border-rule bg-surface p-5">
+      <details className={cx("mt-6", ui.panel)}>
         <summary className="cursor-pointer font-medium text-ink">{tIssue("newIssue")}</summary>
         <form action={createMagazineIssue} className="mt-4 grid gap-3 sm:grid-cols-3">
           <input
-            suppressHydrationWarning
             name="issueNumber"
             type="number"
             min={1}
             placeholder={tIssue("issueNumber")}
-            className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+            className={cx("w-full", ui.field)}
           />
           <input
-            suppressHydrationWarning
             name="month"
             type="number"
             min={1}
             max={12}
             required
             placeholder={tIssue("month")}
-            className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+            className={cx("w-full", ui.field)}
           />
           <input
-            suppressHydrationWarning
             name="year"
             type="number"
             min={2000}
@@ -52,11 +50,10 @@ export default async function AdminMagazinePage() {
             required
             defaultValue={new Date().getFullYear()}
             placeholder={tIssue("year")}
-            className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+            className={cx("w-full", ui.field)}
           />
           <div className="sm:col-span-3">
             <button
-              suppressHydrationWarning
               className="pill-press rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white"
             >
               {ta("create")}
@@ -69,7 +66,7 @@ export default async function AdminMagazinePage() {
         {issues.map((issue) => {
           const action = createMagazineArticle.bind(null, issue.id);
           return (
-            <div key={issue.id} className="rounded-2xl border border-rule bg-surface p-5">
+            <div key={issue.id} className={ui.panel}>
               <h2 className="font-display text-lg font-semibold text-ink">
                 {tMag("issue", { number: issue.issueNumber })} — {issue.month}/{issue.year}
               </h2>
@@ -101,15 +98,15 @@ export default async function AdminMagazinePage() {
                   {tm("addArticle")}
                 </summary>
                 <form action={action} className="mt-3 space-y-2">
-                  <input suppressHydrationWarning name="title" required placeholder={tm("articleTitlePlaceholder")} className="w-full rounded-lg border border-rule bg-paper px-3 py-2 text-sm" />
+                  <input name="title" required placeholder={tm("articleTitlePlaceholder")} className="w-full rounded-lg border border-rule bg-paper px-3 py-2 text-sm" />
                   <div className="grid grid-cols-2 gap-2">
-                    <input suppressHydrationWarning name="category" placeholder={tm("categoryPlaceholder")} className="rounded-lg border border-rule bg-paper px-3 py-2 text-sm" />
-                    <select suppressHydrationWarning name="accessLevel" className="rounded-lg border border-rule bg-paper px-3 py-2 text-sm">
+                    <input name="category" placeholder={tm("categoryPlaceholder")} className="rounded-lg border border-rule bg-paper px-3 py-2 text-sm" />
+                    <select name="accessLevel" className="rounded-lg border border-rule bg-paper px-3 py-2 text-sm">
                       <option value="PUBLIC">{tAccess("PUBLIC")}</option>
                       <option value="MEMBERS_ONLY">{tAccess("MEMBERS_ONLY")}</option>
                     </select>
                   </div>
-                  <textarea suppressHydrationWarning name="bodyHtml" required rows={3} placeholder={ta("bodyHtmlPlaceholder")} className="w-full rounded-lg border border-rule bg-paper px-3 py-2 text-sm" />
+                  <textarea name="bodyHtml" required rows={3} placeholder={ta("bodyHtmlPlaceholder")} className="w-full rounded-lg border border-rule bg-paper px-3 py-2 text-sm" />
                   <SubmitButton>{ta("add")}</SubmitButton>
                 </form>
               </details>
