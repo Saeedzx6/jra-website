@@ -21,14 +21,14 @@ export function NewsletterForm() {
 
   return (
     <form action={formAction} className="mx-auto mt-6 flex max-w-md gap-2">
-      <input suppressHydrationWarning
+      <input
         type="email"
         name="email"
         required
         placeholder={t("newsletterPlaceholder")}
         className="w-full rounded-full border border-paper/25 bg-paper/10 px-4 py-2.5 text-sm text-paper placeholder:text-paper/50 focus:border-brass focus:outline-none"
       />
-      <button suppressHydrationWarning
+      <button
         type="submit"
         disabled={pending}
         className="shrink-0 rounded-full bg-brass px-5 py-2.5 text-sm font-semibold text-ink transition-transform hover:-translate-y-0.5 disabled:opacity-60"

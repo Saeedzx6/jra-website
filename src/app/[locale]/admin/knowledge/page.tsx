@@ -3,6 +3,7 @@ import { SubmitButton } from "@/components/admin/form-controls";
 import { db } from "@/lib/db";
 import { CoverImageField } from "@/components/admin/cover-image-field";
 import { createResource } from "@/lib/actions/resources";
+import { cx, ui } from "@/lib/ui";
 
 const TYPE_KEYS = ["STUDY", "GUIDE", "TEMPLATE", "PROJECT", "OPPORTUNITY", "CASE_STUDY"] as const;
 
@@ -20,23 +21,23 @@ export default async function AdminKnowledgePage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">{tk("title")}</h1>
+      <h1 className={ui.sectionTitle}>{tk("title")}</h1>
       <p className="mt-2 max-w-xl text-sm text-ink-soft">{tk("description")}</p>
 
-      <details className="mt-6 rounded-2xl border border-rule bg-surface p-5">
+      <details className={cx("mt-6", ui.panel)}>
         <summary className="cursor-pointer font-medium text-ink">{tk("newEntry")}</summary>
         <form action={createResource} className="mt-4 space-y-3">
           <div className="grid gap-3 sm:grid-cols-2">
-            <input suppressHydrationWarning name="title" required placeholder={ta("titlePlaceholder")} className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
-            <select suppressHydrationWarning name="type" required className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm">
+            <input name="title" required placeholder={ta("titlePlaceholder")} className={ui.field} />
+            <select name="type" required className={ui.field}>
               {TYPE_KEYS.map((k) => (
                 <option key={k} value={k}>{tType(k)}</option>
               ))}
             </select>
-            <input suppressHydrationWarning name="fileUrl" placeholder={tk("fileUrlPlaceholder")} className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
-            <input suppressHydrationWarning name="deadlineAt" type="date" placeholder={tk("deadlinePlaceholder")} className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
+            <input name="fileUrl" placeholder={tk("fileUrlPlaceholder")} className={ui.field} />
+            <input name="deadlineAt" type="date" placeholder={tk("deadlinePlaceholder")} className={ui.field} />
           </div>
-          <textarea suppressHydrationWarning name="summary" rows={3} placeholder={tk("summaryPlaceholder")} className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
+          <textarea name="summary" rows={3} placeholder={tk("summaryPlaceholder")} className={cx("w-full", ui.field)} />
           <SubmitButton>{ta("create")}</SubmitButton>
         </form>
       </details>

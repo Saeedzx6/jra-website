@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { CoverThumb } from "@/components/cover-thumb";
 import { db } from "@/lib/db";
 import { pageMetadata } from "@/lib/page-metadata";
+import { ui } from "@/lib/ui";
 
 // Cached and revalidated every 900s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -28,7 +29,7 @@ export default async function NewsListPage({
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="font-display font-semibold text-5xl text-ink">{t("news")}</h1>
+      <h1 className={ui.pageTitle}>{t("news")}</h1>
 
       {articles.length === 0 ? (
         <p className="mt-12 text-center text-ink-soft">{tCommon("noResults")}</p>

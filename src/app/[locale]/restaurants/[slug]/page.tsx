@@ -23,7 +23,10 @@ export async function generateMetadata({
   const restaurant = await getRestaurantBySlug(slug);
 
   if (!restaurant || restaurant.status !== "PUBLISHED") {
-    return { title: "Not found", robots: { index: false, follow: false } };
+    return {
+      title: (await getTranslations({ locale, namespace: "meta" }))("notFoundTitle"),
+      robots: { index: false, follow: false },
+    };
   }
 
   const ar = locale === "ar";
@@ -36,15 +39,21 @@ export async function generateMetadata({
 
   // Falls back through description → cuisine/place summary, so every one of the
   // 701 pages gets a distinct description rather than sharing the site default.
+  // Both halves of the sentence used to be written out in each language and
+  // stitched together here, which put translated copy in a page file and made
+  // the Arabic word order a property of the array. The three shapes the data
+  // actually comes in are three phrases in the message catalogue.
+  const tMeta = await getTranslations({ locale, namespace: "meta" });
+  const summary = cuisine
+    ? place
+      ? tMeta("restaurantSummaryWithPlace", { cuisine, place })
+      : tMeta("restaurantSummary", { cuisine })
+    : place
+      ? tMeta("restaurantSummaryPlaceOnly", { place })
+      : tMeta("directoryDescription");
+
   const description =
-    toDescription(restaurant.fullDescriptionHtml) ??
-    restaurant.shortDescription ??
-    (ar
-      ? [cuisine, place && `في ${place}`, "— مصنّف من نقابة أصحاب المطاعم الأردنية."]
-      : [cuisine, place && `in ${place}`, "— classified by the Jordan Restaurant Association."]
-    )
-      .filter(Boolean)
-      .join(" ");
+    toDescription(restaurant.fullDescriptionHtml) ?? restaurant.shortDescription ?? summary;
 
   return buildMetadata({
     locale,

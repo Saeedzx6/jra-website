@@ -4,9 +4,11 @@ import { FileText, Download, Mail, PlayCircle } from "lucide-react";
 import { db } from "@/lib/db";
 import { pageMetadata } from "@/lib/page-metadata";
 import { AboutCarousel } from "@/components/about/about-carousel";
-import { CountUp } from "@/components/count-up";
+import { StatGrid } from "@/components/stat-grid";
+import { ORG } from "@/lib/organisation";
 import { toVideoEmbed } from "@/lib/video-embed";
 import { clampSlideSeconds } from "@/lib/about-timing";
+import { cx, ui } from "@/lib/ui";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -59,7 +61,7 @@ export default async function AboutPage({
     (ar && p.positionAr) || p.positionEn;
 
   const stats = [
-    { value: new Date().getFullYear() - 2002, label: tAbout("statYears") },
+    { value: new Date().getFullYear() - ORG.foundingYear, label: tAbout("statYears") },
     { value: restaurantCount, label: tAbout("statClassified") },
     { value: governorates.length, label: tAbout("statGovernorates") },
   ];
@@ -68,7 +70,7 @@ export default async function AboutPage({
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <header className="max-w-3xl">
         <p className="ui-caps font-semibold text-accent">{tAbout("kicker")}</p>
-        <h1 className="mt-2 font-display font-semibold text-5xl text-ink">{t("about")}</h1>
+        <h1 className={cx("mt-2", ui.pageTitle)}>{t("about")}</h1>
         <p className="mt-5 text-lg leading-relaxed text-ink-soft">{tAbout("intro")}</p>
       </header>
 
@@ -90,16 +92,10 @@ export default async function AboutPage({
 
       {/* Real numbers, computed rather than typed. The old jra.jo shipped four
           counters all reading zero. */}
-      <section className="mt-14 grid gap-6 border-y border-rule py-10 sm:grid-cols-3">
-        {stats.map((s) => (
-          <div key={s.label} className="text-center">
-            <div className="font-display text-4xl font-semibold text-accent">
-              <CountUp value={s.value} />
-            </div>
-            <div className="mt-1 text-sm text-ink-soft">{s.label}</div>
-          </div>
-        ))}
-      </section>
+      <StatGrid
+        className="mt-14 border-y border-rule py-10 sm:grid-cols-3"
+        stats={stats}
+      />
 
       {video ? (
         <section className="mt-14">

@@ -1,6 +1,7 @@
 import { Download } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
+import { ui } from "@/lib/ui";
 
 export default async function AdminNewsletterPage() {
   const subscribers = await db.newsletterSubscriber.findMany({
@@ -15,7 +16,10 @@ export default async function AdminNewsletterPage() {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl font-semibold text-ink">{tn("newsletterSubscribers")}</h1>
+        <h1 className={ui.sectionTitle}>{tn("newsletterSubscribers")}</h1>
+        {/* A route handler that streams a CSV, not a page — next/link would
+            try to client-navigate to it instead of downloading it. */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         <a
           href="/api/admin/newsletter/export"
           className="flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white"

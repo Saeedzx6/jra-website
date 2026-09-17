@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 import { createRestaurant } from "@/lib/actions/admin";
 import { DeleteRestaurantButton } from "@/components/admin/delete-restaurant-button";
+import { cx, ui } from "@/lib/ui";
 
 export default async function AdminRestaurantsPage({
   searchParams,
@@ -25,54 +26,47 @@ export default async function AdminRestaurantsPage({
     include: { governorate: true },
   });
 
-  const createField =
-    "w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm focus:border-accent focus:outline-none";
-
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl font-semibold text-ink">{tn("restaurants")}</h1>
+        <h1 className={ui.sectionTitle}>{tn("restaurants")}</h1>
       </div>
       <form className="mt-4">
-        <input suppressHydrationWarning
+        <input
           name="q"
           defaultValue={q ?? ""}
           placeholder={tr("searchPlaceholder")}
-          className="w-full max-w-sm rounded-full border border-rule bg-surface px-4 py-2 text-sm focus:border-accent focus:outline-none"
+          className={cx("w-full max-w-sm", ui.fieldPillOnPaper)}
         />
       </form>
 
-      <details className="mt-6 rounded-2xl border border-rule bg-surface p-5">
+      <details className={cx("mt-6", ui.panel)}>
         <summary className="cursor-pointer font-medium text-ink">{tr("newRestaurant")}</summary>
         <form action={createRestaurant} className="mt-4 grid gap-3 sm:grid-cols-2">
           <input
-            suppressHydrationWarning
             name="name"
             required
             placeholder={tr("namePlaceholder")}
-            className={createField}
+            className={cx("w-full", ui.field)}
           />
           <input
-            suppressHydrationWarning
             name="nameAr"
             dir="rtl"
             placeholder={tr("nameArPlaceholder")}
-            className={createField}
+            className={cx("w-full", ui.field)}
           />
           <textarea
-            suppressHydrationWarning
             name="shortDescription"
             rows={2}
             placeholder={tr("descriptionPlaceholder")}
-            className={`${createField} sm:col-span-2`}
+            className={cx("w-full", ui.field, "sm:col-span-2")}
           />
           <input
-            suppressHydrationWarning
             name="addressText"
             placeholder={tr("addressPlaceholder")}
-            className={createField}
+            className={cx("w-full", ui.field)}
           />
-          <select suppressHydrationWarning name="governorateId" defaultValue="" className={createField}>
+          <select name="governorateId" defaultValue="" className={cx("w-full", ui.field)}>
             <option value="">{tr("noGovernorate")}</option>
             {governorates.map((g) => (
               <option key={g.id} value={g.id}>
@@ -81,21 +75,19 @@ export default async function AdminRestaurantsPage({
             ))}
           </select>
           <input
-            suppressHydrationWarning
             name="phone"
             dir="ltr"
             placeholder={tr("phonePlaceholder")}
-            className={createField}
+            className={cx("w-full", ui.field)}
           />
           <input
-            suppressHydrationWarning
             name="email"
             type="email"
             dir="ltr"
             placeholder={tr("emailPlaceholder")}
-            className={createField}
+            className={cx("w-full", ui.field)}
           />
-          <select suppressHydrationWarning name="status" defaultValue="DRAFT" className={createField}>
+          <select name="status" defaultValue="DRAFT" className={cx("w-full", ui.field)}>
             <option value="DRAFT">{tStatus("DRAFT")}</option>
             <option value="PUBLISHED">{tStatus("PUBLISHED")}</option>
           </select>

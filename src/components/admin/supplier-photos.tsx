@@ -83,7 +83,6 @@ export function SupplierPhotoManager({
             <div className="absolute inset-x-0 bottom-0 flex justify-between gap-1 bg-ink/70 p-1.5 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
               {!img.isPrimary ? (
                 <button
-                  suppressHydrationWarning
                   type="button"
                   disabled={pending}
                   onClick={() =>
@@ -97,11 +96,10 @@ export function SupplierPhotoManager({
                 </button>
               ) : null}
               <button
-                suppressHydrationWarning
                 type="button"
                 disabled={pending}
                 onClick={() => startTransition(() => deleteSupplierImage(img.id))}
-                title="Delete"
+                title={tf("deletePhoto")}
                 className="ms-auto flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-accent-strong hover:bg-white"
               >
                 {pending ? (
@@ -123,7 +121,6 @@ export function SupplierPhotoManager({
 
       <form key={formKey} action={upload} className="mt-3 flex flex-wrap items-center gap-2">
         <input
-          suppressHydrationWarning
           type="file"
           name="file"
           accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
@@ -131,7 +128,6 @@ export function SupplierPhotoManager({
           className="min-w-0 flex-1 text-xs text-ink-soft file:me-3 file:rounded-full file:border file:border-rule file:bg-surface file:px-3 file:py-1.5 file:text-xs file:text-ink hover:file:border-ink"
         />
         <button
-          suppressHydrationWarning
           type="submit"
           disabled={pending}
           className="pill-press inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-xs font-semibold text-white disabled:opacity-60"

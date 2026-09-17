@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { routing, type AppLocale } from "@/i18n/routing";
+import { ORG } from "@/lib/organisation";
 
 /**
  * Absolute origin for canonical URLs, hreflang alternates, OG images and the
@@ -67,7 +68,7 @@ export function buildMetadata({
   noIndex = false,
 }: BuildMetadataArgs): Metadata {
   const url = localeUrl(locale, path);
-  const ogImage = image ?? `${SITE_URL}/brand/og-default.png`;
+  const ogImage = image ?? `${SITE_URL}${ORG.brand.ogImage}`;
   const isKnownLocale = (routing.locales as readonly string[]).includes(locale);
 
   return {

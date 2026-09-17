@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { db } from "@/lib/db";
 import { buildMetadata, toDescription } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { cx, ui } from "@/lib/ui";
 
 // Cached and revalidated every 600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -70,7 +71,7 @@ export default async function ListingDetailPage({
       <span className="inline-block rounded-full bg-brass-soft px-2.5 py-0.5 text-xs font-medium text-brass-text">
         {tCategory(listing.category)}
       </span>
-      <h1 className="mt-3 font-display font-semibold text-5xl text-ink">{listing.title}</h1>
+      <h1 className={cx("mt-3", ui.pageTitle)}>{listing.title}</h1>
       {listing.price ? (
         <p className="tabular mt-1 text-lg font-semibold text-accent">
           {listing.price} {listing.priceCurrency}
@@ -78,10 +79,29 @@ export default async function ListingDetailPage({
       ) : (
         <p className="mt-1 text-ink-faint">{tm("priceOnRequest")}</p>
       )}
-      <div
-        className="prose mt-6 max-w-none leading-relaxed text-ink-soft"
-        dangerouslySetInnerHTML={{ __html: listing.descriptionHtml }}
-      />
+      {/*
+        Rendered as text, not HTML.
+
+        `createMarketplaceListing` checks only that someone is signed in -- not
+        their role -- and validates this field with `z.string().min(10)`, so any
+        member could store `<img src=x onerror=...>` here. It was then printed
+        with `dangerouslySetInnerHTML` on this page the moment an admin
+        published the listing, and the admin review screen shows the title and
+        status without ever rendering the body, so nobody saw the payload on
+        the way through.
+
+        Nothing is lost by treating it as text: the form behind it is a plain
+        <textarea>, not a rich-text editor, so what people type is prose.
+        `whitespace-pre-line` keeps the paragraph breaks they typed.
+
+        The column keeps its `descriptionHtml` name. Renaming it is a migration,
+        and migrations here reach the production database as soon as a pull
+        request opens a preview deploy -- which would break the currently
+        deployed site, since it still selects the old name.
+      */}
+      <div className="mt-6 max-w-none whitespace-pre-line leading-relaxed text-ink-soft">
+        {listing.descriptionHtml}
+      </div>
       <div className="mt-8 space-y-2 rounded-xl border border-rule bg-surface p-5">
         {listing.contactPhone ? (
           <div className="flex items-center gap-2 text-sm text-ink-soft">

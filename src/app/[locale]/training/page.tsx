@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { CoverThumb } from "@/components/cover-thumb";
 import { CourseRegisterForm } from "@/components/training/register-form";
 import { pageMetadata } from "@/lib/page-metadata";
+import { ui } from "@/lib/ui";
 
 // Cached and revalidated every 3600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -33,7 +34,7 @@ export default async function TrainingPage({
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="font-display font-semibold text-5xl text-ink">{t("training")}</h1>
+      <h1 className={ui.pageTitle}>{t("training")}</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">{tt("description")}</p>
 
       {courses.length === 0 ? (

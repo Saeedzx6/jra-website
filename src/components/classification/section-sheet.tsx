@@ -74,7 +74,6 @@ export function SectionSheet({
             </p>
           </div>
           <button
-            suppressHydrationWarning
             type="button"
             onClick={onClose}
             aria-label={tc("close")}
@@ -126,7 +125,6 @@ export function SectionSheet({
           })}
 
           <button
-            suppressHydrationWarning
             type="button"
             onClick={onClose}
             className="pill-press mt-6 w-full rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-white"

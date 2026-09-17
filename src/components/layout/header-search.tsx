@@ -52,7 +52,6 @@ export function HeaderSearch() {
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && submit()}
         placeholder={t("search")}
-        suppressHydrationWarning
         className="w-36 bg-transparent px-2 text-sm text-ink placeholder:text-ink-faint focus:outline-none sm:w-48"
       />
       <button

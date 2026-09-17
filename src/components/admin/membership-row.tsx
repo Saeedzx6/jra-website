@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { FileText, ClipboardCheck } from "lucide-react";
 import { approveMembershipApplication, rejectMembershipApplication } from "@/lib/actions/admin";
+import { ui } from "@/lib/ui";
 
 type AssessmentSummary = {
   establishmentType?: string;
@@ -77,7 +78,7 @@ export function MembershipApplicationRow({
   const supplier = documents?.supplier;
 
   return (
-    <div className="rounded-2xl border border-rule bg-surface p-5">
+    <div className={ui.panel}>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="font-medium text-ink">{businessName}</p>
@@ -89,7 +90,7 @@ export function MembershipApplicationRow({
           </span>
         </div>
         <div className="flex shrink-0 gap-2">
-          <button suppressHydrationWarning
+          <button
             disabled={pending}
             onClick={() =>
               startTransition(async () => {
@@ -101,7 +102,7 @@ export function MembershipApplicationRow({
           >
             {ta("approve")}
           </button>
-          <button suppressHydrationWarning
+          <button
             disabled={pending}
             onClick={() =>
               startTransition(async () => {

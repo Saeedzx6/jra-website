@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { AlertTriangle } from "lucide-react";
+import { cx, ui } from "@/lib/ui";
 
 /**
  * Error boundary for the locale segment. Must be a client component — Next
@@ -19,6 +20,7 @@ export default function LocaleError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const locale = useLocale();
   const t = useTranslations("errors");
 
   useEffect(() => {
@@ -32,7 +34,7 @@ export default function LocaleError({
       <div className="flex h-14 w-14 items-center justify-center rounded-full bg-brass-soft">
         <AlertTriangle className="h-6 w-6 text-brass-text" aria-hidden="true" />
       </div>
-      <h1 className="mt-6 font-display font-semibold text-5xl text-ink">{t("errorTitle")}</h1>
+      <h1 className={cx("mt-6", ui.pageTitle)}>{t("errorTitle")}</h1>
       <p className="mt-3 leading-relaxed text-ink-soft">{t("errorBody")}</p>
 
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -43,8 +45,12 @@ export default function LocaleError({
         >
           {t("errorRetry")}
         </button>
+        {/* A plain anchor, not next-intl's Link: leaving a crashed boundary
+            should be a fresh document load, which discards whatever client
+            state caused the error. The locale is carried by hand because a
+            bare "/" would drop an Arabic reader onto the default language. */}
         <a
-          href="/"
+          href={`/${locale}`}
           className="inline-flex items-center rounded-full border border-rule px-6 py-3 text-sm font-semibold text-ink-soft transition-colors hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
           {t("errorHome")}

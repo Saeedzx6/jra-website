@@ -6,6 +6,7 @@ import {
   SupplierEditForm,
   type SupplierLabels,
 } from "@/components/admin/supplier-form";
+import { cx, ui } from "@/lib/ui";
 
 /**
  * Supplier back office.
@@ -54,17 +55,17 @@ export default async function AdminSuppliersPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">{tn("suppliers")}</h1>
+      <h1 className={ui.sectionTitle}>{tn("suppliers")}</h1>
       <p className="mt-2 text-sm text-ink-soft">{tsup("intro")}</p>
 
-      <details className="mt-6 rounded-2xl border border-rule bg-surface p-5">
+      <details className={cx("mt-6", ui.panel)}>
         <summary className="cursor-pointer font-medium text-ink">{tsup("newSupplier")}</summary>
         <SupplierCreateForm governorates={governorates} labels={labels} />
       </details>
 
       <div className="mt-6 space-y-4">
         {suppliers.map((s) => (
-          <div key={s.id} className="rounded-2xl border border-rule bg-surface p-5">
+          <div key={s.id} className={ui.panel}>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <p className="font-medium text-ink">
                 {s.name}
@@ -119,7 +120,7 @@ export default async function AdminSuppliersPage() {
           </div>
         ))}
         {suppliers.length === 0 ? (
-          <p className="rounded-2xl border border-rule bg-surface p-5 text-sm text-ink-soft">
+          <p className={cx(ui.panel, "text-sm text-ink-soft")}>
             {tsup("empty")}
           </p>
         ) : null}

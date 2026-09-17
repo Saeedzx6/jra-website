@@ -37,7 +37,7 @@ export function MarketplaceModerationRow({
         </p>
       </div>
       <div className="flex gap-2">
-        <button suppressHydrationWarning
+        <button
           disabled={pending}
           onClick={() =>
             startTransition(async () => {
@@ -49,7 +49,7 @@ export function MarketplaceModerationRow({
         >
           {tm("approve")}
         </button>
-        <button suppressHydrationWarning
+        <button
           disabled={pending}
           onClick={() =>
             startTransition(async () => {

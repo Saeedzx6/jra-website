@@ -95,7 +95,6 @@ export function SectionTiles({
         return (
           <li key={section.id}>
             <button
-              suppressHydrationWarning
               type="button"
               onClick={() => onOpen(section)}
               className={`flex w-full flex-col items-center gap-2 rounded-2xl border p-4 text-center transition-colors ${

@@ -2,6 +2,7 @@ import { Star } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
+import { ui } from "@/lib/ui";
 
 export default async function AdminAssessmentsPage() {
   const sessions = await db.assessmentSession.findMany({
@@ -14,7 +15,7 @@ export default async function AdminAssessmentsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">
+      <h1 className={ui.sectionTitle}>
         {tn("selfAssessments")}
       </h1>
       <p className="mt-2 max-w-xl text-sm text-ink-soft">{ta("description")}</p>

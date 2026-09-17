@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { MarketplaceModerationRow } from "@/components/admin/marketplace-row";
+import { ui } from "@/lib/ui";
 
 export default async function AdminMarketplacePage() {
   const tm = await getTranslations("marketplace");
@@ -11,7 +12,7 @@ export default async function AdminMarketplacePage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">{tm("moderationTitle")}</h1>
+      <h1 className={ui.sectionTitle}>{tm("moderationTitle")}</h1>
       <div className="mt-6 space-y-3">
         {pending.map((l) => (
           <MarketplaceModerationRow
