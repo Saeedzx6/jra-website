@@ -465,6 +465,7 @@
     },
     "assessments": {
       "description": "Submitted classification self-assessments from logged-in members, saved against their real restaurant profile.",
+      "submittedHeading": "Submitted for grading",
       "noSubmittedYet": "No submitted assessments yet.",
       "pts": "pts",
       "points": "points",
@@ -487,6 +488,21 @@
         "cancel": "Cancel",
         "approvedWith": "Approved — {stars} stars awarded",
         "rejected": "Refused",
+        "failed": "Could not save the decision."
+      },
+      "reRating": {
+        "heading": "Re-rating requests",
+        "intro": "Establishments asking to be rated again. Opening one lets them fill in a fresh checklist; refusing needs a reason, which they are shown.",
+        "none": "No re-rating requests waiting.",
+        "reasonGiven": "Why they asked",
+        "noReasonGiven": "No reason recorded.",
+        "cycleLabel": "Cycle {cycle}",
+        "open": "Open the re-rating",
+        "decline": "Refuse",
+        "confirmDecline": "Refuse this request",
+        "declineReasonLabel": "Reason for refusing",
+        "declineReasonHint": "Shown to the establishment. Say what would change the answer, not just that it was refused.",
+        "cancel": "Cancel",
         "failed": "Could not save the decision."
       }
     },
