@@ -79,10 +79,29 @@ export default async function ListingDetailPage({
       ) : (
         <p className="mt-1 text-ink-faint">{tm("priceOnRequest")}</p>
       )}
-      <div
-        className="prose mt-6 max-w-none leading-relaxed text-ink-soft"
-        dangerouslySetInnerHTML={{ __html: listing.descriptionHtml }}
-      />
+      {/*
+        Rendered as text, not HTML.
+
+        `createMarketplaceListing` checks only that someone is signed in -- not
+        their role -- and validates this field with `z.string().min(10)`, so any
+        member could store `<img src=x onerror=...>` here. It was then printed
+        with `dangerouslySetInnerHTML` on this page the moment an admin
+        published the listing, and the admin review screen shows the title and
+        status without ever rendering the body, so nobody saw the payload on
+        the way through.
+
+        Nothing is lost by treating it as text: the form behind it is a plain
+        <textarea>, not a rich-text editor, so what people type is prose.
+        `whitespace-pre-line` keeps the paragraph breaks they typed.
+
+        The column keeps its `descriptionHtml` name. Renaming it is a migration,
+        and migrations here reach the production database as soon as a pull
+        request opens a preview deploy -- which would break the currently
+        deployed site, since it still selects the old name.
+      */}
+      <div className="mt-6 max-w-none whitespace-pre-line leading-relaxed text-ink-soft">
+        {listing.descriptionHtml}
+      </div>
       <div className="mt-8 space-y-2 rounded-xl border border-rule bg-surface p-5">
         {listing.contactPhone ? (
           <div className="flex items-center gap-2 text-sm text-ink-soft">
