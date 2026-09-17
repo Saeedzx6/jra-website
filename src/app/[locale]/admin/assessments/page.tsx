@@ -3,13 +3,24 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 import { ui } from "@/lib/ui";
+import { ReRatingQueue } from "@/components/admin/re-rating-queue";
 
 export default async function AdminAssessmentsPage() {
-  const sessions = await db.assessmentSession.findMany({
-    where: { status: "SCORED" },
-    orderBy: { submittedAt: "desc" },
-    include: { restaurant: true },
-  });
+  // Two queues, because they are two different decisions. A SCORED session is
+  // a finished assessment awaiting a grade; a REQUESTED one is an
+  // establishment asking to be rated again, and nothing has been filled in yet.
+  const [sessions, reRatings] = await Promise.all([
+    db.assessmentSession.findMany({
+      where: { status: "SCORED" },
+      orderBy: { submittedAt: "desc" },
+      include: { restaurant: true },
+    }),
+    db.assessmentSession.findMany({
+      where: { status: "REQUESTED" },
+      orderBy: { createdAt: "asc" },
+      include: { restaurant: true },
+    }),
+  ]);
   const tn = await getTranslations("admin.nav");
   const ta = await getTranslations("admin.assessments");
 
@@ -20,7 +31,30 @@ export default async function AdminAssessmentsPage() {
       </h1>
       <p className="mt-2 max-w-xl text-sm text-ink-soft">{ta("description")}</p>
 
-      <div className="mt-6 divide-y divide-rule rounded-2xl border border-rule bg-surface">
+      <section className="mt-8">
+        <h2 className="font-medium text-ink">
+          {ta("reRating.heading")}
+          {reRatings.length > 0 ? (
+            <span className="ms-2 rounded-full bg-accent px-2 py-0.5 text-xs font-semibold text-white">
+              {reRatings.length}
+            </span>
+          ) : null}
+        </h2>
+        <p className="mt-1 max-w-xl text-xs text-ink-faint">{ta("reRating.intro")}</p>
+        <ReRatingQueue
+          requests={reRatings.map((r) => ({
+            id: r.id,
+            restaurantName: r.restaurant.name,
+            reason: r.requestedReason,
+            requestedAt: r.createdAt.toISOString(),
+            cycle: r.cycle,
+          }))}
+        />
+      </section>
+
+      <h2 className="mt-10 font-medium text-ink">{ta("submittedHeading")}</h2>
+
+      <div className="mt-4 divide-y divide-rule rounded-2xl border border-rule bg-surface">
         {sessions.map((s) => (
           <Link
             key={s.id}
