@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { updateRestaurant, uploadRestaurantImage } from "@/lib/actions/admin";
 import { RestaurantPhotoManager } from "@/components/admin/restaurant-photos";
 import { DeleteRestaurantButton } from "@/components/admin/delete-restaurant-button";
+import { cx, ui } from "@/lib/ui";
 
 export default async function AdminEditRestaurantPage({
   params,
@@ -29,17 +30,17 @@ export default async function AdminEditRestaurantPage({
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl font-semibold text-ink">{tr("editRestaurant")}</h1>
+        <h1 className={ui.sectionTitle}>{tr("editRestaurant")}</h1>
         <DeleteRestaurantButton id={restaurant.id} name={restaurant.name} redirectToList />
       </div>
 
-      <section className="mt-6 max-w-2xl rounded-2xl border border-rule bg-surface p-5">
+      <section className={cx("mt-6 max-w-2xl", ui.panel)}>
         <h2 className="font-display text-base font-semibold text-ink">{tr("photos")}</h2>
         <div className="mt-4">
           <RestaurantPhotoManager restaurantId={restaurant.id} images={restaurant.images} />
         </div>
         <form action={uploadAction} className="mt-4 flex items-center gap-2">
-          <input suppressHydrationWarning
+          <input
             type="file"
             name="file"
             accept="image/png,image/jpeg,image/webp"
@@ -57,30 +58,30 @@ export default async function AdminEditRestaurantPage({
 
       <form action={action} className="mt-6 max-w-xl space-y-4">
         <div>
-          <label className="mb-1 block text-sm font-medium text-ink-soft">{ta("name")}</label>
-          <input suppressHydrationWarning
+          <label className={ui.fieldLabel}>{ta("name")}</label>
+          <input
             name="name"
             defaultValue={restaurant.name}
-            className="w-full rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+            className={cx("w-full", ui.fieldOnPaper)}
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-ink-soft">
+          <label className={ui.fieldLabel}>
             {tr("shortDescription")}
           </label>
-          <textarea suppressHydrationWarning
+          <textarea
             name="shortDescription"
             defaultValue={restaurant.shortDescription ?? ""}
             rows={3}
-            className="w-full rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+            className={cx("w-full", ui.fieldOnPaper)}
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-ink-soft">{ta("status")}</label>
-          <select suppressHydrationWarning
+          <label className={ui.fieldLabel}>{ta("status")}</label>
+          <select
             name="status"
             defaultValue={restaurant.status}
-            className="rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+            className={ui.fieldOnPaper}
           >
             <option value="DRAFT">{tStatus("DRAFT")}</option>
             <option value="PUBLISHED">{tStatus("PUBLISHED")}</option>

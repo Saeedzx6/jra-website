@@ -1,4 +1,5 @@
 "use client";
+import { cx, ui } from "@/lib/ui";
 
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
@@ -20,10 +21,10 @@ export function CourseRegisterForm({ sessionId }: { sessionId: string }) {
 
   return (
     <form action={formAction} className="mt-3 flex flex-wrap gap-2">
-      <input suppressHydrationWarning name="fullName" required placeholder={tt("fullNamePlaceholder")} className="flex-1 min-w-[140px] rounded-lg border border-rule bg-paper px-3 py-2 text-sm focus:border-accent focus:outline-none" />
-      <input suppressHydrationWarning name="email" type="email" required placeholder={tt("emailPlaceholder")} className="flex-1 min-w-[140px] rounded-lg border border-rule bg-paper px-3 py-2 text-sm focus:border-accent focus:outline-none" />
-      <input suppressHydrationWarning name="phone" placeholder={tt("phonePlaceholder")} className="w-32 rounded-lg border border-rule bg-paper px-3 py-2 text-sm focus:border-accent focus:outline-none" />
-      <button suppressHydrationWarning disabled={pending} className="pill-press rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white disabled:opacity-60">
+      <input name="fullName" required placeholder={tt("fullNamePlaceholder")} className={cx("flex-1 min-w-[140px]", ui.fieldCompact)} />
+      <input name="email" type="email" required placeholder={tt("emailPlaceholder")} className={cx("flex-1 min-w-[140px]", ui.fieldCompact)} />
+      <input name="phone" placeholder={tt("phonePlaceholder")} className={cx("w-32", ui.fieldCompact)} />
+      <button disabled={pending} className="pill-press rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white disabled:opacity-60">
         {pending ? <Loader2 className="me-1.5 inline h-3.5 w-3.5 animate-spin align-[-2px]" aria-hidden="true" /> : null}
         {tt("register")}
       </button>

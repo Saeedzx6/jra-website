@@ -3,6 +3,7 @@ import { Tag } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 import { pageMetadata } from "@/lib/page-metadata";
+import { cx, ui } from "@/lib/ui";
 
 // Cached and revalidated every 600s. Set per route since the site-wide
 // force-dynamic was removed from the locale layout (blueprint §4.2).
@@ -43,7 +44,7 @@ export default async function MarketplacePage({
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
-      <h1 className="font-display font-semibold text-5xl text-ink">{t("marketplace")}</h1>
+      <h1 className={ui.pageTitle}>{t("marketplace")}</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">{tm("description")}</p>
 
       <div className="mt-6 flex flex-wrap gap-2">
@@ -72,7 +73,7 @@ export default async function MarketplacePage({
             <Link
               key={l.id}
               href={`/marketplace/${l.id}`}
-              className="motion-card block rounded-2xl border border-rule bg-surface p-5"
+              className={cx("motion-card block", ui.panel)}
             >
               <span className="inline-flex items-center gap-1.5 rounded-full bg-brass-soft px-2.5 py-0.5 text-xs font-medium text-brass-text">
                 <Tag className="h-3 w-3" />

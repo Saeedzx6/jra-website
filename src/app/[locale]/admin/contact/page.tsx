@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { SubmitButton } from "@/components/admin/form-controls";
 import { db } from "@/lib/db";
 import { markInquiryHandled } from "@/lib/actions/admin";
+import { ui } from "@/lib/ui";
 
 export default async function AdminContactPage() {
   const inquiries = await db.contactInquiry.findMany({ orderBy: { createdAt: "desc" } });
@@ -10,10 +11,10 @@ export default async function AdminContactPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">{tn("contactInbox")}</h1>
+      <h1 className={ui.sectionTitle}>{tn("contactInbox")}</h1>
       <div className="mt-6 space-y-3">
         {inquiries.map((inq) => (
-          <div key={inq.id} className="rounded-2xl border border-rule bg-surface p-5">
+          <div key={inq.id} className={ui.panel}>
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="font-medium text-ink">

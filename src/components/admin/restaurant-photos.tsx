@@ -32,7 +32,7 @@ export function RestaurantPhotoManager({
           )}
           <div className="absolute inset-x-0 bottom-0 flex justify-between gap-1 bg-ink/70 p-1.5 opacity-0 transition-opacity group-hover:opacity-100">
             {!img.isPrimary && (
-              <button suppressHydrationWarning
+              <button
                 type="button"
                 disabled={pending}
                 onClick={() => startTransition(() => setPrimaryRestaurantImage(restaurantId, img.id))}
@@ -42,7 +42,7 @@ export function RestaurantPhotoManager({
                 <Star className="h-3 w-3" />
               </button>
             )}
-            <button suppressHydrationWarning
+            <button
               type="button"
               disabled={pending}
               onClick={() => startTransition(() => deleteRestaurantImage(img.id))}

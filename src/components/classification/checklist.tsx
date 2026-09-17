@@ -14,6 +14,7 @@ import {
   type StarBand,
 } from "@/lib/classification-scoring";
 import { saveAnswer, submitAssessment } from "@/lib/actions/classification";
+import { ui } from "@/lib/ui";
 
 /**
  * The portal version: the same checklist, but every tick is saved against the
@@ -113,7 +114,7 @@ export function ClassificationChecklist({
           />
         </div>
         <div>
-          <h2 className="font-display text-2xl font-semibold text-ink">
+          <h2 className={ui.sectionTitle}>
             {tc("assessmentSubmitted")}
           </h2>
           <p className="mt-2 max-w-xl text-ink-soft">
@@ -148,7 +149,6 @@ export function ClassificationChecklist({
             })}
           </div>
           <button
-            suppressHydrationWarning
             onClick={() => window.print()}
             className="mt-8 rounded-full border border-accent px-6 py-2.5 text-sm font-semibold text-accent transition-colors hover:bg-accent hover:text-white print:hidden"
           >
@@ -199,7 +199,6 @@ export function ClassificationChecklist({
 
       {!readOnly ? (
         <button
-          suppressHydrationWarning
           onClick={handleSubmit}
           disabled={pending}
           className="pill-press flex w-full items-center justify-center gap-2 rounded-full bg-accent px-4 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-60 sm:w-auto sm:px-8"

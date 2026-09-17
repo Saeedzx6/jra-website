@@ -5,6 +5,7 @@ import { Plus, Save, Trash2 } from "lucide-react";
 import { upsertNewsArticle, deleteNewsArticle } from "@/lib/actions/admin";
 import { IDLE } from "@/lib/action-state";
 import { SubmitButton, FormStatus } from "@/components/admin/form-controls";
+import { cx, ui } from "@/lib/ui";
 
 export type NewsRow = {
   id: string;
@@ -26,34 +27,29 @@ export type NewsLabels = {
   coverOnCreate: string;
 };
 
-const FIELD =
-  "w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm focus:border-accent focus:outline-none";
 
 function Fields({ labels, value }: { labels: NewsLabels; value?: NewsRow }) {
   return (
     <>
       <input
-        suppressHydrationWarning
         name="title"
         required
         defaultValue={value?.title ?? ""}
         placeholder={labels.title}
-        className={FIELD}
+        className={cx("w-full", ui.field)}
       />
       <textarea
-        suppressHydrationWarning
         name="bodyHtml"
         required
         rows={5}
         defaultValue={value?.bodyHtml ?? ""}
         placeholder={labels.body}
-        className={FIELD}
+        className={cx("w-full", ui.field)}
       />
       <select
-        suppressHydrationWarning
         name="status"
         defaultValue={value?.status ?? "DRAFT"}
-        className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm"
+        className={ui.field}
       >
         <option value="DRAFT">{labels.draft}</option>
         <option value="PUBLISHED">{labels.published}</option>
@@ -77,7 +73,6 @@ export function NewsCreateForm({ labels }: { labels: NewsLabels }) {
           {labels.coverOnCreate}
         </span>
         <input
-          suppressHydrationWarning
           type="file"
           name="cover"
           accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
@@ -133,7 +128,6 @@ export function NewsEditForm({ article, labels }: { article: NewsRow; labels: Ne
               {labels.remove}
             </SubmitButton>
             <button
-              suppressHydrationWarning
               type="button"
               onClick={() => setConfirming(false)}
               className="rounded-full border border-rule px-4 py-1.5 text-xs font-medium text-ink-soft"
@@ -143,7 +137,6 @@ export function NewsEditForm({ article, labels }: { article: NewsRow; labels: Ne
           </form>
         ) : (
           <button
-            suppressHydrationWarning
             type="button"
             onClick={() => setConfirming(true)}
             className="inline-flex items-center gap-1.5 rounded-full border border-rule px-4 py-1.5 text-xs font-medium text-ink-soft hover:border-danger hover:text-danger-text"

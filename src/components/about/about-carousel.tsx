@@ -166,7 +166,6 @@ export function AboutCarousel({
         {count > 1 ? (
           <>
             <button
-              suppressHydrationWarning
               type="button"
               onClick={() => manual(index - 1)}
               aria-label={t("previousSlide")}
@@ -178,7 +177,6 @@ export function AboutCarousel({
               />
             </button>
             <button
-              suppressHydrationWarning
               type="button"
               onClick={() => manual(index + 1)}
               aria-label={t("nextSlide")}
@@ -197,7 +195,6 @@ export function AboutCarousel({
         <div className="mt-4 flex items-center justify-center gap-2">
           {slides.map((s, i) => (
             <button
-              suppressHydrationWarning
               key={s.id}
               type="button"
               onClick={() => manual(i)}

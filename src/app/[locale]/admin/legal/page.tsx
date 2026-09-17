@@ -3,6 +3,7 @@ import { SubmitButton } from "@/components/admin/form-controls";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 import { createLegalDocument } from "@/lib/actions/legal";
+import { cx, ui } from "@/lib/ui";
 
 export default async function AdminLegalPage() {
   const documents = await db.legalDocument.findMany({
@@ -17,25 +18,25 @@ export default async function AdminLegalPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">{tn("legalDocuments")}</h1>
+      <h1 className={ui.sectionTitle}>{tn("legalDocuments")}</h1>
 
-      <details className="mt-6 rounded-2xl border border-rule bg-surface p-5">
+      <details className={cx("mt-6", ui.panel)}>
         <summary className="cursor-pointer font-medium text-ink">{tl("newDocument")}</summary>
         <form action={createLegalDocument} className="mt-4 space-y-3">
           <div className="grid gap-3 sm:grid-cols-2">
-            <input suppressHydrationWarning name="title" required placeholder={tl("titlePlaceholder")} className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
-            <select suppressHydrationWarning name="type" required className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm">
+            <input name="title" required placeholder={tl("titlePlaceholder")} className={ui.field} />
+            <select name="type" required className={ui.field}>
               <option value="LAW">{tType("LAW")}</option>
               <option value="REGULATION">{tType("REGULATION")}</option>
               <option value="INSTRUCTION">{tType("INSTRUCTION")}</option>
             </select>
-            <input suppressHydrationWarning name="topic" placeholder={tl("topicPlaceholder")} className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
-            <input suppressHydrationWarning name="entity" placeholder={tl("entityPlaceholder")} className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
-            <input suppressHydrationWarning name="year" type="number" placeholder={tl("yearPlaceholder")} className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
-            <input suppressHydrationWarning name="versionLabel" placeholder={tl("versionLabelPlaceholder")} defaultValue="1.0" className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
+            <input name="topic" placeholder={tl("topicPlaceholder")} className={ui.field} />
+            <input name="entity" placeholder={tl("entityPlaceholder")} className={ui.field} />
+            <input name="year" type="number" placeholder={tl("yearPlaceholder")} className={ui.field} />
+            <input name="versionLabel" placeholder={tl("versionLabelPlaceholder")} defaultValue="1.0" className={ui.field} />
           </div>
-          <input suppressHydrationWarning name="fileUrl" placeholder={tl("fileUrlPlaceholder")} className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
-          <textarea suppressHydrationWarning name="bodyHtml" rows={3} placeholder={tl("summaryPlaceholder")} className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
+          <input name="fileUrl" placeholder={tl("fileUrlPlaceholder")} className={cx("w-full", ui.field)} />
+          <textarea name="bodyHtml" rows={3} placeholder={tl("summaryPlaceholder")} className={cx("w-full", ui.field)} />
           <SubmitButton>{ta("create")}</SubmitButton>
         </form>
       </details>

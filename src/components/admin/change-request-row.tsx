@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { approveChangeRequest, rejectChangeRequest } from "@/lib/actions/admin";
+import { ui } from "@/lib/ui";
 
 export function ChangeRequestRow({
   id,
@@ -31,7 +32,7 @@ export function ChangeRequestRow({
   }
 
   return (
-    <div className="rounded-2xl border border-rule bg-surface p-5">
+    <div className={ui.panel}>
       <div className="flex items-center justify-between">
         <div>
           <span className="rounded-full bg-brass-soft px-2 py-0.5 text-xs font-medium text-brass-text">
@@ -42,7 +43,7 @@ export function ChangeRequestRow({
           </span>
         </div>
         <div className="flex gap-2">
-          <button suppressHydrationWarning
+          <button
             disabled={pending}
             onClick={() =>
               startTransition(async () => {
@@ -54,7 +55,7 @@ export function ChangeRequestRow({
           >
             {ta("approve")}
           </button>
-          <button suppressHydrationWarning
+          <button
             disabled={pending}
             onClick={() =>
               startTransition(async () => {

@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { AboutManager } from "@/components/admin/about-manager";
+import { ui } from "@/lib/ui";
 
 /**
  * The About page's carousel and video.
@@ -22,7 +23,7 @@ export default async function AdminAboutPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">{tn("aboutPage")}</h1>
+      <h1 className={ui.sectionTitle}>{tn("aboutPage")}</h1>
       <p className="mt-2 text-sm text-ink-soft">{t("intro")}</p>
 
       <div className="mt-6">

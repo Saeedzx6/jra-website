@@ -21,7 +21,8 @@ export const ORG = {
     en: "Jordan Restaurant Association",
     ar: "نقابة أصحاب المطاعم الأردنية",
   },
-  foundingDate: "2002",
+  /** A number, because the About page counts the years since it. */
+  foundingYear: 2002,
 
   phone: {
     /** For `tel:` hrefs -- digits and a leading plus only. */

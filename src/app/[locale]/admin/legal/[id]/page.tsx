@@ -3,6 +3,7 @@ import { SubmitButton } from "@/components/admin/form-controls";
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { addLegalDocumentVersion } from "@/lib/actions/legal";
+import { cx, ui } from "@/lib/ui";
 
 export default async function AdminLegalDocumentPage({
   params,
@@ -21,7 +22,7 @@ export default async function AdminLegalDocumentPage({
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-ink">{doc.topic ?? doc.slug}</h1>
+      <h1 className={ui.sectionTitle}>{doc.topic ?? doc.slug}</h1>
 
       <div className="mt-6 space-y-2">
         {doc.versions.map((v) => (
@@ -31,11 +32,11 @@ export default async function AdminLegalDocumentPage({
         ))}
       </div>
 
-      <form action={action} className="mt-6 space-y-3 rounded-2xl border border-rule bg-surface p-5">
+      <form action={action} className={cx("mt-6 space-y-3", ui.panel)}>
         <h2 className="font-medium text-ink">{tl("addNewVersion")}</h2>
-        <input suppressHydrationWarning name="versionLabel" required placeholder={tl("versionLabelOnly")} className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
-        <input suppressHydrationWarning name="fileUrl" placeholder={tl("fileUrlOnly")} className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
-        <textarea suppressHydrationWarning name="bodyHtml" rows={3} placeholder={tl("amendmentSummaryPlaceholder")} className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm" />
+        <input name="versionLabel" required placeholder={tl("versionLabelOnly")} className={cx("w-full", ui.field)} />
+        <input name="fileUrl" placeholder={tl("fileUrlOnly")} className={cx("w-full", ui.field)} />
+        <textarea name="bodyHtml" rows={3} placeholder={tl("amendmentSummaryPlaceholder")} className={cx("w-full", ui.field)} />
         <SubmitButton>{tl("addVersion")}</SubmitButton>
       </form>
     </div>

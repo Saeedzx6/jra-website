@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import { getStandardWithCriteria } from "@/lib/classification";
 import { AssessmentReview } from "@/components/admin/assessment-review";
+import { cx, ui } from "@/lib/ui";
 
 export default async function AdminAssessmentDetailPage({
   params,
@@ -30,7 +31,7 @@ export default async function AdminAssessmentDetailPage({
       <p className="text-xs font-semibold uppercase tracking-wide text-brass-text">
         {session.establishmentType}
       </p>
-      <h1 className="mt-1 font-display text-2xl font-semibold text-ink">
+      <h1 className={cx("mt-1", ui.sectionTitle)}>
         {session.restaurant.name}
       </h1>
       <div className="mt-2 flex items-center gap-4">
@@ -61,7 +62,7 @@ export default async function AdminAssessmentDetailPage({
 
       <div className="mt-8 space-y-6">
         {standard.sections.map((section) => (
-          <section key={section.id} className="rounded-2xl border border-rule bg-surface p-5">
+          <section key={section.id} className={ui.panel}>
             <h2 className="font-display text-base font-semibold text-ink">{section.nameEn}</h2>
             <div className="mt-3 divide-y divide-rule">
               {section.criteria.map((criterion) => {

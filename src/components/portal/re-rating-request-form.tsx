@@ -1,4 +1,5 @@
 "use client";
+import { cx, ui } from "@/lib/ui";
 
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
@@ -27,7 +28,6 @@ export function ReRatingRequestForm({ restaurantId }: { restaurantId: string }) 
   if (!open) {
     return (
       <button
-        suppressHydrationWarning
         type="button"
         onClick={() => setOpen(true)}
         className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-rule px-4 py-2 text-sm font-semibold text-ink-soft transition-colors hover:border-accent hover:text-accent"
@@ -48,11 +48,10 @@ export function ReRatingRequestForm({ restaurantId }: { restaurantId: string }) 
         value={reason}
         onChange={(e) => setReason(e.target.value)}
         rows={3}
-        className="mt-1 w-full rounded-lg border border-rule bg-paper px-3 py-2 text-sm focus:border-accent focus:outline-none"
+        className={cx("mt-1 w-full", ui.fieldCompact)}
       />
       <div className="mt-2 flex flex-wrap items-center gap-3">
         <button
-          suppressHydrationWarning
           type="button"
           disabled={pending || !reason.trim()}
           onClick={() =>
@@ -76,7 +75,6 @@ export function ReRatingRequestForm({ restaurantId }: { restaurantId: string }) 
           {tc("sendRequest")}
         </button>
         <button
-          suppressHydrationWarning
           type="button"
           onClick={() => setOpen(false)}
           className="text-sm font-medium text-ink-soft hover:text-ink"

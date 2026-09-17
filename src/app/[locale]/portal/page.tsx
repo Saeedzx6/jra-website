@@ -6,6 +6,7 @@ import { logoutAction } from "@/lib/actions/auth";
 import { ClipboardCheck, Store, LogOut } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { SuggestEditForm } from "@/components/portal/suggest-edit-form";
+import { ui } from "@/lib/ui";
 
 export default async function PortalDashboard() {
   const session = await getSession();
@@ -19,11 +20,11 @@ export default async function PortalDashboard() {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl font-semibold text-ink">
+        <h1 className={ui.sectionTitle}>
           {tp("welcome", { name: session?.user.name ?? "" })}
         </h1>
         <form action={logoutAction}>
-          <button suppressHydrationWarning className="flex items-center gap-1.5 text-sm text-ink-soft hover:text-accent">
+          <button className="flex items-center gap-1.5 text-sm text-ink-soft hover:text-accent">
             <LogOut className="h-4 w-4" /> {tp("logOut")}
           </button>
         </form>
@@ -37,7 +38,7 @@ export default async function PortalDashboard() {
             const biz = m.restaurant ?? m.supplier;
             if (!biz) return null;
             return (
-              <div key={m.id} className="rounded-2xl border border-rule bg-surface p-5">
+              <div key={m.id} className={ui.panel}>
                 <div className="flex items-center gap-2 text-ink-faint">
                   <Store className="h-4 w-4" />
                   <span className="text-xs uppercase tracking-wide">

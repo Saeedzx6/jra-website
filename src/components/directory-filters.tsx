@@ -1,4 +1,5 @@
 "use client";
+import { cx, ui } from "@/lib/ui";
 
 import { useLocale, useTranslations } from "next-intl";
 import { Search } from "lucide-react";
@@ -40,7 +41,7 @@ export function DirectoryFilters({
     >
       <div className="relative min-w-[200px] flex-1">
         <Search className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-faint" />
-        <input suppressHydrationWarning
+        <input
           type="search"
           defaultValue={current.q ?? ""}
           placeholder={t("search")}
@@ -52,14 +53,14 @@ export function DirectoryFilters({
               400
             );
           }}
-          className="w-full rounded-full border border-rule bg-paper py-2 ps-9 pe-4 text-sm focus:border-accent focus:outline-none"
+          className={cx("w-full ps-9 pe-4", ui.fieldPill)}
         />
       </div>
 
-      <select suppressHydrationWarning
+      <select
         defaultValue={current.governorate ?? ""}
         onChange={(e) => update("governorate", e.target.value)}
-        className="rounded-full border border-rule bg-paper px-3 py-2 text-sm focus:border-accent focus:outline-none"
+        className={cx(ui.fieldPill, "px-3 py-2")}
       >
         <option value="">{tr("allGovernorates")}</option>
         {governorates.map((g) => (
@@ -69,10 +70,10 @@ export function DirectoryFilters({
         ))}
       </select>
 
-      <select suppressHydrationWarning
+      <select
         defaultValue={current.cuisine ?? ""}
         onChange={(e) => update("cuisine", e.target.value)}
-        className="rounded-full border border-rule bg-paper px-3 py-2 text-sm focus:border-accent focus:outline-none"
+        className={cx(ui.fieldPill, "px-3 py-2")}
       >
         <option value="">{tr("allCuisines")}</option>
         {cuisines.map((c) => (

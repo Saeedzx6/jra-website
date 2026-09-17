@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Check, Paperclip, AlertCircle, Loader2 } from "lucide-react";
 import { submitMembershipApplication } from "@/lib/actions/membership";
 import { UPLOAD_MAX_BYTES } from "@/lib/prepare-image";
+import { cx, ui } from "@/lib/ui";
 
 export function MembershipForm({
   governorates = [],
@@ -72,7 +73,7 @@ export function MembershipForm({
             ["ASSOCIATE_SUPPLIER", tf("supplier")],
           ] as const
         ).map(([value, label]) => (
-          <button suppressHydrationWarning
+          <button
             key={value}
             type="button"
             onClick={() => setType(value)}
@@ -84,76 +85,76 @@ export function MembershipForm({
           </button>
         ))}
       </div>
-      <input suppressHydrationWarning type="hidden" name="applicantType" value={type} />
+      <input type="hidden" name="applicantType" value={type} />
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <input suppressHydrationWarning
+        <input
           name="businessName"
           required
           placeholder={type === "ACTIVE_RESTAURANT" ? tf("restaurantNamePlaceholder") : tf("companyNamePlaceholder")}
-          className="rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+          className={ui.fieldOnPaper}
         />
-        <input suppressHydrationWarning
+        <input
           name="contactName"
           required
           placeholder={tf("contactPersonPlaceholder")}
-          className="rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+          className={ui.fieldOnPaper}
         />
-        <input suppressHydrationWarning
+        <input
           name="email"
           type="email"
           required
           placeholder={tf("emailPlaceholder")}
-          className="rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+          className={ui.fieldOnPaper}
         />
-        <input suppressHydrationWarning
+        <input
           name="phone"
           required
           placeholder={tf("phonePlaceholder")}
-          className="rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+          className={ui.fieldOnPaper}
         />
       </div>
       {type === "ACTIVE_RESTAURANT" && (
-        <input suppressHydrationWarning
+        <input
           name="classificationClaim"
           placeholder={tf("classificationClaimPlaceholder")}
-          className="w-full rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+          className={cx("w-full", ui.fieldOnPaper)}
         />
       )}
 
       {type === "ASSOCIATE_SUPPLIER" && (
         <div className="space-y-4 rounded-2xl border border-rule bg-surface-2 p-5">
           <p className="text-sm font-medium text-ink">{tf("supplierSectionTitle")}</p>
-          <textarea suppressHydrationWarning
+          <textarea
             name="productsSupplied"
             required
             rows={3}
             placeholder={tf("productsSuppliedPlaceholder")}
-            className="w-full rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+            className={cx("w-full", ui.fieldOnPaper)}
           />
           <div className="grid gap-4 sm:grid-cols-2">
-            <input suppressHydrationWarning
+            <input
               name="registrationNumber"
               placeholder={tf("registrationNumberPlaceholder")}
-              className="rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+              className={ui.fieldOnPaper}
             />
-            <input suppressHydrationWarning
+            <input
               name="yearsTrading"
               placeholder={tf("yearsTradingPlaceholder")}
-              className="rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+              className={ui.fieldOnPaper}
             />
-            <input suppressHydrationWarning
+            <input
               name="website"
               type="url"
               dir="ltr"
               placeholder={tf("websitePlaceholder")}
-              className="rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+              className={ui.fieldOnPaper}
             />
             {governorates.length > 0 ? (
-              <select suppressHydrationWarning
+              <select
                 name="governorateId"
                 defaultValue=""
-                className="rounded-lg border border-rule bg-surface px-4 py-2.5 text-sm focus:border-accent focus:outline-none"
+                className={ui.fieldOnPaper}
               >
                 <option value="">{tf("governoratePlaceholder")}</option>
                 {governorates.map((g) => (
@@ -173,7 +174,6 @@ export function MembershipForm({
           {tf("supportingDocuments")} <span className="text-ink-faint">{tf("optional")}</span>
         </span>
         <input
-          suppressHydrationWarning
           type="file"
           name="documents"
           multiple
@@ -193,7 +193,7 @@ export function MembershipForm({
         </p>
       ) : null}
 
-      <button suppressHydrationWarning
+      <button
         type="submit"
         disabled={pending}
         className="pill-press w-full rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-60 sm:w-auto"
