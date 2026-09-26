@@ -50,18 +50,22 @@ export function RestaurantCard({ restaurant }: { restaurant: RestaurantCardData 
       href={`/restaurants/${restaurant.slug}`}
       className="motion-card group block overflow-hidden rounded-2xl border border-rule bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
     >
-      {/* 16:9 rather than a taller crop. These are mostly logos, which sit
-          in a wide frame without being cut, and a 4:3 image made the picture
-          three quarters of the card — a wall of artwork with captions rather
-          than a directory. At this ratio three rows fit a laptop screen. */}
-      <div className="relative aspect-[16/9] overflow-hidden bg-surface-2">
+      {/* 16:9 rather than a taller crop — a 4:3 image made the picture three
+          quarters of the card, and at 16:9 three rows fit a laptop screen.
+          Uploaded images are mostly business logos of wildly different
+          shapes (square marks, wide wordmarks, circular badges), not
+          uniform wide photos, so object-cover was cropping into them
+          unpredictably. object-contain + padding shows each one whole,
+          centered on a neutral fill, so the grid reads as one system
+          instead of a set of random crops. */}
+      <div className="relative aspect-[16/9] overflow-hidden bg-surface-2 p-3">
         {restaurant.imageUrl ? (
           <Image
             src={restaurant.imageUrl}
             alt=""
             fill
             sizes="(min-width: 1024px) 320px, (min-width: 640px) 45vw, 90vw"
-            className="motion-card-image object-cover"
+            className="motion-card-image object-contain"
           />
         ) : (
           <div
